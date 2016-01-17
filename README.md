@@ -1,6 +1,6 @@
 [![Stories in Ready](https://badge.waffle.io/frc5687/2016-Outlier2.png?label=ready&title=Ready)](https://waffle.io/frc5687/2016-Outlier2)
 # 2016-Outlier2
-Code for The Outlier's 2016 FRC robot
+Code for The Outliers' 2016 FRC robot
 
 ## Getting Started
 1. Install [IntelliJ IDEA Community Edition](https://www.jetbrains.com/idea/download/)
@@ -19,6 +19,6 @@ Code for The Outlier's 2016 FRC robot
       > ./gradlew idea
       ```
       
-4. Double-click on Outlier1.ipr to open the project in IntelliJ IDEA
+4. In IntelliJ IDEA, create a new project from existing sources and import the local clone of this repository
 
 Note that you can use the Terminal window in IntelliJ for future command-prompt/ terminal needs (like deploying code)
