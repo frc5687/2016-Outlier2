@@ -21,4 +21,6 @@ Code for The Outlier's 2016 FRC robot
       
 4. Double-click on Outlier1.ipr to open the project in IntelliJ IDEA
 
-Note that you can use the Terminal window in IntelliJ for future command-prompt/ terminal needs (like deploying code)
+Note that you can use the Terminal window in IntelliJ for future command-prompt/ terminal needs (like deploying code).
+
+See 'GradleRIO4Dummies.txt' for more information.
