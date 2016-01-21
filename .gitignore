@@ -5,6 +5,7 @@
 
 # Package Files #
 *.jar
+!navx_frc.jar
 *.war
 *.ear
 
