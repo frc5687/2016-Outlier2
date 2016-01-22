@@ -23,13 +23,13 @@ public class Gamepad extends Joystick{
         D_PAD_HORIZONTAL(6),
         D_PAD_VERTICAL(7);
 
-        private final int axisValue;
-        Axes(int axisValue) {
-            this.axisValue = axisValue;
+        private final int number;
+        Axes(int number) {
+            this.number = number;
         }
 
-        public int getAxisValue() {
-            return axisValue;
+        public int getNumber() {
+            return number;
         }
     }
 
@@ -37,24 +37,24 @@ public class Gamepad extends Joystick{
      * Enumeration for the various buttons
      */
     public static enum Buttons {
-        A(0),
-        B(1),
-        X(2),
-        Y(3),
-        LB(4),
-        RB(5),
-        BACK(6),
-        START(7),
-        LEFT_BUTTON(8),
-        RIGHT_BUTTON(9);
+        A(1),
+        B(2),
+        X(3),
+        Y(4),
+        LEFT_BUMPER(5),
+        RIGHT_BUMPER(6),
+        BACK(7),
+        START(8),
+        LEFT_STICK(9),
+        RIGHT_STICK(10);
 
-        private final int buttonValue;
-        Buttons(int buttonValue) {
-            this.buttonValue = buttonValue;
+        private final int number;
+        Buttons(int number) {
+            this.number = number;
         }
 
-        public int getButtonValue() {
-            return buttonValue;
+        public int getNumber() {
+            return number;
         }
     }
 
@@ -71,7 +71,7 @@ public class Gamepad extends Joystick{
      * @return double the analog value for the axis
      */
     public double getRawAxis(Axes axis) {
-        return super.getRawAxis(axis.ordinal());
+        return super.getRawAxis(axis.getNumber());
     }
 
     /*
@@ -80,6 +80,6 @@ public class Gamepad extends Joystick{
      * @return bool true if the button is pressed
      */
     public boolean getRawButton(Buttons button) {
-        return super.getRawButton(button.ordinal() + 1);
+        return super.getRawButton(button.getNumber());
     }
 }
