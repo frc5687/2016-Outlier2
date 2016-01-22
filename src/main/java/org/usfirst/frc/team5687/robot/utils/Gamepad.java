@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.Joystick;
  * depends on the code in the driver station.
  */
 public class Gamepad extends Joystick{
-
     /*
 	 * Enumeration for the various analog axes
 	 */
