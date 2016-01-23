@@ -22,10 +22,9 @@ public class Robot extends IterativeRobot {
 
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	// public static OI oi;
-    public static DriveTrain driveTrain;
     Command autonomousCommand;
     SendableChooser chooser;
-
+    public static DriveTrain driveTrain = new DriveTrain();
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.

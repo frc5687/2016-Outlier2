@@ -14,13 +14,13 @@ import org.usfirst.frc.team5687.robot.Robot;
 public class DriveWith2Joysticks extends Command {
 
     //DriveTrain drive = Robot.driveTrain;
-    OI oi = Robot.oi;
+    OI oi = OI.oi;
 
     /*
      * Constructor
      */
     public DriveWith2Joysticks() {
-
+    requires(Robot.driveTrain);
         // requires(drive);
     }
 
@@ -38,10 +38,7 @@ public class DriveWith2Joysticks extends Command {
      * @see edu.wpi.first.wpilibj.command.Command#execute()
      */
     protected void execute() {
-
-//        drive.tankDrive(oi.left_speed,
-//                oi.right_speed,
-//                false);
+        Robot.driveTrain.tankdrive(oi.left_speed, oi.right_speed);
     }
 
     /*

@@ -20,7 +20,7 @@ public class OI {
     // There are a few additional built in buttons you can use. Additionally,
     // by subclassing Button you can create custom triggers and bind those to
     // commands the same as any other Button.
-
+    public static OI oi = new OI();
 
 //I want to get the left and right joystick axes individually:
 
