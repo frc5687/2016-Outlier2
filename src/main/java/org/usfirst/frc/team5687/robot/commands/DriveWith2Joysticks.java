@@ -11,6 +11,7 @@ import org.usfirst.frc.team5687.robot.Robot;
 /**
  * Command for basic driver-control of the robot chassis
  */
+
 public class DriveWith2Joysticks extends Command {
 
     //DriveTrain drive = Robot.driveTrain;
@@ -38,7 +39,9 @@ public class DriveWith2Joysticks extends Command {
      * @see edu.wpi.first.wpilibj.command.Command#execute()
      */
     protected void execute() {
-        Robot.driveTrain.tankdrive(oi.left_speed, oi.right_speed);
+        oi.getLeftspeed();
+        oi.getRightspeed();
+        Robot.driveTrain.tankdrive(oi.getLeftspeed(), oi.getRightspeed());
     }
 
     /*
