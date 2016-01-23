@@ -1,7 +1,9 @@
 package org.usfirst.frc.team5687.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import org.usfirst.frc.team5687.robot.commands.ExampleCommand;
+import org.usfirst.frc.team5687.robot.utils.Gamepad;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -14,11 +16,23 @@ public class OI {
     // number it is.
     // Joystick stick = new Joystick(port);
     // Button button = new JoystickButton(stick, buttonNumber);
-    
+    Gamepad xbox = new Gamepad(0);//TODO: Where is this?
     // There are a few additional built in buttons you can use. Additionally,
     // by subclassing Button you can create custom triggers and bind those to
     // commands the same as any other Button.
-    
+
+
+//I want to get the left and right joystick axes individually:
+
+    //Method call:
+    public double left_speed = xbox.getRawAxis(Gamepad.Axes.LEFT_Y);
+    public double right_speed = xbox.getRawAxis(Gamepad.Axes.RIGHT_Y);
+
+
+
+
+
+
     //// TRIGGERING COMMANDS WITH BUTTONS
     // Once you have a button, it's trivial to bind it to a button in one of
     // three ways:
