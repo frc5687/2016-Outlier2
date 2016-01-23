@@ -14,7 +14,7 @@ import org.usfirst.frc.team5687.robot.Robot;
 public class DriveWith2Joysticks extends Command {
 
     //DriveTrain drive = Robot.driveTrain;
-    OI oi = OI.oi;
+    OI oi =Robot.oi;
 
     /*
      * Constructor

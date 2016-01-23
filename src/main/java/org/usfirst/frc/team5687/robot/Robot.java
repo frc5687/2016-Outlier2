@@ -24,13 +24,16 @@ public class Robot extends IterativeRobot {
 	// public static OI oi;
     Command autonomousCommand;
     SendableChooser chooser;
-    public static DriveTrain driveTrain = new DriveTrain();
+    public static DriveTrain driveTrain;
+    public static OI oi;
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
 		// oi = new OI();
+        oi = new OI();
+        driveTrain = new DriveTrain();
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", new ExampleCommand());
 //        chooser.addObject("My Auto", new MyAutoCommand());
