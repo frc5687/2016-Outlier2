@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5687.robot.utils;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import org.usfirst.frc.team5687.robot.Constants;
 
 public class Helpers{
     /*
@@ -20,4 +21,10 @@ public class Helpers{
     public static double applyDeadband(double input, double deadband){
         return (Math.abs(input) >= Math.abs(deadband)) ? input : 0;
     }
+
+
+    public static double applyExponential(double joystick) {
+        return Constants.sensitivityController.sensitivityExponent*joystick*joystick*joystick + (1- Constants.sensitivityController.sensitivityExponent)*joystick;
+    }
+
 }

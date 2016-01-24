@@ -1,12 +1,15 @@
 package org.usfirst.frc.team5687.robot;
 
-import edu.wpi.first.wpilibj.buttons.Button;
-import org.usfirst.frc.team5687.robot.commands.ExampleCommand;
+import org.usfirst.frc.team5687.robot.utils.Gamepad;
+import org.usfirst.frc.team5687.robot.utils.Helpers;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
+ *
  */
+
+
 public class OI {
     //// CREATING BUTTONS
     // One type of button is a joystick button which is any button on a joystick.
@@ -14,11 +17,30 @@ public class OI {
     // number it is.
     // Joystick stick = new Joystick(port);
     // Button button = new JoystickButton(stick, buttonNumber);
-    
+    Gamepad xbox = new Gamepad(0);
     // There are a few additional built in buttons you can use. Additionally,
     // by subclassing Button you can create custom triggers and bind those to
     // commands the same as any other Button.
-    
+
+
+//I want to get the left and right joystick axes individually:
+
+
+    public double getLeftspeed(){
+        double result = xbox.getRawAxis(Gamepad.Axes.LEFT_Y);
+        result = Helpers.applyDeadband(result, Constants.Deadbands.DRIVE_STICK);
+        result = Helpers.applyExponential(result);
+        return result;
+    }
+
+    public double getRightspeed(){
+        double result = xbox.getRawAxis(Gamepad.Axes.RIGHT_Y);
+        result = Helpers.applyDeadband(result, Constants.Deadbands.DRIVE_STICK);
+        result = Helpers.applyExponential(result);
+        return result;
+    }
+
+
     //// TRIGGERING COMMANDS WITH BUTTONS
     // Once you have a button, it's trivial to bind it to a button in one of
     // three ways:
