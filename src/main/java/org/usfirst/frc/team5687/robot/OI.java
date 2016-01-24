@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import org.usfirst.frc.team5687.robot.commands.ExampleCommand;
 import org.usfirst.frc.team5687.robot.utils.Gamepad;
+import org.usfirst.frc.team5687.robot.utils.Helpers;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -29,11 +30,11 @@ public class OI {
 
 
     public double getLeftspeed(){
-        return(xbox.getRawAxis(Gamepad.Axes.LEFT_Y));
+        return Helpers.applyDeadband(xbox.getRawAxis(Gamepad.Axes.LEFT_Y), Constants.Deadbands.DRIVE_STICK);
     }
 
     public double getRightspeed(){
-        return(xbox.getRawAxis(Gamepad.Axes.RIGHT_Y));
+        return Helpers.applyDeadband(xbox.getRawAxis(Gamepad.Axes.RIGHT_Y), Constants.Deadbands.DRIVE_STICK);
     }
 
 

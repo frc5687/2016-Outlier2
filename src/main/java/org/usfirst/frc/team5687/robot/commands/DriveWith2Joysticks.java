@@ -7,6 +7,7 @@ package org.usfirst.frc.team5687.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5687.robot.OI;
 import org.usfirst.frc.team5687.robot.Robot;
+import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
 
 /**
  * Command for basic driver-control of the robot chassis
@@ -14,15 +15,14 @@ import org.usfirst.frc.team5687.robot.Robot;
 
 public class DriveWith2Joysticks extends Command {
 
-    //DriveTrain drive = Robot.driveTrain;
-    OI oi =Robot.oi;
+    DriveTrain driveTrain = Robot.driveTrain;
+    OI oi = Robot.oi;
 
     /*
      * Constructor
      */
     public DriveWith2Joysticks() {
-    requires(Robot.driveTrain);
-        // requires(drive);
+        requires(driveTrain);
     }
 
     /*
@@ -39,9 +39,7 @@ public class DriveWith2Joysticks extends Command {
      * @see edu.wpi.first.wpilibj.command.Command#execute()
      */
     protected void execute() {
-        oi.getLeftspeed();
-        oi.getRightspeed();
-        Robot.driveTrain.tankdrive(oi.getLeftspeed(), oi.getRightspeed());
+        driveTrain.tankdrive(oi.getLeftspeed(), oi.getRightspeed());
     }
 
     /*

@@ -1,9 +1,9 @@
 package org.usfirst.frc.team5687.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.RobotDrive;
+import org.usfirst.frc.team5687.robot.Constants;
 import org.usfirst.frc.team5687.robot.RobotMap;
 
 /**
@@ -26,19 +26,15 @@ public class DriveTrain extends Subsystem {
 
     }
     public void tankdrive(double leftSpeed, double rightSpeed){
-//double timeOfAccel = 1;  Enter ideal time (in seconds) it should
-        /*if (leftSpeed-leftMotor.get() > timeOfAccel/50){
-            leftSpeed = (leftMotor.get() + timeOfAccel/50);
-        }
-        if (leftSpeed - leftMotor.get()< -timeOfAccel/50);{
-            leftSpeed = (leftMotor.get()-timeOfAccel/50);
-        }
-        if (rightSpeed - rightMotor.get() > timeOfAccel/50);{ //Tests right motor forward
-            rightSpeed = rightMotor.get() + timeOfAccel/50;
-        }
-        if(rightSpeed - rightMotor.get()< -timeOfAccel) { // Tests right motor for going too far backwards
-        rightSpeed = rightMotor.get() -timeOfAccel;
-        } */
-        drive.tankDrive(leftSpeed,rightSpeed);
+
+        // Limit change in leftSpeed to +/- ACCELERATION_CAP
+        leftSpeed = Math.min(leftSpeed, leftMotor.get() + Constants.Limits.ACCELERATION_CAP);
+        leftSpeed = Math.max(leftSpeed, leftMotor.get() - Constants.Limits.ACCELERATION_CAP);
+
+        // Limit change in rightSpeed to +/- ACCELERATION_CAP
+        rightSpeed = Math.min(rightSpeed, rightMotor.get() + Constants.Limits.ACCELERATION_CAP);
+        rightSpeed = Math.max(rightSpeed, rightMotor.get() - Constants.Limits.ACCELERATION_CAP);
+
+        drive.tankDrive(leftSpeed, rightSpeed, false);
     };
 }
