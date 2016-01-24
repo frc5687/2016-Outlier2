@@ -4,6 +4,7 @@ package org.usfirst.frc.team5687.robot.commands;
  * Created by Baxter on 1/23/2016.
  */
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5687.robot.OI;
 import org.usfirst.frc.team5687.robot.Robot;
@@ -40,6 +41,8 @@ public class DriveWith2Joysticks extends Command {
      */
     protected void execute() {
         driveTrain.tankDrive(oi.getLeftspeed(), oi.getRightspeed());
+        Double distance = driveTrain.rightEnc.getDistance();
+        DriverStation.reportError(distance + "\r\n", false);
     }
 
     /*

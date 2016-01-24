@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5687.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -15,12 +16,19 @@ public class DriveTrain extends Subsystem {
     private RobotDrive drive;
     VictorSP leftMotor;
     VictorSP rightMotor;
+    public Encoder rightEnc;
+    boolean reverse_direction;
 
     public DriveTrain(){
         leftMotor = new VictorSP(RobotMap.leftMotor);
         rightMotor = new VictorSP(RobotMap.rightMotor);
         drive = new RobotDrive(leftMotor,rightMotor);
-
+        reverse_direction = false;
+        rightEnc = new Encoder(RobotMap.rightMotorEncoderChannelA, RobotMap.rightMotorEncoderChannelB, reverse_direction, Encoder.EncodingType.k4X);
+        rightEnc.setMinRate(10);
+        rightEnc.setDistancePerPulse(5);
+        rightEnc.setReverseDirection(reverse_direction);
+        rightEnc.setSamplesToAverage(7);
     }
 
 
