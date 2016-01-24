@@ -29,7 +29,7 @@ public class DriveTrain extends Subsystem {
     }
 
 
-    public void tankDrive(double leftSpeed, double rightSpeed){
+    public void s_tankDrive(double leftSpeed, double rightSpeed){
 
         // Limit change in leftSpeed to +/- ACCELERATION_CAP
         leftSpeed = Math.min(leftSpeed, leftMotor.get() + Constants.Limits.ACCELERATION_CAP);
