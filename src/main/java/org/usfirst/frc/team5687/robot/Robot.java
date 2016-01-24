@@ -185,5 +185,11 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber(   "IMU_Byte_Count",       imu.getByteCount());
         SmartDashboard.putNumber(   "IMU_Update_Count",     imu.getUpdateCount());
 
+
+            //Testing and working
+        DriverStation.reportError(String.format("IMU_Connected %1$b", imu.isConnected()), false);
+        DriverStation.reportError(String.format("IMU_IsMoving %1$b", imu.isMoving()), false);
+
+
     }
 }
