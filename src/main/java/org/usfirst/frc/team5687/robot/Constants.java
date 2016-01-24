@@ -29,7 +29,7 @@ public class Constants {
     }
     public class sensitivityController {
         // NEVER SET ABOVE 1 OR BELOW 0
-        public static final double sensitivityExponent = 0;
+        public static final double sensitivityExponent = 0.5;
         // A mathematical way to determine the sensativity at low levels
 
     }
