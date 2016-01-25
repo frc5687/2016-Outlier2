@@ -9,7 +9,14 @@ import org.usfirst.frc.team5687.robot.utils.Helpers;
  *
  */
 public class OI {
-    private Gamepad xbox = new Gamepad(0);
+    private Gamepad xbox;
+
+    /**
+     * Create a new instance of the operator interface
+     */
+    public OI() {
+        xbox = new Gamepad(0);
+    }
 
     /**
      * Gets the desired speed for the left side of the drive
