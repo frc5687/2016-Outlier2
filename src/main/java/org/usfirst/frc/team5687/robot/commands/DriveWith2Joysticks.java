@@ -5,18 +5,14 @@ package org.usfirst.frc.team5687.robot.commands;
  */
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team5687.robot.OI;
-import org.usfirst.frc.team5687.robot.Robot;
-import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
+import static org.usfirst.frc.team5687.robot.Robot.driveTrain;
+import static org.usfirst.frc.team5687.robot.Robot.oi;
 
 /**
  * Command for basic driver-control of the robot chassis
  */
 
 public class DriveWith2Joysticks extends Command {
-
-    DriveTrain driveTrain = Robot.driveTrain;
-    OI oi = Robot.oi;
 
     /*
      * Constructor
