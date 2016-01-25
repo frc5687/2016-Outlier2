@@ -26,17 +26,17 @@ public class OI {
 //I want to get the left and right joystick axes individually:
 
 
-    public double getLeftspeed(){
+    public double getLeftSpeed(){
         double result = xbox.getRawAxis(Gamepad.Axes.LEFT_Y);
         result = Helpers.applyDeadband(result, Constants.Deadbands.DRIVE_STICK);
-        result = Helpers.applyExponential(result);
+        result = Helpers.applySensitivityTransform(result);
         return result;
     }
 
-    public double getRightspeed(){
+    public double getRightSpeed(){
         double result = xbox.getRawAxis(Gamepad.Axes.RIGHT_Y);
         result = Helpers.applyDeadband(result, Constants.Deadbands.DRIVE_STICK);
-        result = Helpers.applyExponential(result);
+        result = Helpers.applySensitivityTransform(result);
         return result;
     }
 

@@ -23,8 +23,22 @@ public class Helpers{
     }
 
 
-    public static double applyExponential(double joystick) {
-        return Constants.sensitivityController.sensitivityExponent*joystick*joystick*joystick + (1- Constants.sensitivityController.sensitivityExponent)*joystick;
+    /***
+     * Applies a transform to the input to provide better sensitivity at low speeds.
+     * @param input
+     * @return
+     */
+    public static double applySensitivityTransform(double input) {
+        // See http://www.chiefdelphi.com/forums/showthread.php?p=921992
+
+        // The transform can only work on values between -1 and 1.
+        if (input>1) { return 1; }
+        if (input <-1) { return -1; }
+
+        // THe sensitivity factor MUST be between 0 and 1!
+        double factor = Math.max(Math.min(Constants.Calibration.SENSITIVITY_FACTOR, 1),0);
+
+        return factor*input*input*input + (1-factor)*input;
     }
 
 }
