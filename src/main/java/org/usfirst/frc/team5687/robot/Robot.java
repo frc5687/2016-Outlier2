@@ -140,64 +140,50 @@ public class Robot extends IterativeRobot {
     }
 
     protected void sendIMUData() {
-
         if (imu==null) {
             // If we can't find the imu, report that to the dashboard and return.
-            SmartDashboard.putString(   "FirmwareVersion",      "navX not connected");
+            SmartDashboard.putString("FirmwareVersion",      "navX not connected");
             return;
         }
 
-           /* Display 6-axis Processed Angle Data                                      */
+        // Display 6-axis Processed Angle Data
         SmartDashboard.putBoolean(  "IMU_Connected",        imu.isConnected());
         SmartDashboard.putBoolean(  "IMU_IsCalibrating",    imu.isCalibrating());
         SmartDashboard.putNumber(   "IMU_Yaw",              imu.getYaw());
         SmartDashboard.putNumber(   "IMU_Pitch",            imu.getPitch());
         SmartDashboard.putNumber(   "IMU_Roll",             imu.getRoll());
 
-           /* Display tilt-corrected, Magnetometer-based heading (requires             */
-           /* magnetometer calibration to be useful)                                   */
-
+        // Display tilt-corrected, Magnetometer-based heading (requires magnetometer calibration to be useful)
         SmartDashboard.putNumber(   "IMU_CompassHeading",   imu.getCompassHeading());
 
-           /* Display 9-axis Heading (requires magnetometer calibration to be useful)  */
+        // Display 9-axis Heading (requires magnetometer calibration to be useful)
         SmartDashboard.putNumber(   "IMU_FusedHeading",     imu.getFusedHeading());
 
-           /* These functions are compatible w/the WPI Gyro Class, providing a simple  */
-           /* path for upgrading from the Kit-of-Parts gyro to the navx MXP            */
-
+        // These functions are compatible w/the WPI Gyro Class, providing a simple
+        // path for upgrading from the Kit-of-Parts gyro to the navx MXP
         SmartDashboard.putNumber(   "IMU_TotalYaw",         imu.getAngle());
         SmartDashboard.putNumber(   "IMU_YawRateDPS",       imu.getRate());
 
-           /* Display Processed Acceleration Data (Linear Acceleration, Motion Detect) */
-
+        // Display Processed Acceleration Data (Linear Acceleration, Motion Detect)
         SmartDashboard.putNumber(   "IMU_Accel_X",          imu.getWorldLinearAccelX());
         SmartDashboard.putNumber(   "IMU_Accel_Y",          imu.getWorldLinearAccelY());
         SmartDashboard.putBoolean(  "IMU_IsMoving",         imu.isMoving());
         SmartDashboard.putBoolean(  "IMU_IsRotating",       imu.isRotating());
 
-           /* Display estimates of velocity/displacement.  Note that these values are  */
-           /* not expected to be accurate enough for estimating robot position on a    */
-           /* FIRST FRC Robotics Field, due to accelerometer noise and the compounding */
-           /* of these errors due to single (velocity) integration and especially      */
-           /* double (displacement) integration.                                       */
-
+        // Display estimates of velocity/displacement.  Note that these values are not expected to be accurate enough
+        // for estimating robot position on a FIRST FRC Robotics Field, due to accelerometer noise and the compounding
+        // of these errors due to single (velocity) integration and especially double (displacement) integration.
         SmartDashboard.putNumber(   "Velocity_X",           imu.getVelocityX());
         SmartDashboard.putNumber(   "Velocity_Y",           imu.getVelocityY());
         SmartDashboard.putNumber(   "Displacement_X",       imu.getDisplacementX());
         SmartDashboard.putNumber(   "Displacement_Y",       imu.getDisplacementY());
 
-
-
-
-           /* Connectivity Debugging Support                                           */
+        // Connectivity Debugging Support
         SmartDashboard.putNumber(   "IMU_Byte_Count",       imu.getByteCount());
         SmartDashboard.putNumber(   "IMU_Update_Count",     imu.getUpdateCount());
 
-
-            //Testing and working
+        //Testing and working
         DriverStation.reportError(String.format("IMU_Connected %1$b", imu.isConnected()), false);
         DriverStation.reportError(String.format("IMU_IsMoving %1$b", imu.isMoving()), false);
-
-
     }
 }
