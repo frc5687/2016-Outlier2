@@ -8,13 +8,13 @@ import org.usfirst.frc.team5687.robot.utils.Helpers;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-    private Gamepad xbox;
+    private Gamepad gamepad;
 
     /**
      * Create a new instance of the operator interface
      */
     public OI() {
-        xbox = new Gamepad(0);
+        gamepad = new Gamepad(0);
     }
 
     /**
@@ -39,7 +39,7 @@ public class OI {
      * @return the adjusted control value from the gamepad
      */
     private double transformStickToSpeed(Gamepad.Axes stick) {
-        double result = xbox.getRawAxis(stick);
+        double result = gamepad.getRawAxis(stick);
         result = Helpers.applyDeadband(result, Constants.Deadbands.DRIVE_STICK);
         result = Helpers.applySensitivityTransform(result);
         return result;
