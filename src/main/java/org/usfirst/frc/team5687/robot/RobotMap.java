@@ -6,6 +6,7 @@ package org.usfirst.frc.team5687.robot;
  * floating around.
  */
 public class RobotMap {
+    
     // Drive train ports
     public static int leftMotors = 0;
     public static int rightMotors = 3;
