@@ -27,19 +27,24 @@ public class OI {
 
 
     public double getLeftSpeed(){
-        double result = xbox.getRawAxis(Gamepad.Axes.LEFT_Y);
-        result = Helpers.applyDeadband(result, Constants.Deadbands.DRIVE_STICK);
-        result = Helpers.applySensitivityTransform(result);
-        return result;
+        return transformStickToSpeed(Gamepad.Axes.LEFT_Y);
     }
 
     public double getRightSpeed(){
-        double result = xbox.getRawAxis(Gamepad.Axes.RIGHT_Y);
+        return transformStickToSpeed(Gamepad.Axes.RIGHT_Y);
+    }
+
+    /***
+     * Get the requested stick position from the gamepad, apply deadpand and sensitivity transforms, and return the result.
+     * @param stick
+     * @return
+     */
+    private double transformStickToSpeed(Gamepad.Axes stick) {
+        double result = xbox.getRawAxis(stick);
         result = Helpers.applyDeadband(result, Constants.Deadbands.DRIVE_STICK);
         result = Helpers.applySensitivityTransform(result);
         return result;
     }
-
 
     //// TRIGGERING COMMANDS WITH BUTTONS
     // Once you have a button, it's trivial to bind it to a button in one of
