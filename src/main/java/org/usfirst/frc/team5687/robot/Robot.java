@@ -1,21 +1,17 @@
-
 package org.usfirst.frc.team5687.robot;
 
+import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import org.usfirst.frc.team5687.robot.commands.ExampleCommand;
-import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
-import org.usfirst.frc.team5687.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
 
-import com.kauailabs.navx.frc.AHRS;
-
-/**
+/*
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
  * documentation. If you change the name of this class or the package after
@@ -24,28 +20,34 @@ import com.kauailabs.navx.frc.AHRS;
  */
 public class Robot extends IterativeRobot {
 
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
-	// public static OI oi;
-    /***
+    /**
      * Represents the navX inertial measurement unit, used for measuring robot movement and orientation.
      */
     public static AHRS imu;
 
+    /**
+     * Represents the robot's drive chassis
+     */
+    public static DriveTrain driveTrain;
+
+    /**
+     * Represents the operator interface/ controls
+     */
+    public static OI oi;
+
     Command autonomousCommand;
     SendableChooser chooser;
-    public static DriveTrain driveTrain;
-    public static OI oi;
+
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
-		// oi = new OI();
         oi = new OI();
         driveTrain = new DriveTrain();
         chooser = new SendableChooser();
-        chooser.addDefault("Default Auto", new ExampleCommand());
-//        chooser.addObject("My Auto", new MyAutoCommand());
+        //chooser.addDefault("Default Auto", new ExampleCommand());
+        //chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
 
         try {
@@ -69,7 +71,6 @@ public class Robot extends IterativeRobot {
 	 * the robot is disabled.
      */
     public void disabledInit(){
-
     }
 	
 	public void disabledPeriodic() {
@@ -135,64 +136,50 @@ public class Robot extends IterativeRobot {
     }
 
     protected void sendIMUData() {
-
         if (imu==null) {
             // If we can't find the imu, report that to the dashboard and return.
-            SmartDashboard.putString(   "FirmwareVersion",      "navX not connected");
+            SmartDashboard.putString("FirmwareVersion",      "navX not connected");
             return;
         }
 
-           /* Display 6-axis Processed Angle Data                                      */
+        // Display 6-axis Processed Angle Data
         SmartDashboard.putBoolean(  "IMU_Connected",        imu.isConnected());
         SmartDashboard.putBoolean(  "IMU_IsCalibrating",    imu.isCalibrating());
         SmartDashboard.putNumber(   "IMU_Yaw",              imu.getYaw());
         SmartDashboard.putNumber(   "IMU_Pitch",            imu.getPitch());
         SmartDashboard.putNumber(   "IMU_Roll",             imu.getRoll());
 
-           /* Display tilt-corrected, Magnetometer-based heading (requires             */
-           /* magnetometer calibration to be useful)                                   */
-
+        // Display tilt-corrected, Magnetometer-based heading (requires magnetometer calibration to be useful)
         SmartDashboard.putNumber(   "IMU_CompassHeading",   imu.getCompassHeading());
 
-           /* Display 9-axis Heading (requires magnetometer calibration to be useful)  */
+        // Display 9-axis Heading (requires magnetometer calibration to be useful)
         SmartDashboard.putNumber(   "IMU_FusedHeading",     imu.getFusedHeading());
 
-           /* These functions are compatible w/the WPI Gyro Class, providing a simple  */
-           /* path for upgrading from the Kit-of-Parts gyro to the navx MXP            */
-
+        // These functions are compatible w/the WPI Gyro Class, providing a simple
+        // path for upgrading from the Kit-of-Parts gyro to the navx MXP
         SmartDashboard.putNumber(   "IMU_TotalYaw",         imu.getAngle());
         SmartDashboard.putNumber(   "IMU_YawRateDPS",       imu.getRate());
 
-           /* Display Processed Acceleration Data (Linear Acceleration, Motion Detect) */
-
+        // Display Processed Acceleration Data (Linear Acceleration, Motion Detect)
         SmartDashboard.putNumber(   "IMU_Accel_X",          imu.getWorldLinearAccelX());
         SmartDashboard.putNumber(   "IMU_Accel_Y",          imu.getWorldLinearAccelY());
         SmartDashboard.putBoolean(  "IMU_IsMoving",         imu.isMoving());
         SmartDashboard.putBoolean(  "IMU_IsRotating",       imu.isRotating());
 
-           /* Display estimates of velocity/displacement.  Note that these values are  */
-           /* not expected to be accurate enough for estimating robot position on a    */
-           /* FIRST FRC Robotics Field, due to accelerometer noise and the compounding */
-           /* of these errors due to single (velocity) integration and especially      */
-           /* double (displacement) integration.                                       */
-
+        // Display estimates of velocity/displacement.  Note that these values are not expected to be accurate enough
+        // for estimating robot position on a FIRST FRC Robotics Field, due to accelerometer noise and the compounding
+        // of these errors due to single (velocity) integration and especially double (displacement) integration.
         SmartDashboard.putNumber(   "Velocity_X",           imu.getVelocityX());
         SmartDashboard.putNumber(   "Velocity_Y",           imu.getVelocityY());
         SmartDashboard.putNumber(   "Displacement_X",       imu.getDisplacementX());
         SmartDashboard.putNumber(   "Displacement_Y",       imu.getDisplacementY());
 
-
-
-
-           /* Connectivity Debugging Support                                           */
+        // Connectivity Debugging Support
         SmartDashboard.putNumber(   "IMU_Byte_Count",       imu.getByteCount());
         SmartDashboard.putNumber(   "IMU_Update_Count",     imu.getUpdateCount());
 
-
-            //Testing and working
+        //Testing and working
         DriverStation.reportError(String.format("IMU_Connected %1$b", imu.isConnected()), false);
         DriverStation.reportError(String.format("IMU_IsMoving %1$b", imu.isMoving()), false);
-
-
     }
 }

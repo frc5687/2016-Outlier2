@@ -17,22 +17,22 @@ public class DriveTrain extends Subsystem {
     private VictorSP rightMotor;
 
     public DriveTrain(){
-        leftMotor = new VictorSP(RobotMap.leftMotor);
-        rightMotor = new VictorSP(RobotMap.rightMotor);
+        leftMotor = new VictorSP(RobotMap.leftMotors);
+        rightMotor = new VictorSP(RobotMap.rightMotors);
         drive = new RobotDrive(leftMotor,rightMotor);
-
     }
-
 
     @Override
     protected void initDefaultCommand() {
         setDefaultCommand(new DriveWith2Joysticks());
-
     }
 
-
+    /**
+     * Run drive motors at specified speeds
+     * @param leftSpeed desired speed for left motors
+     * @param rightSpeed desired speed for right motors
+     */
     public void tankDrive(double leftSpeed, double rightSpeed){
-
         // Limit change in leftSpeed to +/- ACCELERATION_CAP
         leftSpeed = Math.min(leftSpeed, leftMotor.get() + Constants.Limits.ACCELERATION_CAP);
         leftSpeed = Math.max(leftSpeed, leftMotor.get() - Constants.Limits.ACCELERATION_CAP);
