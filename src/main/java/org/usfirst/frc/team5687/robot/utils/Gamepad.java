@@ -60,6 +60,7 @@ public class Gamepad extends Joystick{
 
     /**
      * Constructor
+     * @param port the driver station port the gamepad is connected to
      */
     public Gamepad(int port) {
         super(port);
@@ -67,7 +68,7 @@ public class Gamepad extends Joystick{
 
     /**
      * Gets the raw value for the specified axis
-     * @param Axes the desired gamepad axis
+     * @param axis the desired gamepad axis
      * @return double the analog value for the axis
      */
     public double getRawAxis(Axes axis) {
@@ -76,7 +77,7 @@ public class Gamepad extends Joystick{
 
     /**
      * Checks if the specified button is pressed
-     * @param Buttons the desired gamepad button
+     * @param button the desired gamepad button
      * @return bool true if the button is pressed
      */
     public boolean getRawButton(Buttons button) {
