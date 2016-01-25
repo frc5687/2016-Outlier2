@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team5687.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -24,23 +23,30 @@ import com.kauailabs.navx.frc.AHRS;
  */
 public class Robot extends IterativeRobot {
 
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
-	// public static OI oi;
     /***
      * Represents the navX inertial measurement unit, used for measuring robot movement and orientation.
      */
     public static AHRS imu;
 
+    /**
+     * Represents the robot's drive chassis
+     */
+    public static DriveTrain driveTrain;
+
+    /**
+     * Represents the operator interface/ controls
+     */
+    public static OI oi;
+
+    public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
     Command autonomousCommand;
     SendableChooser chooser;
-    public static DriveTrain driveTrain;
-    public static OI oi;
+
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
-		// oi = new OI();
         oi = new OI();
         driveTrain = new DriveTrain();
         chooser = new SendableChooser();
@@ -69,7 +75,6 @@ public class Robot extends IterativeRobot {
 	 * the robot is disabled.
      */
     public void disabledInit(){
-
     }
 	
 	public void disabledPeriodic() {
