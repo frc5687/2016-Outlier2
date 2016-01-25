@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.Joystick;
  * depends on the code in the driver station.
  */
 public class Gamepad extends Joystick{
-    /*
+    /**
 	 * Enumeration for the various analog axes
 	 */
     public static enum Axes {
@@ -33,7 +33,7 @@ public class Gamepad extends Joystick{
         }
     }
 
-    /*
+    /**
      * Enumeration for the various buttons
      */
     public static enum Buttons {
@@ -58,14 +58,14 @@ public class Gamepad extends Joystick{
         }
     }
 
-    /*
+    /**
      * Constructor
      */
     public Gamepad(int port) {
         super(port);
     }
 
-    /*
+    /**
      * Gets the raw value for the specified axis
      * @param Axes the desired gamepad axis
      * @return double the analog value for the axis
@@ -74,7 +74,7 @@ public class Gamepad extends Joystick{
         return super.getRawAxis(axis.getNumber());
     }
 
-    /*
+    /**
      * Checks if the specified button is pressed
      * @param Buttons the desired gamepad button
      * @return bool true if the button is pressed
