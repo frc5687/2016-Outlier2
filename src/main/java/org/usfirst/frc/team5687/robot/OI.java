@@ -26,18 +26,26 @@ public class OI {
 //I want to get the left and right joystick axes individually:
 
 
+    /**
+     * Gets the desired speed for the left side of the drive
+     * @return the control value for the right drive motors
+     */
     public double getLeftSpeed(){
         return transformStickToSpeed(Gamepad.Axes.LEFT_Y);
     }
 
+    /**
+     * Gets the desired speed for the right side of the drive
+     * @return the control value for the right drive motors
+     */
     public double getRightSpeed(){
         return transformStickToSpeed(Gamepad.Axes.RIGHT_Y);
     }
 
     /***
      * Get the requested stick position from the gamepad, apply deadpand and sensitivity transforms, and return the result.
-     * @param stick
-     * @return
+     * @param stick the gamepad axis to adjust and use
+     * @return the adjusted control value from the gamepad
      */
     private double transformStickToSpeed(Gamepad.Axes stick) {
         double result = xbox.getRawAxis(stick);
