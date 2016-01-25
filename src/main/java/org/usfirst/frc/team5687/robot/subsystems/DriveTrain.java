@@ -13,8 +13,8 @@ import org.usfirst.frc.team5687.robot.commands.DriveWith2Joysticks;
 public class DriveTrain extends Subsystem {
 
     private RobotDrive drive;
-    VictorSP leftMotor;
-    VictorSP rightMotor;
+    private VictorSP leftMotor;
+    private VictorSP rightMotor;
 
     public DriveTrain(){
         leftMotor = new VictorSP(RobotMap.leftMotor);
