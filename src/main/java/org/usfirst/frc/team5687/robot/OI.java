@@ -6,7 +6,6 @@ import org.usfirst.frc.team5687.robot.utils.Helpers;
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
- *
  */
 public class OI {
     private Gamepad xbox;
@@ -34,7 +33,7 @@ public class OI {
         return transformStickToSpeed(Gamepad.Axes.RIGHT_Y);
     }
 
-    /***
+    /**
      * Get the requested stick position from the gamepad, apply deadpand and sensitivity transforms, and return the result.
      * @param stick the gamepad axis to adjust and use
      * @return the adjusted control value from the gamepad

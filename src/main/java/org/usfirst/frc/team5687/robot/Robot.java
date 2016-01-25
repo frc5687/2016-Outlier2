@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
 
-/**
+/*
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
  * documentation. If you change the name of this class or the package after
@@ -20,7 +20,7 @@ import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
  */
 public class Robot extends IterativeRobot {
 
-    /***
+    /**
      * Represents the navX inertial measurement unit, used for measuring robot movement and orientation.
      */
     public static AHRS imu;
@@ -46,8 +46,8 @@ public class Robot extends IterativeRobot {
         oi = new OI();
         driveTrain = new DriveTrain();
         chooser = new SendableChooser();
-//        chooser.addDefault("Default Auto", new ExampleCommand());
-//        chooser.addObject("My Auto", new MyAutoCommand());
+        //chooser.addDefault("Default Auto", new ExampleCommand());
+        //chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
 
         try {

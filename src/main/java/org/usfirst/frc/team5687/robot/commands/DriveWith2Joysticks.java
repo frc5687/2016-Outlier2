@@ -1,15 +1,12 @@
 package org.usfirst.frc.team5687.robot.commands;
 
-/**
- * Created by Baxter on 1/23/2016.
- */
-
 import edu.wpi.first.wpilibj.command.Command;
 import static org.usfirst.frc.team5687.robot.Robot.driveTrain;
 import static org.usfirst.frc.team5687.robot.Robot.oi;
 
 /**
  * Command for basic driver-control of the robot chassis
+ * Created by Baxter on 1/23/2016.
  */
 
 public class DriveWith2Joysticks extends Command {
