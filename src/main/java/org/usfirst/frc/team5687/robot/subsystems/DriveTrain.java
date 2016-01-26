@@ -16,21 +16,45 @@ public class DriveTrain extends Subsystem {
     private RobotDrive drive;
     VictorSP leftMotor;
     VictorSP rightMotor;
-    public Encoder rightEnc;
-    boolean reverse_direction;
+    private Encoder rightEncoder;
+    private Encoder leftEncoder;
 
     public DriveTrain(){
-        leftMotor = new VictorSP(RobotMap.leftMotor);
-        rightMotor = new VictorSP(RobotMap.rightMotor);
+        leftMotor = new VictorSP(RobotMap.leftDriveMotor);
+        rightMotor = new VictorSP(RobotMap.rightDriveMotor);
         drive = new RobotDrive(leftMotor,rightMotor);
-        reverse_direction = false;
-        rightEnc = new Encoder(RobotMap.rightMotorEncoderChannelA, RobotMap.rightMotorEncoderChannelB, reverse_direction, Encoder.EncodingType.k4X);
-        rightEnc.setMinRate(10);
-        rightEnc.setDistancePerPulse(5);
-        rightEnc.setReverseDirection(reverse_direction);
-        rightEnc.setSamplesToAverage(7);
+        rightEncoder = initializeEncoder(RobotMap.rightDriveEncoderChannelA, RobotMap.rightDriveEncoderChannelB, Constants.Encoders.RightDrive.REVERSED, Constants.Encoders.RightDrive.INCHES_PER_PULSE, Constants.Encoders.RightDrive.MAX_PERIOD);
+        leftEncoder = initializeEncoder(RobotMap.leftDriveEncoderChannelA, RobotMap.leftDriveEncoderChannelB, Constants.Encoders.LeftDrive.REVERSED, Constants.Encoders.LeftDrive.INCHES_PER_PULSE, Constants.Encoders.LeftDrive.MAX_PERIOD);
     }
 
+    public void resetDriveEncoders() {
+        rightEncoder.reset();
+        leftEncoder.reset();
+    }
+
+    public double getLeftDistance() {
+        return leftEncoder.getDistance();
+    }
+
+    public double getLeftTicks() {
+        return leftEncoder.getRaw();
+    }
+
+    public double getRightDistance() {
+        return rightEncoder.getDistance();
+    }
+
+    public double getRightTicks() {
+        return rightEncoder.getRaw();
+    }
+
+    private Encoder initializeEncoder(int channelA, int channelB, boolean reversed, double distancePerPulse, double maxPeriod) {
+        Encoder encoder = new Encoder(channelA, channelB, reversed, Encoder.EncodingType.k4X);
+        encoder.setDistancePerPulse(distancePerPulse);
+        encoder.setMaxPeriod(maxPeriod);
+        encoder.reset();
+        return encoder;
+    }
 
     @Override
     protected void initDefaultCommand() {

@@ -32,6 +32,7 @@ public class DriveWith2Joysticks extends Command {
      * @see edu.wpi.first.wpilibj.command.Command#initialize()
      */
     protected void initialize() {
+        driveTrain.resetDriveEncoders();
     }
 
     /*
@@ -41,8 +42,10 @@ public class DriveWith2Joysticks extends Command {
      */
     protected void execute() {
         driveTrain.tankDrive(oi.getLeftspeed(), oi.getRightspeed());
-        Double distance = driveTrain.rightEnc.getDistance();
-        DriverStation.reportError(distance + "\r\n", false);
+        DriverStation.reportError(String.format("Right distance: %1$f", driveTrain.getRightDistance()), false);
+        DriverStation.reportError(String.format(" Left distance: %1$f", driveTrain.getLeftDistance()), false);
+        DriverStation.reportError(String.format("Right ticks: %1$f", driveTrain.getRightTicks()), false);
+        DriverStation.reportError(String.format(" Left ticks: %1$f", driveTrain.getLeftTicks()), false);
     }
 
     /*
