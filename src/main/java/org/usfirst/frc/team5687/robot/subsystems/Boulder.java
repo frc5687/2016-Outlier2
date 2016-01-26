@@ -1,18 +1,36 @@
 package org.usfirst.frc.team5687.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import org.usfirst.frc.team5687.robot.RobotMap;
+import sun.management.Sensor;
 
 public class Boulder extends Subsystem {
 
     VictorSP intakeRoller;
     VictorSP shooterWheel;
     Encoder shooterRotation;
+    DigitalInput hoppersensor;
 
+
+    public boolean DigitalInput() { //TODO: Why do I have to have a method to contain these objects?
+        //TODO: Why is it saying that DigitalInput is not used? I use the objects contained within it, and I don't see a difference between what I have and what's on the DriveTrain subsystem.
+        hoppersensor = new DigitalInput(RobotMap.hopperSensor);
+    }
+
+    public int Shooter(){(shooterRotation = new Encoder(RobotMap.shooterEncoder);//TODO: If the encoder class returns an int, why can't it resolve the constructor?
+    }
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
+
+    public boolean isBoulderThere(){
+        return hoppersensor.get();
+    }
+    public int isShooterSpinning(){return shooterRotation.get();}
+
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
@@ -20,6 +38,13 @@ public class Boulder extends Subsystem {
     }
 
     public void intake() {
+        if(isBoulderThere()!= true) {
+            reset();
+            if (isShooterSpinning()== 0)
+
+
+                 {}
+        }
         //Start Conditions: Hopper sensor detects NO boulder in hopper
         //                  Check for shooter wheels not spinning
         //Do What:          Run Intake roller IN

@@ -15,7 +15,7 @@ public class DriveTrain extends Subsystem {
     VictorSP leftMotor;
     VictorSP rightMotor;
 
-    public DriveTrain(){
+    public DriveTrain(){ //TODO: Why didn't I have to declare a return type here?
         leftMotor = new VictorSP(RobotMap.leftMotor);
         rightMotor = new VictorSP(RobotMap.rightMotor);
         drive = new RobotDrive(leftMotor,rightMotor);
