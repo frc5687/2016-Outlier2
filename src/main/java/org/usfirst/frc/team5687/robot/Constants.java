@@ -33,11 +33,11 @@ public class Constants {
     public class Encoders {
         public class Defaults {
             public static final boolean REVERSED = false;
-            public static final int PULSES_PER_ROTATION = 48;
+            public static final int PULSES_PER_ROTATION = 2048;
             public static final double WHEEL_DIAMETER = 13;
             public static final double INCHES_PER_ROTATION = Math.PI * WHEEL_DIAMETER;
-            public static final double GEAR_RATIO = .4;
-            public static final double INCHES_PER_PULSE = INCHES_PER_ROTATION * GEAR_RATIO / PULSES_PER_ROTATION;
+            public static final double SCALAR_RATIO = 1.4;
+            public static final double INCHES_PER_PULSE = INCHES_PER_ROTATION * SCALAR_RATIO / PULSES_PER_ROTATION ;
             public static final double MAX_PERIOD = 5;
         }
 

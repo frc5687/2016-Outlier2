@@ -6,6 +6,7 @@ package org.usfirst.frc.team5687.robot.commands;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.OI;
 import org.usfirst.frc.team5687.robot.Robot;
 import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
@@ -42,10 +43,15 @@ public class DriveWith2Joysticks extends Command {
      */
     protected void execute() {
         driveTrain.tankDrive(oi.getLeftspeed(), oi.getRightspeed());
-        DriverStation.reportError(String.format("Right distance: %1$f", driveTrain.getRightDistance()), false);
-        DriverStation.reportError(String.format(" Left distance: %1$f", driveTrain.getLeftDistance()), false);
-        DriverStation.reportError(String.format("Right ticks: %1$f", driveTrain.getRightTicks()), false);
-        DriverStation.reportError(String.format(" Left ticks: %1$f", driveTrain.getLeftTicks()), false);
+        DriverStation.reportError(String.format("Right distance: %1$f\r\n", driveTrain.getRightDistance()), false);
+        DriverStation.reportError(String.format(" Left distance: %1$f\r\n", driveTrain.getLeftDistance()), false);
+        DriverStation.reportError(String.format("   Right ticks: %1$f\r\n", driveTrain.getRightTicks()), false);
+        DriverStation.reportError(String.format("    Left ticks: %1$f\r\n", driveTrain.getLeftTicks()), false);
+
+        SmartDashboard.putNumber("Right distance" ,driveTrain.getRightDistance());
+        SmartDashboard.putNumber("Left distance" ,driveTrain.getLeftDistance());
+        SmartDashboard.putNumber("Right ticks" ,driveTrain.getRightTicks());
+        SmartDashboard.putNumber("Left ticks" ,driveTrain.getLeftTicks());
     }
 
     /*

@@ -13,11 +13,11 @@ public class RobotMap {
     public static int leftDriveMotor = 0;
     public static int rightDriveMotor = 3;
 
-    public static int leftDriveEncoderChannelA = 6;
-    public static int leftDriveEncoderChannelB = 7;
+    public static int leftDriveEncoderChannelA = 8;
+    public static int leftDriveEncoderChannelB = 9;
 
-    public static int rightDriveEncoderChannelA = 8;
-    public static int rightDriveEncoderChannelB = 9;
+    public static int rightDriveEncoderChannelA = 6;
+    public static int rightDriveEncoderChannelB = 7;
     // If you are using multiple modules, make sure to define both the port
     // number and the module. For example you with a rangefinder:
     // public static int rangefinderPort = 1;
