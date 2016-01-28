@@ -1,8 +1,5 @@
 package org.usfirst.frc.team5687.robot;
 
-/**
- * Created by Ben Bernard on 1/23/2016.
- */
 public class Constants {
     public static final int CYCLES_PER_SECOND = 50;
 

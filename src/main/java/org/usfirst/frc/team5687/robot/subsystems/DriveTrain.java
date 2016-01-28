@@ -9,9 +9,6 @@ import org.usfirst.frc.team5687.robot.Constants;
 import org.usfirst.frc.team5687.robot.RobotMap;
 import org.usfirst.frc.team5687.robot.commands.DriveWith2Joysticks;
 
-/**
- * Created by Caleb on 1/22/2016.
- */
 public class DriveTrain extends Subsystem {
 
     private RobotDrive drive;
@@ -67,7 +64,7 @@ public class DriveTrain extends Subsystem {
     private Encoder initializeEncoder(int channelA, int channelB, boolean reversed, double distancePerPulse, double maxPeriod) {
         Encoder encoder = new Encoder(channelA, channelB, reversed, Encoder.EncodingType.k4X);
         encoder.setDistancePerPulse(distancePerPulse);
-        DriverStation.reportError(String.format("Encoder initialized with channel A=%1$i, channel B==%2$i, reversed==%3$b, distancePerPulse=%4$f, and maxPeriod=%5$f", channelA, channelB, reversed, distancePerPulse, maxPeriod), false);
+        //DriverStation.reportError(String.format("Encoder initialized with channel A=%1$i, channel B==%2$i, reversed==%3$b, distancePerPulse=%4$f, and maxPeriod=%5$f", channelA, channelB, reversed, distancePerPulse, maxPeriod), false);
         encoder.reset();
         return encoder;
     }
