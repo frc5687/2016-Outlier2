@@ -38,6 +38,7 @@ public class DriveTrain extends Subsystem {
     }
 
     public double getLeftTicks() {
+
         return leftEncoder.getRaw();
     }
 
@@ -46,6 +47,7 @@ public class DriveTrain extends Subsystem {
     }
 
     public double getRightTicks() {
+
         return rightEncoder.getRaw();
     }
 
