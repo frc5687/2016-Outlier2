@@ -64,7 +64,6 @@ public class DriveTrain extends Subsystem {
     private Encoder initializeEncoder(int channelA, int channelB, boolean reversed, double distancePerPulse, double maxPeriod) {
         Encoder encoder = new Encoder(channelA, channelB, reversed, Encoder.EncodingType.k4X);
         encoder.setDistancePerPulse(distancePerPulse);
-        //DriverStation.reportError(String.format("Encoder initialized with channel A=%1$i, channel B==%2$i, reversed==%3$b, distancePerPulse=%4$f, and maxPeriod=%5$f", channelA, channelB, reversed, distancePerPulse, maxPeriod), false);
         encoder.reset();
         return encoder;
     }
