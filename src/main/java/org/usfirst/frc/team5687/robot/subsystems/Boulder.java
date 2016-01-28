@@ -13,16 +13,19 @@ public class Boulder extends Subsystem {
     VictorSP shooterWheel;
     Encoder shooterRotation;
     DigitalInput hoppersensor;
+    boolean isboulder;
 
 
-    public boolean DigitalInput() { //TODO: Why do I have to have a method to contain these objects?
+    public void  Boulder() { //TODO: Why do I have to have a method to contain these objects? John said it's a constructor, but isn't the constructor buried in the wpilib?
         //TODO: Why is it saying that DigitalInput is not used? I use the objects contained within it, and I don't see a difference between what I have and what's on the DriveTrain subsystem.
         hoppersensor = new DigitalInput(RobotMap.hopperSensor);
+        shooterRotation = new Encoder(RobotMap.shooterEncoderA, RobotMap.shooterEncoderB, isboulder); //TODO: Check if you need to include a reverse direction parameter
     }
 
-    public int Shooter(){(shooterRotation = new Encoder(RobotMap.shooterEncoder);//TODO: If the encoder class returns an int, why can't it resolve the constructor?
-    }
-
+   /* public int Shooter() {
+        shooterRotation = new Encoder(RobotMap.shooterEncoderA, RobotMap.shooterEncoderB, ); //TODO: Check if you need to include a reverse direction parameter
+    return shooterRotation.get();
+    }*/
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
@@ -39,8 +42,9 @@ public class Boulder extends Subsystem {
 
     public void intake() {
         if(isBoulderThere()!= true) {
-            reset();
-            if (isShooterSpinning()== 0)
+            if (isShooterSpinning()== 0) {
+
+            }
 
 
                  {}
