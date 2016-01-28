@@ -38,8 +38,14 @@ public class DriveTrain extends Subsystem {
     }
 
     public double getLeftTicks() {
-
         return leftEncoder.getRaw();
+    }
+    public double getLeftRate() {
+        return leftEncoder.getRate();
+    }
+
+    public double getLeftSpeed() {
+        return leftMotor.getSpeed();
     }
 
     public double getRightDistance() {
@@ -47,8 +53,15 @@ public class DriveTrain extends Subsystem {
     }
 
     public double getRightTicks() {
-
         return rightEncoder.getRaw();
+    }
+
+    public double getRightRate() {
+        return rightEncoder.getRate();
+    }
+
+    public double getRightSpeed() {
+        return rightMotor.getSpeed();
     }
 
     private Encoder initializeEncoder(int channelA, int channelB, boolean reversed, double distancePerPulse, double maxPeriod) {
