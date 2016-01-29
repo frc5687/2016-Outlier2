@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5687.robot;
 
 import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SPI;
@@ -49,6 +50,11 @@ public class Robot extends IterativeRobot {
         //chooser.addDefault("Default Auto", new ExampleCommand());
         //chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
+
+        //Camera Code
+        CameraServer server = CameraServer.getInstance();
+        server.setQuality(50);
+        server.startAutomaticCapture("cam0");
 
         try {
             // Try to connect to the navX imu.
