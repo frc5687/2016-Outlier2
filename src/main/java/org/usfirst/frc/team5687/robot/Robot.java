@@ -52,9 +52,9 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData("Auto mode", chooser);
 
         //Camera Code
-        CameraServer server = CameraServer.getInstance();
-        server.setQuality(50);
-        server.startAutomaticCapture("cam0");
+        CameraServer cameraServer = CameraServer.getInstance();
+        cameraServer.setQuality(50);
+        cameraServer.startAutomaticCapture("cam0");
 
         try {
             // Try to connect to the navX imu.
