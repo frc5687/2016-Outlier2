@@ -13,6 +13,7 @@ buildscript {
   }
   dependencies {
     classpath group: 'jaci.openrio.gradle', name: 'GradleRIO', version: '+'			//Change this line if you wish to Update GradleRIO
+    classpath 'org.ajoberstar:grgit:1.1.0'
   }
 }
 
@@ -20,7 +21,32 @@ apply plugin: 'java'
 dependencies {
   compile files('lib/navx_frc.jar')
 }
+
 apply plugin: 'idea'
+
+apply plugin: 'application'
+ext {
+  git = org.ajoberstar.grgit.Grgit.open(file('.'))        //Open git repository
+  revision = git.head().id                                //Get commit id for revision
+}
+
+version = "2.0.1.${git.head().abbreviatedId}"             //Get commit abbreviatedId for verision
+mainClassName = 'src.main.java.org.usfirst.frc.team5687.robot.Robot'    //Application plugin extension properties
+applicationName = 'Team 5687'
+
+applicationDistribution.with {
+  from('src/dist') {
+    include 'VERSION'
+    expand(
+      buildDate: new Date(),
+      revision: revision,
+      version: project.version,
+      appName: applicationName)
+  }
+}
+
+assemble.dependsOn installDist
+
 //apply plugin: 'eclipse'
 apply plugin: 'GradleRIO'                                 //Apply the GradleRIO plugin
 
