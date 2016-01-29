@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.Constants;
 import org.usfirst.frc.team5687.robot.Robot;
 import org.usfirst.frc.team5687.robot.RobotMap;
@@ -17,22 +18,30 @@ public class DriveTrain extends Subsystem {
     private RobotDrive drive;
     private VictorSP leftMotor;
     private VictorSP rightMotor;
-    private PowerDistributionPanel pdp;
 
     public DriveTrain(){
         leftMotor = new VictorSP(RobotMap.leftMotors);
         rightMotor = new VictorSP(RobotMap.rightMotors);
         drive = new RobotDrive(leftMotor,rightMotor);
-        pdp = new PowerDistributionPanel(RobotMap.pdp);
     }
-    public double logCurrentDraw(){
-    return pdp.getCurrent(5);}
-    //TODO: is this really where I'm getting current from?
+
+
+
 
     @Override
     protected void initDefaultCommand() {
         setDefaultCommand(new DriveWith2Joysticks());
     }
+
+    public void sendAmpDraw() {
+        SmartDashboard.putNumber("Leftmotor1", Robot.powerDistributionPanel.getCurrent(1)); //TODO: is this really where I'm getting current from? Check for all 4
+        SmartDashboard.putNumber("Leftmotor2", Robot.powerDistributionPanel.getCurrent(2));
+        SmartDashboard.putNumber("Rightmotor1", Robot.powerDistributionPanel.getCurrent(4));
+        SmartDashboard.putNumber("Rightmotor2", Robot.powerDistributionPanel.getCurrent(5));
+
+    }
+
+
 
     /**
      * Run drive motors at specified speeds

@@ -39,13 +39,14 @@ public class Robot extends IterativeRobot {
      * Represents the power distribution panel
      */
     public static PowerDistributionPanel powerDistributionPanel;
-    
+
 
     //TODO: smartdashboard.putnumber to get the values to the dashboard, one for each motor
 
 
     Command autonomousCommand;
     SendableChooser chooser;
+
 
     /**
      * This function is run when the robot is first started up and should be
@@ -55,6 +56,9 @@ public class Robot extends IterativeRobot {
         oi = new OI();
         driveTrain = new DriveTrain();
         chooser = new SendableChooser();
+        powerDistributionPanel = new PowerDistributionPanel();
+        //TODO: new object(); DriveTrain
+
         //chooser.addDefault("Default Auto", new ExampleCommand());
         //chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
@@ -65,36 +69,36 @@ public class Robot extends IterativeRobot {
 
             // Report to both the logs and the dashboard.  We may not want to keep this permanently, but it's helpful for our initial testing.
             DriverStation.reportError(String.format("Connected to navX MXP with FirmwareVersion %1$s", imu.getFirmwareVersion()), false);
-            SmartDashboard.putString(   "FirmwareVersion",      imu.getFirmwareVersion());
+            SmartDashboard.putString("FirmwareVersion", imu.getFirmwareVersion());
         } catch (Exception ex) {
             // If there are any errors, null out the imu reference and report the error both to the logs and the dashboard.
-            SmartDashboard.putString(   "FirmwareVersion",      "navX not connected");
+            SmartDashboard.putString("FirmwareVersion", "navX not connected");
             DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
             imu = null;
         }
     }
-	
-	/**
+
+    /**
      * This function is called once each time the robot enters Disabled mode.
      * You can use it to reset any subsystem information you want to clear when
-	 * the robot is disabled.
+     * the robot is disabled.
      */
-    public void disabledInit(){
+    public void disabledInit() {
     }
-	
-	public void disabledPeriodic() {
-		Scheduler.getInstance().run();
-	}
 
-	/**
-	 * This autonomous (along with the chooser code above) shows how to select between different autonomous modes
-	 * using the dashboard. The sendable chooser code works with the Java SmartDashboard. If you prefer the LabVIEW
-	 * Dashboard, remove all of the chooser code and uncomment the getString code to get the auto name from the text box
-	 * below the Gyro
-	 *
-	 * You can add additional auto modes by adding additional commands to the chooser code above (like the commented example)
-	 * or additional comparisons to the switch structure below with additional strings and commands.
-	 */
+    public void disabledPeriodic() {
+        Scheduler.getInstance().run();
+    }
+
+    /**
+     * This autonomous (along with the chooser code above) shows how to select between different autonomous modes
+     * using the dashboard. The sendable chooser code works with the Java SmartDashboard. If you prefer the LabVIEW
+     * Dashboard, remove all of the chooser code and uncomment the getString code to get the auto name from the text box
+     * below the Gyro
+     * <p/>
+     * You can add additional auto modes by adding additional commands to the chooser code above (like the commented example)
+     * or additional comparisons to the switch structure below with additional strings and commands.
+     */
     public void autonomousInit() {
         autonomousCommand = (Command) chooser.getSelected();
         
@@ -108,8 +112,8 @@ public class Robot extends IterativeRobot {
 			autonomousCommand = new ExampleCommand();
 			break;
 		} */
-    	
-    	// schedule the autonomous command (example)
+
+        // schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
     }
 
@@ -121,19 +125,22 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-        // teleop starts running. If you want the autonomous to 
+        // This makes sure that the autonomous stops running when
+        // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
+
+        //TODO: objectName.methodName(parameters) where methodName = putDashBoard()
+
     }
 
     /**
      * This function is called periodically during operator control
      */
-    public void teleopPeriodic()
-    {
+    public void teleopPeriodic() {
         sendIMUData();
+        driveTrain.sendAmpDraw();
         Scheduler.getInstance().run();
     }
 
@@ -143,6 +150,7 @@ public class Robot extends IterativeRobot {
     public void testPeriodic() {
         LiveWindow.run();
     }
+
 
     protected void sendIMUData() {
         if (imu==null) {
@@ -163,6 +171,11 @@ public class Robot extends IterativeRobot {
 
         // Display 9-axis Heading (requires magnetometer calibration to be useful)
         SmartDashboard.putNumber(   "IMU_FusedHeading",     imu.getFusedHeading());
+
+        //Display the current values from the left and right motors
+
+
+        //TODO: Why are all of these referencing the imu?
 
         // These functions are compatible w/the WPI Gyro Class, providing a simple
         // path for upgrading from the Kit-of-Parts gyro to the navx MXP

@@ -11,5 +11,9 @@ public class RobotMap {
     // Drive train ports
     public static int leftMotors = 0;
     public static int rightMotors = 3;
-    public static int pdp = 5;
+    public static int pdpAddress = 5;
+    public static int Leftmotor1 = 1; //TODO: Where on the robot is leftmotor1?
+    public static int Leftmotor2 = 2;//TODO: Where on the robot is leftmotor2?
+    public static int Rightmotor1 = 4; //TODO: Where on the robot is rightmotor1?
+    public static int Rightmotor2 = 5;//TODO: Where on the robot is rightmotor2?
 }
