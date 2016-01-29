@@ -1,6 +1,5 @@
 package org.usfirst.frc.team5687.robot.subsystems;
 
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -16,24 +15,18 @@ public class DriveTrain extends Subsystem {
     private RobotDrive drive;
     private VictorSP leftMotor;
     private VictorSP rightMotor;
-    private PowerDistributionPanel pdp;
 
     public DriveTrain(){
         leftMotor = new VictorSP(RobotMap.leftMotors);
         rightMotor = new VictorSP(RobotMap.rightMotors);
         drive = new RobotDrive(leftMotor,rightMotor);
-        pdp = new PowerDistributionPanel(RobotMap.pdp);//TODO: Basically, where is the method supposed to look for the current?);
     }
 
     @Override
     protected void initDefaultCommand() {
         setDefaultCommand(new DriveWith2Joysticks());
     }
-    public double logCurrentDraw(){pdp.getCurrent(5); //TODO: is this really where I'm getting current from?
-        
-        //TODO: logs current draw to the dashboard}
-    }
-//TODO: Query the power distribution panel for the current draw and send to smartDashBoard
+
     /**
      * Run drive motors at specified speeds
      * @param leftSpeed desired speed for left motors

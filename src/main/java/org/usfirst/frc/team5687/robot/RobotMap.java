@@ -11,5 +11,4 @@ public class RobotMap {
     // Drive train ports
     public static int leftMotors = 0;
     public static int rightMotors = 3;
-    public static int pdp = 5; //TODO: is this really where the pdp plugs in?
 }
