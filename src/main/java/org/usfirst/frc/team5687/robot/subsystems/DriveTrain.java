@@ -1,25 +1,72 @@
 package org.usfirst.frc.team5687.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.Constants;
 import org.usfirst.frc.team5687.robot.RobotMap;
 import org.usfirst.frc.team5687.robot.commands.DriveWith2Joysticks;
 
-/**
- * Created by Caleb on 1/22/2016.
- */
 public class DriveTrain extends Subsystem {
 
     private RobotDrive drive;
     private VictorSP leftMotor;
     private VictorSP rightMotor;
+    private Encoder rightEncoder;
+    private Encoder leftEncoder;
 
     public DriveTrain(){
-        leftMotor = new VictorSP(RobotMap.leftMotors);
-        rightMotor = new VictorSP(RobotMap.rightMotors);
+        leftMotor = new VictorSP(RobotMap.leftDriveMotors);
+        rightMotor = new VictorSP(RobotMap.rightDriveMotors);
         drive = new RobotDrive(leftMotor,rightMotor);
+        rightEncoder = initializeEncoder(RobotMap.rightDriveEncoderChannelA, RobotMap.rightDriveEncoderChannelB, Constants.Encoders.RightDrive.REVERSED, Constants.Encoders.RightDrive.INCHES_PER_PULSE, Constants.Encoders.RightDrive.MAX_PERIOD);
+        leftEncoder = initializeEncoder(RobotMap.leftDriveEncoderChannelA, RobotMap.leftDriveEncoderChannelB, Constants.Encoders.LeftDrive.REVERSED, Constants.Encoders.LeftDrive.INCHES_PER_PULSE, Constants.Encoders.LeftDrive.MAX_PERIOD);
+    }
+
+    public void resetDriveEncoders() {
+        rightEncoder.reset();
+        leftEncoder.reset();
+    }
+
+    public double getLeftDistance() {
+        return leftEncoder.getDistance();
+    }
+
+    public double getLeftTicks() {
+        return leftEncoder.getRaw();
+    }
+    public double getLeftRate() {
+        return leftEncoder.getRate();
+    }
+
+    public double getLeftSpeed() {
+        return leftMotor.getSpeed();
+    }
+
+    public double getRightDistance() {
+        return rightEncoder.getDistance();
+    }
+
+    public double getRightTicks() {
+        return rightEncoder.getRaw();
+    }
+
+    public double getRightRate() {
+        return rightEncoder.getRate();
+    }
+
+    public double getRightSpeed() {
+        return rightMotor.getSpeed();
+    }
+
+    private Encoder initializeEncoder(int channelA, int channelB, boolean reversed, double distancePerPulse, double maxPeriod) {
+        Encoder encoder = new Encoder(channelA, channelB, reversed, Encoder.EncodingType.k4X);
+        encoder.setDistancePerPulse(distancePerPulse);
+        encoder.reset();
+        return encoder;
     }
 
     @Override
@@ -42,5 +89,18 @@ public class DriveTrain extends Subsystem {
         rightSpeed = Math.max(rightSpeed, rightMotor.get() - Constants.Limits.ACCELERATION_CAP);
 
         drive.tankDrive(leftSpeed, rightSpeed, false);
+
+
+        SmartDashboard.putNumber("Right distance" , getRightDistance());
+        SmartDashboard.putNumber("Left distance" , getLeftDistance());
+
+        SmartDashboard.putNumber("Right ticks" , getRightTicks());
+        SmartDashboard.putNumber("Left ticks" , getLeftTicks());
+
+        SmartDashboard.putNumber("Right rate" , getRightRate());
+        SmartDashboard.putNumber("Left rate" , getLeftRate());
+
+        SmartDashboard.putNumber("Right speed" , getRightSpeed());
+        SmartDashboard.putNumber("Left speed" , getLeftSpeed());
     }
 }

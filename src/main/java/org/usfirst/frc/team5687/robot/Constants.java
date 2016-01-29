@@ -35,4 +35,28 @@ public class Constants {
          */
         public static final double SENSITIVITY_FACTOR = 0.5;
     }
+
+    public class Encoders {
+        public class Defaults {
+            public static final boolean REVERSED = false;
+            public static final int PULSES_PER_ROTATION = 2048;
+            public static final double WHEEL_DIAMETER = 13;
+            public static final double INCHES_PER_ROTATION = Math.PI * WHEEL_DIAMETER;
+            public static final double SCALAR_RATIO = 1.4;
+            public static final double INCHES_PER_PULSE = INCHES_PER_ROTATION * SCALAR_RATIO / PULSES_PER_ROTATION ;
+            public static final double MAX_PERIOD = 5;
+        }
+
+        public class RightDrive {
+            public static final boolean REVERSED = Defaults.REVERSED;
+            public static final double INCHES_PER_PULSE = Defaults.INCHES_PER_PULSE;
+            public static final double MAX_PERIOD = Defaults.MAX_PERIOD;
+        }
+
+        public class LeftDrive {
+            public static final boolean REVERSED = true;
+            public static final double INCHES_PER_PULSE = Defaults.INCHES_PER_PULSE;
+            public static final double MAX_PERIOD = Defaults.MAX_PERIOD;
+        }
+    }
 }
