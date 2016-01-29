@@ -13,7 +13,7 @@ buildscript {
   }
   dependencies {
     classpath group: 'jaci.openrio.gradle', name: 'GradleRIO', version: '+'			//Change this line if you wish to Update GradleRIO
-    classpath 'org.ajoberstar:grgit:1.1.0'
+    classpath 'org.ajoberstar:gradle-git:1.2.0'
   }
 }
 
@@ -31,8 +31,8 @@ ext {
 }
 
 version = "2.0.1.${git.head().abbreviatedId}"             //Get commit abbreviatedId for verision
-mainClassName = 'src.main.java.org.usfirst.frc.team5687.robot.Robot'    //Application plugin extension properties
-applicationName = 'Team 5687'
+mainClassName = "org.usfirst.frc.team5687.robot.Robot"    //Application plugin extension properties
+applicationName = 'Robot'
 
 applicationDistribution.with {
   from('src/dist') {
