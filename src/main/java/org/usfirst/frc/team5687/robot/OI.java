@@ -49,7 +49,7 @@ public class OI {
     /**
      * Temporary function to detect if the safety button is pressed.
      * This is so that the CVTTest will ONLY run if the safety is pressed.
-     * @return
+     * @return Whether safety is pressed.
      */
     public boolean isSafetyPressed() {
         return gamepad.getRawButton(Gamepad.Buttons.A);
