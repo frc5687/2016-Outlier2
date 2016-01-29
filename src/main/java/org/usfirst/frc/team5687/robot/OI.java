@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5687.robot;
 
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.usfirst.frc.team5687.robot.utils.Gamepad;
 import org.usfirst.frc.team5687.robot.utils.Helpers;
 
@@ -43,6 +44,15 @@ public class OI {
         result = Helpers.applyDeadband(result, Constants.Deadbands.DRIVE_STICK);
         result = Helpers.applySensitivityTransform(result);
         return result;
+    }
+
+    /**
+     * Temporary function to detect if the safety button is pressed.
+     * This is so that the CVTTest will ONLY run if the safety is pressed.
+     * @return
+     */
+    public boolean isSafetyPressed() {
+        return gamepad.getRawButton(Gamepad.Buttons.A);
     }
 
     //// CREATING BUTTONS
