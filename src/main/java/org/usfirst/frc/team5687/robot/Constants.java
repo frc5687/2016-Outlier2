@@ -1,11 +1,17 @@
 package org.usfirst.frc.team5687.robot;
 
+/**
+ * Collection of constant/ calibration values for the robot
+ * Created by Ben Bernard on 1/23/2016.
+ */
 public class Constants {
     public static final int CYCLES_PER_SECOND = 50;
 
     public class Deadbands {
+        /**
+         * Deadband threshold for drive joysticks
+         */
         public static final double DRIVE_STICK = 0.1;
-
     }
 
     public class Limits {
@@ -15,16 +21,19 @@ public class Constants {
         public static final double TIME_OF_ACCEL = 25;
 
         /***
-         * Maximum accelerations per cycl
+         * Maximum accelerations per cycle
          */
         public static final double ACCELERATION_CAP = TIME_OF_ACCEL / CYCLES_PER_SECOND * 100;
-
     }
-    public class sensitivityController {
-        // NEVER SET ABOVE 1 OR BELOW 0
-        public static final double sensitivityExponent = 0;
-        // A mathematical way to determine the sensativity at low levels
 
+    public class Calibration {
+        /***
+         * Controls the sensitivity algorithm.
+         * 0 results in a linear control-to-speed relationship, while 1 results in cubed.
+         *
+         * NEVER SET ABOVE 1 OR BELOW 0
+         */
+        public static final double SENSITIVITY_FACTOR = 0.5;
     }
 
     public class Encoders {

@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.Constants;
 import org.usfirst.frc.team5687.robot.RobotMap;
 import org.usfirst.frc.team5687.robot.commands.DriveWith2Joysticks;
@@ -12,14 +13,14 @@ import org.usfirst.frc.team5687.robot.commands.DriveWith2Joysticks;
 public class DriveTrain extends Subsystem {
 
     private RobotDrive drive;
-    VictorSP leftMotor;
-    VictorSP rightMotor;
+    private VictorSP leftMotor;
+    private VictorSP rightMotor;
     private Encoder rightEncoder;
     private Encoder leftEncoder;
 
     public DriveTrain(){
-        leftMotor = new VictorSP(RobotMap.leftDriveMotor);
-        rightMotor = new VictorSP(RobotMap.rightDriveMotor);
+        leftMotor = new VictorSP(RobotMap.leftDriveMotors);
+        rightMotor = new VictorSP(RobotMap.rightDriveMotors);
         drive = new RobotDrive(leftMotor,rightMotor);
         rightEncoder = initializeEncoder(RobotMap.rightDriveEncoderChannelA, RobotMap.rightDriveEncoderChannelB, Constants.Encoders.RightDrive.REVERSED, Constants.Encoders.RightDrive.INCHES_PER_PULSE, Constants.Encoders.RightDrive.MAX_PERIOD);
         leftEncoder = initializeEncoder(RobotMap.leftDriveEncoderChannelA, RobotMap.leftDriveEncoderChannelB, Constants.Encoders.LeftDrive.REVERSED, Constants.Encoders.LeftDrive.INCHES_PER_PULSE, Constants.Encoders.LeftDrive.MAX_PERIOD);
@@ -71,12 +72,14 @@ public class DriveTrain extends Subsystem {
     @Override
     protected void initDefaultCommand() {
         setDefaultCommand(new DriveWith2Joysticks());
-
     }
 
-
+    /**
+     * Run drive motors at specified speeds
+     * @param leftSpeed desired speed for left motors
+     * @param rightSpeed desired speed for right motors
+     */
     public void tankDrive(double leftSpeed, double rightSpeed){
-
         // Limit change in leftSpeed to +/- ACCELERATION_CAP
         leftSpeed = Math.min(leftSpeed, leftMotor.get() + Constants.Limits.ACCELERATION_CAP);
         leftSpeed = Math.max(leftSpeed, leftMotor.get() - Constants.Limits.ACCELERATION_CAP);
@@ -86,5 +89,18 @@ public class DriveTrain extends Subsystem {
         rightSpeed = Math.max(rightSpeed, rightMotor.get() - Constants.Limits.ACCELERATION_CAP);
 
         drive.tankDrive(leftSpeed, rightSpeed, false);
+
+
+        SmartDashboard.putNumber("Right distance" , getRightDistance());
+        SmartDashboard.putNumber("Left distance" , getLeftDistance());
+
+        SmartDashboard.putNumber("Right ticks" , getRightTicks());
+        SmartDashboard.putNumber("Left ticks" , getLeftTicks());
+
+        SmartDashboard.putNumber("Right rate" , getRightRate());
+        SmartDashboard.putNumber("Left rate" , getLeftRate());
+
+        SmartDashboard.putNumber("Right speed" , getRightSpeed());
+        SmartDashboard.putNumber("Left speed" , getLeftSpeed());
     }
 }

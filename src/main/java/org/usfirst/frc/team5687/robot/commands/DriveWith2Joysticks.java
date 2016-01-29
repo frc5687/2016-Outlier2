@@ -1,9 +1,5 @@
 package org.usfirst.frc.team5687.robot.commands;
 
-/**
- * Created by Baxter on 1/23/2016.
- */
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -13,10 +9,10 @@ import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
 
 /**
  * Command for basic driver-control of the robot chassis
+ * Created by Baxter on 1/23/2016.
  */
 
 public class DriveWith2Joysticks extends Command {
-
     DriveTrain driveTrain = Robot.driveTrain;
     OI oi = Robot.oi;
 
@@ -42,20 +38,7 @@ public class DriveWith2Joysticks extends Command {
      * @see edu.wpi.first.wpilibj.command.Command#execute()
      */
     protected void execute() {
-        driveTrain.tankDrive(oi.getLeftspeed(), oi.getRightspeed());
-
-        SmartDashboard.putNumber("Right distance" ,driveTrain.getRightDistance());
-        SmartDashboard.putNumber("Left distance" ,driveTrain.getLeftDistance());
-
-        SmartDashboard.putNumber("Right ticks" ,driveTrain.getRightTicks());
-        SmartDashboard.putNumber("Left ticks" ,driveTrain.getLeftTicks());
-
-        SmartDashboard.putNumber("Right rate" ,driveTrain.getRightRate());
-        SmartDashboard.putNumber("Left rate" ,driveTrain.getLeftRate());
-
-        SmartDashboard.putNumber("Right speed" ,driveTrain.getRightSpeed());
-        SmartDashboard.putNumber("Left speed" ,driveTrain.getLeftSpeed());
-
+        driveTrain.tankDrive(oi.getLeftSpeed(), oi.getRightSpeed());
     }
 
     /*
