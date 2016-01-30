@@ -13,6 +13,8 @@ public class OI {
     private Gamepad gamepad;
 
     public static int currentDirection = 1; //Initial drive direction
+    private final int FORWARD_DIRECTION = 1;
+    private final int REVERSE_DIRECTION = -1;
 
     public static final int REVERSE = Gamepad.Buttons.BACK.getNumber();
 
@@ -48,6 +50,9 @@ public class OI {
      * @return the control value for the right drive motors
      */
     public double getLeftSpeed(){
+        if (currentDirection == REVERSE_DIRECTION) {
+            return currentDirection * transformStickToSpeed(Gamepad.Axes.RIGHT_Y);
+        }
         return transformStickToSpeed(Gamepad.Axes.LEFT_Y);
     }
 
@@ -56,6 +61,9 @@ public class OI {
      * @return the control value for the right drive motors
      */
     public double getRightSpeed(){
+        if (currentDirection == REVERSE_DIRECTION) {
+            return currentDirection * transformStickToSpeed(Gamepad.Axes.LEFT_Y);
+        }
         return transformStickToSpeed(Gamepad.Axes.RIGHT_Y);
     }
 
