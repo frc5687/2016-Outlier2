@@ -19,8 +19,8 @@ public class ReverseDrive extends Command{
     @Override
     protected void initialize() {
         direction = oi.getDirection();
-
         prevDirection = direction;
+
         direction *= -1;
         oi.setDirection(direction);
         SmartDashboard.putString("DriveIsFacing", (direction == FORWARD_DIRECTION) ? "electronics" : "intake");
