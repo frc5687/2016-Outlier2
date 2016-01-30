@@ -12,9 +12,7 @@ import org.usfirst.frc.team5687.robot.utils.Helpers;
 public class OI {
     private Gamepad gamepad;
 
-    public static int currentDirection = 1; //Initial direction
-    private final int FORWARD_DIRECTION = 1;
-    private final int REVERSE_DIRECTION = -1;
+    public static int currentDirection = 1; //Initial drive direction
 
     public static final int REVERSE = Gamepad.Buttons.BACK.getNumber();
 
