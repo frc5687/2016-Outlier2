@@ -17,6 +17,8 @@ buildscript {
   }
 }
 
+import org.ajoberstar.grgit.*
+
 apply plugin: 'java'
 dependencies {
   compile files('lib/navx_frc.jar')
@@ -32,7 +34,7 @@ ext {
 
 version = "2.0.1.${git.head().abbreviatedId}"             //Get commit abbreviatedId for verision
 mainClassName = "org.usfirst.frc.team5687.robot.Robot"    //Application plugin extension properties
-applicationName = 'Robot'
+applicationName = 'robot'
 
 applicationDistribution.with {
   from('src/dist') {
@@ -45,7 +47,13 @@ applicationDistribution.with {
   }
 }
 
-assemble.dependsOn installDist
+// Contents for src/dist/VERSION:
+/*
+Version: ${version}
+Revision: ${revision}
+Build-date: ${buildDate.format('dd-MM-yyyy HH:mm:ss')}
+Application-name: ${appName}
+*/
 
 //apply plugin: 'eclipse'
 apply plugin: 'GradleRIO'                                 //Apply the GradleRIO plugin
@@ -72,3 +80,6 @@ task genJavadoc(type: Jar, dependsOn: javadoc) {
 artifacts {
   archives genJavadoc
 }
+
+//assemble.dependsOn installDist
+
