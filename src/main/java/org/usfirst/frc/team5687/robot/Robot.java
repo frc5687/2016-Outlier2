@@ -94,6 +94,8 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings and commands.
 	 */
     public void autonomousInit() {
+        DriverStation.reportError("Auto start", false);
+
         autonomousCommand = new AutoChaseTarget();
         
 		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");

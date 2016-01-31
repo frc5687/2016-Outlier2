@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5687.robot.commands;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import org.usfirst.frc.team5687.robot.Robot;
@@ -12,27 +13,53 @@ public class AutoChaseTarget extends Command {
     DriveTrain driveTrain;
     NetworkTable tracking;
 
-    private static final double targetWidth = 50;
+
+    private static final double targetWidth = 110;
+    private static final double speed = 0.4;
+    private static final double twist = .2;
+    private static final double deadband = 30;
 
     @Override
     protected void initialize() {
         driveTrain = Robot.driveTrain;
-        tracking = NetworkTable.getTable("tracking");
+        tracking = NetworkTable.getTable("/GRIP/tracking");
+        DriverStation.reportError("Starting autochasetarget", false);
     }
 
     @Override
     protected void execute() {
 
         // read network tables
-        double width = tracking.getNumber("width", 0);
+        double[] defaultvalue = new double[0];
+        double[] widths = tracking.getNumberArray("width", defaultvalue);
+        double width = widths.length==0?0:widths[0];
+
+        double[] centerXs = tracking.getNumberArray("centerX", defaultvalue);
+        double centerX = centerXs.length==0?0:centerXs[0];
+
+        DriverStation.reportError("Cycle" + Double.toString(width), false);
+
+        double offset = 0;
+
+        if (centerX > 300 + deadband) {
+            offset = -1*twist;
+        } else if (centerX < 300 - deadband) {
+            offset = +1*twist;
+        }
+        DriverStation.reportError("Offset " + Double.toString(offset), false);
 
         if (width==0) {
             driveTrain.tankDrive(0,0);
-        } else if (width<targetWidth) {
+        } else if (width<targetWidth - 10) {
             // set motor speed
-            driveTrain.tankDrive(.1, .1);
-        } else if (width>targetWidth) {
-            driveTrain.tankDrive(-.1, -.1);
+            DriverStation.reportError("Move forward " + Double.toString(speed), false);
+            driveTrain.tankDrive(-1*speed + offset, -1*speed - offset);
+        } else if (width>targetWidth + 10) {
+            DriverStation.reportError("Move back " + Double.toString(speed), false);
+            driveTrain.tankDrive(speed, speed);
+        } else {
+            driveTrain.tankDrive(offset, -1*offset);
+
         }
     }
 
