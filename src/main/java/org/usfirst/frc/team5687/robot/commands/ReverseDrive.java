@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import static org.usfirst.frc.team5687.robot.Robot.oi;
+import static org.usfirst.frc.team5687.robot.Robot.robot;
 
 /**
  * Command for reversing the drive's direction
@@ -23,6 +24,8 @@ public class ReverseDrive extends Command{
 
         direction *= -1;
         oi.setDirection(direction);
+        robot.switchCameras();
+
         SmartDashboard.putString("DriveIsFacing", (direction == FORWARD_DIRECTION) ? "electronics" : "intake");
     }
 
