@@ -36,6 +36,11 @@ public class Robot extends IterativeRobot {
      */
     public static OI oi;
 
+    /**
+     * Provides static access to the singleton Robot instance
+     */
+    public static Robot robot;
+
     Command autonomousCommand;
     SendableChooser chooser;
 
@@ -48,6 +53,7 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
         oi = new OI();
+        robot = this;
         driveTrain = new DriveTrain();
         chooser = new SendableChooser();
         //chooser.addDefault("Default Auto", new ExampleCommand());
