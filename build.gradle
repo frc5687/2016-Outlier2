@@ -43,9 +43,9 @@ artifacts {
   archives genJavadoc
 }
 
-task gitInfo {
+task gitInfo(dependsOn: build) {
   def cmd = "git rev-parse --short HEAD"
   def pro = cmd.execute()
   ext.revision = pro.text.trim()
-  println ext.revision
+  println "Commit: " + ext.revision
 }
