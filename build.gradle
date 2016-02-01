@@ -43,8 +43,8 @@ artifacts {
   archives genJavadoc
 }
 
-task gitVersion() {
-  def cmd = "git rev-pars --short"
+task gitVersion {
+  def cmd = "git rev-pars --short HEAD"
   def pro = cmd.execute()
   ext.revision = pro.text.trim()
   println ext.revision
