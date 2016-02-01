@@ -1,8 +1,3 @@
-/**
-Template file for classes using GradleRIO
-@author Jaci
-*/
-
 buildscript {
   repositories {
 	mavenCentral()
@@ -13,11 +8,8 @@ buildscript {
   }
   dependencies {
     classpath group: 'jaci.openrio.gradle', name: 'GradleRIO', version: '+'			//Change this line if you wish to Update GradleRIO
-    classpath 'org.ajoberstar:gradle-git:1.2.0'
   }
 }
-
-import org.ajoberstar.grgit.*
 
 apply plugin: 'java'
 dependencies {
@@ -26,36 +18,6 @@ dependencies {
 
 apply plugin: 'idea'
 
-apply plugin: 'application'
-ext {
-  git = org.ajoberstar.grgit.Grgit.open(file('.'))        //Open git repository
-  revision = git.head().id                                //Get commit id for revision
-}
-
-version = "2.0.1.${git.head().abbreviatedId}"             //Get commit abbreviatedId for verision
-mainClassName = "org.usfirst.frc.team5687.robot.Robot"    //Application plugin extension properties
-applicationName = 'robot'
-
-applicationDistribution.with {
-  from('src/dist') {
-    include 'VERSION'
-    expand(
-      buildDate: new Date(),
-      revision: revision,
-      version: project.version,
-      appName: applicationName)
-  }
-}
-
-// Contents for src/dist/VERSION:
-/*
-Version: ${version}
-Revision: ${revision}
-Build-date: ${buildDate.format('dd-MM-yyyy HH:mm:ss')}
-Application-name: ${appName}
-*/
-
-//apply plugin: 'eclipse'
 apply plugin: 'GradleRIO'                                 //Apply the GradleRIO plugin
 
 gradlerio.robotClass = "org.usfirst.frc.team5687.robot.Robot"   //The class for the main Robot Class. Used in manifest
@@ -80,6 +42,4 @@ task genJavadoc(type: Jar, dependsOn: javadoc) {
 artifacts {
   archives genJavadoc
 }
-
-//assemble.dependsOn installDist
 
