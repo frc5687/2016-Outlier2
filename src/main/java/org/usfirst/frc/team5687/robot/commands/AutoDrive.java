@@ -36,11 +36,7 @@ public class AutoDrive extends Command {
 
     @Override
     protected void execute() {
-        if (oi.isSafetyPressed()) {
-            driveTrain.tankDrive(leftSpeed, rightSpeed);
-        } else {
-            driveTrain.tankDrive(0, 0);
-        }
+        driveTrain.tankDrive(leftSpeed, rightSpeed);
     }
 
     @Override

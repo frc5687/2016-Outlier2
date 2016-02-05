@@ -46,15 +46,6 @@ public class OI {
         return result;
     }
 
-    /**
-     * Temporary function to detect if the safety button is pressed.
-     * This is so that the CVTTest will ONLY run if the safety is pressed.
-     * @return Whether safety is pressed.
-     */
-    public boolean isSafetyPressed() {
-        return gamepad.getRawButton(Gamepad.Buttons.A);
-    }
-
     //// CREATING BUTTONS
     // One type of button is a joystick button which is any button on a joystick.
     // You create one by telling it which joystick it's on and which button
