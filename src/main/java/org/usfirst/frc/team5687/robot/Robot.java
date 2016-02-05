@@ -13,7 +13,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
-
+import org.usfirst.frc.team5687.robot.commands.AutoChaseTarget;
+import org.usfirst.frc.team5687.robot.commands.AutonomousDoNothing;
 import org.usfirst.frc.team5687.robot.commands.AutonomousTestCVT;
 
 import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
@@ -77,9 +78,9 @@ public class Robot extends IterativeRobot {
 
 
 
-        chooser.addDefault("Do Nothing", new );//TODO: Reference Do nothing command
-        chooser.addObject("Calibrate CVT", new);//TODO: Reference Calibrate CVT command
-        chooser.addObject("Chase Target", new );//TODO: Reference Chase Target
+        chooser.addDefault("Do Nothing", new AutonomousDoNothing());
+        chooser.addObject("Calibrate CVT", new AutonomousTestCVT());
+        chooser.addObject("Chase Target", new AutoChaseTarget());
         SmartDashboard.putData("Autonomous mode chooser", chooser);
 
         //chooser.addDefault("Default Auto", new ExampleCommand());
