@@ -62,7 +62,7 @@ public class Robot extends IterativeRobot {
 
 
 
-        chooser.addDefault("Do Nothing", new AutonomousDoNothing());//TODO: Reference Do nothing command
+        chooser.addDefault("Do Nothing", new );//TODO: Reference Do nothing command
         chooser.addObject("Calibrate CVT", new);//TODO: Reference Calibrate CVT command
         chooser.addObject("Chase Target", new );//TODO: Reference Chase Target
         SmartDashboard.putData("Autonomous mode chooser", chooser);
