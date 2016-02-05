@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team5687.robot.commands.AutonomousDoNothing;
 import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
 
 /*
@@ -20,6 +21,7 @@ import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
  * directory.
  */
 public class Robot extends IterativeRobot {
+
 
     /**
      * Represents the navX inertial measurement unit, used for measuring robot movement and orientation.
@@ -57,7 +59,13 @@ public class Robot extends IterativeRobot {
         driveTrain = new DriveTrain();
         chooser = new SendableChooser();
         powerDistributionPanel = new PowerDistributionPanel();
-        //TODO: new object(); DriveTrain
+
+
+
+        chooser.addDefault("Do Nothing", new AutonomousDoNothing());//TODO: Reference Do nothing command
+        chooser.addObject("Calibrate CVT", new);//TODO: Reference Calibrate CVT command
+        chooser.addObject("Chase Target", new );//TODO: Reference Chase Target
+        SmartDashboard.putData("Autonomous mode chooser", chooser);
 
         //chooser.addDefault("Default Auto", new ExampleCommand());
         //chooser.addObject("My Auto", new MyAutoCommand());
