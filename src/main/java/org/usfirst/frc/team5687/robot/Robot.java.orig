@@ -41,6 +41,10 @@ public class Robot extends IterativeRobot {
      */
     public static PowerDistributionPanel powerDistributionPanel;
 
+
+    //TODO: smartdashboard.putnumber to get the values to the dashboard, one for each motor
+
+
     /**
      * Provides static access to the singleton Robot instance
      */
@@ -49,8 +53,11 @@ public class Robot extends IterativeRobot {
     Command autonomousCommand;
     SendableChooser chooser;
 
+<<<<<<< HEAD
     CameraServer cameraServer;
     String camera = "cam0";
+=======
+>>>>>>> drive/#22-current-logging
 
     /**
      * This function is run when the robot is first started up and should be
@@ -88,7 +95,11 @@ public class Robot extends IterativeRobot {
         }
     }
 
+<<<<<<< HEAD
 	/**
+=======
+    /**
+>>>>>>> drive/#22-current-logging
      * This function is called once each time the robot enters Disabled mode.
      * You can use it to reset any subsystem information you want to clear when
      * the robot is disabled.
@@ -160,6 +171,7 @@ public class Robot extends IterativeRobot {
         LiveWindow.run();
     }
 
+<<<<<<< HEAD
     /**
      * This function will switch the camera currently streaming to the DriverStation
      */
@@ -168,6 +180,8 @@ public class Robot extends IterativeRobot {
         cameraServer.startAutomaticCapture(camera);
         DriverStation.reportError("Camera now streaming: "+camera,false);
     }
+=======
+>>>>>>> drive/#22-current-logging
 
     protected void sendIMUData() {
         if (imu==null) {

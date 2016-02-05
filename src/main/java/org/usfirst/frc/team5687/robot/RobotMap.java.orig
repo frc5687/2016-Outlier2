@@ -9,6 +9,7 @@ package org.usfirst.frc.team5687.robot;
 public class RobotMap {
     
     // Drive train ports
+<<<<<<< HEAD
     public static int leftDriveMotors = 0;
     public static int rightDriveMotors = 3;
 
@@ -17,9 +18,13 @@ public class RobotMap {
 
     public static int rightDriveEncoderChannelA = 6;
     public static int rightDriveEncoderChannelB = 7;
+=======
+    public static int leftMotors = 0;
+    public static int rightMotors = 3;
     public static int pdpAddress = 5;
     public static int PDP_LEFT_MOTOR1 = 0;
     public static int PDP_LEFT_MOTOR2 = 1;
     public static int PDP_RIGHT_MOTOR1 = 2;
     public static int PDP_RIGHT_MOTOR2 = 3;
+>>>>>>> drive/#22-current-logging
 }
