@@ -7,6 +7,8 @@ import org.usfirst.frc.team5687.robot.Robot;
 import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
 
 /**
+ * Autonomous command for chasing a predefined target using input from a vision source via NetworkTables.
+ * This will server as the basis for our eventual tower target tracker, and can also be a good way to "demo" the robot.
  * Created by Ben Bernard on 1/31/2016.
  */
 public class AutoChaseTarget extends Command {
@@ -14,6 +16,7 @@ public class AutoChaseTarget extends Command {
     NetworkTable tracking;
 
 
+    // Keeping these constants here rather than in Constants because they ar peripheral to the robot's main function.
     private static final double targetWidth = 110;
     private static final double speed = 0.4;
     private static final double twist = .2;
