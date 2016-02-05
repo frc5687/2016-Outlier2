@@ -34,11 +34,10 @@ public class DriveTrain extends Subsystem {
     }
 
     public void sendAmpDraw() {
-        SmartDashboard.putNumber("Leftmotor1", Robot.powerDistributionPanel.getCurrent(1)); //TODO: is this really where I'm getting current from? Check for all 4
-        SmartDashboard.putNumber("Leftmotor2", Robot.powerDistributionPanel.getCurrent(2));
-        SmartDashboard.putNumber("Rightmotor1", Robot.powerDistributionPanel.getCurrent(4));
-        SmartDashboard.putNumber("Rightmotor2", Robot.powerDistributionPanel.getCurrent(5));
-
+        SmartDashboard.putNumber("Current Draw/LeftMotor1", Robot.powerDistributionPanel.getCurrent(RobotMap.PDP_LEFT_MOTOR1)); //TODO: is this really where I'm getting current from? Check for all 4
+        SmartDashboard.putNumber("Current Draw/LeftMotor2", Robot.powerDistributionPanel.getCurrent(RobotMap.PDP_LEFT_MOTOR2));
+        SmartDashboard.putNumber("Current Draw/RightMotor1", Robot.powerDistributionPanel.getCurrent(RobotMap.PDP_RIGHT_MOTOR1));
+        SmartDashboard.putNumber("Current Draw/RightMotor2", Robot.powerDistributionPanel.getCurrent(RobotMap.PDP_RIGHT_MOTOR2));
     }
 
 

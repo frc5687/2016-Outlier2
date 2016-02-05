@@ -12,8 +12,8 @@ public class RobotMap {
     public static int leftMotors = 0;
     public static int rightMotors = 3;
     public static int pdpAddress = 5;
-    public static int Leftmotor1 = 1; //TODO: Where on the robot is leftmotor1?
-    public static int Leftmotor2 = 2;//TODO: Where on the robot is leftmotor2?
-    public static int Rightmotor1 = 4; //TODO: Where on the robot is rightmotor1?
-    public static int Rightmotor2 = 5;//TODO: Where on the robot is rightmotor2?
+    public static int PDP_LEFT_MOTOR1 = 0;
+    public static int PDP_LEFT_MOTOR2 = 1;
+    public static int PDP_RIGHT_MOTOR1 = 2;
+    public static int PDP_RIGHT_MOTOR2 = 3;
 }
