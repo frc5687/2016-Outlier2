@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5687.robot;
 
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import org.usfirst.frc.team5687.robot.commands.ReverseDrive;
 import org.usfirst.frc.team5687.robot.utils.Gamepad;
 import org.usfirst.frc.team5687.robot.utils.Helpers;
 
@@ -11,11 +12,37 @@ import org.usfirst.frc.team5687.robot.utils.Helpers;
 public class OI {
     private Gamepad gamepad;
 
+    public static int currentDirection = 1; //Initial drive direction
+    private final int FORWARD_DIRECTION = 1;
+    private final int REVERSE_DIRECTION = -1;
+
+    public static final int REVERSE = Gamepad.Buttons.BACK.getNumber();
+
     /**
      * Create a new instance of the operator interface
      */
     public OI() {
         gamepad = new Gamepad(0);
+
+        JoystickButton reverseButton = new JoystickButton(gamepad, REVERSE);
+
+        reverseButton.whenPressed(new ReverseDrive());
+    }
+
+    /**
+     * Gets the current direction of the drive
+     * @return the direction, 1 for forward or -1 for reverse
+     */
+    public int getDirection() {
+        return currentDirection;
+    }
+
+    /**
+     * Sets the current direction of the drive
+     * @param direction the desired direction of the drive
+     */
+    public void setDirection(int direction) {
+        currentDirection = direction;
     }
 
     /**
@@ -23,6 +50,9 @@ public class OI {
      * @return the control value for the right drive motors
      */
     public double getLeftSpeed(){
+        if (currentDirection == REVERSE_DIRECTION) {
+            return currentDirection * transformStickToSpeed(Gamepad.Axes.RIGHT_Y);
+        }
         return transformStickToSpeed(Gamepad.Axes.LEFT_Y);
     }
 
@@ -31,6 +61,9 @@ public class OI {
      * @return the control value for the right drive motors
      */
     public double getRightSpeed(){
+        if (currentDirection == REVERSE_DIRECTION) {
+            return currentDirection * transformStickToSpeed(Gamepad.Axes.LEFT_Y);
+        }
         return transformStickToSpeed(Gamepad.Axes.RIGHT_Y);
     }
 
@@ -45,31 +78,5 @@ public class OI {
         result = Helpers.applySensitivityTransform(result);
         return result;
     }
-
-    //// CREATING BUTTONS
-    // One type of button is a joystick button which is any button on a joystick.
-    // You create one by telling it which joystick it's on and which button
-    // number it is.
-    // Joystick stick = new Joystick(port);
-    // Button button = new JoystickButton(stick, buttonNumber);
-    // There are a few additional built in buttons you can use. Additionally,
-    // by subclassing Button you can create custom triggers and bind those to
-    // commands the same as any other Button.
-
-    //// TRIGGERING COMMANDS WITH BUTTONS
-    // Once you have a button, it's trivial to bind it to a button in one of
-    // three ways:
-    
-    // Start the command when the button is pressed and let it run the command
-    // until it is finished as determined by it's isFinished method.
-    // button.whenPressed(new ExampleCommand());
-    
-    // Run the command while the button is being held down and interrupt it once
-    // the button is released.
-    // button.whileHeld(new ExampleCommand());
-    
-    // Start the command when the button is released  and let it run the command
-    // until it is finished as determined by it's isFinished method.
-    // button.whenReleased(new ExampleCommand());
 }
 

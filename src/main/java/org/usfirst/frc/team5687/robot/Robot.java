@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5687.robot;
 
 import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SPI;
@@ -36,8 +37,16 @@ public class Robot extends IterativeRobot {
      */
     public static OI oi;
 
+    /**
+     * Provides static access to the singleton Robot instance
+     */
+    public static Robot robot;
+
     Command autonomousCommand;
     SendableChooser chooser;
+
+    CameraServer cameraServer;
+    String camera = "cam0";
 
     /**
      * This function is run when the robot is first started up and should be
@@ -45,11 +54,17 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
         oi = new OI();
+        robot = this;
         driveTrain = new DriveTrain();
         chooser = new SendableChooser();
         //chooser.addDefault("Default Auto", new ExampleCommand());
         //chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
+
+        //Setup Camera Code
+        cameraServer = CameraServer.getInstance();
+        cameraServer.setQuality(50);
+        cameraServer.startAutomaticCapture(camera);
 
         try {
             // Try to connect to the navX imu.
@@ -65,7 +80,7 @@ public class Robot extends IterativeRobot {
             imu = null;
         }
     }
-	
+
 	/**
      * This function is called once each time the robot enters Disabled mode.
      * You can use it to reset any subsystem information you want to clear when
@@ -89,8 +104,9 @@ public class Robot extends IterativeRobot {
 	 */
     public void autonomousInit() {
         // schedule the autonomous command (example)
-        autonomousCommand = new AutonomousTestCVT();
-        autonomousCommand.start();
+        if (autonomousCommand!=null) {
+            autonomousCommand.start();
+        }
     }
 
     /**
@@ -122,6 +138,15 @@ public class Robot extends IterativeRobot {
      */
     public void testPeriodic() {
         LiveWindow.run();
+    }
+
+    /**
+     * This function will switch the camera currently streaming to the DriverStation
+     */
+    public void switchCameras() {
+        camera = camera.equals("cam0")?"cam1":"cam0";
+        cameraServer.startAutomaticCapture(camera);
+        DriverStation.reportError("Camera now streaming: "+camera,false);
     }
 
     protected void sendIMUData() {

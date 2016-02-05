@@ -9,8 +9,10 @@ import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
 import java.util.Date;
 
 /**
- * Temporary command to run the drivetrain at a preset speed for a preset time.
- * Used for the
+ * Autonomous command to run the drivetrain.
+ * For now, runs at a preset speed for a preset time.
+ * Eventually we will want to add distance-based options.
+ *
  * Created by Ben Bernard on 1/28/2016.
  */
 public class AutoDrive extends Command {
