@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5687.robot;
 
 import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -10,7 +11,11 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team5687.robot.commands.AutonomousDoNothing;
+
+
+
+import org.usfirst.frc.team5687.robot.commands.AutonomousTestCVT;
+
 import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
 
 /*
@@ -46,8 +51,17 @@ public class Robot extends IterativeRobot {
     //TODO: smartdashboard.putnumber to get the values to the dashboard, one for each motor
 
 
+    /**
+     * Provides static access to the singleton Robot instance
+     */
+    public static Robot robot;
+
     Command autonomousCommand;
     SendableChooser chooser;
+
+
+    CameraServer cameraServer;
+    String camera = "cam0";
 
 
     /**
@@ -56,6 +70,7 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
         oi = new OI();
+        robot = this;
         driveTrain = new DriveTrain();
         chooser = new SendableChooser();
         powerDistributionPanel = new PowerDistributionPanel();
@@ -70,6 +85,11 @@ public class Robot extends IterativeRobot {
         //chooser.addDefault("Default Auto", new ExampleCommand());
         //chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
+
+        //Setup Camera Code
+        cameraServer = CameraServer.getInstance();
+        cameraServer.setQuality(50);
+        cameraServer.startAutomaticCapture(camera);
 
         try {
             // Try to connect to the navX imu.
@@ -86,7 +106,11 @@ public class Robot extends IterativeRobot {
         }
     }
 
+<<<<<<< HEAD
     /**
+=======
+	/**
+>>>>>>> b96b111aed965ae65e84d15010168d598f3df034
      * This function is called once each time the robot enters Disabled mode.
      * You can use it to reset any subsystem information you want to clear when
      * the robot is disabled.
@@ -107,6 +131,7 @@ public class Robot extends IterativeRobot {
      * or additional comparisons to the switch structure below with additional strings and commands.
      */
     public void autonomousInit() {
+
         autonomousCommand = (Command) chooser.getSelected();
         
 		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
@@ -122,6 +147,12 @@ public class Robot extends IterativeRobot {
 
         // schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
+
+        // schedule the autonomous command (example)
+        if (autonomousCommand!=null) {
+            autonomousCommand.start();
+        }
+
     }
 
     /**
@@ -156,6 +187,16 @@ public class Robot extends IterativeRobot {
      */
     public void testPeriodic() {
         LiveWindow.run();
+    }
+
+
+    /**
+     * This function will switch the camera currently streaming to the DriverStation
+     */
+    public void switchCameras() {
+        camera = camera.equals("cam0")?"cam1":"cam0";
+        cameraServer.startAutomaticCapture(camera);
+        DriverStation.reportError("Camera now streaming: "+camera,false);
     }
 
 
