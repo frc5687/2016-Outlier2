@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team5687.robot.commands.AutonomousTestCVT;
 import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
 
 /*
@@ -109,21 +110,10 @@ public class Robot extends IterativeRobot {
      * or additional comparisons to the switch structure below with additional strings and commands.
      */
     public void autonomousInit() {
-        autonomousCommand = (Command) chooser.getSelected();
-        
-		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
-		switch(autoSelected) {
-		case "My Auto":
-			autonomousCommand = new MyAutoCommand();
-			break;
-		case "Default Auto":
-		default:
-			autonomousCommand = new ExampleCommand();
-			break;
-		} */
-
         // schedule the autonomous command (example)
-        if (autonomousCommand != null) autonomousCommand.start();
+        if (autonomousCommand!=null) {
+            autonomousCommand.start();
+        }
     }
 
     /**
@@ -139,9 +129,6 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
-
-        //TODO: objectName.methodName(parameters) where methodName = putDashBoard()
-
     }
 
     /**
@@ -189,10 +176,6 @@ public class Robot extends IterativeRobot {
         // Display 9-axis Heading (requires magnetometer calibration to be useful)
         SmartDashboard.putNumber(   "IMU_FusedHeading",     imu.getFusedHeading());
 
-        //Display the current values from the left and right motors
-
-
-        //TODO: Why are all of these referencing the imu?
 
         // These functions are compatible w/the WPI Gyro Class, providing a simple
         // path for upgrading from the Kit-of-Parts gyro to the navx MXP

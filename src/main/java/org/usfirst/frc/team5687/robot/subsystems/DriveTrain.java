@@ -24,8 +24,8 @@ public class DriveTrain extends Subsystem {
         leftMotor = new VictorSP(RobotMap.leftDriveMotors);
         rightMotor = new VictorSP(RobotMap.rightDriveMotors);
         drive = new RobotDrive(leftMotor,rightMotor);
-        rightEncoder = initializeEncoder(RobotMap.rightDriveEncoderChannelA, RobotMap.rightDriveEncoderChannelB, Constants.Encoders.RightDrive.REVERSED, Constants.Encoders.RightDrive.INCHES_PER_PULSE, Constants.Encoders.RightDrive.MAX_PERIOD);
-        leftEncoder = initializeEncoder(RobotMap.leftDriveEncoderChannelA, RobotMap.leftDriveEncoderChannelB, Constants.Encoders.LeftDrive.REVERSED, Constants.Encoders.LeftDrive.INCHES_PER_PULSE, Constants.Encoders.LeftDrive.MAX_PERIOD);
+        rightEncoder = initializeEncoder(RobotMap.rightDriveEncoderChannelA, RobotMap.rightDriveEncoderChannelB, Constants.Encoders.RightDrive.REVERSED, Constants.Encoders.RightDrive.INCHES_PER_PULSE);
+        leftEncoder = initializeEncoder(RobotMap.leftDriveEncoderChannelA, RobotMap.leftDriveEncoderChannelB, Constants.Encoders.LeftDrive.REVERSED, Constants.Encoders.LeftDrive.INCHES_PER_PULSE);
     }
 
     public void resetDriveEncoders() {
@@ -64,9 +64,11 @@ public class DriveTrain extends Subsystem {
         return rightMotor.getSpeed();
     }
 
-    private Encoder initializeEncoder(int channelA, int channelB, boolean reversed, double distancePerPulse, double maxPeriod) {
+    private Encoder initializeEncoder(int channelA, int channelB, boolean reversed, double distancePerPulse) {
         Encoder encoder = new Encoder(channelA, channelB, reversed, Encoder.EncodingType.k4X);
         encoder.setDistancePerPulse(distancePerPulse);
+        encoder.setMaxPeriod(Constants.Encoders.Defaults.MAX_PERIOD);
+        encoder.setSamplesToAverage(Constants.Encoders.Defaults.SAMPLES_TO_AVERAGE);
         encoder.reset();
         return encoder;
     }
