@@ -107,11 +107,9 @@ public class Robot extends IterativeRobot {
         }
     }
 
-<<<<<<< HEAD
+
     /**
-=======
-	/**
->>>>>>> b96b111aed965ae65e84d15010168d598f3df034
+
      * This function is called once each time the robot enters Disabled mode.
      * You can use it to reset any subsystem information you want to clear when
      * the robot is disabled.
