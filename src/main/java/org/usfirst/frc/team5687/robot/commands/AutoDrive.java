@@ -51,6 +51,8 @@ public class AutoDrive extends Command {
     protected void initialize() {
         DriverStation.reportError(String.format("Accelerating to %1$f\n", rightSpeed), false);
         end = (new Date()).getTime() + timeToDrive;
+
+        driveTrain.resetDriveEncoders();
     }
 
     @Override
