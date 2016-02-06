@@ -43,7 +43,7 @@ artifacts {
   archives genJavadoc
 }
 
-def getTimestamp() {
+def getTimestamp = {
   def date = new Date()
   def df = "[" + date.format('hh:mm') + " " + date.format('MM-dd-yyyy') + "]"
   return df
@@ -53,8 +53,12 @@ task gitInfo(dependsOn: build) {
   def cmd = "git rev-parse --short HEAD"
   def pro = cmd.execute()
   ext.revision = pro.text.trim()
-  println "[commit] " + ext.revision
+  project.ext.set("revision", ext.revision)
+  println "[commit] " + project.revision
+}
 
+task gitInfoLog(dependsOn: gitInfo) {
   def cmdFile = new File("build.json")
-  cmdFile.text += getTimestamp() + " " + ext.revision + "\n"
+  cmdFile.text = getTimestamp() + " " + project.revision
+  //cmdFile.text += getTimestamp() + " " + project.revision + "\n"
 }
