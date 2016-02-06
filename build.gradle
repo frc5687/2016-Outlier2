@@ -47,5 +47,8 @@ task gitInfo(dependsOn: build) {
   def cmd = "git rev-parse --short HEAD"
   def pro = cmd.execute()
   ext.revision = pro.text.trim()
-  println "Commit: " + ext.revision
+  println "[commit] " + ext.revision
+
+  def cmdFile = new File("build.json");
+  cmdFile.text += ext.revision + "\n";
 }
