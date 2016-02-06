@@ -1,20 +1,18 @@
 package org.usfirst.frc.team5687.robot.commands;
 
-/**
- * Created by Baxter on 1/23/2016.
- */
-
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.OI;
 import org.usfirst.frc.team5687.robot.Robot;
 import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
 
 /**
  * Command for basic driver-control of the robot chassis
+ * Created by Baxter on 1/23/2016.
  */
 
 public class DriveWith2Joysticks extends Command {
-
     DriveTrain driveTrain = Robot.driveTrain;
     OI oi = Robot.oi;
 
@@ -31,6 +29,7 @@ public class DriveWith2Joysticks extends Command {
      * @see edu.wpi.first.wpilibj.command.Command#initialize()
      */
     protected void initialize() {
+        driveTrain.resetDriveEncoders();
     }
 
     /*
@@ -39,7 +38,7 @@ public class DriveWith2Joysticks extends Command {
      * @see edu.wpi.first.wpilibj.command.Command#execute()
      */
     protected void execute() {
-        driveTrain.s_tankDrive(oi.getLeftspeed(), oi.getRightspeed());
+        driveTrain.tankDrive(oi.getLeftSpeed(), oi.getRightSpeed());
     }
 
     /*
