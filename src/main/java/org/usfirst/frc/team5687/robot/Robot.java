@@ -70,7 +70,7 @@ public class Robot extends IterativeRobot {
         chooser.addDefault("Do Nothing", new AutonomousDoNothing());
         chooser.addObject("Calibrate CVT", new AutonomousTestCVT());
         chooser.addObject("Chase Target", new AutoChaseTarget());
-        SmartDashboard.putData("Autonomous mode", chooser);
+        SmartDashboard.putData("AutonomousMode", chooser);
 
         //Setup Camera Code
         cameraServer = CameraServer.getInstance();
