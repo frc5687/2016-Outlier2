@@ -1,11 +1,7 @@
 package org.usfirst.frc.team5687.robot;
 
 import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
-import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -21,7 +17,7 @@ import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-public class Robot extends IterativeRobot {
+public class Robot extends IterativeRobot { //TODO: Add an impliments PID output, and also a PIDoutput class. Also, add kToleranceDegrees
 
     /**
      * Represents the navX inertial measurement unit, used for measuring robot movement and orientation.
@@ -49,9 +45,14 @@ public class Robot extends IterativeRobot {
 
     Command autonomousCommand;
     SendableChooser chooser;
+    PIDController turncontroller;
 
     CameraServer cameraServer;
     String camera = "cam0";
+    static final double kP = 0.03;
+    static final double kI = 0.00;
+    static final double kD = 0.00;
+    static final double kF = 0.00;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -63,6 +64,7 @@ public class Robot extends IterativeRobot {
         driveTrain = new DriveTrain();
         chooser = new SendableChooser();
         powerDistributionPanel = new PowerDistributionPanel();
+        turncontroller = new PIDController()
         //TODO: new object(); DriveTrain
 
         //chooser.addDefault("Default Auto", new ExampleCommand());
@@ -114,6 +116,7 @@ public class Robot extends IterativeRobot {
         if (autonomousCommand!=null) {
             autonomousCommand.start();
         }
+
     }
 
     /**
