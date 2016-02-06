@@ -5,9 +5,9 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Created by Baxter on 2/6/2016.
+ * Created by Maya on 2/6/2016.
  */
-public class AutoAlign extends Command {
+public class AutoAlign extends Command implements PIDOutput{
 
     //Drivetrain object to get the rotation value
     //A method that the code goes through to correct it for current location
@@ -18,12 +18,13 @@ public class AutoAlign extends Command {
     static final double Ki = 0.00;
     static final double Kd = 0.00;
     //static final double kF = 0.00; //TODO: What is this for?
-
+    boolean rotateToAngle = false;
+    double rotateToAngleRate;
 
 
     protected void initialize(){
 
-        turnController = new PIDController(Kp, Ki, Kd, ahrs, this);//TODO: why do they send values to the PIDcontroller object if it doesn't impliment PIDOutput?
+        turnController = new PIDController(Kp, Ki, Kd, ahrs, this);
 
 
     }
@@ -36,6 +37,13 @@ public class AutoAlign extends Command {
         } catch (RuntimeException ex ) {
             DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
         }
+        turnController.setSetpoint(0.0f); //TODO: What angle do we want the robot to rotate to?
+        rotateToAngle = true;
+        //TODO: Maybe add a DriverStation report to help diagnose potential problems?
+
+
+
+
 
     }
     protected boolean isFinished() {
@@ -46,5 +54,10 @@ public class AutoAlign extends Command {
     }
     protected void interrupted() {
 
+    }
+
+    @Override
+    public void pidWrite(double output) {
+        rotateToAngleRate = output;
     }
 }
