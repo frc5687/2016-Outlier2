@@ -17,4 +17,9 @@ public class RobotMap {
 
     public static int rightDriveEncoderChannelA = 6;
     public static int rightDriveEncoderChannelB = 7;
+    public static int pdpAddress = 5;
+    public static int PDP_LEFT_MOTOR1 = 0;
+    public static int PDP_LEFT_MOTOR2 = 1;
+    public static int PDP_RIGHT_MOTOR1 = 2;
+    public static int PDP_RIGHT_MOTOR2 = 3;
 }
