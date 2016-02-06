@@ -49,16 +49,20 @@ def getTimestamp = {
   return df
 }
 
-task gitInfo(dependsOn: build) {
+task(gitInfo, dependsOn: build) {
+  description = 'When build, logs the commit id to build'
   def cmd = "git rev-parse --short HEAD"
   def pro = cmd.execute()
   ext.revision = pro.text.trim()
   project.ext.set("revision", ext.revision)
-  println "[commit] " + project.revision
+  project.ext.set("commit", "[commit] " + project.revision)
+  println project.commit
 }
 
-task gitInfoLog(dependsOn: gitInfo) {
+task(gitLog, dependsOn: deploy) << {
+  description = 'When deploy, logs and overwrite commit id in build.json'
   def cmdFile = new File("build.json")
-  cmdFile.text = getTimestamp() + " " + project.revision
+  cmdFile.text = project.commit
   //cmdFile.text += getTimestamp() + " " + project.revision + "\n"
 }
+gitLog.dependsOn deploy
