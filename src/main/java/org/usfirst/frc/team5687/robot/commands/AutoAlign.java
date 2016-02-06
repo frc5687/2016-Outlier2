@@ -7,8 +7,13 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * Created by Maya on 2/6/2016.
  */
-public class AutoAlign extends Command implements PIDOutput{
+public class AutoAlign extends Command implements PIDOutput {
 
+    public AutoAlign(double targetAngle, double angle) {
+        this.targetAngle = targetAngle;
+        this.angle = angle;
+        DriverStation.reportError("Turning to Angle", false);
+    }
     //Drivetrain object to get the rotation value
     //A method that the code goes through to correct it for current location
 
@@ -18,9 +23,11 @@ public class AutoAlign extends Command implements PIDOutput{
     static final double Ki = 0.00;
     static final double Kd = 0.00;
     //static final double kF = 0.00; //TODO: What is this for?
-    boolean rotateToAngle = false;
     double rotateToAngleRate;
-
+    boolean rotateToAngle = false;
+    boolean isForward = true;
+    double angle;
+    double targetAngle; //TODO: What is the target angle?
 
     protected void initialize(){
 
@@ -29,6 +36,11 @@ public class AutoAlign extends Command implements PIDOutput{
 
     }
     protected void execute(){
+
+        
+
+
+
         try {
           /* Communicate w/navX-MXP via the MXP SPI Bus.                                     */
           /* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
@@ -37,10 +49,18 @@ public class AutoAlign extends Command implements PIDOutput{
         } catch (RuntimeException ex ) {
             DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
         }
-        turnController.setSetpoint(0.0f); //TODO: What angle do we want the robot to rotate to?
-        rotateToAngle = true;
-        //TODO: Maybe add a DriverStation report to help diagnose potential problems?
 
+
+
+        if (isForward) {//TODO:Method to set boolean isForward equal to false if the robot is backwards. This will need to reference John's code.
+
+            turnController.setSetpoint(targetAngle); //TODO: What angle do we want the robot to rotate to?
+            rotateToAngle = true;
+            //TODO: Maybe add a DriverStation report to help diagnose potential problems?
+        } else if (!isForward){
+            turnController.setSetpoint(-targetAngle); //TODO: What angle do we want the robot to rotate to?
+            rotateToAngle = true;
+        }
 
 
 

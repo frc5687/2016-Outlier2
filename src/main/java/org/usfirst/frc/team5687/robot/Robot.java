@@ -64,7 +64,7 @@ public class Robot extends IterativeRobot { //TODO: Add an impliments PID output
         driveTrain = new DriveTrain();
         chooser = new SendableChooser();
         powerDistributionPanel = new PowerDistributionPanel();
-        turncontroller = new PIDController()
+        turncontroller = new PIDController();
         //TODO: new object(); DriveTrain
 
         //chooser.addDefault("Default Auto", new ExampleCommand());
