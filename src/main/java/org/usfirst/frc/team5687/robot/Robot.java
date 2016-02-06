@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team5687.robot.commands.AutoChaseTarget;
+import org.usfirst.frc.team5687.robot.commands.AutonomousDoNothing;
 import org.usfirst.frc.team5687.robot.commands.AutonomousTestCVT;
 import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
 
@@ -65,9 +67,10 @@ public class Robot extends IterativeRobot {
         powerDistributionPanel = new PowerDistributionPanel();
         //TODO: new object(); DriveTrain
 
-        //chooser.addDefault("Default Auto", new ExampleCommand());
-        //chooser.addObject("My Auto", new MyAutoCommand());
-        SmartDashboard.putData("Auto mode", chooser);
+        chooser.addDefault("Do Nothing", new AutonomousDoNothing());
+        chooser.addObject("Calibrate CVT", new AutonomousTestCVT());
+        chooser.addObject("Chase Target", new AutoChaseTarget());
+        SmartDashboard.putData("Autonomous mode", chooser);
 
         //Setup Camera Code
         cameraServer = CameraServer.getInstance();
@@ -111,6 +114,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousInit() {
         // schedule the autonomous command (example)
+        autonomousCommand = (Command)chooser.getSelected();
         if (autonomousCommand!=null) {
             autonomousCommand.start();
         }
