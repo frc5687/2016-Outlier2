@@ -5,52 +5,30 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team5687.robot.RobotMap;
-import sun.management.Sensor;
 
 public class Boulder extends Subsystem {
 
-    VictorSP intakeRoller;
-    VictorSP shooterWheel;
-    Encoder shooterRotation;
-    DigitalInput hoppersensor;
-    boolean isboulder;
+    VictorSP intakeMotor;
+    VictorSP shooterMotor;
+    Encoder shooterEncoder;
+    DigitalInput hopperSensor;
+    DigitalInput primeSensor;
 
-
-    public void  Boulder() { //TODO: Why do I have to have a method to contain these objects? John said it's a constructor, but isn't the constructor buried in the wpilib?
-        //TODO: Why is it saying that DigitalInput is not used? I use the objects contained within it, and I don't see a difference between what I have and what's on the DriveTrain subsystem.
-        /*
-        hoppersensor = new DigitalInput(RobotMap.hopperSensor);
-        shooterRotation = new Encoder(RobotMap.shooterEncoderA, RobotMap.shooterEncoderB, isboulder); //TODO: Check if you need to include a reverse direction parameter
-         */
+    public Boulder() {
+        intakeMotor = new VictorSP(RobotMap.intakeMotor);
+        shooterMotor = new VictorSP(RobotMap.shooterMotor);
+        shooterEncoder = new Encoder(RobotMap.shooterEncoderChannelA, RobotMap.shooterEncoderChannelB, false, Encoder.EncodingType.k4X);
+        hopperSensor = new DigitalInput(RobotMap.hopperSensor);
+        primeSensor = new DigitalInput(RobotMap.primeSensor);
     }
 
-   /* public int Shooter() {
-        shooterRotation = new Encoder(RobotMap.shooterEncoderA, RobotMap.shooterEncoderB, ); //TODO: Check if you need to include a reverse direction parameter
-    return shooterRotation.get();
-    }*/
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
-
-    public boolean isBoulderThere(){
-        return hoppersensor.get();
-    }
-    public int isShooterSpinning(){return shooterRotation.get();}
-
-
+    @Override
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+
     }
 
     public void intake() {
-        if(isBoulderThere()!= true) {
-            if (isShooterSpinning()== 0) {
 
-            }
-
-
-                 {}
-        }
         //Start Conditions: Hopper sensor detects NO boulder in hopper
         //                  Check for shooter wheels not spinning
         //Do What:          Run Intake roller IN

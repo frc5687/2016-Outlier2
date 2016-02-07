@@ -22,4 +22,12 @@ public class RobotMap {
     public static int PDP_LEFT_MOTOR2 = 1;
     public static int PDP_RIGHT_MOTOR1 = 2;
     public static int PDP_RIGHT_MOTOR2 = 3;
+
+    // Shooter ports
+    public static int intakeMotor;
+    public static int shooterMotor;
+    public static int shooterEncoderChannelA;
+    public static int shooterEncoderChannelB;
+    public static int hopperSensor;
+    public static int primeSensor;
 }
