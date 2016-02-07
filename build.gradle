@@ -64,7 +64,7 @@ task gitInfo(dependsOn: build) {
 
 task gitLog << {
   description = 'When deploy, logs and overwrites branch and version to a log file'
-  def cmdFile = new File('src/main/java/org/usfirst/frc/team5687/robot/utils/deploy.txt')
+  def cmdFile = new File('deploy.txt')
   cmdFile.text = project.branch + " " + project.revision
   //cmdFile.text += getTimestamp() + " " project.branch + " " + project.revision + "\n"
 }

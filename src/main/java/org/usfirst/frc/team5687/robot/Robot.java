@@ -13,6 +13,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.commands.AutonomousTestCVT;
 import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team5687.robot.utils.Reader;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 /*
  * The VM is configured to automatically run this class, and to call the
@@ -47,6 +53,11 @@ public class Robot extends IterativeRobot {
      */
     public static Robot robot;
 
+    /**
+     * Creates a reader for git information
+     */
+    public static Reader reader;
+
     Command autonomousCommand;
     SendableChooser chooser;
 
@@ -63,11 +74,33 @@ public class Robot extends IterativeRobot {
         driveTrain = new DriveTrain();
         chooser = new SendableChooser();
         powerDistributionPanel = new PowerDistributionPanel();
+        reader = new Reader();
         //TODO: new object(); DriveTrain
 
         //chooser.addDefault("Default Auto", new ExampleCommand());
         //chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
+
+        // Report git info to the dashboard
+        SmartDashboard.putString("Git Info", reader.getGitInfo());
+        /*
+        try {
+            File file = new File("deploy.txt");
+            FileReader reader = new FileReader(file);
+            char[] chars = new char[(int) file.length()];
+            reader.read(chars);
+            String content = new String(chars);
+
+            SmartDashboard.putString("Git Info", content);
+            reader.close();
+        } catch (FileNotFoundException ex) {
+            // If log file is missing, report to Drive Station
+            DriverStation.reportError("Error opening git log file", true);
+        } catch (IOException ex) {
+            // If log file is damaged, report to Driver Station
+            DriverStation.reportError("Error reading git log file", true);
+        }
+         */
 
         //Setup Camera Code
         cameraServer = CameraServer.getInstance();

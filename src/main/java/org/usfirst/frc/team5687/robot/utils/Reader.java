@@ -10,15 +10,15 @@ import java.io.*;
  * @author wilstenholme
  */
 public class Reader {
-    private final static String fileName = "deploy.txt";
+    private final static String gitLogName = "deploy.txt";
+    private String content;
 
-    public static void sendGitInfo() {
-        String content;
+    public Reader() {
         File file;
         FileReader reader;
 
         try {
-            file = new File(fileName);
+            file = new File(gitLogName);
             reader = new FileReader(file);
 
             char[] chars = new char[(int) file.length()];
@@ -26,14 +26,18 @@ public class Reader {
             content = new String(chars);
 
             reader.close();
-            // Log the git information to the Smart Dashboard
-            SmartDashboard.putString("GitInfo", content);
         } catch (FileNotFoundException ex) {
             // Report error to the Driver Station that log file is missing
             DriverStation.reportError("Error opening git log file", true);
+            //System.out.println("Error opening git log file");
         } catch (IOException ex) {
             // Report error to the Driver Station if log file is damaged or does not exist
             DriverStation.reportError("Error reading git log file", true);
+            //System.out.println("Error reading git log file");
         }
+    }
+
+    public String getGitInfo() {
+        return content;
     }
 }
