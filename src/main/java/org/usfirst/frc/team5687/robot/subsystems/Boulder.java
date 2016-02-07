@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import org.usfirst.frc.team5687.robot.OI;
 import org.usfirst.frc.team5687.robot.RobotMap;
 import sun.management.Sensor;
 
@@ -22,6 +23,9 @@ public class Boulder extends Subsystem {
         hoppersensor = new DigitalInput(RobotMap.hopperSensor);
         shooterRotation = new Encoder(RobotMap.shooterEncoderA, RobotMap.shooterEncoderB, isboulder); //TODO: Check if you need to include a reverse direction parameter
          */
+        shooterWheel = new VictorSP(RobotMap.shooterWheelMotor);
+
+
     }
 
    /* public int Shooter() {
@@ -36,6 +40,9 @@ public class Boulder extends Subsystem {
     }
     public int isShooterSpinning(){return shooterRotation.get();}
 
+    public void spinShooter(double speed) {
+        shooterWheel.set(speed);
+    }
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.

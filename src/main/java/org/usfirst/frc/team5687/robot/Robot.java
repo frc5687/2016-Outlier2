@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.commands.AutonomousTestCVT;
+import org.usfirst.frc.team5687.robot.subsystems.Boulder;
 import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
 
 /*
@@ -37,6 +38,9 @@ public class Robot extends IterativeRobot {
      * Represents the operator interface/ controls
      */
     public static OI oi;
+
+    public static Boulder boulder;
+
     /**
      * Represents the power distribution panel
      */
@@ -62,6 +66,7 @@ public class Robot extends IterativeRobot {
         robot = this;
         driveTrain = new DriveTrain();
         chooser = new SendableChooser();
+        boulder = new Boulder();
         powerDistributionPanel = new PowerDistributionPanel();
         //TODO: new object(); DriveTrain
 

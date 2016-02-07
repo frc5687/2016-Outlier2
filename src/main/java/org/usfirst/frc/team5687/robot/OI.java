@@ -66,7 +66,9 @@ public class OI {
         }
         return transformStickToSpeed(Gamepad.Axes.RIGHT_Y);
     }
-
+    public double getShooterSpeed(){
+     return transformStickToSpeed(Gamepad.Axes.D_PAD_VERTICAL);
+    };
     /**
      * Get the requested stick position from the gamepad, apply deadpand and sensitivity transforms, and return the result.
      * @param stick the gamepad axis to adjust and use
