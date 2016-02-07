@@ -59,7 +59,7 @@ task gitInfo(dependsOn: build) {
   println project.commit
 }
 
-task gitLog(dependsOn: deploy) << {
+task gitLog << {
   //mustRunAfter deploy
   description = 'When deploy, logs and overwrite commit id in build.json'
   def cmdFile = new File("build.json")
@@ -67,9 +67,5 @@ task gitLog(dependsOn: deploy) << {
   //cmdFile.text += getTimestamp() + " " + project.revision + "\n"
 }
 
-deploy.finalizedBy(gitLog)
-/*
-deploy.doLast {
-  task.gitLog.execute()
-}
-*/
+deploy.dependsOn(gitLog)
+//deploy.finalizedBy(gitLog)
