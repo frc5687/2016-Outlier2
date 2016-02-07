@@ -35,9 +35,10 @@ public class AutoAlign extends Command implements PIDOutput {
 
 
     }
+
+
     protected void execute(){   //Classname.methodName(use these to align robot);
 
-        
 
 
 
@@ -51,8 +52,12 @@ public class AutoAlign extends Command implements PIDOutput {
         }
 
 
-
+/*
+<<<<<<< HEAD
         if (isForward) {//TODO:Method to set boolean isForward equal to false if the robot is backwards.
+=======
+        if (isForward) {//TODO:Method to set boolean isForward equal to false if the robot is backwards. This will need to reference John's code.
+>>>>>>> e2c98c1320b4c87b26349092e8adc34009270e00
 
             turnController.setSetpoint(targetAngle); //TODO: What angle do we want the robot to rotate to?
             rotateToAngle = true;
@@ -62,7 +67,7 @@ public class AutoAlign extends Command implements PIDOutput {
             rotateToAngle = true;
         }
 
-
+    */
 
 
     }
