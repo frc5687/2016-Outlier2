@@ -63,11 +63,10 @@ task gitInfo(dependsOn: build) {
 }
 
 task gitLog << {
-  //mustRunAfter deploy
-  description = 'When deploy, logs and overwrites branch and version in build.json'
-  def cmdFile = new File("build.json")
+  description = 'When deploy, logs and overwrites branch and version to a log file'
+  def cmdFile = new File('src/main/java/org/usfirst/frc/team5687/robot/utils/deploy.txt')
   cmdFile.text = project.branch + " " + project.revision
-  //cmdFile.text += getTimestamp() + " " + project.revision + "\n"
+  //cmdFile.text += getTimestamp() + " " project.branch + " " + project.revision + "\n"
 }
 
 deploy.dependsOn(gitLog)
