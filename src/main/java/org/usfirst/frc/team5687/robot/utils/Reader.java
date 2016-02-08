@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.io.*;
+import java.nio.Buffer;
 
 /**
  * A file reader class to read Git information from code deploy
@@ -15,26 +16,26 @@ public class Reader {
 
     public Reader() {
         File file;
-        FileReader reader;
+        BufferedReader br;
 
         try {
-            file = new File(gitLogName);
-            reader = new FileReader(file);
+            br = new BufferedReader(new FileReader(gitLogName));
 
-            char[] chars = new char[(int) file.length()];
-            reader.read(chars);
-            content = new String(chars);
-
-            reader.close();
-        } catch (FileNotFoundException ex) {
-            // Report error to the Driver Station that log file is missing
-            DriverStation.reportError("Error opening git log file", true);
-            //System.out.println("Error opening git log file");
+            // Log git info to a string
+            content = br.readLine();
+            br.close();
         } catch (IOException ex) {
-            // Report error to the Driver Station if log file is damaged or does not exist
+            // Report error to the Driver Station if log file does not exist
+            String errorMessage = getStackTrace(ex);
             DriverStation.reportError("Error reading git log file", true);
-            //System.out.println("Error reading git log file");
+            DriverStation.reportError(errorMessage, true);
         }
+    }
+
+    public static String getStackTrace (Throwable t) {
+        StringWriter sw = new StringWriter();
+        t.printStackTrace(new PrintWriter(sw));
+        return sw.toString();
     }
 
     public String getGitInfo() {

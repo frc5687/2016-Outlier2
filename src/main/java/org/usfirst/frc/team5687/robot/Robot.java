@@ -83,24 +83,6 @@ public class Robot extends IterativeRobot {
 
         // Report git info to the dashboard
         SmartDashboard.putString("Git Info", reader.getGitInfo());
-        /*
-        try {
-            File file = new File("deploy.txt");
-            FileReader reader = new FileReader(file);
-            char[] chars = new char[(int) file.length()];
-            reader.read(chars);
-            String content = new String(chars);
-
-            SmartDashboard.putString("Git Info", content);
-            reader.close();
-        } catch (FileNotFoundException ex) {
-            // If log file is missing, report to Drive Station
-            DriverStation.reportError("Error opening git log file", true);
-        } catch (IOException ex) {
-            // If log file is damaged, report to Driver Station
-            DriverStation.reportError("Error reading git log file", true);
-        }
-         */
 
         //Setup Camera Code
         cameraServer = CameraServer.getInstance();
