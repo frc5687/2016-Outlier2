@@ -50,7 +50,7 @@ public class Robot extends IterativeRobot {
     public static Robot robot;
 
     Command autonomousCommand;
-    SendableChooser chooser;
+    SendableChooser autoChooser;
 
     CameraServer cameraServer;
     String camera = "cam0";
@@ -63,14 +63,14 @@ public class Robot extends IterativeRobot {
         oi = new OI();
         robot = this;
         driveTrain = new DriveTrain();
-        chooser = new SendableChooser();
+        autoChooser = new SendableChooser();
         powerDistributionPanel = new PowerDistributionPanel();
         //TODO: new object(); DriveTrain
 
-        chooser.addDefault("Do Nothing", new AutonomousDoNothing());
-        chooser.addObject("Calibrate CVT", new AutonomousTestCVT());
-        chooser.addObject("Chase Target", new AutoChaseTarget());
-        SmartDashboard.putData("AutonomousMode", chooser);
+        autoChooser.addDefault("Do Nothing At All", new AutonomousDoNothing());
+        autoChooser.addObject("Calibrate CVT", new AutonomousTestCVT());
+        autoChooser.addObject("Chase Target", new AutoChaseTarget());
+        SmartDashboard.putData("Autonomous mode", autoChooser);
 
         //Setup Camera Code
         cameraServer = CameraServer.getInstance();
@@ -114,7 +114,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousInit() {
         // schedule the autonomous command (example)
-        autonomousCommand = (Command)chooser.getSelected();
+        autonomousCommand = (Command)autoChooser.getSelected();
         if (autonomousCommand!=null) {
             autonomousCommand.start();
         }
