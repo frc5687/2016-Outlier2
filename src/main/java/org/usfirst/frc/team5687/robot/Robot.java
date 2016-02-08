@@ -53,11 +53,6 @@ public class Robot extends IterativeRobot {
      */
     public static Robot robot;
 
-    /**
-     * Creates a reader for git information
-     */
-    public static Reader reader;
-
     Command autonomousCommand;
     SendableChooser chooser;
 
@@ -74,7 +69,6 @@ public class Robot extends IterativeRobot {
         driveTrain = new DriveTrain();
         chooser = new SendableChooser();
         powerDistributionPanel = new PowerDistributionPanel();
-        reader = new Reader();
         //TODO: new object(); DriveTrain
 
         //chooser.addDefault("Default Auto", new ExampleCommand());
@@ -82,7 +76,7 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData("Auto mode", chooser);
 
         // Report git info to the dashboard
-        SmartDashboard.putString("Git Info", reader.getGitInfo());
+        SmartDashboard.putString("Git Info", Reader.gitInfo);
 
         //Setup Camera Code
         cameraServer = CameraServer.getInstance();

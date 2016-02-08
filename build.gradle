@@ -64,10 +64,11 @@ task gitInfo(dependsOn: build) {
 
 task gitLog << {
   description = 'When deploy, logs and overwrites branch and version to a log file'
-  def cmdFile = new File('deploy.txt')
-  cmdFile.text = project.branch + " " + project.revision
-  //cmdFile.text += getTimestamp() + " " project.branch + " " + project.revision + "\n"
+  def cmdFile = new File('src/main/java/org/usfirst/frc/team5687/robot/utils/Reader.java')
+  def br = "\n\n"
+  def pck = "package org.usfirst.frc.team5687.robot.utils;" + br
+  def jvd = "/**\n * A file reader class to read current Git information from deployed robot code\n * @author wilstenholme\n */" + br
+  def reader = "public class Reader {\n" + "    public static final String gitInfo = \"" + project.branch + " " + project.revision + "\";\n }"
+  cmdFile.text = pck + jvd + reader
 }
-
 deploy.dependsOn(gitLog)
-//deploy.finalizedBy(gitLog)
