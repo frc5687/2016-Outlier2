@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5687.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.usfirst.frc.team5687.robot.commands.ReverseDrive;
 import org.usfirst.frc.team5687.robot.utils.Gamepad;
@@ -11,6 +12,7 @@ import org.usfirst.frc.team5687.robot.utils.Helpers;
  */
 public class OI {
     private Gamepad gamepad;
+    private Joystick joystick;
 
     public static int currentDirection = 1; //Initial drive direction
     private final int FORWARD_DIRECTION = 1;
@@ -23,6 +25,7 @@ public class OI {
      */
     public OI() {
         gamepad = new Gamepad(0);
+        joystick = new Joystick(1);
 
         JoystickButton reverseButton = new JoystickButton(gamepad, REVERSE);
 
@@ -66,9 +69,15 @@ public class OI {
         }
         return transformStickToSpeed(Gamepad.Axes.RIGHT_Y);
     }
+
+    /**
+     * Gets the desired speed for the shooter wheels
+     * @return the control value for the shooter motor
+     */
     public double getShooterSpeed(){
-     return transformStickToSpeed(Gamepad.Axes.D_PAD_VERTICAL);
-    };
+        return Helpers.applyDeadband(joystick.getThrottle(), Constants.Deadbands.SHOOTER_WHEELS);
+    }
+
     /**
      * Get the requested stick position from the gamepad, apply deadpand and sensitivity transforms, and return the result.
      * @param stick the gamepad axis to adjust and use
