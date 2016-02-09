@@ -13,11 +13,13 @@ public class RobotMap {
     public static int rightDriveMotors = 1;
     public static int shooterWheelMotor = 2;
 
+    public static int shooterWheelEncoderChannelA = 4;
+    public static int shooterWheelEncoderChannelB = 5;
+    public static int rightDriveEncoderChannelA = 6;
+    public static int rightDriveEncoderChannelB = 7;
     public static int leftDriveEncoderChannelA = 8;
     public static int leftDriveEncoderChannelB = 9;
 
-    public static int rightDriveEncoderChannelA = 6;
-    public static int rightDriveEncoderChannelB = 7;
     public static int pdpAddress = 5;
     public static int PDP_LEFT_MOTOR1 = 0;
     public static int PDP_LEFT_MOTOR2 = 1;
