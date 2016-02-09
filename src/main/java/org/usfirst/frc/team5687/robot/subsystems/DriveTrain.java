@@ -73,6 +73,12 @@ public class DriveTrain extends Subsystem {
         return encoder;
     }
 
+    /**
+     * @return average of leftDistance and rightDistance
+     */
+    public double getDistance() { return (Robot.driveTrain.getLeftDistance()+Robot.driveTrain.getRightDistance()/2);}
+
+
     @Override
     protected void initDefaultCommand() {
         setDefaultCommand(new DriveWith2Joysticks());
