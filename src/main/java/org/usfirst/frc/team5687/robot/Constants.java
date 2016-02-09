@@ -37,6 +37,11 @@ public class Constants {
         public static final double SENSITIVITY_FACTOR = 0.5;
     }
 
+    public class Autonomous {
+        public static final double MIN_AUTO_TRAVERSE_ANGLE = 9; // the minimum angle the robot will pitch when traversing a defense
+        public static final double MAX_AUTO_TRAVERSE_SECONDS = 5; //the maximum time the robot should need to travers a defense in Autonomous,
+    }
+
     public class Encoders {
         public class Defaults {
             public static final boolean REVERSED = false;
