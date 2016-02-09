@@ -10,7 +10,8 @@ public class RobotMap {
     
     // Drive train ports
     public static int leftDriveMotors = 0;
-    public static int rightDriveMotors = 3;
+    public static int rightDriveMotors = 1;
+    public static int shooterWheelMotor = 2;
 
     public static int leftDriveEncoderChannelA = 8;
     public static int leftDriveEncoderChannelB = 9;
