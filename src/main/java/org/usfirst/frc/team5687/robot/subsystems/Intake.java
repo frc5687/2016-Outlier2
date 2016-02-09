@@ -3,6 +3,7 @@ package org.usfirst.frc.team5687.robot.subsystems;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team5687.robot.RobotMap;
+import org.usfirst.frc.team5687.robot.commands.RunIntakeManually;
 
 /**
  * Class for boulder intake subsystem
@@ -15,9 +16,13 @@ public class Intake extends Subsystem {
      */
     private VictorSP intakeMotor;
 
-
     public Intake() {
         intakeMotor = new VictorSP(RobotMap.Intake.INTAKE_MOTOR);
+    }
+
+    @Override
+    protected void initDefaultCommand() {
+        setDefaultCommand(new RunIntakeManually());
     }
 
     /**
@@ -26,10 +31,5 @@ public class Intake extends Subsystem {
      */
     public void setSpeed(double speed) {
         intakeMotor.set(speed);
-    }
-
-    @Override
-    protected void initDefaultCommand() {
-
     }
 }
