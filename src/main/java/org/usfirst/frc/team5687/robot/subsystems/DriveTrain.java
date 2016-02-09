@@ -21,9 +21,14 @@ public class DriveTrain extends Subsystem {
     public DriveTrain(){
         leftMotor = new VictorSP(RobotMap.Drive.LEFT_MOTORS);
         rightMotor = new VictorSP(RobotMap.Drive.RIGHT_MOTORS);
-        drive = new RobotDrive(leftMotor,rightMotor);
+        drive = new RobotDrive(leftMotor, rightMotor);
         rightEncoder = initializeEncoder(RobotMap.Drive.RIGHT_ENCODER_CHANNEL_A, RobotMap.Drive.RIGHT_ENCODER_CHANNEL_B, Constants.Encoders.RightDrive.REVERSED, Constants.Encoders.RightDrive.INCHES_PER_PULSE);
         leftEncoder = initializeEncoder(RobotMap.Drive.LEFT_ENCODER_CHANNEL_A, RobotMap.Drive.LEFT_ENCODER_CHANNEL_B, Constants.Encoders.LeftDrive.REVERSED, Constants.Encoders.LeftDrive.INCHES_PER_PULSE);
+    }
+
+    @Override
+    protected void initDefaultCommand() {
+        setDefaultCommand(new DriveWith2Joysticks());
     }
 
     public void resetDriveEncoders() {
@@ -38,12 +43,17 @@ public class DriveTrain extends Subsystem {
     public double getLeftTicks() {
         return leftEncoder.getRaw();
     }
+
     public double getLeftRate() {
         return leftEncoder.getRate();
     }
 
     public double getLeftSpeed() {
         return leftMotor.getSpeed();
+    }
+
+    public double getLeftRPS() {
+        return getLeftRate() / (Constants.Encoders.Defaults.PULSES_PER_ROTATION * Constants.Encoders.Defaults.INCHES_PER_PULSE);
     }
 
     public double getRightDistance() {
@@ -62,6 +72,10 @@ public class DriveTrain extends Subsystem {
         return rightMotor.getSpeed();
     }
 
+    public double getRightRPS() {
+        return getRightRate() / (Constants.Encoders.Defaults.PULSES_PER_ROTATION * Constants.Encoders.Defaults.INCHES_PER_PULSE);
+    }
+
     private Encoder initializeEncoder(int channelA, int channelB, boolean reversed, double distancePerPulse) {
         Encoder encoder = new Encoder(channelA, channelB, reversed, Encoder.EncodingType.k4X);
         encoder.setDistancePerPulse(distancePerPulse);
@@ -71,19 +85,12 @@ public class DriveTrain extends Subsystem {
         return encoder;
     }
 
-    @Override
-    protected void initDefaultCommand() {
-        setDefaultCommand(new DriveWith2Joysticks());
-    }
-
     public void sendAmpDraw() {
         SmartDashboard.putNumber("Current Draw/LeftMotor1", Robot.powerDistributionPanel.getCurrent(RobotMap.Drive.PDP_LEFT_MOTOR1)); //TODO: is this really where I'm getting current from? Check for all 4
         SmartDashboard.putNumber("Current Draw/LeftMotor2", Robot.powerDistributionPanel.getCurrent(RobotMap.Drive.PDP_LEFT_MOTOR2));
         SmartDashboard.putNumber("Current Draw/RightMotor1", Robot.powerDistributionPanel.getCurrent(RobotMap.Drive.PDP_RIGHT_MOTOR1));
         SmartDashboard.putNumber("Current Draw/RightMotor2", Robot.powerDistributionPanel.getCurrent(RobotMap.Drive.PDP_RIGHT_MOTOR2));
     }
-
-
 
     /**
      * Run drive motors at specified speeds
@@ -113,5 +120,8 @@ public class DriveTrain extends Subsystem {
 
         SmartDashboard.putNumber("Right speed" , getRightSpeed());
         SmartDashboard.putNumber("Left speed" , getLeftSpeed());
+
+        SmartDashboard.putNumber("Right RPS" , getRightRPS());
+        SmartDashboard.putNumber("Left RPS" , getLeftRPS());
     }
 }
