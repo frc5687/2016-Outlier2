@@ -5,26 +5,26 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team5687.robot.RobotMap;
 import org.usfirst.frc.team5687.robot.commands.RunShooterManually;
 
-public class Boulder extends Subsystem {
+public class Shooter extends Subsystem {
 
     /**
      * Victor speed controller for the shooter motor
      */
-    private VictorSP shooterWheel;
+    private VictorSP wheelMotor;
 
     /**
      * Constructor
      */
-    public  Boulder() {
-        shooterWheel = new VictorSP(RobotMap.shooterWheelMotor);
+    public Shooter() {
+        wheelMotor = new VictorSP(RobotMap.shooterWheelMotor);
     }
 
     /**
      * Set the shooter wheel speed
      * @param speed the desired speed control value
      */
-    public void setShooterSpeed(double speed) {
-        shooterWheel.set(speed);
+    public void setSpeed(double speed) {
+        wheelMotor.set(speed);
     }
 
     /**

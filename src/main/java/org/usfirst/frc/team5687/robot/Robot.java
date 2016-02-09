@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.commands.AutoChaseTarget;
 import org.usfirst.frc.team5687.robot.commands.AutonomousDoNothing;
 import org.usfirst.frc.team5687.robot.commands.AutonomousTestCVT;
-import org.usfirst.frc.team5687.robot.subsystems.Boulder;
+import org.usfirst.frc.team5687.robot.subsystems.Shooter;
 import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
 
 /*
@@ -41,7 +41,7 @@ public class Robot extends IterativeRobot {
      */
     public static OI oi;
 
-    public static Boulder boulder;
+    public static Shooter shooter;
 
     /**
      * Represents the power distribution panel
@@ -67,7 +67,7 @@ public class Robot extends IterativeRobot {
         oi = new OI();
         robot = this;
         driveTrain = new DriveTrain();
-        boulder = new Boulder();
+        shooter = new Shooter();
         autoChooser = new SendableChooser();
         powerDistributionPanel = new PowerDistributionPanel();
         //TODO: new object(); DriveTrain
