@@ -34,10 +34,15 @@ public abstract class AutoTraverse extends Command{
 
     protected void execute() {
 
+        calculateProgress();
 
-        if(Math.abs(Math.abs(imu.getPitch())-Constants.Autonomous.MIN_AUTO_TRAVERSE_ANGLE) < pitchErrorMargin) {
-            pitchThresholdReached = true;
-        }
+        Robot.driveTrain.tankDrive(.3,.3);
+
+    }
+
+    protected void calculateProgress(){ if(Math.abs(Math.abs(imu.getPitch())-Constants.Autonomous.MIN_AUTO_TRAVERSE_ANGLE) < pitchErrorMargin) {
+        pitchThresholdReached = true;
+    }
 
         if(Math.abs(driveTrain.getDistance())-startingInches > inchesToTraverseDefense ){
             inchesToTraverseReached = true;
@@ -54,9 +59,7 @@ public abstract class AutoTraverse extends Command{
             inchesLevel = driveTrain.getLeftDistance()-positionFirstLevel;
             //writing how long the robot has been level
         }
-
     }
-
 
     protected boolean isFinished() {
 
