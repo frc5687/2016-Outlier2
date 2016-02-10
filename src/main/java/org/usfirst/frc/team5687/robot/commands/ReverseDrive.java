@@ -24,7 +24,9 @@ public class ReverseDrive extends Command{
 
         direction *= -1;
         oi.setDirection(direction);
-        robot.switchCameras();
+
+        //disabling cameraSwitching for now
+        //robot.switchCameras();
 
         SmartDashboard.putString("DriveIsFacing", (direction == FORWARD_DIRECTION) ? "electronics" : "intake");
     }
