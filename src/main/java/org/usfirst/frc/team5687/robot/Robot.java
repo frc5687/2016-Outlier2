@@ -11,7 +11,11 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team5687.robot.commands.AutoChaseTarget;
+import org.usfirst.frc.team5687.robot.commands.AutonomousDoNothing;
 import org.usfirst.frc.team5687.robot.commands.AutonomousTestCVT;
+import org.usfirst.frc.team5687.robot.subsystems.Intake;
+import org.usfirst.frc.team5687.robot.subsystems.Shooter;
 import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5687.robot.utils.Reader;
 
@@ -43,6 +47,14 @@ public class Robot extends IterativeRobot {
      * Represents the operator interface/ controls
      */
     public static OI oi;
+
+    public static Shooter shooter;
+
+    /**
+     * Represents the robot's boulder intake
+     */
+    public static Intake intake;
+
     /**
      * Represents the power distribution panel
      */
@@ -54,7 +66,7 @@ public class Robot extends IterativeRobot {
     public static Robot robot;
 
     Command autonomousCommand;
-    SendableChooser chooser;
+    SendableChooser autoChooser;
 
     CameraServer cameraServer;
     String camera = "cam0";
@@ -67,13 +79,16 @@ public class Robot extends IterativeRobot {
         oi = new OI();
         robot = this;
         driveTrain = new DriveTrain();
-        chooser = new SendableChooser();
+        shooter = new Shooter();
+        intake = new Intake();
+        autoChooser = new SendableChooser();
         powerDistributionPanel = new PowerDistributionPanel();
         //TODO: new object(); DriveTrain
 
-        //chooser.addDefault("Default Auto", new ExampleCommand());
-        //chooser.addObject("My Auto", new MyAutoCommand());
-        SmartDashboard.putData("Auto mode", chooser);
+        autoChooser.addDefault("Do Nothing At All", new AutonomousDoNothing());
+        autoChooser.addObject("Calibrate CVT", new AutonomousTestCVT());
+        autoChooser.addObject("Chase Target", new AutoChaseTarget());
+        SmartDashboard.putData("Autonomous mode", autoChooser);
 
         // Report git info to the dashboard
         SmartDashboard.putString("Git Info", Reader.gitInfo);
@@ -120,6 +135,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousInit() {
         // schedule the autonomous command (example)
+        autonomousCommand = (Command)autoChooser.getSelected();
         if (autonomousCommand!=null) {
             autonomousCommand.start();
         }
