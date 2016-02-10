@@ -3,71 +3,44 @@ package org.usfirst.frc.team5687.robot.commands;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team5687.robot.Robot;
+import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
 
 /**
  * Created by Maya on 2/6/2016.
  */
-public class AutoAlign extends Command implements PIDOutput {
+public class AutoAlign extends Command implements PIDOutput{
+    DriveTrain driveTrain = Robot.driveTrain;
+    public static PIDController turnController;
+    AHRS ahrs;
+    RobotDrive myRobot;
+    Joystick stick;
 
-    public AutoAlign(double targetAngle, double angle) {
+    double rotateToAngleRate;
+
+   /* public AutoAlign(double targetAngle, double angle) {
         this.targetAngle = targetAngle;
         this.angle = angle;
         DriverStation.reportError("Turning to Angle", false);
     }
-    //Drivetrain object to get the rotation value
-    //A method that the code goes through to correct it for current location
+*/
+    static final double kP = 0.03;
+    static final double kI = 0.00;
+    static final double kD = 0.00;
+    static final double kF = 0.00;
 
-    PIDController turnController;
-    AHRS ahrs;
-    static final double Kp = 0.03;
-    static final double Ki = 0.00;
-    static final double Kd = 0.00;
-    //static final double kF = 0.00; //TODO: What is this for?
-    double rotateToAngleRate;
-    boolean rotateToAngle = false;
-    boolean isForward = true;
-    double angle;
-    double targetAngle; //TODO: What is the target angle?
+    static final double kToleranceDegrees = 2.0f;
+
+    turnController = new PIDController(kP, kI, kD, kF, ahrs, this);
+
+
 
     protected void initialize(){
-
-        turnController = new PIDController(Kp, Ki, Kd, ahrs, this);
-
 
     }
 
 
-    protected void execute(){   //Classname.methodName(use these to align robot);
-
-
-
-
-        try {
-          /* Communicate w/navX-MXP via the MXP SPI Bus.                                     */
-          /* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
-          /* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
-            ahrs = new AHRS(SPI.Port.kMXP);
-        } catch (RuntimeException ex ) {
-            DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
-        }
-
-
-/*
-<<<<<<< HEAD
-        if (isForward) {//TODO:Method to set boolean isForward equal to false if the robot is backwards.
-=======
-        if (isForward) {//TODO:Method to set boolean isForward equal to false if the robot is backwards. This will need to reference John's code.
->>>>>>> e2c98c1320b4c87b26349092e8adc34009270e00
-
-            turnController.setSetpoint(targetAngle); //TODO: What angle do we want the robot to rotate to?
-            rotateToAngle = true;
-            //TODO: Maybe add a DriverStation report to help diagnose potential problems?
-        } else if (!isForward){
-            turnController.setSetpoint(-targetAngle); //TODO: What angle do we want the robot to rotate to?
-            rotateToAngle = true;
-        }
-
-    */
+    protected void execute(){driveTrain.autoAlign();}//Classname.methodName(use these to align robot);
 
 
     }

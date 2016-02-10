@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.Constants;
 import org.usfirst.frc.team5687.robot.Robot;
 import org.usfirst.frc.team5687.robot.RobotMap;
+import org.usfirst.frc.team5687.robot.commands.AutoAlign;
 import org.usfirst.frc.team5687.robot.commands.DriveWith2Joysticks;
 
 public class DriveTrain extends Subsystem {
@@ -16,6 +17,7 @@ public class DriveTrain extends Subsystem {
     private Encoder leftEncoder;
     private RobotDrive myRobot;
     private Joystick stick;
+
 
     public DriveTrain(){
         leftMotor = new VictorSP(RobotMap.leftDriveMotors);
@@ -60,6 +62,8 @@ public class DriveTrain extends Subsystem {
     public double getRightSpeed() {
         return rightMotor.getSpeed();
     }
+
+
 
     private Encoder initializeEncoder(int channelA, int channelB, boolean reversed, double distancePerPulse) {
         Encoder encoder = new Encoder(channelA, channelB, reversed, Encoder.EncodingType.k4X);
@@ -115,9 +119,10 @@ public class DriveTrain extends Subsystem {
     }
     //Method that does the aligning based on the current angle and the desired angle
     public void autoAlign(){
-        myRobot = new RobotDrive(RobotMap.leftDriveMotors, RobotMap.rightDriveMotors);//TODO: Why does one object get the motors and one object set the setpoint? How does the robot know that it needs to do .setPoint for the motors?
-        myRobot.setExpiration(0.1);
-        stick = new Joystick(0);
+        AutoAlign.turnController.setSetpoint(0.00); //TODO: What is the setpoint?
+    }
+
+ //TODO: Why does one object get the motors and one object set the setpoint? How does the robot know that it needs to do .setPoint for the motors?
 //TODO: I don't understand how the example code interprets joystick.
 /*TODO: There's a PID controller object that is a member of a class which extends SampleRobot and implements PIDOutput.
 If implements is used to tailor an abstract method in a parent class to your needs, and the PID controller object uses keyword this as the PIDOutput
@@ -132,7 +137,7 @@ and have the 'this' keyword in that location).
 
         //TODO: How come the actual mechanics of how to move the motors are in tankDrive but not in autoAlign?
 
-    }
+
 
 
 

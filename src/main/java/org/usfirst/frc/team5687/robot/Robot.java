@@ -49,10 +49,7 @@ public class Robot extends IterativeRobot { //TODO: Add an impliments PID output
 
     CameraServer cameraServer;
     String camera = "cam0";
-    static final double kP = 0.03;
-    static final double kI = 0.00;
-    static final double kD = 0.00;
-    static final double kF = 0.00;
+
 
     /**
      * This function is run when the robot is first started up and should be
