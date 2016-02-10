@@ -13,7 +13,7 @@ public class RobotMap {
      */
     public static class Drive {
         public static final int LEFT_MOTORS = 0;
-        public static final int RIGHT_MOTORS = 1;
+        public static final int RIGHT_MOTORS = 3;
 
         public static final int LEFT_ENCODER_CHANNEL_A = 8;
         public static final int LEFT_ENCODER_CHANNEL_B = 9;
