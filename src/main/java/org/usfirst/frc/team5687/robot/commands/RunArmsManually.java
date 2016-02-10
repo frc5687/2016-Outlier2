@@ -19,7 +19,7 @@ public class RunArmsManually extends Command {
 
     @Override
     protected void execute() {
-        arm.setSpeed(oi.getRaiseArmSpeed() - oi.getLowerArmSpeed());
+        arm.setSpeed(oi.getArmSpeed());
     }
 
     @Override

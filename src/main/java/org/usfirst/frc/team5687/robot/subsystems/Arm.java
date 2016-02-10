@@ -18,8 +18,6 @@ public class Arm extends Subsystem {
     }
 
     public void setSpeed (double speed) {
-        speed = Math.min(speed, armMotor.get() + Constants.Limits.ACCELERATION_CAP);
-        speed = Math.max(speed, armMotor.get() - Constants.Limits.ACCELERATION_CAP);
 
         armMotor.set(speed);
     }
