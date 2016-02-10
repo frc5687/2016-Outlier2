@@ -17,6 +17,12 @@ import org.usfirst.frc.team5687.robot.commands.AutonomousTestCVT;
 import org.usfirst.frc.team5687.robot.subsystems.Intake;
 import org.usfirst.frc.team5687.robot.subsystems.Shooter;
 import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team5687.robot.utils.Reader;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 /*
  * The VM is configured to automatically run this class, and to call the
@@ -83,6 +89,9 @@ public class Robot extends IterativeRobot {
         autoChooser.addObject("Calibrate CVT", new AutonomousTestCVT());
         autoChooser.addObject("Chase Target", new AutoChaseTarget());
         SmartDashboard.putData("Autonomous mode", autoChooser);
+
+        // Report git info to the dashboard
+        SmartDashboard.putString("Git Info", Reader.gitInfo);
 
         //Setup Camera Code
         cameraServer = CameraServer.getInstance();
