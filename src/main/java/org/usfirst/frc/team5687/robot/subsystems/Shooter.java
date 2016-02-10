@@ -16,7 +16,7 @@ public class Shooter extends Subsystem {
      * Constructor
      */
     public Shooter() {
-        wheelMotor = new VictorSP(RobotMap.shooterWheelMotor);
+        wheelMotor = new VictorSP(RobotMap.Shooter.WHEEL_MOTOR);
     }
 
     /**
