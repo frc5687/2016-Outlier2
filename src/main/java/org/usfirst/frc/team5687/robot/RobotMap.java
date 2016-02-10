@@ -39,4 +39,8 @@ public class RobotMap {
     public static class Intake {
         public static int INTAKE_MOTOR = 1;
     }
+
+    public static class Arm {
+        public static final int ARM_MOTOR = 4;
+    }
 }
