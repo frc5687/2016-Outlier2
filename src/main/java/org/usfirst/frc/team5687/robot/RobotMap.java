@@ -33,4 +33,10 @@ public class RobotMap {
         public static final int WHEEL_MOTOR = 2;
     }
 
+    /**
+     * Intake ports
+     */
+    public static class Intake {
+        public static int INTAKE_MOTOR;
+    }
 }
