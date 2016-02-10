@@ -119,7 +119,8 @@ public class DriveTrain extends Subsystem {
     }
     //Method that does the aligning based on the current angle and the desired angle
     public void autoAlign(){
-        AutoAlign.turnController.setSetpoint(0.00); //TODO: What is the setpoint?
+        AutoAlign.turnController.setSetpoint(0.00);//TODO: Setpoint = 0 because we want it to drive straight?
+        AutoAlign.turnController.setContinuous(true);//Robot automatically takes the shorter distance in a circle
     }
 
  //TODO: Why does one object get the motors and one object set the setpoint? How does the robot know that it needs to do .setPoint for the motors?
@@ -134,7 +135,6 @@ and have the 'this' keyword in that location).
         /* Typically, only the P value needs to be modified.                   */
         /*LiveWindow.addActuator("DriveSystem", "RotateController", turnController);
     }*/
-
         //TODO: How come the actual mechanics of how to move the motors are in tankDrive but not in autoAlign?
 
 
