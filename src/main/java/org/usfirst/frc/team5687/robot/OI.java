@@ -84,7 +84,7 @@ public class OI {
      */
     public double getIntakeSpeed() {
         // Joystick's y-axis is set to control intake speed
-        return Helpers.applyDeadband(joystick.getRawAxis(2), Constants.Deadbands.INTAKE_STICK);
+        return Helpers.applyDeadband(joystick.getRawAxis(1), Constants.Deadbands.INTAKE_STICK);
     }
 
     /**
