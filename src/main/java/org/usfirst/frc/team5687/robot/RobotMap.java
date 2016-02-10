@@ -30,13 +30,13 @@ public class RobotMap {
      * Shooter ports
      */
     public static class Shooter {
-        public static final int WHEEL_MOTOR = 2;
+        public static final int WHEEL_MOTOR = 8;
     }
 
     /**
      * Intake ports
      */
     public static class Intake {
-        public static int INTAKE_MOTOR = 1;
+        public static final int INTAKE_MOTOR = 9;
     }
 }
