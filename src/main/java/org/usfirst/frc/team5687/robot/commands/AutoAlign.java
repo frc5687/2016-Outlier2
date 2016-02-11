@@ -15,7 +15,9 @@ public class AutoAlign extends Command implements PIDOutput{
     AHRS ahrs;
     RobotDrive myRobot;
     Joystick stick;
+    RobotDrive rotate;
 
+    rotate = new RobotDrive;//TODO: Fix this and see if you can use the rotateVector method to drive the robot.
     double rotateToAngleRate;
 
    /* public AutoAlign(double targetAngle, double angle) {
@@ -24,6 +26,7 @@ public class AutoAlign extends Command implements PIDOutput{
         DriverStation.reportError("Turning to Angle", false);
     }
 */
+
     static final double kP = 0.03;
     static final double kI = 0.00;
     static final double kD = 0.00;
