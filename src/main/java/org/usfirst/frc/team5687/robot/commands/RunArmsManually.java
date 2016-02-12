@@ -12,9 +12,12 @@ public class RunArmsManually extends Command {
     Arms arms = Robot.arms;
     OI oi = Robot.oi;
 
+    public RunArmsManually() {
+        requires(arms);
+    }
+
     @Override
     protected void initialize() {
-        requires(arms);
     }
 
     @Override
@@ -29,11 +32,9 @@ public class RunArmsManually extends Command {
 
     @Override
     protected void end() {
-
     }
 
     @Override
     protected void interrupted() {
-
     }
 }
