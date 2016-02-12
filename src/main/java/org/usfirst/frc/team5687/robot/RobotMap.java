@@ -40,7 +40,7 @@ public class RobotMap {
         public static int INTAKE_MOTOR = 1;
     }
 
-    public static class Arm {
-        public static final int ARM_MOTOR = 4;
+    public static class Arms {
+        public static final int ARMS_MOTOR = 4;
     }
 }

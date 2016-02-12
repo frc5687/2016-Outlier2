@@ -6,6 +6,7 @@ import org.usfirst.frc.team5687.robot.Robot;
 import org.usfirst.frc.team5687.robot.subsystems.Arms;
 
 /**
+ * Command for basic manual-control of the arms
  * Created by John on 2/10/2016.
  */
 public class RunArmsManually extends Command {
