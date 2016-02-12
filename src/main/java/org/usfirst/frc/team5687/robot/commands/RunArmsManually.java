@@ -3,23 +3,23 @@ package org.usfirst.frc.team5687.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5687.robot.OI;
 import org.usfirst.frc.team5687.robot.Robot;
-import org.usfirst.frc.team5687.robot.subsystems.Arm;
+import org.usfirst.frc.team5687.robot.subsystems.Arms;
 
 /**
  * Created by John on 2/10/2016.
  */
 public class RunArmsManually extends Command {
-    Arm arm = Robot.arm;
+    Arms arms = Robot.arms;
     OI oi = Robot.oi;
 
     @Override
     protected void initialize() {
-        requires(arm);
+        requires(arms);
     }
 
     @Override
     protected void execute() {
-        arm.setSpeed(oi.getArmSpeed());
+        arms.setSpeed(oi.getArmSpeed());
     }
 
     @Override

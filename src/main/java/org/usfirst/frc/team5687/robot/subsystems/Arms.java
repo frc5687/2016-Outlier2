@@ -9,17 +9,17 @@ import org.usfirst.frc.team5687.robot.commands.RunArmsManually;
 /**
  * Created by John on 2/10/2016.
  */
-public class Arm extends Subsystem {
+public class Arms extends Subsystem {
 
-    private VictorSP armMotor;
+    private VictorSP armsMotor;
 
-    public Arm() {
-        armMotor = new VictorSP(RobotMap.Arm.ARM_MOTOR);
+    public Arms() {
+        armsMotor = new VictorSP(RobotMap.Arm.ARM_MOTOR);
     }
 
     public void setSpeed (double speed) {
 
-        armMotor.set(speed);
+        armsMotor.set(speed);
     }
 
     @Override
