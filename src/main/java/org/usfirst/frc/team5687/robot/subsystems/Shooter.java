@@ -2,6 +2,7 @@ package org.usfirst.frc.team5687.robot.subsystems;
 
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.RobotMap;
 import org.usfirst.frc.team5687.robot.commands.RunShooterManually;
 
@@ -11,10 +12,8 @@ public class Shooter extends Subsystem {
      * Victor speed controller for the shooter motor
      */
     private VictorSP wheelMotor;
+    private Double SpinTime;
 
-    /**
-     * Constructor
-     */
     public Shooter() {
         wheelMotor = new VictorSP(RobotMap.Shooter.WHEEL_MOTOR);
     }
@@ -25,11 +24,15 @@ public class Shooter extends Subsystem {
      */
     public void setSpeed(double speed) {
         wheelMotor.set(speed);
+        if (speed != 0) {
+            SpinTime = SmartDashboard.getNumber("Shooter Spin Up Time", 0);
+            SpinTime += 0.02;
+            SmartDashboard.putNumber("Shooter Spin Up Time", SpinTime);
+        } else {
+            SmartDashboard.putNumber("Shooter Spin Up Time", 0);
+        }
     }
 
-    /**
-     * Set the default command for the shooter subsystem
-     */
     public void initDefaultCommand() {
         setDefaultCommand(new RunShooterManually());
     }

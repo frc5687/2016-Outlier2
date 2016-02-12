@@ -64,5 +64,12 @@ public class Constants {
             public static final boolean REVERSED = true;
             public static final double INCHES_PER_PULSE = Defaults.INCHES_PER_PULSE;
         }
+
+        public class ShooterWheel {
+            public static final int PULSES_PER_ROTATION = 945; // TODO: This is placeholder value, find what it should be
+            public static final double WHEEL_DIAMETER = 6;
+            public static final boolean REVERSED = Defaults.REVERSED;
+            public static final double INCHES_PER_PULSE = (Math.PI * WHEEL_DIAMETER) * Defaults.SCALAR_RATIO / Defaults.PULSES_PER_ROTATION;
+        }
     }
 }
