@@ -22,7 +22,7 @@ public class RunArmsManually extends Command {
 
     @Override
     protected void execute() {
-        arms.setSpeed(oi.getArmSpeed());
+        arms.setSpeed(oi.getArmsSpeed());
     }
 
     @Override

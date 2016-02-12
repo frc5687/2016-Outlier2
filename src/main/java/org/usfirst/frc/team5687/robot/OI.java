@@ -87,8 +87,8 @@ public class OI {
         return Helpers.applyDeadband(joystick.getRawAxis(2), Constants.Deadbands.INTAKE_STICK);
     }
 
-    public double getArmSpeed() {
-        return Helpers.applyDeadband(gamepad.getRawAxis(2), Constants.Deadbands.ARM) - Helpers.applyDeadband(gamepad.getRawAxis(3), Constants.Deadbands.ARM);
+    public double getArmsSpeed() {
+        return Helpers.applyDeadband(Gamepad.Axes.LEFT_TRIGGER.getNumber(), Constants.Deadbands.ARM) - Helpers.applyDeadband(Gamepad.Axes.RIGHT_TRIGGER.getNumber(), Constants.Deadbands.ARM);
     }
 
     /**
