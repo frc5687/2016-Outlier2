@@ -38,5 +38,6 @@ public class RobotMap {
      */
     public static class Intake {
         public static final int INTAKE_MOTOR = 9;
+        public static final int INFARED_SENSOR = 30; // change to actual port at some point
     }
 }
