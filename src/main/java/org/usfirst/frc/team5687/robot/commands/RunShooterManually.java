@@ -1,7 +1,6 @@
 package org.usfirst.frc.team5687.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.OI;
 import org.usfirst.frc.team5687.robot.Robot;
 import org.usfirst.frc.team5687.robot.subsystems.Shooter;
