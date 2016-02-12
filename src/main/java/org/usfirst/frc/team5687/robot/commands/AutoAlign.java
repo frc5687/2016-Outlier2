@@ -3,59 +3,60 @@ package org.usfirst.frc.team5687.robot.commands;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team5687.robot.Robot;
-import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
-
+import static org.usfirst.frc.team5687.robot.Robot.imu;
+import static org.usfirst.frc.team5687.robot.Robot.driveTrain;
 /**
  * Created by Maya on 2/6/2016.
  */
 public class AutoAlign extends Command implements PIDOutput{
-    DriveTrain driveTrain = Robot.driveTrain;
     public static PIDController turnController;
-    AHRS ahrs;
-    RobotDrive myRobot;
-    Joystick stick;
-    RobotDrive rotate;
-
-    rotate = new RobotDrive;//TODO: Fix this and see if you can use the rotateVector method to drive the robot.
-    double rotateToAngleRate;
-
-   /* public AutoAlign(double targetAngle, double angle) {
-        this.targetAngle = targetAngle;
-        this.angle = angle;
-        DriverStation.reportError("Turning to Angle", false);
-    }
-*/
 
     static final double kP = 0.03;
     static final double kI = 0.00;
     static final double kD = 0.00;
     static final double kF = 0.00;
-
+    static final double rotationDeadband = 0.1;
     static final double kToleranceDegrees = 2.0f;
 
-    turnController = new PIDController(kP, kI, kD, kF, ahrs, this);
+    double rotateToAngleRate;
+    double targetAngle;
+
+
+   public AutoAlign(double targetAngle) {
+        this.targetAngle = targetAngle;
+        DriverStation.reportError("Turning to Angle", false);
+
+       turnController = new PIDController(kP, kI, kD, kF, imu, this);
+       turnController.setInputRange(-180.0f,  180.0f);
+       turnController.setOutputRange(-1.0, 1.0);
+       turnController.setAbsoluteTolerance(kToleranceDegrees);
+       turnController.setContinuous(true);
+    }
 
 
 
     protected void initialize(){
-
+        turnController.enable();
     }
 
 
-    protected void execute(){driveTrain.autoAlign();}//Classname.methodName(use these to align robot);
-
-
+    protected void execute(){
+        // Base turning on the rotateToAngleRate...
+        turnController.enable();
+        driveTrain.tankDrive(rotateToAngleRate, -1*rotateToAngleRate);
     }
+
+
     protected boolean isFinished() {
-        return true; //TODO: Just so it will compile
-
+        // Stop rotating when the PID speed drops below our deadband.
+        return Math.abs(rotateToAngleRate)< rotationDeadband;
     }
-    protected void end() {
 
+    protected void end() {
+        turnController.disable();
     }
     protected void interrupted() {
-
+        turnController.disable();
     }
 
     @Override
