@@ -15,7 +15,7 @@ public class Shooter extends Subsystem {
     private Double SpinTime;
 
     public Shooter() {
-        wheelMotor = new VictorSP(RobotMap.shooterWheelMotor);
+        wheelMotor = new VictorSP(RobotMap.Shooter.WHEEL_MOTOR);
     }
 
     /**
