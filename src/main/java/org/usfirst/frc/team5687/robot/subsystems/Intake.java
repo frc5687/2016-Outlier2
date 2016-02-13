@@ -29,6 +29,9 @@ public class Intake extends Subsystem {
         setDefaultCommand(new RunIntakeManually());
     }
 
+    /**
+     * Moves sesnor data to smart dashboard
+     */
     public void SendDashboardData() {
         SmartDashboard.putNumber("IR distance", boulderSensor.getValue());
     }
