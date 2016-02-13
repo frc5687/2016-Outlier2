@@ -88,6 +88,10 @@ public class OI {
         return Helpers.applyDeadband(joystick.getRawAxis(1), Constants.Deadbands.INTAKE_STICK);
     }
 
+    public double getArmsSpeed() {
+        return Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.LEFT_TRIGGER), Constants.Deadbands.ARMS) - Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.RIGHT_TRIGGER), Constants.Deadbands.ARMS);
+    }
+
     /**
      * Get the requested stick position from the gamepad, apply deadpand and sensitivity transforms, and return the result.
      * @param stick the gamepad axis to adjust and use

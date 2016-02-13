@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.commands.AutoChaseTarget;
 import org.usfirst.frc.team5687.robot.commands.AutonomousDoNothing;
 import org.usfirst.frc.team5687.robot.commands.AutonomousTestCVT;
+import org.usfirst.frc.team5687.robot.subsystems.Arms;
 import org.usfirst.frc.team5687.robot.subsystems.Intake;
 import org.usfirst.frc.team5687.robot.subsystems.Shooter;
 import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
@@ -56,6 +57,11 @@ public class Robot extends IterativeRobot {
     public static Intake intake;
 
     /**
+     * Represents the robot's arm
+     */
+    public static Arms arms;
+
+    /**
      * Represents the power distribution panel
      */
     public static PowerDistributionPanel powerDistributionPanel;
@@ -81,6 +87,7 @@ public class Robot extends IterativeRobot {
         driveTrain = new DriveTrain();
         shooter = new Shooter();
         intake = new Intake();
+        arms = new Arms();
         autoChooser = new SendableChooser();
         powerDistributionPanel = new PowerDistributionPanel();
         //TODO: new object(); DriveTrain
