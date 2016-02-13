@@ -68,6 +68,9 @@ public class DriveTrain extends Subsystem {
         return rightEncoder.getRate();
     }
 
+    public static double getBoulderDistance() {
+        return RobotMap.Intake.INFARED_SENSOR;
+    }
     public double getRightSpeed() {
         return rightMotor.getSpeed();
     }

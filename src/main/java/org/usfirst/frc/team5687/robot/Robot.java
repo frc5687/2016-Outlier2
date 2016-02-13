@@ -163,6 +163,7 @@ public class Robot extends IterativeRobot {
         sendIMUData();
         driveTrain.sendAmpDraw();
         Scheduler.getInstance().run();
+        Intake.SendDashboardData();
     }
 
     /**
