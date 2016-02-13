@@ -8,7 +8,7 @@ import org.usfirst.frc.team5687.robot.RobotMap;
 import org.usfirst.frc.team5687.robot.commands.RunIntakeManually;
 
 /**
- * Class for boulder intake subsystem
+ * Class  for boulder intake subsystem
  * @author wil
  */
 public class Intake extends Subsystem {
@@ -18,7 +18,7 @@ public class Intake extends Subsystem {
      */
     private VictorSP intakeMotor;
     private AnalogInput boulderSensor;
-    
+
     public Intake() {
         intakeMotor = new VictorSP(RobotMap.Intake.INTAKE_MOTOR);
         intakeMotor.setInverted(true);
@@ -37,6 +37,7 @@ public class Intake extends Subsystem {
     public void SendDashboardData() {
         SmartDashboard.putNumber("IR distance", boulderSensor.getValue());
     }
+    
     /**
      * Sets the speed of the intake
      * @param speed the desired speed value
