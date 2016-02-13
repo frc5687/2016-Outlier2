@@ -40,4 +40,8 @@ public class RobotMap {
         public static final int INTAKE_MOTOR = 9;
         public static int INFARED_SENSOR ; //TODO change to actual port at some point
     }
+
+    public static class Arms {
+        public static final int ARMS_MOTOR = 4;
+    }
 }

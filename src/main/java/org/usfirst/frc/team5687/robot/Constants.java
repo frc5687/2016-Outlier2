@@ -14,6 +14,7 @@ public class Constants {
         public static final double DRIVE_STICK = 0.1;
         public static final double SHOOTER_WHEELS = 0.1;
         public static final double INTAKE_STICK = 0.1;
+        public static final double ARMS = 0.1;
     }
 
     public class Limits {
