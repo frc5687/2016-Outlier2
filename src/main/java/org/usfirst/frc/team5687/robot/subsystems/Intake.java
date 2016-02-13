@@ -32,12 +32,12 @@ public class Intake extends Subsystem {
     }
 
     /**
-     * Moves sesnor data to smart dashboard
+     * Moves sensor data to smart dashboard
      */
     public void SendDashboardData() {
         SmartDashboard.putNumber("IR distance", boulderSensor.getValue());
     }
-    
+
     /**
      * Sets the speed of the intake
      * @param speed the desired speed value
