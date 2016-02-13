@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5687.robot.subsystems;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -16,9 +17,11 @@ public class Intake extends Subsystem {
      * VictorSP speed controller for intake motor
      */
     private VictorSP intakeMotor;
+    private AnalogInput boulderSensor;
+
 
     public Intake() {
-        intakeMotor = new VictorSP(RobotMap.Intake.INTAKE_MOTOR);
+        intakeMotor = new VictorSP(RobotMap.Intake.INTAKE_MOTOR); boulderSensor = new AnalogInput(RobotMap.Intake.INFARED_SENSOR);
     }
 
     @Override
@@ -26,11 +29,8 @@ public class Intake extends Subsystem {
         setDefaultCommand(new RunIntakeManually());
     }
 
-    public static double getBoulderDistance(){
-        return RobotMap.Intake.INFARED_SENSOR;
-    }
-    public static void SendDashboardData() {
-        SmartDashboard.putNumber("IR distance", getBoulderDistance());
+    public void SendDashboardData() {
+        SmartDashboard.putNumber("IR distance", boulderSensor.getValue());
     }
     /**
      * Sets the speed of the intake
