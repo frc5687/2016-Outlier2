@@ -49,11 +49,7 @@ public class Intake extends Subsystem {
      * @return Whether or not the boulder is primed
      */
     public boolean isPrimeAble() {
-        if (Math.abs(boulderSensor.getValue()- Constants.InfraRedConstants.PRIMED_OPTIMAL)< Constants.InfraRedConstants.PRIMED_TOLERANCE) {
-            return true;
-        } else{
-            return false;
-        }
+        return Math.abs(boulderSensor.getValue()- Constants.InfraRedConstants.PRIMED_OPTIMAL)< Constants.InfraRedConstants.PRIMED_TOLERANCE
     }
 
     /**
