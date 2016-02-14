@@ -44,6 +44,10 @@ public class Constants {
         public static final double MAX_AUTO_TRAVERSE_SECONDS = 5; //the maximum time the robot should need to travers a defense in Autonomous,
     }
 
+    public static int detectionThreshhold;
+    public static int primedThreshhold;
+    public static int capturedThreshhold;
+
     public class Encoders {
         public class Defaults {
             public static final boolean REVERSED = false;
