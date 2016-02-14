@@ -48,8 +48,8 @@ public class Intake extends Subsystem {
      * Checks if it is primed
      * @return Whether or not the boulder is primed
      */
-    public boolean isPrimed() {
-        if (Constants.primedThreshhold > boulderSensor.getValue() && boulderSensor.getValue()> Constants.capturedThreshhold) {
+    public boolean isPrimeAble() {
+        if (Math.abs(boulderSensor.getValue()-Constants.primedOptimal)< Constants.primedTolorance) {
             return true;
         } else{
             return false;
@@ -61,7 +61,7 @@ public class Intake extends Subsystem {
      * @return Whether or not the ball is captured
      */
     public boolean isCaptured(){
-        if(boulderSensor.getValue()< Constants.capturedThreshhold && boulderSensor.getValue() > Constants.primedThreshhold){
+        if(Math.abs(boulderSensor.getValue()-Constants.capturedOptimal)< Constants.capturedTolarance){
             return true;
         } else {
             return false;
@@ -75,10 +75,10 @@ public class Intake extends Subsystem {
         if (!isDetected()){
             SmartDashboard.putString("Boulder is", "Not Detected");
         }
-        if (!isPrimed() && isDetected()){
+        if (!isPrimeAble() && isDetected()){
             SmartDashboard.putString("Boulder is", "Detected");
         }
-        if (isPrimed()){
+        if (isPrimeAble()){
             SmartDashboard.putString("Boulder is","Primed");
         }
         if (isCaptured()){
