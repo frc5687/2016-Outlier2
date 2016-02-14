@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.vision.USBCamera;
 import org.usfirst.frc.team5687.robot.commands.AutoChaseTarget;
 import org.usfirst.frc.team5687.robot.commands.AutonomousDoNothing;
 import org.usfirst.frc.team5687.robot.commands.AutonomousTestCVT;
@@ -18,6 +19,7 @@ import org.usfirst.frc.team5687.robot.subsystems.Arms;
 import org.usfirst.frc.team5687.robot.subsystems.Intake;
 import org.usfirst.frc.team5687.robot.subsystems.Shooter;
 import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team5687.robot.utils.CustomCameraServer;
 import org.usfirst.frc.team5687.robot.utils.Reader;
 
 import java.io.File;
@@ -74,8 +76,12 @@ public class Robot extends IterativeRobot {
     Command autonomousCommand;
     SendableChooser autoChooser;
 
-    CameraServer cameraServer;
-    String camera = "cam0";
+    CustomCameraServer cameraServer;
+
+    USBCamera hornsCamera = new USBCamera(RobotMap.Cameras.hornsEnd);
+    USBCamera intakeCamera = new USBCamera(RobotMap.Cameras.intakeEnd);
+
+    String camera = RobotMap.Cameras.hornsEnd;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -101,9 +107,9 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putString("Git Info", Reader.gitInfo);
 
         //Setup Camera Code
-        cameraServer = CameraServer.getInstance();
+        cameraServer = CustomCameraServer.getInstance();
         cameraServer.setQuality(50);
-        cameraServer.startAutomaticCapture(camera);
+        cameraServer.startAutomaticCapture(hornsCamera);
 
         try {
             // Try to connect to the navX imu.
@@ -184,8 +190,14 @@ public class Robot extends IterativeRobot {
      * This function will switch the camera currently streaming to the DriverStation
      */
     public void switchCameras() {
-        camera = camera.equals("cam0")?"cam1":"cam0";
-        cameraServer.startAutomaticCapture(camera);
+        //cameraServer.stopAutomaticCapture();
+        if (camera.equals(RobotMap.Cameras.hornsEnd)) {
+            camera = RobotMap.Cameras.intakeEnd;
+            cameraServer.startAutomaticCapture(intakeCamera);
+        } else {
+            camera = RobotMap.Cameras.hornsEnd;
+            cameraServer.startAutomaticCapture(hornsCamera);
+        }
         DriverStation.reportError("Camera now streaming: "+camera,false);
     }
 
