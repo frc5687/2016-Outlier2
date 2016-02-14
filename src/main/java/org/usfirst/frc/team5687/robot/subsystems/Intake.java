@@ -45,4 +45,11 @@ public class Intake extends Subsystem {
     public void setSpeed(double speed) {
         intakeMotor.set(speed);
     }
+
+    /**
+     * Stops the intake motor
+     */
+    public void stop() {
+        intakeMotor.set(0);
+    }
 }
