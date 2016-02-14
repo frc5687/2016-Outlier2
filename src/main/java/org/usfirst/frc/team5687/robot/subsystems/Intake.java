@@ -37,7 +37,7 @@ public class Intake extends Subsystem {
      * @return Whether or not the infrared sensor sees anything
      */
     public boolean isDetected() {
-        if (boulderSensor.getValue() < Constants.detectionThreshhold) {
+        if (boulderSensor.getValue() < Constants.InfraRedConstants.DETECTION_THRESHOLD) {
             return true;
         } else {
             return false;
@@ -49,7 +49,7 @@ public class Intake extends Subsystem {
      * @return Whether or not the boulder is primed
      */
     public boolean isPrimeAble() {
-        if (Math.abs(boulderSensor.getValue()-Constants.primedOptimal)< Constants.primedTolorance) {
+        if (Math.abs(boulderSensor.getValue()- Constants.InfraRedConstants.PRIMED_OPTIMAL)< Constants.InfraRedConstants.PRIMED_TOLERANCE) {
             return true;
         } else{
             return false;
@@ -61,7 +61,7 @@ public class Intake extends Subsystem {
      * @return Whether or not the ball is captured
      */
     public boolean isCaptured(){
-        if(Math.abs(boulderSensor.getValue()-Constants.capturedOptimal)< Constants.capturedTolarance){
+        if((Constants.InfraRedConstants.CAPTURED_OPTIMAL-boulderSensor.getValue()<Constants.InfraRedConstants.CAPTURED_TOLERANCE)||(boulderSensor.getValue()>Constants.InfraRedConstants.CAPTURED_OPTIMAL)){
             return true;
         } else {
             return false;

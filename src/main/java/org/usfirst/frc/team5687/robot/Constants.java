@@ -41,14 +41,17 @@ public class Constants {
 
     public class Autonomous {
         public static final double MIN_AUTO_TRAVERSE_ANGLE = 9; // the minimum angle the robot will pitch when traversing a defense
-        public static final double MAX_AUTO_TRAVERSE_SECONDS = 5; //the maximum time the robot should need to travers a defense in Autonomous,
+        public static final double MAX_AUTO_TRAVERSE_SECONDS = 5; // the maximum time the robot should need to travers a defense in Autonomous,
     }
 
-    public static int detectionThreshhold = 1;
-    public static int primedOptimal  = 1000;
-    public static int primedTolorance = 100;
-    public static int capturedOptimal = 1300;
-    public static int capturedTolarance = 200;
+    public class InfraRedConstants {
+
+        public static final int DETECTION_THRESHOLD = 100;
+        public static final int PRIMED_OPTIMAL = 1000; // Optimal position of boulder for Priming the Shooter Wheel
+        public static final int PRIMED_TOLERANCE = 100; // Tolerance in either direction of boulder position for Priming
+        public static final int CAPTURED_OPTIMAL = 1300; // Optimal position of boulder for storing bolder and traversing defenses
+        public static final int CAPTURED_TOLERANCE = 200; // Tolerance in either direction of boulder position for carrying boulder
+    }
 
     public class Encoders {
         public class Defaults {
