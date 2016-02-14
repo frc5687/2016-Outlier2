@@ -1,8 +1,8 @@
 package org.usfirst.frc.team5687.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team5687.robot.Robot;
-import org.usfirst.frc.team5687.robot.subsystems.Intake;
+import org.usfirst.frc.team5687.robot.Constants;
+import static org.usfirst.frc.team5687.robot.Robot.intake;
 
 import java.util.Date;
 
@@ -11,22 +11,20 @@ import java.util.Date;
  * @author wil
  */
 public class Bowl extends Command{
-    Intake intake = Robot.intake;
     private long endTime;
 
     public Bowl() {
-
+        requires(intake);
     }
 
     @Override
     protected void initialize() {
-        intake = Robot.intake;
-        endTime = System.currentTimeMillis()+1000;
+        endTime = System.currentTimeMillis()+ Constants.Intake.BOWL_TIME;
     }
 
     @Override
     protected void execute() {
-        intake.setSpeed(-1);
+        intake.setSpeed(Constants.Intake.BOWL_SPEED);
     }
 
     @Override

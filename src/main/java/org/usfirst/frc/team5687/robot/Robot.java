@@ -83,7 +83,9 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-        oi = new OI();
+        // Report git info to the dashboard
+        SmartDashboard.putString("Git Info", Reader.gitInfo);
+
         robot = this;
         driveTrain = new DriveTrain();
         shooter = new Shooter();
@@ -91,15 +93,15 @@ public class Robot extends IterativeRobot {
         arms = new Arms();
         autoChooser = new SendableChooser();
         powerDistributionPanel = new PowerDistributionPanel();
-        //TODO: new object(); DriveTrain
+
+        // Commands need to be instantiated AFTER the subsystems.  Since the OI constructor instantiates several commands, we need it to be instantiated last.
+        oi = new OI();
 
         autoChooser.addDefault("Do Nothing At All", new AutonomousDoNothing());
         autoChooser.addObject("Calibrate CVT", new AutonomousTestCVT());
         autoChooser.addObject("Chase Target", new AutoChaseTarget());
         SmartDashboard.putData("Autonomous mode", autoChooser);
 
-        // Report git info to the dashboard
-        SmartDashboard.putString("Git Info", Reader.gitInfo);
 
         //Setup Camera Code
         cameraServer = CameraServer.getInstance();
