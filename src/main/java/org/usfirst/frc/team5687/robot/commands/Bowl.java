@@ -4,20 +4,24 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5687.robot.Robot;
 import org.usfirst.frc.team5687.robot.subsystems.Intake;
 
+import java.util.Date;
+
 /**
  * Command for bowling the boulder into a low goal
  * @author wil
  */
 public class Bowl extends Command{
     Intake intake = Robot.intake;
+    private long endTime;
 
     public Bowl() {
-        requires(intake);
+
     }
 
     @Override
     protected void initialize() {
-
+        intake = Robot.intake;
+        endTime = System.currentTimeMillis()+1000;
     }
 
     @Override
@@ -27,8 +31,7 @@ public class Bowl extends Command{
 
     @Override
     protected boolean isFinished() {
-        // return Intake.hasNoBoulder();
-        return false;
+        return System.currentTimeMillis()>endTime;
     }
 
     @Override

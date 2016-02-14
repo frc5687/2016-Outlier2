@@ -44,10 +44,6 @@ public class Robot extends IterativeRobot {
      */
     public static DriveTrain driveTrain;
 
-    /**
-     * Represents the operator interface/ controls
-     */
-    public static OI oi;
 
     public static Shooter shooter;
 
@@ -60,6 +56,11 @@ public class Robot extends IterativeRobot {
      * Represents the robot's arm
      */
     public static Arms arms;
+
+    /**
+     * Represents the operator interface/ controls
+     */
+    public static OI oi;
 
     /**
      * Represents the power distribution panel

@@ -22,7 +22,7 @@ public class OI {
     // Drive Train Buttons
     public static final int REVERSE = Gamepad.Buttons.BACK.getNumber();
     // Shooter Buttons
-    public static int BOWL;
+    public static int BOWL = 1;
 
     /**
      * Create a new instance of the operator interface
