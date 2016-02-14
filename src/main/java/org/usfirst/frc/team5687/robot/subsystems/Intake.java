@@ -66,15 +66,16 @@ public class Intake extends Subsystem {
         SmartDashboard.putNumber("IR distance", boulderSensor.getValue());
         if (!isDetected()){
             SmartDashboard.putString("Boulder is", "Not Detected");
-        }
-        if (!isPrimeAble() && isDetected()){
-            SmartDashboard.putString("Boulder is", "Detected");
-        }
-        if (isPrimeAble()){
-            SmartDashboard.putString("Boulder is","Primeable");
-        }
-        if (isCaptured()){
-            SmartDashboard.putString("Boulder is", "Captured");
+        } else {
+            if (!isPrimeAble() && isDetected()){
+                SmartDashboard.putString("Boulder is", "Detected");
+            }
+            if (isPrimeAble()){
+                SmartDashboard.putString("Boulder is","Primeable");
+            }
+            if (isCaptured()){
+                SmartDashboard.putString("Boulder is", "Captured");
+            }
         }
     }
 
