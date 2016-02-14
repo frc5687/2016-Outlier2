@@ -58,26 +58,19 @@ task gitInfo(dependsOn: build) {
 
   println "[branch] " + project.branch
   println "[commit] " + project.revision
-
-  cmd = "git diff HEAD --shortstat"
-  def mod = cmd.execute().text.trim()
-  if (mod != null && mod.length() != 0) {
-    project.ext.modified = mod.substring(0, 1)
-    println "[modifed] " + project.modified
-  }
 }
 
 task gitLog << {
   description = 'When deploy, logs and overwrites branch and version to a log file'
   def logFile = new File('src/main/java/org/usfirst/frc/team5687/robot/utils/Reader.java')
-  def mod = ""
-  if (project.modified != null & project.modified.length() != 0) {
-    mod = " *"
-  }
+
+  def cmd = "git diff HEAD --shortstat"
+  def mod = cmd.execute().text.trim()
+  def modified = (mod != null && mod.length() != 0) ? " *" : ""
   def br = "\n\n"
   def reader = "package org.usfirst.frc.team5687.robot.utils;" + br
   reader += "/**\n * A file reader class to read current Git information from deployed robot code\n * @author wilstenholme\n */" + br
-  reader += "public class Reader {\n" + "    public static final String gitInfo = \"" + project.branch + " " + project.revision + mod + "\";\n }"
+  reader += "public class Reader {\n" + "    public static final String gitInfo = \"" + project.branch + " " + project.revision + modified + "\";\n }"
   logFile.text = reader
 }
 deploy.dependsOn(gitLog)
