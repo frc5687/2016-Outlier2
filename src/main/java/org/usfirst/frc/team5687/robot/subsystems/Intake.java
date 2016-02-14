@@ -61,11 +61,7 @@ public class Intake extends Subsystem {
      * @return Whether or not the ball is captured
      */
     public boolean isCaptured(){
-        if((Constants.InfraRedConstants.CAPTURED_OPTIMAL-boulderSensor.getValue()<Constants.InfraRedConstants.CAPTURED_TOLERANCE)||(boulderSensor.getValue()>Constants.InfraRedConstants.CAPTURED_OPTIMAL)){
-            return true;
-        } else {
-            return false;
-        }
+         return ((Constants.InfraRedConstants.CAPTURED_OPTIMAL-boulderSensor.getValue()<Constants.InfraRedConstants.CAPTURED_TOLERANCE)||(boulderSensor.getValue()>Constants.InfraRedConstants.CAPTURED_OPTIMAL));
     }
     /**
      * Moves sensor data to smart dashboard
