@@ -45,4 +45,11 @@ public class Intake extends Subsystem {
     public void setSpeed(double speed) {
         intakeMotor.set(speed);
     }
+
+    /**
+     * Returns true if the bouler has been captured, and false if it has not been captured
+     */
+    public boolean isCaptured() {
+        return true; // Placeholder
+    }
 }

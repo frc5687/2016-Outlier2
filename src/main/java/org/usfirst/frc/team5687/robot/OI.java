@@ -2,6 +2,7 @@ package org.usfirst.frc.team5687.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import org.usfirst.frc.team5687.robot.commands.CaptureBoulder;
 import org.usfirst.frc.team5687.robot.commands.ReverseDrive;
 import org.usfirst.frc.team5687.robot.utils.Gamepad;
 import org.usfirst.frc.team5687.robot.utils.Helpers;
@@ -19,6 +20,7 @@ public class OI {
     private final int REVERSE_DIRECTION = -1;
 
     public static final int REVERSE = Gamepad.Buttons.BACK.getNumber();
+    public static final int testCaptureBoulderButton = 3;
 
     /**
      * Create a new instance of the operator interface
@@ -28,8 +30,10 @@ public class OI {
         joystick = new Joystick(1);
 
         JoystickButton reverseButton = new JoystickButton(gamepad, REVERSE);
+        JoystickButton testCaptureBoulder = new JoystickButton(joystick, testCaptureBoulderButton);
 
         reverseButton.whenPressed(new ReverseDrive());
+        testCaptureBoulder.whenPressed(new CaptureBoulder());
     }
 
     /**
