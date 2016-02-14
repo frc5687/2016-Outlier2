@@ -52,23 +52,21 @@ def getTimestamp = {
 task gitInfo(dependsOn: build) {
   description = 'When build, logs the branch and version to build'
   def cmd = "git rev-parse --abbrev-ref HEAD"
-  ext.branch = cmd.execute().text.trim()
+  project.ext.branch = cmd.execute().text.trim()
   cmd = "git rev-parse --short HEAD"
-  ext.revision = cmd.execute().text.trim()
+  project.ext.set("revision", cmd.execute().text.trim())
 
-  project.ext.set("branch", ext.branch)
-  project.ext.set("revision", ext.revision)
   println "[branch] " + project.branch
   println "[commit] " + project.revision
 }
 
 task gitLog << {
   description = 'When deploy, logs and overwrites branch and version to a log file'
-  def cmdFile = new File('src/main/java/org/usfirst/frc/team5687/robot/utils/Reader.java')
+  def logFile = new File('src/main/java/org/usfirst/frc/team5687/robot/utils/Reader.java')
   def br = "\n\n"
-  def pck = "package org.usfirst.frc.team5687.robot.utils;" + br
-  def jvd = "/**\n * A file reader class to read current Git information from deployed robot code\n * @author wilstenholme\n */" + br
-  def reader = "public class Reader {\n" + "    public static final String gitInfo = \"" + project.branch + " " + project.revision + "\";\n }"
-  cmdFile.text = pck + jvd + reader
+  def reader = "package org.usfirst.frc.team5687.robot.utils;" + br
+  reader += "/**\n * A file reader class to read current Git information from deployed robot code\n * @author wilstenholme\n */" + br
+  reader += "public class Reader {\n" + "    public static final String gitInfo = \"" + project.branch + " " + project.revision + "\";\n }"
+  logFile.text = reader
 }
 deploy.dependsOn(gitLog)
