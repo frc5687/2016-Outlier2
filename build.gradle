@@ -58,6 +58,12 @@ task gitInfo(dependsOn: build) {
 
   println "[branch] " + project.branch
   println "[commit] " + project.revision
+
+  cmd = "git diff --shortstat"
+  def changes = cmd.execute().text.trim()
+  if (changes != null && changes.length() != 0) {
+    println "[modifed] " + changes.substring(0, 1)
+  }
 }
 
 task gitLog << {
