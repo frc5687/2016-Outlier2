@@ -12,18 +12,15 @@ public class RobotMap {
      * Drive Train ports
      */
     public static class Drive {
-        public static final int LEFT_MOTORS = 0;
-        public static final int RIGHT_MOTORS = 3;
+        public static final int LEFT_MOTOR_FRONT = 0;
+        public static final int LEFT_MOTOR_REAR = 1;
+        public static final int RIGHT_MOTOR_FRONT = 2;
+        public static final int RIGHT_MOTOR_REAR = 3;
 
         public static final int LEFT_ENCODER_CHANNEL_A = 8;
         public static final int LEFT_ENCODER_CHANNEL_B = 9;
         public static final int RIGHT_ENCODER_CHANNEL_A = 6;
         public static final int RIGHT_ENCODER_CHANNEL_B = 7;
-
-        public static final int PDP_LEFT_MOTOR1 = 0;
-        public static final int PDP_LEFT_MOTOR2 = 1;
-        public static final int PDP_RIGHT_MOTOR1 = 2;
-        public static final int PDP_RIGHT_MOTOR2 = 3;
     }
 
     /**
@@ -38,7 +35,7 @@ public class RobotMap {
      */
     public static class Intake {
         public static final int INTAKE_MOTOR = 9;
-        public static int INFARED_SENSOR = 0 ; //TODO change to actual port at some point
+        public static final int INFARED_SENSOR = 0;
     }
 
     public static class Arms {
