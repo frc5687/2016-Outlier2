@@ -53,6 +53,18 @@ public class Constants {
         public static final int CAPTURED_TOLERANCE = 200; // Tolerance in either direction of boulder position for carrying boulder
     }
 
+    public class Intake {
+        /**
+         * Time it takes for a boulder to clear the intake roller when bowling (in milliseconds).
+         */
+        public static final long BOWL_TIME = 1000;
+
+        /**
+         * Speed to run the intake roller when bowling.
+         */
+        public static final double BOWL_SPEED = -1.0;
+    }
+
     public class Encoders {
         public class Defaults {
             public static final boolean REVERSED = false;

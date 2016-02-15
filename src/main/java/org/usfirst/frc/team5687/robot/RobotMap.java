@@ -44,4 +44,9 @@ public class RobotMap {
     public static class Arms {
         public static final int ARMS_MOTOR = 4;
     }
+
+    public static class Cameras {
+        public static final String hornsEnd = "cam0";
+        public static final String intakeEnd = "cam1";
+    }
 }

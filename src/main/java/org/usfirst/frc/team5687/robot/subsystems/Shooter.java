@@ -17,6 +17,7 @@ public class Shooter extends Subsystem {
      */
     public Shooter() {
         wheelMotor = new VictorSP(RobotMap.Shooter.WHEEL_MOTOR);
+        wheelMotor.setInverted(true);
     }
 
     /**

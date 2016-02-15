@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import org.usfirst.frc.team5687.robot.Robot;
-import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
+import static org.usfirst.frc.team5687.robot.Robot.driveTrain;
 
 /**
  * Autonomous command for chasing a predefined target using input from a vision source via NetworkTables.
@@ -12,7 +12,6 @@ import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
  * Created by Ben Bernard on 1/31/2016.
  */
 public class AutoChaseTarget extends Command {
-    DriveTrain driveTrain;
     NetworkTable tracking;
 
 
