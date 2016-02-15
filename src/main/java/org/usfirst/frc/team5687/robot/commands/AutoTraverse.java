@@ -77,4 +77,9 @@ public abstract class AutoTraverse extends Command{
     protected void end() {
 
     }
+
+    @Override
+    protected void interrupted() {
+
+    }
 }

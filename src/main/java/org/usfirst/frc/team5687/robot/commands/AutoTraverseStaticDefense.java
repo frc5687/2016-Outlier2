@@ -8,31 +8,14 @@ import org.usfirst.frc.team5687.robot.Robot;
  */
 public class AutoTraverseStaticDefense extends AutoTraverse {
 
-    double desiredSpeed;
+    private double speed;
 
-    AutoTraverseStaticDefense(){
-        desiredSpeed = //TODO: not sure how to keep this open
-
-    }
-
-    protected void initialize(){
-        super.initialize();
+    public AutoTraverseStaticDefense(double speed){
+        this.speed = speed;
     }
 
     protected void execute() {
-
-        Robot.driveTrain.tankDrive(desiredSpeed,desiredSpeed);
+        Robot.driveTrain.tankDrive(speed,speed);
     }
-
-
-    protected boolean isFinished(){
-        super.isFinished();
-
-    }
-
-    @Override
-    protected void interrupted() {
-        Robot.driveTrain.tankDrive(0,0);
-
-    }
+    
 }
