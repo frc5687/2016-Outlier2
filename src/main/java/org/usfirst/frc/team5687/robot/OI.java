@@ -2,6 +2,7 @@ package org.usfirst.frc.team5687.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import org.usfirst.frc.team5687.robot.commands.Bowl;
 import org.usfirst.frc.team5687.robot.commands.ReverseDrive;
 import org.usfirst.frc.team5687.robot.utils.Gamepad;
 import org.usfirst.frc.team5687.robot.utils.Helpers;
@@ -18,7 +19,10 @@ public class OI {
     public static final int REVERSE_DIRECTION = -1;
     private static int currentDirection = FORWARD_DIRECTION; //Initial drive direction
 
+    // Drive Train Buttons
     public static final int REVERSE = Gamepad.Buttons.BACK.getNumber();
+    // Shooter Buttons
+    public static int BOWL = 1;
 
     /**
      * Create a new instance of the operator interface
@@ -28,8 +32,12 @@ public class OI {
         joystick = new Joystick(1);
 
         JoystickButton reverseButton = new JoystickButton(gamepad, REVERSE);
+        JoystickButton bowlButton = new JoystickButton(joystick, BOWL);
 
+        // Drive Train Commands
         reverseButton.whenPressed(new ReverseDrive());
+        // Shooter Commands
+        bowlButton.whenPressed(new Bowl());
     }
 
     /**
