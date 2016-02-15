@@ -11,11 +11,21 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.vision.USBCamera;
 import org.usfirst.frc.team5687.robot.commands.AutoChaseTarget;
 import org.usfirst.frc.team5687.robot.commands.AutonomousDoNothing;
 import org.usfirst.frc.team5687.robot.commands.AutonomousTestCVT;
+import org.usfirst.frc.team5687.robot.subsystems.Arms;
+import org.usfirst.frc.team5687.robot.subsystems.Intake;
 import org.usfirst.frc.team5687.robot.subsystems.Shooter;
 import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team5687.robot.utils.CustomCameraServer;
+import org.usfirst.frc.team5687.robot.utils.Reader;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 /*
  * The VM is configured to automatically run this class, and to call the
@@ -44,6 +54,16 @@ public class Robot extends IterativeRobot {
     public static Shooter shooter;
 
     /**
+     * Represents the robot's boulder intake
+     */
+    public static Intake intake;
+
+    /**
+     * Represents the robot's arm
+     */
+    public static Arms arms;
+
+    /**
      * Represents the power distribution panel
      */
     public static PowerDistributionPanel powerDistributionPanel;
@@ -56,8 +76,12 @@ public class Robot extends IterativeRobot {
     Command autonomousCommand;
     SendableChooser autoChooser;
 
-    CameraServer cameraServer;
-    String camera = "cam0";
+    CustomCameraServer cameraServer;
+
+    USBCamera hornsCamera = new USBCamera(RobotMap.Cameras.hornsEnd);
+    USBCamera intakeCamera = new USBCamera(RobotMap.Cameras.intakeEnd);
+
+    String camera = RobotMap.Cameras.hornsEnd;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -68,6 +92,8 @@ public class Robot extends IterativeRobot {
         robot = this;
         driveTrain = new DriveTrain();
         shooter = new Shooter();
+        intake = new Intake();
+        arms = new Arms();
         autoChooser = new SendableChooser();
         powerDistributionPanel = new PowerDistributionPanel();
         //TODO: new object(); DriveTrain
@@ -77,10 +103,13 @@ public class Robot extends IterativeRobot {
         autoChooser.addObject("Chase Target", new AutoChaseTarget());
         SmartDashboard.putData("Autonomous mode", autoChooser);
 
+        // Report git info to the dashboard
+        SmartDashboard.putString("Git Info", Reader.gitInfo);
+
         //Setup Camera Code
-        cameraServer = CameraServer.getInstance();
+        cameraServer = CustomCameraServer.getInstance();
         cameraServer.setQuality(50);
-        cameraServer.startAutomaticCapture(camera);
+        cameraServer.startAutomaticCapture(hornsCamera);
 
         try {
             // Try to connect to the navX imu.
@@ -147,6 +176,7 @@ public class Robot extends IterativeRobot {
         sendIMUData();
         driveTrain.sendAmpDraw();
         Scheduler.getInstance().run();
+        intake.SendDashboardData();
     }
 
     /**
@@ -160,8 +190,14 @@ public class Robot extends IterativeRobot {
      * This function will switch the camera currently streaming to the DriverStation
      */
     public void switchCameras() {
-        camera = camera.equals("cam0")?"cam1":"cam0";
-        cameraServer.startAutomaticCapture(camera);
+        //cameraServer.stopAutomaticCapture();
+        if (camera.equals(RobotMap.Cameras.hornsEnd)) {
+            camera = RobotMap.Cameras.intakeEnd;
+            cameraServer.startAutomaticCapture(intakeCamera);
+        } else {
+            camera = RobotMap.Cameras.hornsEnd;
+            cameraServer.startAutomaticCapture(hornsCamera);
+        }
         DriverStation.reportError("Camera now streaming: "+camera,false);
     }
 
@@ -208,9 +244,5 @@ public class Robot extends IterativeRobot {
         // Connectivity Debugging Support
         SmartDashboard.putNumber(   "IMU_Byte_Count",       imu.getByteCount());
         SmartDashboard.putNumber(   "IMU_Update_Count",     imu.getUpdateCount());
-
-        //Testing and working
-        DriverStation.reportError(String.format("IMU_Connected %1$b", imu.isConnected()), false);
-        DriverStation.reportError(String.format("IMU_IsMoving %1$b", imu.isMoving()), false);
     }
 }

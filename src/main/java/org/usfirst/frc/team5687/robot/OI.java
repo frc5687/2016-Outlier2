@@ -14,9 +14,9 @@ public class OI {
     private Gamepad gamepad;
     private Joystick joystick;
 
-    public static int currentDirection = 1; //Initial drive direction
-    private final int FORWARD_DIRECTION = 1;
-    private final int REVERSE_DIRECTION = -1;
+    public static final int FORWARD_DIRECTION = 1;
+    public static final int REVERSE_DIRECTION = -1;
+    private static int currentDirection = FORWARD_DIRECTION; //Initial drive direction
 
     public static final int REVERSE = Gamepad.Buttons.BACK.getNumber();
 
@@ -75,11 +75,29 @@ public class OI {
      * @return the control value for the shooter motor
      */
     public double getShooterSpeed(){
-        return Helpers.applyDeadband(joystick.getThrottle(), Constants.Deadbands.SHOOTER_WHEELS);
+        // Joystick's throttle axis range is set to the forward range of the shooter speed
+        return Helpers.applyDeadband((joystick.getThrottle() + 1) / 2, Constants.Deadbands.SHOOTER_WHEELS);
     }
 
     /**
-     * Get the requested stick position from the gamepad, apply deadpand and sensitivity transforms, and return the result.
+     * Gets the desired speed for the intake
+     * @return the control value for the intake motor
+     */
+    public double getIntakeSpeed() {
+        // Joystick's y-axis is set to control intake speed
+        return Helpers.applyDeadband(joystick.getRawAxis(1), Constants.Deadbands.INTAKE_STICK);
+    }
+
+    /**
+     * Gets the desired speed for the arms
+     * @return the control value for the arms' motor
+     */
+    public double getArmsSpeed() {
+        return Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.LEFT_TRIGGER), Constants.Deadbands.ARMS) - Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.RIGHT_TRIGGER), Constants.Deadbands.ARMS);
+    }
+
+    /**
+     * Get the requested stick position from the gamepad, apply deadband and sensitivity transforms, and return the result.
      * @param stick the gamepad axis to adjust and use
      * @return the adjusted control value from the gamepad
      */
