@@ -1,7 +1,6 @@
 package org.usfirst.frc.team5687.robot;
 
 import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -21,11 +20,6 @@ import org.usfirst.frc.team5687.robot.subsystems.Shooter;
 import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5687.robot.utils.CustomCameraServer;
 import org.usfirst.frc.team5687.robot.utils.Reader;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 
 /*
  * The VM is configured to automatically run this class, and to call the
@@ -74,7 +68,10 @@ public class Robot extends IterativeRobot {
     public static Robot robot;
 
     Command autonomousCommand;
-    SendableChooser autoChooser;
+    SendableChooser autoFullCommandChooser;
+
+    public SendableChooser autoDefenseChooser;
+    public SendableChooser autoPositionChooser;
 
     CustomCameraServer cameraServer;
 
@@ -94,14 +91,33 @@ public class Robot extends IterativeRobot {
         shooter = new Shooter();
         intake = new Intake();
         arms = new Arms();
-        autoChooser = new SendableChooser();
+        autoFullCommandChooser = new SendableChooser();
+        autoDefenseChooser = new SendableChooser();
+        autoPositionChooser = new SendableChooser();
+
         powerDistributionPanel = new PowerDistributionPanel();
         //TODO: new object(); DriveTrain
 
-        autoChooser.addDefault("Do Nothing At All", new AutonomousDoNothing());
-        autoChooser.addObject("Calibrate CVT", new AutonomousTestCVT());
-        autoChooser.addObject("Chase Target", new AutoChaseTarget());
-        SmartDashboard.putData("Autonomous mode", autoChooser);
+        autoFullCommandChooser.addDefault("Do Nothing At All", new AutonomousDoNothing());
+        autoFullCommandChooser.addObject("Calibrate CVT", new AutonomousTestCVT());
+        autoFullCommandChooser.addObject("Chase Target", new AutoChaseTarget());
+        autoFullCommandChooser.addObject("Use Position and Defense", new AutoChaseTarget());
+        SmartDashboard.putData("Full Autonomous mode", autoFullCommandChooser);
+
+        autoDefenseChooser.addDefault("Low Bar", "LowBar");
+        autoDefenseChooser.addObject("Moat", "Moat");
+        autoDefenseChooser.addObject("Rock Wall","RockWall");
+        autoDefenseChooser.addObject("Rough Terrain","RoughTerrain");
+        autoDefenseChooser.addObject("Rampart","Rampart");
+        SmartDashboard.putData("Select Defense", autoDefenseChooser);
+
+        autoDefenseChooser.addDefault("A (Low Bar)","A");
+        autoDefenseChooser.addObject("B","B");
+        autoDefenseChooser.addObject("C","C");
+        autoDefenseChooser.addObject("D","D");
+        autoDefenseChooser.addObject("E","E");
+        SmartDashboard.putData("Select Position", autoPositionChooser);
+
 
         // Report git info to the dashboard
         SmartDashboard.putString("Git Info", Reader.gitInfo);
@@ -148,7 +164,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousInit() {
         // schedule the autonomous command (example)
-        autonomousCommand = (Command)autoChooser.getSelected();
+        autonomousCommand = (Command) autoFullCommandChooser.getSelected();
         if (autonomousCommand!=null) {
             autonomousCommand.start();
         }
@@ -201,6 +217,7 @@ public class Robot extends IterativeRobot {
         DriverStation.reportError("Camera now streaming: "+camera,false);
     }
 
+
     protected void sendIMUData() {
         if (imu==null) {
             // If we can't find the imu, report that to the dashboard and return.
@@ -245,4 +262,13 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber(   "IMU_Byte_Count",       imu.getByteCount());
         SmartDashboard.putNumber(   "IMU_Update_Count",     imu.getUpdateCount());
     }
+
+    public String getSelectedDefense() {
+        return (String)autoDefenseChooser.getSelected();
+    }
+
+    public String getSelectedPosition() {
+        return (String)autoPositionChooser.getSelected();
+    }
+
 }
