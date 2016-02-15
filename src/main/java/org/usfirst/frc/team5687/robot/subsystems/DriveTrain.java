@@ -13,15 +13,19 @@ import org.usfirst.frc.team5687.robot.commands.DriveWith2Joysticks;
 public class DriveTrain extends Subsystem {
 
     private RobotDrive drive;
-    private VictorSP leftMotor;
-    private VictorSP rightMotor;
+    private VictorSP leftFrontMotor;
+    private VictorSP leftRearMotor;
+    private VictorSP rightFrontMotor;
+    private VictorSP rightRearMotor;
     private Encoder rightEncoder;
     private Encoder leftEncoder;
 
     public DriveTrain(){
-        leftMotor = new VictorSP(RobotMap.Drive.LEFT_MOTORS);
-        rightMotor = new VictorSP(RobotMap.Drive.RIGHT_MOTORS);
-        drive = new RobotDrive(leftMotor, rightMotor);
+        leftFrontMotor = new VictorSP(RobotMap.Drive.LEFT_MOTOR_FRONT);
+        leftRearMotor = new VictorSP(RobotMap.Drive.LEFT_MOTOR_REAR);
+        rightFrontMotor = new VictorSP(RobotMap.Drive.RIGHT_MOTOR_FRONT);
+        rightRearMotor = new VictorSP(RobotMap.Drive.RIGHT_MOTOR_REAR);
+        drive = new RobotDrive(leftFrontMotor, leftRearMotor, rightFrontMotor, rightRearMotor);
         rightEncoder = initializeEncoder(RobotMap.Drive.RIGHT_ENCODER_CHANNEL_A, RobotMap.Drive.RIGHT_ENCODER_CHANNEL_B, Constants.Encoders.RightDrive.REVERSED, Constants.Encoders.RightDrive.INCHES_PER_PULSE);
         leftEncoder = initializeEncoder(RobotMap.Drive.LEFT_ENCODER_CHANNEL_A, RobotMap.Drive.LEFT_ENCODER_CHANNEL_B, Constants.Encoders.LeftDrive.REVERSED, Constants.Encoders.LeftDrive.INCHES_PER_PULSE);
     }
@@ -49,7 +53,7 @@ public class DriveTrain extends Subsystem {
     }
 
     public double getLeftSpeed() {
-        return leftMotor.getSpeed();
+        return leftFrontMotor.getSpeed();
     }
 
     public double getLeftRPS() {
@@ -69,7 +73,7 @@ public class DriveTrain extends Subsystem {
     }
 
     public double getRightSpeed() {
-        return rightMotor.getSpeed();
+        return rightFrontMotor.getSpeed();
     }
 
     public double getRightRPS() {
@@ -89,11 +93,12 @@ public class DriveTrain extends Subsystem {
      * @return average of leftDistance and rightDistance
      */
     public double getDistance() { return (Robot.driveTrain.getLeftDistance()+Robot.driveTrain.getRightDistance()/2);}
+
     public void sendAmpDraw() {
-        SmartDashboard.putNumber("Current Draw/LeftMotor1", Robot.powerDistributionPanel.getCurrent(RobotMap.Drive.PDP_LEFT_MOTOR1)); //TODO: is this really where I'm getting current from? Check for all 4
-        SmartDashboard.putNumber("Current Draw/LeftMotor2", Robot.powerDistributionPanel.getCurrent(RobotMap.Drive.PDP_LEFT_MOTOR2));
-        SmartDashboard.putNumber("Current Draw/RightMotor1", Robot.powerDistributionPanel.getCurrent(RobotMap.Drive.PDP_RIGHT_MOTOR1));
-        SmartDashboard.putNumber("Current Draw/RightMotor2", Robot.powerDistributionPanel.getCurrent(RobotMap.Drive.PDP_RIGHT_MOTOR2));
+        SmartDashboard.putNumber("Current Draw/LeftFrontMotor", Robot.powerDistributionPanel.getCurrent(RobotMap.Drive.LEFT_MOTOR_FRONT));
+        SmartDashboard.putNumber("Current Draw/LeftRearMotor", Robot.powerDistributionPanel.getCurrent(RobotMap.Drive.LEFT_MOTOR_REAR));
+        SmartDashboard.putNumber("Current Draw/RightFrontMotor", Robot.powerDistributionPanel.getCurrent(RobotMap.Drive.RIGHT_MOTOR_FRONT));
+        SmartDashboard.putNumber("Current Draw/RightRearMotor", Robot.powerDistributionPanel.getCurrent(RobotMap.Drive.RIGHT_MOTOR_REAR));
     }
 
     /**
@@ -103,12 +108,12 @@ public class DriveTrain extends Subsystem {
      */
     public void tankDrive(double leftSpeed, double rightSpeed){
         // Limit change in leftSpeed to +/- ACCELERATION_CAP
-        leftSpeed = Math.min(leftSpeed, leftMotor.get() + Constants.Limits.ACCELERATION_CAP);
-        leftSpeed = Math.max(leftSpeed, leftMotor.get() - Constants.Limits.ACCELERATION_CAP);
+        leftSpeed = Math.min(leftSpeed, leftFrontMotor.get() + Constants.Limits.ACCELERATION_CAP);
+        leftSpeed = Math.max(leftSpeed, leftFrontMotor.get() - Constants.Limits.ACCELERATION_CAP);
 
         // Limit change in rightSpeed to +/- ACCELERATION_CAP
-        rightSpeed = Math.min(rightSpeed, rightMotor.get() + Constants.Limits.ACCELERATION_CAP);
-        rightSpeed = Math.max(rightSpeed, rightMotor.get() - Constants.Limits.ACCELERATION_CAP);
+        rightSpeed = Math.min(rightSpeed, rightFrontMotor.get() + Constants.Limits.ACCELERATION_CAP);
+        rightSpeed = Math.max(rightSpeed, rightFrontMotor.get() - Constants.Limits.ACCELERATION_CAP);
 
         drive.tankDrive(leftSpeed, rightSpeed, false);
 
