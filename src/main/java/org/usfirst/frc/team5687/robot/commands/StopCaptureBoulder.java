@@ -17,12 +17,12 @@ public class StopCaptureBoulder extends Command {
 
     @Override
     protected void initialize() {
-
+        finished = true;
     }
 
     @Override
     protected void execute() {
-        finished = true;
+        
     }
 
     @Override
