@@ -55,7 +55,7 @@ public class Constants {
 
     public class Intake {
         /**
-         * Speed to run the intake roller when bowling.
+         * Speed to run the intake roller to capture the boulder until detected
          */
         public static final double CAPTURE_SPEED = 1.0;
 

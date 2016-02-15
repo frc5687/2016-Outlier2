@@ -34,7 +34,9 @@ public class OI {
         gamepad = new Gamepad(0);
         joystick = new Joystick(1);
 
+        // Gamepad Buttons
         JoystickButton reverseButton = new JoystickButton(gamepad, REVERSE);
+        // Joystick Buttons
         JoystickButton captureButton = new JoystickButton(joystick, CAPTURE);
         JoystickButton bowlButton = new JoystickButton(joystick, BOWL);
 
