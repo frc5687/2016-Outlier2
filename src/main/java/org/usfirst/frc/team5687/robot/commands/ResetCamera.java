@@ -8,8 +8,7 @@ import static org.usfirst.frc.team5687.robot.Robot.oi;
 import static org.usfirst.frc.team5687.robot.Robot.robot;
 
 /**
- * Command for reversing the drive's direction
- * @author wil
+ * Command for resetting the cameras
  */
 public class ResetCamera extends Command{
 
