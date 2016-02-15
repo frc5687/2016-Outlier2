@@ -55,6 +55,11 @@ public class Constants {
 
     public class Intake {
         /**
+         * Speed to run the intake roller to capture the boulder until detected
+         */
+        public static final double CAPTURE_SPEED = 1.0;
+
+        /**
          * Time it takes for a boulder to clear the intake roller when bowling (in milliseconds).
          */
         public static final long BOWL_TIME = 1000;

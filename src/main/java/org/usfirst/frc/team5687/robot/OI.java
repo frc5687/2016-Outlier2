@@ -2,6 +2,7 @@ package org.usfirst.frc.team5687.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import org.usfirst.frc.team5687.robot.commands.CaptureBoulder;
 import org.usfirst.frc.team5687.robot.commands.Bowl;
 import org.usfirst.frc.team5687.robot.commands.ReverseDrive;
 import org.usfirst.frc.team5687.robot.utils.Gamepad;
@@ -15,6 +16,7 @@ public class OI {
     private Gamepad gamepad;
     private Joystick joystick;
 
+    // Drive Train Elements
     public static final int FORWARD_DIRECTION = 1;
     public static final int REVERSE_DIRECTION = -1;
     private static int currentDirection = FORWARD_DIRECTION; //Initial drive direction
@@ -22,7 +24,8 @@ public class OI {
     // Drive Train Buttons
     public static final int REVERSE = Gamepad.Buttons.BACK.getNumber();
     // Shooter Buttons
-    public static int BOWL = 1;
+    public static final int CAPTURE = 3;
+    public static final int BOWL = 1;
 
     /**
      * Create a new instance of the operator interface
@@ -31,12 +34,16 @@ public class OI {
         gamepad = new Gamepad(0);
         joystick = new Joystick(1);
 
+        // Gamepad Buttons
         JoystickButton reverseButton = new JoystickButton(gamepad, REVERSE);
+        // Joystick Buttons
+        JoystickButton captureButton = new JoystickButton(joystick, CAPTURE);
         JoystickButton bowlButton = new JoystickButton(joystick, BOWL);
 
         // Drive Train Commands
         reverseButton.whenPressed(new ReverseDrive());
         // Shooter Commands
+        captureButton.whenPressed(new CaptureBoulder());
         bowlButton.whenPressed(new Bowl());
     }
 

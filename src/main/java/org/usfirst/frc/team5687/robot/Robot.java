@@ -1,7 +1,6 @@
 package org.usfirst.frc.team5687.robot;
 
 import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -21,11 +20,6 @@ import org.usfirst.frc.team5687.robot.subsystems.Shooter;
 import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5687.robot.utils.CustomCameraServer;
 import org.usfirst.frc.team5687.robot.utils.Reader;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 
 /*
  * The VM is configured to automatically run this class, and to call the
@@ -179,7 +173,7 @@ public class Robot extends IterativeRobot {
         sendIMUData();
         driveTrain.sendAmpDraw();
         Scheduler.getInstance().run();
-        intake.SendDashboardData();
+        intake.updateDashboard();
     }
 
     /**
