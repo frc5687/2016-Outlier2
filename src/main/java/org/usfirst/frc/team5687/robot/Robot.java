@@ -79,8 +79,8 @@ public class Robot extends IterativeRobot {
 
     CustomCameraServer cameraServer;
 
-    USBCamera hornsCamera = new USBCamera(RobotMap.Cameras.hornsEnd);
-    USBCamera intakeCamera = new USBCamera(RobotMap.Cameras.intakeEnd);
+    USBCamera hornsCamera = null;
+    USBCamera intakeCamera = null;
 
     String camera = RobotMap.Cameras.hornsEnd;
 
@@ -108,11 +108,7 @@ public class Robot extends IterativeRobot {
         autoChooser.addObject("Chase Target", new AutoChaseTarget());
         SmartDashboard.putData("Autonomous mode", autoChooser);
 
-
-        //Setup Camera Code
-        cameraServer = CustomCameraServer.getInstance();
-        cameraServer.setQuality(50);
-        cameraServer.startAutomaticCapture(hornsCamera);
+        initializeCameras();
 
         try {
             // Try to connect to the navX imu.
@@ -247,5 +243,45 @@ public class Robot extends IterativeRobot {
         // Connectivity Debugging Support
         SmartDashboard.putNumber(   "IMU_Byte_Count",       imu.getByteCount());
         SmartDashboard.putNumber(   "IMU_Update_Count",     imu.getUpdateCount());
+    }
+
+    public void initializeCameras() {
+        if (hornsCamera!=null) {
+            hornsCamera.closeCamera();
+            hornsCamera = null;
+        }
+        if (intakeCamera!=null) {
+            intakeCamera.closeCamera();
+            intakeCamera = null;
+        }
+
+        try {
+            hornsCamera = new USBCamera(RobotMap.Cameras.hornsEnd);
+        } catch (Exception e) {
+            hornsCamera = null;
+        }
+
+        try {
+            intakeCamera = new USBCamera(RobotMap.Cameras.intakeEnd);
+        } catch (Exception e) {
+            intakeCamera = null;
+        }
+
+       if (cameraServer==null){
+        //Setup Camera Code
+            cameraServer = CustomCameraServer.getInstance();
+           cameraServer.setQuality(50);
+       }
+
+        if (camera.equals(RobotMap.Cameras.hornsEnd)) {
+            camera = RobotMap.Cameras.intakeEnd;
+            cameraServer.startAutomaticCapture(intakeCamera);
+        }else {
+            camera = RobotMap.Cameras.hornsEnd;
+            cameraServer.startAutomaticCapture(hornsCamera);
+        }
+
+
+
     }
 }
