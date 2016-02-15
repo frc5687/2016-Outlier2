@@ -3,6 +3,7 @@ package org.usfirst.frc.team5687.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.usfirst.frc.team5687.robot.commands.CaptureBoulder;
+import org.usfirst.frc.team5687.robot.commands.Bowl;
 import org.usfirst.frc.team5687.robot.commands.ReverseDrive;
 import org.usfirst.frc.team5687.robot.utils.Gamepad;
 import org.usfirst.frc.team5687.robot.utils.Helpers;
@@ -15,12 +16,16 @@ public class OI {
     private Gamepad gamepad;
     private Joystick joystick;
 
-    public static int currentDirection = 1; //Initial drive direction
-    private final int FORWARD_DIRECTION = 1;
-    private final int REVERSE_DIRECTION = -1;
+    // Drive Train Elements
+    public static final int FORWARD_DIRECTION = 1;
+    public static final int REVERSE_DIRECTION = -1;
+    private static int currentDirection = FORWARD_DIRECTION; //Initial drive direction
 
+    // Drive Train Buttons
     public static final int REVERSE = Gamepad.Buttons.BACK.getNumber();
-    public static final int testCaptureBoulderButton = 3;
+    // Shooter Buttons
+    public static final int CAPTURE = 3;
+    public static final int BOWL = 1;
 
     /**
      * Create a new instance of the operator interface
@@ -30,10 +35,14 @@ public class OI {
         joystick = new Joystick(1);
 
         JoystickButton reverseButton = new JoystickButton(gamepad, REVERSE);
-        JoystickButton testCaptureBoulder = new JoystickButton(joystick, testCaptureBoulderButton);
+        JoystickButton captureButton = new JoystickButton(joystick, CAPTURE);
+        JoystickButton bowlButton = new JoystickButton(joystick, BOWL);
 
+        // Drive Train Commands
         reverseButton.whenPressed(new ReverseDrive());
-        testCaptureBoulder.whenPressed(new CaptureBoulder());
+        // Shooter Commands
+        captureButton.whenPressed(new CaptureBoulder());
+        bowlButton.whenPressed(new Bowl());
     }
 
     /**
@@ -92,12 +101,16 @@ public class OI {
         return Helpers.applyDeadband(joystick.getRawAxis(1), Constants.Deadbands.INTAKE_STICK);
     }
 
+    /**
+     * Gets the desired speed for the arms
+     * @return the control value for the arms' motor
+     */
     public double getArmsSpeed() {
         return Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.LEFT_TRIGGER), Constants.Deadbands.ARMS) - Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.RIGHT_TRIGGER), Constants.Deadbands.ARMS);
     }
 
     /**
-     * Get the requested stick position from the gamepad, apply deadpand and sensitivity transforms, and return the result.
+     * Get the requested stick position from the gamepad, apply deadband and sensitivity transforms, and return the result.
      * @param stick the gamepad axis to adjust and use
      * @return the adjusted control value from the gamepad
      */

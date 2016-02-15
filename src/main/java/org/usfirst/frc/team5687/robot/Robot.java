@@ -1,7 +1,6 @@
 package org.usfirst.frc.team5687.robot;
 
 import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -11,6 +10,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.vision.USBCamera;
 import org.usfirst.frc.team5687.robot.commands.AutoChaseTarget;
 import org.usfirst.frc.team5687.robot.commands.AutonomousDoNothing;
 import org.usfirst.frc.team5687.robot.commands.AutonomousTestCVT;
@@ -18,12 +18,8 @@ import org.usfirst.frc.team5687.robot.subsystems.Arms;
 import org.usfirst.frc.team5687.robot.subsystems.Intake;
 import org.usfirst.frc.team5687.robot.subsystems.Shooter;
 import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team5687.robot.utils.CustomCameraServer;
 import org.usfirst.frc.team5687.robot.utils.Reader;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 
 /*
  * The VM is configured to automatically run this class, and to call the
@@ -44,10 +40,6 @@ public class Robot extends IterativeRobot {
      */
     public static DriveTrain driveTrain;
 
-    /**
-     * Represents the operator interface/ controls
-     */
-    public static OI oi;
 
     public static Shooter shooter;
 
@@ -62,6 +54,11 @@ public class Robot extends IterativeRobot {
     public static Arms arms;
 
     /**
+     * Represents the operator interface/ controls
+     */
+    public static OI oi;
+
+    /**
      * Represents the power distribution panel
      */
     public static PowerDistributionPanel powerDistributionPanel;
@@ -74,15 +71,21 @@ public class Robot extends IterativeRobot {
     Command autonomousCommand;
     SendableChooser autoChooser;
 
-    CameraServer cameraServer;
-    String camera = "cam0";
+    CustomCameraServer cameraServer;
+
+    USBCamera hornsCamera = new USBCamera(RobotMap.Cameras.hornsEnd);
+    USBCamera intakeCamera = new USBCamera(RobotMap.Cameras.intakeEnd);
+
+    String camera = RobotMap.Cameras.hornsEnd;
 
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
-        oi = new OI();
+        // Report git info to the dashboard
+        SmartDashboard.putString("Git Info", Reader.gitInfo);
+
         robot = this;
         driveTrain = new DriveTrain();
         shooter = new Shooter();
@@ -90,20 +93,20 @@ public class Robot extends IterativeRobot {
         arms = new Arms();
         autoChooser = new SendableChooser();
         powerDistributionPanel = new PowerDistributionPanel();
-        //TODO: new object(); DriveTrain
+
+        // Commands need to be instantiated AFTER the subsystems.  Since the OI constructor instantiates several commands, we need it to be instantiated last.
+        oi = new OI();
 
         autoChooser.addDefault("Do Nothing At All", new AutonomousDoNothing());
         autoChooser.addObject("Calibrate CVT", new AutonomousTestCVT());
         autoChooser.addObject("Chase Target", new AutoChaseTarget());
         SmartDashboard.putData("Autonomous mode", autoChooser);
 
-        // Report git info to the dashboard
-        SmartDashboard.putString("Git Info", Reader.gitInfo);
 
         //Setup Camera Code
-        cameraServer = CameraServer.getInstance();
+        cameraServer = CustomCameraServer.getInstance();
         cameraServer.setQuality(50);
-        cameraServer.startAutomaticCapture(camera);
+        cameraServer.startAutomaticCapture(hornsCamera);
 
         try {
             // Try to connect to the navX imu.
@@ -170,7 +173,7 @@ public class Robot extends IterativeRobot {
         sendIMUData();
         driveTrain.sendAmpDraw();
         Scheduler.getInstance().run();
-        intake.SendDashboardData();
+        intake.updateDashboard();
     }
 
     /**
@@ -184,8 +187,14 @@ public class Robot extends IterativeRobot {
      * This function will switch the camera currently streaming to the DriverStation
      */
     public void switchCameras() {
-        camera = camera.equals("cam0")?"cam1":"cam0";
-        cameraServer.startAutomaticCapture(camera);
+        //cameraServer.stopAutomaticCapture();
+        if (camera.equals(RobotMap.Cameras.hornsEnd)) {
+            camera = RobotMap.Cameras.intakeEnd;
+            cameraServer.startAutomaticCapture(intakeCamera);
+        } else {
+            camera = RobotMap.Cameras.hornsEnd;
+            cameraServer.startAutomaticCapture(hornsCamera);
+        }
         DriverStation.reportError("Camera now streaming: "+camera,false);
     }
 

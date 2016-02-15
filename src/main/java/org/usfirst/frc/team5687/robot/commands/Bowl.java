@@ -1,39 +1,40 @@
 package org.usfirst.frc.team5687.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team5687.robot.OI;
-import org.usfirst.frc.team5687.robot.Robot;
+import org.usfirst.frc.team5687.robot.Constants;
 import static org.usfirst.frc.team5687.robot.Robot.intake;
-import static org.usfirst.frc.team5687.robot.Robot.oi;
+
+import java.util.Date;
 
 /**
- * Command for basic manual control of the boulder intake
+ * Command for bowling the boulder into a low goal
  * @author wil
  */
-public class RunIntakeManually extends Command {
+public class Bowl extends Command{
+    private long endTime;
 
-    public RunIntakeManually() {
+    public Bowl() {
         requires(intake);
     }
 
     @Override
     protected void initialize() {
-
+        endTime = System.currentTimeMillis()+ Constants.Intake.BOWL_TIME;
     }
 
     @Override
     protected void execute() {
-        intake.setSpeed(oi.getIntakeSpeed());
+        intake.setSpeed(Constants.Intake.BOWL_SPEED);
     }
 
     @Override
     protected boolean isFinished() {
-        return false;
+        return System.currentTimeMillis()>endTime;
     }
 
     @Override
     protected void end() {
-
+        intake.stop();
     }
 
     @Override
