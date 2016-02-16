@@ -95,10 +95,10 @@ public class DriveTrain extends Subsystem {
     public double getDistance() { return (Robot.driveTrain.getLeftDistance()+Robot.driveTrain.getRightDistance()/2);}
 
     public void sendAmpDraw() {
-        SmartDashboard.putNumber("Current Draw/LeftFrontMotor", Robot.powerDistributionPanel.getCurrent(RobotMap.Drive.LEFT_MOTOR_FRONT));
-        SmartDashboard.putNumber("Current Draw/LeftRearMotor", Robot.powerDistributionPanel.getCurrent(RobotMap.Drive.LEFT_MOTOR_REAR));
-        SmartDashboard.putNumber("Current Draw/RightFrontMotor", Robot.powerDistributionPanel.getCurrent(RobotMap.Drive.RIGHT_MOTOR_FRONT));
-        SmartDashboard.putNumber("Current Draw/RightRearMotor", Robot.powerDistributionPanel.getCurrent(RobotMap.Drive.RIGHT_MOTOR_REAR));
+        SmartDashboard.putNumber("Current Draw/LeftFrontMotor", Robot.powerDistributionPanel.getCurrent(RobotMap.Drive.PDP_LEFT_MOTOR_FRONT));
+        SmartDashboard.putNumber("Current Draw/LeftRearMotor", Robot.powerDistributionPanel.getCurrent(RobotMap.Drive.PDP_LEFT_MOTOR_REAR));
+        SmartDashboard.putNumber("Current Draw/RightFrontMotor", Robot.powerDistributionPanel.getCurrent(RobotMap.Drive.PDP_RIGHT_MOTOR_FRONT));
+        SmartDashboard.putNumber("Current Draw/RightRearMotor", Robot.powerDistributionPanel.getCurrent(RobotMap.Drive.PDP_RIGHT_MOTOR_REAR));
     }
 
     /**

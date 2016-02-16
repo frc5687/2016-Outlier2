@@ -17,6 +17,11 @@ public class RobotMap {
         public static final int RIGHT_MOTOR_FRONT = 2;
         public static final int RIGHT_MOTOR_REAR = 3;
 
+        public static final int PDP_LEFT_MOTOR_FRONT = 14;
+        public static final int PDP_LEFT_MOTOR_REAR = 15;
+        public static final int PDP_RIGHT_MOTOR_FRONT = 12;
+        public static final int PDP_RIGHT_MOTOR_REAR = 33;
+
         public static final int LEFT_ENCODER_CHANNEL_A = 8;
         public static final int LEFT_ENCODER_CHANNEL_B = 9;
         public static final int RIGHT_ENCODER_CHANNEL_A = 6;
