@@ -4,12 +4,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import static org.usfirst.frc.team5687.robot.Robot.intake;
 
 /**
- * Command to abort a running command requiring the intake subsystem,
- * including the CaptureBoulder command.
+ * Command to abort running the intake motor
  */
 public class StopCaptureBoulder extends Command {
-
-    private Boolean finished = false;
 
     public StopCaptureBoulder() {
         requires(intake);
@@ -17,26 +14,23 @@ public class StopCaptureBoulder extends Command {
 
     @Override
     protected void initialize() {
-        finished = true;
     }
 
     @Override
     protected void execute() {
-        
+        intake.stop();
     }
 
     @Override
     protected boolean isFinished() {
-        return finished;
+        return true;
     }
 
     @Override
     protected void end() {
-
     }
 
     @Override
     protected void interrupted() {
-        finished = true;
     }
 }

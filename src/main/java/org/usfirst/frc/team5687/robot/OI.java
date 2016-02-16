@@ -25,8 +25,8 @@ public class OI {
     // Drive Train Buttons
     public static final int REVERSE = Gamepad.Buttons.BACK.getNumber();
     // Shooter Buttons
-    public static final int STOP_CAPTURE = 4;
     public static final int CAPTURE = 3;
+    public static final int STOP_CAPTURE = 4;
     public static final int BOWL = 1;
 
     /**
@@ -39,15 +39,15 @@ public class OI {
         // Gamepad Buttons
         JoystickButton reverseButton = new JoystickButton(gamepad, REVERSE);
         // Joystick Buttons
-        JoystickButton stopCaptureButton = new JoystickButton(joystick, STOP_CAPTURE);
         JoystickButton captureButton = new JoystickButton(joystick, CAPTURE);
+        JoystickButton stopCaptureButton = new JoystickButton(joystick, STOP_CAPTURE);
         JoystickButton bowlButton = new JoystickButton(joystick, BOWL);
 
         // Drive Train Commands
         reverseButton.whenPressed(new ReverseDrive());
         // Shooter Commands
-        stopCaptureButton.whenPressed(new StopCaptureBoulder());
         captureButton.whenPressed(new CaptureBoulder());
+        stopCaptureButton.whenPressed(new StopCaptureBoulder());
         bowlButton.whenPressed(new Bowl());
     }
 
