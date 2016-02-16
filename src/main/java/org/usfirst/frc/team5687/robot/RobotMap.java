@@ -35,11 +35,12 @@ public class RobotMap {
      */
     public static class Intake {
         public static final int INTAKE_MOTOR = 9;
-        public static final int INFARED_SENSOR = 0;
+        public static final int INFARED_SENSOR = 3;
     }
 
     public static class Arms {
         public static final int ARMS_MOTOR = 4;
+        public static final int ARMS_POT = 2;
     }
 
     public static class Cameras {
