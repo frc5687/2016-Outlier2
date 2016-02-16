@@ -38,11 +38,24 @@ public class RobotMap {
         public static final int INFRARED_SENSOR = 3;
     }
 
+    /**
+     * Arms ports
+     */
     public static class Arms {
-        public static final int ARMS_MOTOR = 4;
+        public static final int ARMS_MOTOR = 5;
         public static final int ARMS_POT = 2;
     }
 
+    /**
+     * Hanger ports
+     */
+    public static class Hanger {
+        public static final int HANGER_MOTOR = 4;
+    }
+
+    /**
+     * Camera ports
+     */
     public static class Cameras {
         public static final String hornsEnd = "cam0";
         public static final String intakeEnd = "cam1";
