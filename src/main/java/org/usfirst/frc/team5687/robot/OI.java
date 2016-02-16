@@ -44,7 +44,7 @@ public class OI {
         // Drive Train Commands
         reverseButton.whenPressed(new ReverseDrive());
         // Shooter Commands
-        captureButton.whenPressed(new CaptureBoulder());
+        captureButton.toggleWhenPressed(new CaptureBoulder());
         bowlButton.whenPressed(new Bowl());
     }
 
