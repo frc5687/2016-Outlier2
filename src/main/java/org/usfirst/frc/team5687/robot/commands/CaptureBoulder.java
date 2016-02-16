@@ -10,6 +10,7 @@ import static org.usfirst.frc.team5687.robot.Robot.intake;
 public class CaptureBoulder extends Command {
 
     public CaptureBoulder() {
+        super("CaptureBoulder");
         requires(intake);
     }
 

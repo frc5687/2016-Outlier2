@@ -9,6 +9,7 @@ import static org.usfirst.frc.team5687.robot.Robot.intake;
 public class StopCaptureBoulder extends Command {
 
     public StopCaptureBoulder() {
+        super("StopIntake");
         requires(intake);
     }
 
