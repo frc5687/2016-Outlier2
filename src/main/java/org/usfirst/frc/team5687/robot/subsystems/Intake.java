@@ -73,14 +73,14 @@ public class Intake extends Subsystem {
         if (!isDetected()){
             SmartDashboard.putString("Boulder is", "Not Detected");
         }
+        else if (isCaptured()){
+            SmartDashboard.putString("Boulder is", "Captured");
+        }
         else if (!isPrimeAble()){
             SmartDashboard.putString("Boulder is", "Detected");
         }
         else if (isPrimeAble()){
             SmartDashboard.putString("Boulder is","Primeable");
-        }
-        else if (isCaptured()){
-            SmartDashboard.putString("Boulder is", "Captured");
         }
     }
 

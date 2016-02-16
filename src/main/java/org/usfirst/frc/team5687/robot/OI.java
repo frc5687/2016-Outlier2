@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.usfirst.frc.team5687.robot.commands.CaptureBoulder;
 import org.usfirst.frc.team5687.robot.commands.Bowl;
+import org.usfirst.frc.team5687.robot.commands.Prime;
 import org.usfirst.frc.team5687.robot.commands.ReverseDrive;
 import org.usfirst.frc.team5687.robot.utils.Gamepad;
 import org.usfirst.frc.team5687.robot.utils.Helpers;
@@ -23,9 +24,10 @@ public class OI {
 
     // Drive Train Buttons
     public static final int REVERSE = Gamepad.Buttons.BACK.getNumber();
-    // Shooter Buttons
+    // Boulder Buttons
     public static final int CAPTURE = 3;
     public static final int BOWL = 1;
+    public static final int PRIME = 5;
 
     /**
      * Create a new instance of the operator interface
@@ -39,12 +41,14 @@ public class OI {
         // Joystick Buttons
         JoystickButton captureButton = new JoystickButton(joystick, CAPTURE);
         JoystickButton bowlButton = new JoystickButton(joystick, BOWL);
+        JoystickButton primeButton = new JoystickButton(joystick, PRIME);
 
         // Drive Train Commands
         reverseButton.whenPressed(new ReverseDrive());
-        // Shooter Commands
+        // Boulder Commands
         captureButton.whenPressed(new CaptureBoulder());
         bowlButton.whenPressed(new Bowl());
+        primeButton.whenPressed(new Prime());
     }
 
     /**

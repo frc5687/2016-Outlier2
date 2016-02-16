@@ -29,6 +29,13 @@ public class Shooter extends Subsystem {
     }
 
     /**
+     * Stops the shooter motor
+     */
+    public void stop() {
+        wheelMotor.set(0);
+    }
+
+    /**
      * Set the default command for the shooter subsystem
      */
     public void initDefaultCommand() {
