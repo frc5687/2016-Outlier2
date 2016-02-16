@@ -79,7 +79,7 @@ public class Constants {
         /**
          * Time for running shooter wheels for priming
          */
-        public static final long SHOOT_TIME = 5000;
+        public static final long SHOOT_TIME = 1500;
 
         /**
          * Speed to run the shooter wheels to shoot high goal

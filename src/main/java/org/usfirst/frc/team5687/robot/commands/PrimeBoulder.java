@@ -26,7 +26,7 @@ public class PrimeBoulder extends Command {
 
     @Override
     protected boolean isFinished() {
-        return intake.isPrimeAble();
+        return intake.isPrimable();
     }
 
     @Override

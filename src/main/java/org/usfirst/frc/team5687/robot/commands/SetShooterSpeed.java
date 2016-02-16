@@ -1,7 +1,6 @@
 package org.usfirst.frc.team5687.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.usfirst.frc.team5687.robot.Constants;
 
 import static org.usfirst.frc.team5687.robot.Robot.shooter;
@@ -36,7 +35,6 @@ public class SetShooterSpeed extends Command {
 
     @Override
     protected void end() {
-        shooter.stop();
     }
 
     @Override
