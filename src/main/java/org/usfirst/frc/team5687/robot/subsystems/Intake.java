@@ -25,7 +25,7 @@ public class Intake extends Subsystem {
     public Intake() {
         intakeMotor = new VictorSP(RobotMap.Intake.INTAKE_MOTOR);
         intakeMotor.setInverted(true);
-        boulderSensor = new AnalogInput(RobotMap.Intake.INFARED_SENSOR);
+        boulderSensor = new AnalogInput(RobotMap.Intake.INFRARED_SENSOR);
     }
 
     @Override
