@@ -34,6 +34,6 @@ public class CaptureBoulder extends Command {
 
     @Override
     protected void interrupted() {
-        intake.stop();
+        end();
     }
 }
