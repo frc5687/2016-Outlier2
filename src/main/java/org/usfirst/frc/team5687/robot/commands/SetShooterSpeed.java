@@ -11,16 +11,23 @@ import static org.usfirst.frc.team5687.robot.Robot.shooter;
  */
 public class SetShooterSpeed extends Command {
     private double speed;
+    private long time;
     private long endTime;
 
-    public SetShooterSpeed(double speed) {
+    /**
+     * Constructor for SetShooterSpeed
+     * @param speed motor speed to run the shooter
+     * @param time duration of time to run the shooter at speed
+     */
+    public SetShooterSpeed(double speed, long time) {
         requires(shooter);
         this.speed = speed;
+        this.time = time;
     }
 
     @Override
     protected void initialize() {
-        endTime = System.currentTimeMillis() + Constants.Shooter.SHOOT_TIME;
+        endTime = System.currentTimeMillis() + time;
     }
 
     @Override
