@@ -1,16 +1,15 @@
 package org.usfirst.frc.team5687.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team5687.robot.Constants;
 import static org.usfirst.frc.team5687.robot.Robot.intake;
 
 /**
- * Command to run intake motor until a boulder is detected
+ * Command to abort running the intake motor
  */
-public class CaptureBoulder extends Command {
+public class StopCaptureBoulder extends Command {
 
-    public CaptureBoulder() {
-        super("CaptureBoulder");
+    public StopCaptureBoulder() {
+        super("StopIntake");
         requires(intake);
     }
 
@@ -20,21 +19,19 @@ public class CaptureBoulder extends Command {
 
     @Override
     protected void execute() {
-        intake.setSpeed(Constants.Intake.CAPTURE_SPEED);
-    }
-
-    @Override
-    protected boolean isFinished() {
-        return intake.isCaptured();
-    }
-
-    @Override
-    protected void end() {
         intake.stop();
     }
 
     @Override
+    protected boolean isFinished() {
+        return true;
+    }
+
+    @Override
+    protected void end() {
+    }
+
+    @Override
     protected void interrupted() {
-        end();
     }
 }
