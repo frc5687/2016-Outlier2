@@ -67,9 +67,9 @@ public class AutoTraverseOnly extends CommandGroup{
 
         //none of this will work 'til it is merged with Rotate and AutoTraverse commands
 
-        //addSequential(new AutoDrive(.5,2));
-        // addSequential(new autoTraverseStaticDefense(traverseSpeed));
-        //addSequential(new autoAllign(rotateAngle));
+        addSequential(new AutoDrive(.5, 2));
+        addSequential(new AutoTraverseStaticDefense(traverseSpeed));
+        // addSequential(new AutoAlign(rotateAngle));
 
         DriverStation.reportError("Traversing "+Robot.robot.getSelectedDefense()+", in position "+Robot.robot.getSelectedPosition()+", at "+traverseSpeed+" speed.",false);
 
