@@ -11,6 +11,6 @@ public class Fire extends CommandGroup{
 
     public Fire() {
         addSequential(new SetIntakeSpeed(Constants.Intake.FIRE_SPEED, Constants.Intake.FIRE_TIME));
-        //addSequential(new SetShooterSpeed(0));
+        addSequential(new SetShooterSpeed(0, Constants.Shooter.STANDBY_TIME));
     }
 }

@@ -3,10 +3,7 @@ package org.usfirst.frc.team5687.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team5687.robot.commands.CaptureBoulder;
-import org.usfirst.frc.team5687.robot.commands.Bowl;
-import org.usfirst.frc.team5687.robot.commands.Prime;
-import org.usfirst.frc.team5687.robot.commands.ReverseDrive;
+import org.usfirst.frc.team5687.robot.commands.*;
 import org.usfirst.frc.team5687.robot.utils.Gamepad;
 import org.usfirst.frc.team5687.robot.utils.Helpers;
 
@@ -29,6 +26,7 @@ public class OI {
     public static final int CAPTURE = 3;
     public static final int BOWL = 1;
     public static final int PRIME = 5;
+    public static final int UNPRIME = 6;
     public static final int FIRE = 2;
 
     /**
@@ -44,6 +42,7 @@ public class OI {
         JoystickButton captureButton = new JoystickButton(joystick, CAPTURE);
         JoystickButton bowlButton = new JoystickButton(joystick, BOWL);
         JoystickButton primeButton = new JoystickButton(joystick, PRIME);
+        JoystickButton unprimeButton = new JoystickButton(joystick, UNPRIME);
         JoystickButton fireButton = new JoystickButton(joystick, FIRE);
 
         // Drive Train Commands
@@ -52,7 +51,8 @@ public class OI {
         captureButton.toggleWhenPressed(new CaptureBoulder());
         bowlButton.whenPressed(new Bowl());
         primeButton.whenPressed(new Prime());
-        //fireButton.whenPressed(new Fire());
+        unprimeButton.whenPressed(new CancelPrime());
+        fireButton.whenPressed(new Fire());
     }
 
     /**

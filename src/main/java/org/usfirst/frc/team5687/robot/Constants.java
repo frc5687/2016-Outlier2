@@ -70,6 +70,11 @@ public class Constants {
         public static final double PRIME_SPEED = -0.8;
 
         /**
+         * Speed to run the intake roller to unprime the boulder to captured position
+         */
+        public static final double UNPRIME_SPEED = 0.3;
+
+        /**
          * Speed to run the intake to fire the boulder for shooting a high goal
          */
         public static final double FIRE_SPEED = 1.0;
@@ -94,12 +99,22 @@ public class Constants {
         /**
          * Time for running shooter wheels for priming
          */
-        public static final long SHOOT_TIME = 1750;
+        public static final long PRIME_TIME = 1750;
+
+        /**
+         * Time allowed for shooter wheels to stop before unpriming the boulder
+         */
+        public static final long UNPRIME_TIME = 1500;
 
         /**
          * Speed to run the shooter wheels to shoot high goal
          */
         public static final double SHOOTER_SPEED = 1.0;
+
+        /**
+         * Time allowed for shooter wheels to stop after firing to standby
+         */
+        public static final long STANDBY_TIME = 1500;
     }
 
     public class Encoders {
