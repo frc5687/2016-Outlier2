@@ -11,9 +11,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.USBCamera;
-import org.usfirst.frc.team5687.robot.commands.AutoChaseTarget;
-import org.usfirst.frc.team5687.robot.commands.AutonomousDoNothing;
-import org.usfirst.frc.team5687.robot.commands.AutonomousTestCVT;
+import org.usfirst.frc.team5687.robot.commands.*;
 import org.usfirst.frc.team5687.robot.subsystems.Arms;
 import org.usfirst.frc.team5687.robot.subsystems.Intake;
 import org.usfirst.frc.team5687.robot.subsystems.Shooter;
@@ -94,20 +92,6 @@ public class Robot extends IterativeRobot {
         autoChooser = new SendableChooser();
         powerDistributionPanel = new PowerDistributionPanel();
 
-        // Commands need to be instantiated AFTER the subsystems.  Since the OI constructor instantiates several commands, we need it to be instantiated last.
-        oi = new OI();
-
-        autoChooser.addDefault("Do Nothing At All", new AutonomousDoNothing());
-        autoChooser.addObject("Calibrate CVT", new AutonomousTestCVT());
-        autoChooser.addObject("Chase Target", new AutoChaseTarget());
-        SmartDashboard.putData("Autonomous mode", autoChooser);
-
-
-        //Setup Camera Code
-        cameraServer = CustomCameraServer.getInstance();
-        cameraServer.setQuality(50);
-        cameraServer.startAutomaticCapture(hornsCamera);
-
         try {
             // Try to connect to the navX imu.
             imu = new AHRS(SPI.Port.kMXP);
@@ -121,6 +105,27 @@ public class Robot extends IterativeRobot {
             DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
             imu = null;
         }
+
+        // Commands need to be instantiated AFTER the subsystems.  Since the OI constructor instantiates several commands, we need it to be instantiated last.
+        oi = new OI();
+
+        autoChooser.addDefault("Do Nothing At All", new AutonomousDoNothing());
+        autoChooser.addObject("Calibrate CVT", new AutonomousTestCVT());
+        autoChooser.addObject("Chase Target", new AutoChaseTarget());
+        autoChooser.addObject("Left 90", new AutoAlign(-90));
+        autoChooser.addObject("Right 90", new AutoAlign(90));
+        autoChooser.addObject("Drive 12", new AutoDrive(-.4, 12f));
+        autoChooser.addObject("Drive 24", new AutoDrive(-.4, 24f));
+        autoChooser.addObject("Drive 48", new AutoDrive(-.4, 48f));
+        autoChooser.addObject("Drive 96", new AutoDrive(-.4, 96f));
+        SmartDashboard.putData("Autonomous mode", autoChooser);
+
+
+        //Setup Camera Code
+        cameraServer = CustomCameraServer.getInstance();
+        cameraServer.setQuality(50);
+        cameraServer.startAutomaticCapture(hornsCamera);
+
     }
 
 	/**
