@@ -4,7 +4,7 @@ import org.usfirst.frc.team5687.robot.Robot;
 
 
 /**
- * Created by Baxter on 2/15/2016.
+ * Created by Maya on 2/15/2016.
  */
 public class AutoTraverseStaticDefense extends AutoTraverse {
 
