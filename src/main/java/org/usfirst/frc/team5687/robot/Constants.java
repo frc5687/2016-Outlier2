@@ -82,7 +82,7 @@ public class Constants {
         /**
          * Time allowed for a boulder to move away from the intake roller to shooter wheels for firing
          */
-        public static final long FIRE_TIME = 1000;
+        public static final long FIRE_TIME = 750;
 
         /**
          * Time it takes for a boulder to clear the intake roller when bowling (in milliseconds).
@@ -102,7 +102,7 @@ public class Constants {
         public static final long PRIME_TIME = 1750;
 
         /**
-         * Time allowed for shooter wheels to stop before unpriming the boulder
+         * Time allowed for shooter wheels to stop before unpriming or after firing the boulder
          */
         public static final long UNPRIME_TIME = 1500;
 
@@ -110,11 +110,6 @@ public class Constants {
          * Speed to run the shooter wheels to shoot high goal
          */
         public static final double SHOOTER_SPEED = 1.0;
-
-        /**
-         * Time allowed for shooter wheels to stop after firing to standby
-         */
-        public static final long STANDBY_TIME = 1500;
     }
 
     public class Encoders {
