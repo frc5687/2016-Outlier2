@@ -53,6 +53,11 @@ public class Constants {
         public static final int CAPTURED_TOLERANCE = 200; // Tolerance in either direction of boulder position for carrying boulder
     }
 
+    public class Horns {
+        public static final double MAX_SPEED = .5; //Speed is Capped at this
+        public static final double SESNITIVITY = 2; // Speed is divided by this
+    }
+
     public class Intake {
         /**
          * Speed to run the intake roller to capture the boulder until detected
@@ -94,7 +99,7 @@ public class Constants {
             public static final int PULSES_PER_ROTATION = 2048;
             public static final double WHEEL_DIAMETER = 13;
             public static final double INCHES_PER_ROTATION = Math.PI * WHEEL_DIAMETER;
-            public static final double SCALAR_RATIO = 1.4;
+            public static final double SCALAR_RATIO = .45;
             public static final double INCHES_PER_PULSE = INCHES_PER_ROTATION * SCALAR_RATIO / PULSES_PER_ROTATION ;
             public static final double MAX_PERIOD = 5;
         }

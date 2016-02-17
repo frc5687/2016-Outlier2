@@ -1,9 +1,9 @@
 package org.usfirst.frc.team5687.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.Constants;
 import org.usfirst.frc.team5687.robot.Robot;
@@ -11,7 +11,6 @@ import org.usfirst.frc.team5687.robot.RobotMap;
 import org.usfirst.frc.team5687.robot.commands.DriveWith2Joysticks;
 
 public class DriveTrain extends Subsystem {
-
     private RobotDrive drive;
     private VictorSP leftFrontMotor;
     private VictorSP leftRearMotor;
@@ -95,18 +94,18 @@ public class DriveTrain extends Subsystem {
     public double getDistance() { return (Robot.driveTrain.getLeftDistance()+Robot.driveTrain.getRightDistance()/2);}
 
     public void sendAmpDraw() {
-        SmartDashboard.putNumber("Current Draw/LeftFrontMotor", Robot.powerDistributionPanel.getCurrent(RobotMap.Drive.LEFT_MOTOR_FRONT));
-        SmartDashboard.putNumber("Current Draw/LeftRearMotor", Robot.powerDistributionPanel.getCurrent(RobotMap.Drive.LEFT_MOTOR_REAR));
-        SmartDashboard.putNumber("Current Draw/RightFrontMotor", Robot.powerDistributionPanel.getCurrent(RobotMap.Drive.RIGHT_MOTOR_FRONT));
-        SmartDashboard.putNumber("Current Draw/RightRearMotor", Robot.powerDistributionPanel.getCurrent(RobotMap.Drive.RIGHT_MOTOR_REAR));
+        SmartDashboard.putNumber("Current Draw/LeftFrontMotor", Robot.powerDistributionPanel.getCurrent(RobotMap.Drive.PDP_LEFT_MOTOR_FRONT));
+        SmartDashboard.putNumber("Current Draw/LeftRearMotor", Robot.powerDistributionPanel.getCurrent(RobotMap.Drive.PDP_LEFT_MOTOR_REAR));
+        SmartDashboard.putNumber("Current Draw/RightFrontMotor", Robot.powerDistributionPanel.getCurrent(RobotMap.Drive.PDP_RIGHT_MOTOR_FRONT));
+        SmartDashboard.putNumber("Current Draw/RightRearMotor", Robot.powerDistributionPanel.getCurrent(RobotMap.Drive.PDP_RIGHT_MOTOR_REAR));
     }
 
     /**
      * Run drive motors at specified speeds
-     * @param leftSpeed desired speed for left motors
+     * @param leftSpeed  desired speed for left motors
      * @param rightSpeed desired speed for right motors
      */
-    public void tankDrive(double leftSpeed, double rightSpeed){
+    public void tankDrive(double leftSpeed, double rightSpeed) {
         // Limit change in leftSpeed to +/- ACCELERATION_CAP
         leftSpeed = Math.min(leftSpeed, leftFrontMotor.get() + Constants.Limits.ACCELERATION_CAP);
         leftSpeed = Math.max(leftSpeed, leftFrontMotor.get() - Constants.Limits.ACCELERATION_CAP);
@@ -118,17 +117,17 @@ public class DriveTrain extends Subsystem {
         drive.tankDrive(leftSpeed, rightSpeed, false);
 
 
-        SmartDashboard.putNumber("Right distance" , getRightDistance());
-        SmartDashboard.putNumber("Left distance" , getLeftDistance());
+        SmartDashboard.putNumber("Right distance", getRightDistance());
+        SmartDashboard.putNumber("Left distance", getLeftDistance());
 
-        SmartDashboard.putNumber("Right ticks" , getRightTicks());
-        SmartDashboard.putNumber("Left ticks" , getLeftTicks());
+        SmartDashboard.putNumber("Right ticks", getRightTicks());
+        SmartDashboard.putNumber("Left ticks", getLeftTicks());
 
-        SmartDashboard.putNumber("Right rate" , getRightRate());
-        SmartDashboard.putNumber("Left rate" , getLeftRate());
+        SmartDashboard.putNumber("Right rate", getRightRate());
+        SmartDashboard.putNumber("Left rate", getLeftRate());
 
-        SmartDashboard.putNumber("Right speed" , getRightSpeed());
-        SmartDashboard.putNumber("Left speed" , getLeftSpeed());
+        SmartDashboard.putNumber("Right speed", getRightSpeed());
+        SmartDashboard.putNumber("Left speed", getLeftSpeed());
 
         SmartDashboard.putNumber("Right RPS" , getRightRPS());
         SmartDashboard.putNumber("Left RPS" , getLeftRPS());
