@@ -59,7 +59,7 @@ public class Intake extends Subsystem {
      * Checks if it is primed
      * @return Whether or not the boulder is primed
      */
-    public boolean isPrimeAble() {
+    public boolean isPrimed() {
         return Helpers.IsValueWithinTolerance(boulderSensor.getValue(),
                                               InfraRedConstants.PRIMED_OPTIMAL,
                                               InfraRedConstants.PRIMED_TOLERANCE);
@@ -71,16 +71,15 @@ public class Intake extends Subsystem {
     public void updateDashboard() {
         SmartDashboard.putNumber("IR distance", boulderSensor.getValue());
         if (!isDetected()){
-            SmartDashboard.putString("Boulder is", "Not Detected");
-        }
-        else if (!isPrimeAble()){
-            SmartDashboard.putString("Boulder is", "Detected");
-        }
-        else if (isPrimeAble()){
-            SmartDashboard.putString("Boulder is","Primeable");
+            SmartDashboard.putString("Boulder", "Not Detected");
         }
         else if (isCaptured()){
-            SmartDashboard.putString("Boulder is", "Captured");
+            SmartDashboard.putString("Boulder", "Captured");
+        }
+        else if (isPrimed()){
+            SmartDashboard.putString("Boulder", "Primed");
+        } else {
+            SmartDashboard.putString("Boulder", "Detected");
         }
     }
 

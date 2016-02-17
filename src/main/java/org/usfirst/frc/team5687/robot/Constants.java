@@ -65,6 +65,11 @@ public class Constants {
         public static final double CAPTURE_SPEED = 1.0;
 
         /**
+         * Speed to run the intake roller to prime the boulder
+         */
+        public static final double PRIME_SPEED = -0.8;
+
+        /**
          * Time it takes for a boulder to clear the intake roller when bowling (in milliseconds).
          */
         public static final long BOWL_TIME = 1000;
@@ -73,6 +78,18 @@ public class Constants {
          * Speed to run the intake roller when bowling.
          */
         public static final double BOWL_SPEED = -1.0;
+    }
+
+    public class Shooter {
+        /**
+         * Time for running shooter wheels for priming
+         */
+        public static final long SHOOT_TIME = 1750;
+
+        /**
+         * Speed to run the shooter wheels to shoot high goal
+         */
+        public static final double SHOOTER_SPEED = 1.0;
     }
 
     public class Encoders {
