@@ -84,9 +84,6 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-        // Report git info to the dashboard
-        SmartDashboard.putString("Git Info", Reader.gitInfo);
-
         robot = this;
         driveTrain = new DriveTrain();
         shooter = new Shooter();
