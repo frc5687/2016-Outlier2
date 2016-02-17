@@ -111,11 +111,11 @@ public class Robot extends IterativeRobot {
         autoDefenseChooser.addObject("Rampart","Rampart");
         SmartDashboard.putData("Select Defense", autoDefenseChooser);
 
-        autoDefenseChooser.addDefault("A (Low Bar)","A");
-        autoDefenseChooser.addObject("B","B");
-        autoDefenseChooser.addObject("C","C");
-        autoDefenseChooser.addObject("D","D");
-        autoDefenseChooser.addObject("E","E");
+        autoPositionChooser.addDefault("A (Low Bar)","A");
+        autoPositionChooser.addObject("B","B");
+        autoPositionChooser.addObject("C","C");
+        autoPositionChooser.addObject("D","D");
+        autoPositionChooser.addObject("E","E");
         SmartDashboard.putData("Select Position", autoPositionChooser);
 
 
