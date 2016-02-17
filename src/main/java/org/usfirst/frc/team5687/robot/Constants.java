@@ -42,6 +42,16 @@ public class Constants {
     public class Autonomous {
         public static final double MIN_AUTO_TRAVERSE_ANGLE = 9; // the minimum angle the robot will pitch when traversing a defense
         public static final double MAX_AUTO_TRAVERSE_SECONDS = 5; // the maximum time the robot should need to travers a defense in Autonomous,
+
+        public class staticDefenseTraverseSpeeds {
+            //speeds the robot should travel at when traversing defenses, should be between 0 and 1
+            public static final double LOW_BAR_SPEED =.5;
+            public static final double MOAT_SPEED =.5;
+            public static final double ROCK_WALL_SPEED =.3;
+            public static final double RAMPARTS_SPEED =.3;
+            public static final double ROUGH_TERRAIN_SPEED =.7;
+        }
+
     }
 
     public class InfraRedConstants {
@@ -53,7 +63,27 @@ public class Constants {
         public static final int CAPTURED_TOLERANCE = 200; // Tolerance in either direction of boulder position for carrying boulder
     }
 
+    public class Horns {
+        public static final double MAX_SPEED = .5; //Speed is Capped at this
+        public static final double SESNITIVITY = 2; // Speed is divided by this
+    }
+
     public class Intake {
+        /**
+         * Speed to run the intake roller to capture the boulder until detected
+         */
+        public static final double CAPTURE_SPEED = 1.0;
+
+        /**
+         * Speed to run the intake roller to prime the boulder
+         */
+        public static final double PRIME_SPEED = -0.8;
+
+        /**
+         * Speed to run the intake roller to unprime the boulder to captured position
+         */
+        public static final double UNPRIME_SPEED = 0.3;
+
         /**
          * Time it takes for a boulder to clear the intake roller when bowling (in milliseconds).
          */
@@ -65,6 +95,23 @@ public class Constants {
         public static final double BOWL_SPEED = -1.0;
     }
 
+    public class Shooter {
+        /**
+         * Time for running shooter wheels for priming
+         */
+        public static final long PRIME_TIME = 1750;
+
+        /**
+         * Speed to run the shooter wheels to shoot high goal
+         */
+        public static final double SHOOTER_SPEED = 1.0;
+
+        /**
+         * Time allowed for shooter wheels to stop before unpriming the boulder
+         */
+        public static final long UNPRIME_TIME = 1500;
+    }
+
     public class Encoders {
         public class Defaults {
             public static final boolean REVERSED = false;
@@ -72,7 +119,7 @@ public class Constants {
             public static final int PULSES_PER_ROTATION = 2048;
             public static final double WHEEL_DIAMETER = 13;
             public static final double INCHES_PER_ROTATION = Math.PI * WHEEL_DIAMETER;
-            public static final double SCALAR_RATIO = 1.4;
+            public static final double SCALAR_RATIO = .45;
             public static final double INCHES_PER_PULSE = INCHES_PER_ROTATION * SCALAR_RATIO / PULSES_PER_ROTATION ;
             public static final double MAX_PERIOD = 5;
         }

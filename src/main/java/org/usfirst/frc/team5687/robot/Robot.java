@@ -1,7 +1,6 @@
 package org.usfirst.frc.team5687.robot;
 
 import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -12,20 +11,13 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.USBCamera;
-import org.usfirst.frc.team5687.robot.commands.AutoChaseTarget;
-import org.usfirst.frc.team5687.robot.commands.AutonomousDoNothing;
-import org.usfirst.frc.team5687.robot.commands.AutonomousTestCVT;
+import org.usfirst.frc.team5687.robot.commands.*;
 import org.usfirst.frc.team5687.robot.subsystems.Arms;
 import org.usfirst.frc.team5687.robot.subsystems.Intake;
 import org.usfirst.frc.team5687.robot.subsystems.Shooter;
 import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5687.robot.utils.CustomCameraServer;
 import org.usfirst.frc.team5687.robot.utils.Reader;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 
 /*
  * The VM is configured to automatically run this class, and to call the
@@ -75,7 +67,10 @@ public class Robot extends IterativeRobot {
     public static Robot robot;
 
     Command autonomousCommand;
-    SendableChooser autoChooser;
+    private SendableChooser autoChooser;
+
+    public SendableChooser defenseChooser;
+    public SendableChooser positionChooser;
 
     CustomCameraServer cameraServer;
 
@@ -98,18 +93,35 @@ public class Robot extends IterativeRobot {
         intake = new Intake();
         arms = new Arms();
         autoChooser = new SendableChooser();
-        powerDistributionPanel = new PowerDistributionPanel();
+        defenseChooser = new SendableChooser();
+        positionChooser = new SendableChooser();
 
-        // Commands need to be instantiated AFTER the subsystems.  Since the OI constructor instantiates several commands, we need it to be instantiated last.
-        oi = new OI();
+        powerDistributionPanel = new PowerDistributionPanel();
 
         autoChooser.addDefault("Do Nothing At All", new AutonomousDoNothing());
         autoChooser.addObject("Calibrate CVT", new AutonomousTestCVT());
         autoChooser.addObject("Chase Target", new AutoChaseTarget());
+        autoChooser.addObject("Traverse Chosen Defense", new AutoTraverseOnly());
         SmartDashboard.putData("Autonomous mode", autoChooser);
 
+        defenseChooser.addDefault("Low Bar", "LowBar");
+        defenseChooser.addObject("Moat", "Moat");
+        defenseChooser.addObject("Rock Wall","RockWall");
+        defenseChooser.addObject("Rough Terrain","RoughTerrain");
+        defenseChooser.addObject("Rampart","Rampart");
+        SmartDashboard.putData("Defense to Cross", defenseChooser);
         initializeCameras();
 
+        positionChooser.addDefault("1 (Low Bar)","1");
+        positionChooser.addObject("2","2");
+        positionChooser.addObject("3","3");
+        positionChooser.addObject("4","4");
+        positionChooser.addObject("5","5");
+        SmartDashboard.putData("Start Position", positionChooser);
+
+
+        // Report git info to the dashboard
+        SmartDashboard.putString("Git Info", Reader.gitInfo);
         try {
             // Try to connect to the navX imu.
             imu = new AHRS(SPI.Port.kMXP);
@@ -123,6 +135,28 @@ public class Robot extends IterativeRobot {
             DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
             imu = null;
         }
+
+        // Commands need to be instantiated AFTER the subsystems.  Since the OI constructor instantiates several commands, we need it to be instantiated last.
+        oi = new OI();
+
+        autoChooser.addDefault("Do Nothing At All", new AutonomousDoNothing());
+        autoChooser.addObject("Calibrate CVT", new AutonomousTestCVT());
+        autoChooser.addObject("Chase Target", new AutoChaseTarget());
+        autoChooser.addObject("Traverse Defense", new AutoTraverseOnly());
+        autoChooser.addObject("Left 90", new AutoAlign(-90));
+        autoChooser.addObject("Right 90", new AutoAlign(90));
+        autoChooser.addObject("Drive 12", new AutoDrive(-.4, 12f));
+        autoChooser.addObject("Drive 24", new AutoDrive(-.4, 24f));
+        autoChooser.addObject("Drive 48", new AutoDrive(-.4, 48f));
+        autoChooser.addObject("Drive 96", new AutoDrive(-.4, 96f));
+        SmartDashboard.putData("Autonomous mode", autoChooser);
+
+
+        //Setup Camera Code
+        cameraServer = CustomCameraServer.getInstance();
+        cameraServer.setQuality(50);
+        cameraServer.startAutomaticCapture(hornsCamera);
+
     }
 
 	/**
@@ -147,7 +181,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousInit() {
         // schedule the autonomous command (example)
-        autonomousCommand = (Command)autoChooser.getSelected();
+        autonomousCommand = (Command) autoChooser.getSelected();
         if (autonomousCommand!=null) {
             autonomousCommand.start();
         }
@@ -175,7 +209,7 @@ public class Robot extends IterativeRobot {
         sendIMUData();
         driveTrain.sendAmpDraw();
         Scheduler.getInstance().run();
-        intake.SendDashboardData();
+        intake.updateDashboard();
     }
 
     /**
@@ -199,6 +233,7 @@ public class Robot extends IterativeRobot {
         }
         DriverStation.reportError("Camera now streaming: "+camera,false);
     }
+
 
     protected void sendIMUData() {
         if (imu==null) {
@@ -244,6 +279,16 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber(   "IMU_Byte_Count",       imu.getByteCount());
         SmartDashboard.putNumber(   "IMU_Update_Count",     imu.getUpdateCount());
     }
+
+    public String getSelectedDefense() {
+        return (String) defenseChooser.getSelected();
+    }
+
+    public String getSelectedPosition() {
+        return (String) positionChooser.getSelected();
+    }
+
+
 
     public void initializeCameras() {
         if (hornsCamera!=null) {

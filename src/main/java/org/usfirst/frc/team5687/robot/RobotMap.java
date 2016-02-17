@@ -12,18 +12,20 @@ public class RobotMap {
      * Drive Train ports
      */
     public static class Drive {
-        public static final int LEFT_MOTORS = 0;
-        public static final int RIGHT_MOTORS = 3;
+        public static final int LEFT_MOTOR_FRONT = 0;
+        public static final int LEFT_MOTOR_REAR = 1;
+        public static final int RIGHT_MOTOR_FRONT = 2;
+        public static final int RIGHT_MOTOR_REAR = 3;
+
+        public static final int PDP_LEFT_MOTOR_FRONT = 14;
+        public static final int PDP_LEFT_MOTOR_REAR = 15;
+        public static final int PDP_RIGHT_MOTOR_FRONT = 12;
+        public static final int PDP_RIGHT_MOTOR_REAR = 13;
 
         public static final int LEFT_ENCODER_CHANNEL_A = 8;
         public static final int LEFT_ENCODER_CHANNEL_B = 9;
         public static final int RIGHT_ENCODER_CHANNEL_A = 6;
         public static final int RIGHT_ENCODER_CHANNEL_B = 7;
-
-        public static final int PDP_LEFT_MOTOR1 = 0;
-        public static final int PDP_LEFT_MOTOR2 = 1;
-        public static final int PDP_RIGHT_MOTOR1 = 2;
-        public static final int PDP_RIGHT_MOTOR2 = 3;
     }
 
     /**
@@ -38,13 +40,27 @@ public class RobotMap {
      */
     public static class Intake {
         public static final int INTAKE_MOTOR = 9;
-        public static int INFARED_SENSOR = 0 ; //TODO change to actual port at some point
+        public static final int INFRARED_SENSOR = 3;
     }
 
+    /**
+     * Arms ports
+     */
     public static class Arms {
-        public static final int ARMS_MOTOR = 4;
+        public static final int ARMS_MOTOR = 5;
+        public static final int ARMS_POT = 2;
     }
 
+    /**
+     * Hanger ports
+     */
+    public static class Hanger {
+        public static final int HANGER_MOTOR = 4;
+    }
+
+    /**
+     * Camera ports
+     */
     public static class Cameras {
         public static final String hornsEnd = "cam0";
         public static final String intakeEnd = "cam1";

@@ -2,9 +2,8 @@ package org.usfirst.frc.team5687.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import org.usfirst.frc.team5687.robot.commands.Bowl;
-import org.usfirst.frc.team5687.robot.commands.ResetCamera;
-import org.usfirst.frc.team5687.robot.commands.ReverseDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team5687.robot.commands.*;
 import org.usfirst.frc.team5687.robot.utils.Gamepad;
 import org.usfirst.frc.team5687.robot.utils.Helpers;
 
@@ -16,14 +15,18 @@ public class OI {
     private Gamepad gamepad;
     private Joystick joystick;
 
+    // Drive Train Elements
     public static final int FORWARD_DIRECTION = 1;
     public static final int REVERSE_DIRECTION = -1;
     private static int currentDirection = FORWARD_DIRECTION; //Initial drive direction
 
     // Drive Train Buttons
     public static final int REVERSE = Gamepad.Buttons.BACK.getNumber();
-    // Shooter Buttons
-    public static int BOWL = 1;
+    // Boulder Buttons
+    public static final int CAPTURE = 3;
+    public static final int BOWL = 1;
+    public static final int PRIME = 5;
+    public static final int UNPRIME = 6;
     // Camera switch
     public static int RESET_CAMERA = 7;
 
@@ -34,14 +37,22 @@ public class OI {
         gamepad = new Gamepad(0);
         joystick = new Joystick(1);
 
+        // Gamepad Buttons
         JoystickButton reverseButton = new JoystickButton(gamepad, REVERSE);
+        // Joystick Buttons
+        JoystickButton captureButton = new JoystickButton(joystick, CAPTURE);
         JoystickButton bowlButton = new JoystickButton(joystick, BOWL);
+        JoystickButton primeButton = new JoystickButton(joystick, PRIME);
+        JoystickButton unprimeButton = new JoystickButton(joystick, UNPRIME);
         JoystickButton resetCameraButton = new JoystickButton(joystick, RESET_CAMERA);
 
         // Drive Train Commands
         reverseButton.whenPressed(new ReverseDrive());
-        // Shooter Commands
+        // Boulder Commands
+        captureButton.toggleWhenPressed(new CaptureBoulder());
         bowlButton.whenPressed(new Bowl());
+        primeButton.whenPressed(new Prime());
+        unprimeButton.whenPressed(new CancelPrime());
         // Reset Camera Command
         resetCameraButton.whenPressed(new ResetCamera());
     }
@@ -107,7 +118,9 @@ public class OI {
      * @return the control value for the arms' motor
      */
     public double getArmsSpeed() {
-        return Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.LEFT_TRIGGER), Constants.Deadbands.ARMS) - Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.RIGHT_TRIGGER), Constants.Deadbands.ARMS);
+        double value = Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.LEFT_TRIGGER), Constants.Deadbands.ARMS) - Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.RIGHT_TRIGGER), Constants.Deadbands.ARMS);
+        SmartDashboard.putNumber("Arms Speed", value);
+        return value;
     }
 
     /**
