@@ -11,6 +11,6 @@ public class Prime extends CommandGroup{
 
     public Prime() {
         addSequential(new PrimeBoulder());
-        addSequential(new SetShooterSpeed(Constants.Shooter.SHOOTER_SPEED));
+        addSequential(new SetShooterSpeed(Constants.Shooter.SHOOTER_SPEED, Constants.Shooter.PRIME_TIME));
     }
 }
