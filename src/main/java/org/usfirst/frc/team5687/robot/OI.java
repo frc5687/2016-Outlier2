@@ -27,6 +27,8 @@ public class OI {
     public static final int BOWL = 1;
     public static final int PRIME = 5;
     public static final int UNPRIME = 6;
+    // Camera switch
+    public static int RESET_CAMERA = 7;
 
     /**
      * Create a new instance of the operator interface
@@ -42,6 +44,7 @@ public class OI {
         JoystickButton bowlButton = new JoystickButton(joystick, BOWL);
         JoystickButton primeButton = new JoystickButton(joystick, PRIME);
         JoystickButton unprimeButton = new JoystickButton(joystick, UNPRIME);
+        JoystickButton resetCameraButton = new JoystickButton(joystick, RESET_CAMERA);
 
         // Drive Train Commands
         reverseButton.whenPressed(new ReverseDrive());
@@ -50,6 +53,8 @@ public class OI {
         bowlButton.whenPressed(new Bowl());
         primeButton.whenPressed(new Prime());
         unprimeButton.whenPressed(new CancelPrime());
+        // Reset Camera Command
+        resetCameraButton.whenPressed(new ResetCamera());
     }
 
     /**

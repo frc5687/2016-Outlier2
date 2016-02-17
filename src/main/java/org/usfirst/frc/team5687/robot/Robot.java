@@ -74,8 +74,8 @@ public class Robot extends IterativeRobot {
 
     CustomCameraServer cameraServer;
 
-    USBCamera hornsCamera = new USBCamera(RobotMap.Cameras.hornsEnd);
-    USBCamera intakeCamera = new USBCamera(RobotMap.Cameras.intakeEnd);
+    USBCamera hornsCamera = null;
+    USBCamera intakeCamera = null;
 
     String camera = RobotMap.Cameras.hornsEnd;
 
@@ -110,6 +110,7 @@ public class Robot extends IterativeRobot {
         defenseChooser.addObject("Rough Terrain","RoughTerrain");
         defenseChooser.addObject("Rampart","Rampart");
         SmartDashboard.putData("Defense to Cross", defenseChooser);
+        initializeCameras();
 
         positionChooser.addDefault("1 (Low Bar)","1");
         positionChooser.addObject("2","2");
@@ -121,12 +122,6 @@ public class Robot extends IterativeRobot {
 
         // Report git info to the dashboard
         SmartDashboard.putString("Git Info", Reader.gitInfo);
-
-        //Setup Camera Code
-        cameraServer = CustomCameraServer.getInstance();
-        cameraServer.setQuality(50);
-        cameraServer.startAutomaticCapture(hornsCamera);
-
         try {
             // Try to connect to the navX imu.
             imu = new AHRS(SPI.Port.kMXP);
@@ -293,4 +288,45 @@ public class Robot extends IterativeRobot {
         return (String) positionChooser.getSelected();
     }
 
+
+
+    public void initializeCameras() {
+        if (hornsCamera!=null) {
+            hornsCamera.closeCamera();
+            hornsCamera = null;
+        }
+        if (intakeCamera!=null) {
+            intakeCamera.closeCamera();
+            intakeCamera = null;
+        }
+
+        try {
+            hornsCamera = new USBCamera(RobotMap.Cameras.hornsEnd);
+        } catch (Exception e) {
+            hornsCamera = null;
+        }
+
+        try {
+            intakeCamera = new USBCamera(RobotMap.Cameras.intakeEnd);
+        } catch (Exception e) {
+            intakeCamera = null;
+        }
+
+       if (cameraServer==null){
+        //Setup Camera Code
+            cameraServer = CustomCameraServer.getInstance();
+           cameraServer.setQuality(50);
+       }
+
+        if (camera.equals(RobotMap.Cameras.hornsEnd)) {
+            camera = RobotMap.Cameras.intakeEnd;
+            cameraServer.startAutomaticCapture(intakeCamera);
+        }else {
+            camera = RobotMap.Cameras.hornsEnd;
+            cameraServer.startAutomaticCapture(hornsCamera);
+        }
+
+
+
+    }
 }
