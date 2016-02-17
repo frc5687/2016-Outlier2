@@ -2,6 +2,7 @@ package org.usfirst.frc.team5687.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.commands.CaptureBoulder;
 import org.usfirst.frc.team5687.robot.commands.Bowl;
 import org.usfirst.frc.team5687.robot.commands.ReverseDrive;
@@ -43,7 +44,7 @@ public class OI {
         // Drive Train Commands
         reverseButton.whenPressed(new ReverseDrive());
         // Shooter Commands
-        captureButton.whenPressed(new CaptureBoulder());
+        captureButton.toggleWhenPressed(new CaptureBoulder());
         bowlButton.whenPressed(new Bowl());
     }
 
@@ -108,7 +109,9 @@ public class OI {
      * @return the control value for the arms' motor
      */
     public double getArmsSpeed() {
-        return Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.LEFT_TRIGGER), Constants.Deadbands.ARMS) - Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.RIGHT_TRIGGER), Constants.Deadbands.ARMS);
+        double value = Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.LEFT_TRIGGER), Constants.Deadbands.ARMS) - Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.RIGHT_TRIGGER), Constants.Deadbands.ARMS);
+        SmartDashboard.putNumber("Arms Speed", value);
+        return value;
     }
 
     /**
