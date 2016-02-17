@@ -69,7 +69,7 @@ public class AutoTraverseOnly extends CommandGroup{
 
         addSequential(new AutoDrive(.5,2));
         addSequential(new AutoTraverseStaticDefense(traverseSpeed));
-        //addSequential(new AutoAllign(rotateAngle));
+        addSequential(new AutoAlign(rotateAngle));
 
         DriverStation.reportError("Traversing "+Robot.robot.getSelectedDefense()+", in position "+Robot.robot.getSelectedPosition()+", at "+traverseSpeed+" speed.",false);
 

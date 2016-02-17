@@ -1,43 +1,40 @@
 package org.usfirst.frc.team5687.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team5687.robot.OI;
-import org.usfirst.frc.team5687.robot.Robot;
+import org.usfirst.frc.team5687.robot.Constants;
+
 import static org.usfirst.frc.team5687.robot.Robot.intake;
-import static org.usfirst.frc.team5687.robot.Robot.oi;
 
 /**
- * Command for basic manual control of the boulder intake
+ * Command to prime the intake or move the boulder back to primed position
  * @author wil
  */
-public class RunIntakeManually extends Command {
+public class PrimeBoulder extends Command {
 
-    public RunIntakeManually() {
+    public PrimeBoulder() {
         requires(intake);
     }
 
     @Override
     protected void initialize() {
-
     }
 
     @Override
     protected void execute() {
-        intake.setSpeed(oi.getIntakeSpeed());
+        intake.setSpeed(Constants.Intake.PRIME_SPEED);
     }
 
     @Override
     protected boolean isFinished() {
-        return false;
+        return intake.isPrimed();
     }
 
     @Override
     protected void end() {
-
+        intake.stop();
     }
 
     @Override
     protected void interrupted() {
-
     }
 }

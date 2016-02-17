@@ -5,7 +5,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.OI;
 import org.usfirst.frc.team5687.robot.Robot;
-import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
+import static org.usfirst.frc.team5687.robot.Robot.driveTrain;
+import static org.usfirst.frc.team5687.robot.Robot.oi;
 
 /**
  * Command for basic driver-control of the robot chassis
@@ -13,9 +14,6 @@ import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
  */
 
 public class DriveWith2Joysticks extends Command {
-    DriveTrain driveTrain = Robot.driveTrain;
-    OI oi = Robot.oi;
-
     /*
      * Constructor
      */

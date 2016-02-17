@@ -4,10 +4,10 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5687.robot.Constants;
 import org.usfirst.frc.team5687.robot.Robot;
 
-import static org.usfirst.frc.team5687.robot.Robot.*;
+import static org.usfirst.frc.team5687.robot.Robot.imu;
+import static org.usfirst.frc.team5687.robot.Robot.driveTrain;
 
 public abstract class AutoTraverse extends Command{
-    AHRS imu = Robot.imu;
 
     double timeStarted;
     double positionFirstLevel = 0;

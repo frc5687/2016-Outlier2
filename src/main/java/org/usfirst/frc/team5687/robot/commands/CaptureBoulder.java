@@ -1,43 +1,39 @@
 package org.usfirst.frc.team5687.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team5687.robot.OI;
-import org.usfirst.frc.team5687.robot.Robot;
+import org.usfirst.frc.team5687.robot.Constants;
 import static org.usfirst.frc.team5687.robot.Robot.intake;
-import static org.usfirst.frc.team5687.robot.Robot.oi;
 
 /**
- * Command for basic manual control of the boulder intake
- * @author wil
+ * Command to run intake motor until a boulder is detected
  */
-public class RunIntakeManually extends Command {
+public class CaptureBoulder extends Command {
 
-    public RunIntakeManually() {
+    public CaptureBoulder() {
         requires(intake);
     }
 
     @Override
     protected void initialize() {
-
     }
 
     @Override
     protected void execute() {
-        intake.setSpeed(oi.getIntakeSpeed());
+        intake.setSpeed(Constants.Intake.CAPTURE_SPEED);
     }
 
     @Override
     protected boolean isFinished() {
-        return false;
+        return intake.isCaptured();
     }
 
     @Override
     protected void end() {
-
+        intake.stop();
     }
 
     @Override
     protected void interrupted() {
-
+        end();
     }
 }

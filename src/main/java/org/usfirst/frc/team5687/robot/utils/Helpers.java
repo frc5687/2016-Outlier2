@@ -39,9 +39,21 @@ public class Helpers{
         if (input>1) { return 1; }
         if (input <-1) { return -1; }
 
-        // THe sensitivity factor MUST be between 0 and 1!
+        // The sensitivity factor MUST be between 0 and 1!
         double factor = Math.max(Math.min(Constants.Calibration.SENSITIVITY_FACTOR, 1),0);
 
         return factor*input*input*input + (1-factor)*input;
+    }
+
+    /**
+     * Checks if a value is within tolerance of another value
+     * @param value the value to check
+     * @param target the target or desired value
+     * @param tolerance the acceptable tolerance around the target
+     * @return true if the value is within tolerance of the target value
+     */
+    public static boolean IsValueWithinTolerance(double value, double target, double tolerance)
+    {
+        return Math.abs(value - target) <= tolerance;
     }
 }

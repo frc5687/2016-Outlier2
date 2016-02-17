@@ -11,10 +11,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.USBCamera;
-import org.usfirst.frc.team5687.robot.commands.AutoChaseTarget;
-import org.usfirst.frc.team5687.robot.commands.AutoTraverseOnly;
-import org.usfirst.frc.team5687.robot.commands.AutonomousDoNothing;
-import org.usfirst.frc.team5687.robot.commands.AutonomousTestCVT;
+import org.usfirst.frc.team5687.robot.commands.*;
 import org.usfirst.frc.team5687.robot.subsystems.Arms;
 import org.usfirst.frc.team5687.robot.subsystems.Intake;
 import org.usfirst.frc.team5687.robot.subsystems.Shooter;
@@ -41,10 +38,6 @@ public class Robot extends IterativeRobot {
      */
     public static DriveTrain driveTrain;
 
-    /**
-     * Represents the operator interface/ controls
-     */
-    public static OI oi;
 
     public static Shooter shooter;
 
@@ -59,6 +52,11 @@ public class Robot extends IterativeRobot {
     public static Arms arms;
 
     /**
+     * Represents the operator interface/ controls
+     */
+    public static OI oi;
+
+    /**
      * Represents the power distribution panel
      */
     public static PowerDistributionPanel powerDistributionPanel;
@@ -69,7 +67,7 @@ public class Robot extends IterativeRobot {
     public static Robot robot;
 
     Command autonomousCommand;
-    private SendableChooser autonomousModeChooser;
+    private SendableChooser autoChooser;
 
     public SendableChooser defenseChooser;
     public SendableChooser positionChooser;
@@ -86,24 +84,25 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-        oi = new OI();
+        // Report git info to the dashboard
+        SmartDashboard.putString("Git Info", Reader.gitInfo);
+
         robot = this;
         driveTrain = new DriveTrain();
         shooter = new Shooter();
         intake = new Intake();
         arms = new Arms();
-        autonomousModeChooser = new SendableChooser();
+        autoChooser = new SendableChooser();
         defenseChooser = new SendableChooser();
         positionChooser = new SendableChooser();
 
         powerDistributionPanel = new PowerDistributionPanel();
-        //TODO: new object(); DriveTrain
 
-        autonomousModeChooser.addDefault("Do Nothing At All", new AutonomousDoNothing());
-        autonomousModeChooser.addObject("Calibrate CVT", new AutonomousTestCVT());
-        autonomousModeChooser.addObject("Chase Target", new AutoChaseTarget());
-        autonomousModeChooser.addObject("Traverse Chosen Defense", new AutoTraverseOnly());
-        SmartDashboard.putData("Autonomous mode", autonomousModeChooser);
+        autoChooser.addDefault("Do Nothing At All", new AutonomousDoNothing());
+        autoChooser.addObject("Calibrate CVT", new AutonomousTestCVT());
+        autoChooser.addObject("Chase Target", new AutoChaseTarget());
+        autoChooser.addObject("Traverse Chosen Defense", new AutoTraverseOnly());
+        SmartDashboard.putData("Autonomous mode", autoChooser);
 
         defenseChooser.addDefault("Low Bar", "LowBar");
         defenseChooser.addObject("Moat", "Moat");
@@ -141,6 +140,28 @@ public class Robot extends IterativeRobot {
             DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
             imu = null;
         }
+
+        // Commands need to be instantiated AFTER the subsystems.  Since the OI constructor instantiates several commands, we need it to be instantiated last.
+        oi = new OI();
+
+        autoChooser.addDefault("Do Nothing At All", new AutonomousDoNothing());
+        autoChooser.addObject("Calibrate CVT", new AutonomousTestCVT());
+        autoChooser.addObject("Chase Target", new AutoChaseTarget());
+        autoChooser.addObject("Traverse Defense", new AutoTraverseOnly());
+        autoChooser.addObject("Left 90", new AutoAlign(-90));
+        autoChooser.addObject("Right 90", new AutoAlign(90));
+        autoChooser.addObject("Drive 12", new AutoDrive(-.4, 12f));
+        autoChooser.addObject("Drive 24", new AutoDrive(-.4, 24f));
+        autoChooser.addObject("Drive 48", new AutoDrive(-.4, 48f));
+        autoChooser.addObject("Drive 96", new AutoDrive(-.4, 96f));
+        SmartDashboard.putData("Autonomous mode", autoChooser);
+
+
+        //Setup Camera Code
+        cameraServer = CustomCameraServer.getInstance();
+        cameraServer.setQuality(50);
+        cameraServer.startAutomaticCapture(hornsCamera);
+
     }
 
 	/**
@@ -165,7 +186,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousInit() {
         // schedule the autonomous command (example)
-        autonomousCommand = (Command) autonomousModeChooser.getSelected();
+        autonomousCommand = (Command) autoChooser.getSelected();
         if (autonomousCommand!=null) {
             autonomousCommand.start();
         }
@@ -193,7 +214,7 @@ public class Robot extends IterativeRobot {
         sendIMUData();
         driveTrain.sendAmpDraw();
         Scheduler.getInstance().run();
-        intake.SendDashboardData();
+        intake.updateDashboard();
     }
 
     /**
