@@ -179,6 +179,10 @@ public class CustomCameraServer {
     }
 
     public synchronized void startAutomaticCapture(USBCamera camera) {
+        if (camera==null) {
+            return;
+        }
+
         if (m_autoCaptureStarted) {
             m_camera.stopCapture();
             m_camera = camera;
