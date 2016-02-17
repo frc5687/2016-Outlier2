@@ -70,6 +70,16 @@ public class Constants {
         public static final double PRIME_SPEED = -0.8;
 
         /**
+         * Speed to run the intake to fire the boulder for shooting a high goal
+         */
+        public static final double FIRE_SPEED = 1.0;
+
+        /**
+         * Time allowed for a boulder to move away from the intake roller to shooter wheels for firing
+         */
+        public static final long FIRE_TIME = 1000;
+
+        /**
          * Time it takes for a boulder to clear the intake roller when bowling (in milliseconds).
          */
         public static final long BOWL_TIME = 1000;

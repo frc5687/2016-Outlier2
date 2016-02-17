@@ -29,6 +29,7 @@ public class OI {
     public static final int CAPTURE = 3;
     public static final int BOWL = 1;
     public static final int PRIME = 5;
+    public static final int FIRE = 2;
 
     /**
      * Create a new instance of the operator interface
@@ -43,6 +44,7 @@ public class OI {
         JoystickButton captureButton = new JoystickButton(joystick, CAPTURE);
         JoystickButton bowlButton = new JoystickButton(joystick, BOWL);
         JoystickButton primeButton = new JoystickButton(joystick, PRIME);
+        JoystickButton fireButton = new JoystickButton(joystick, FIRE);
 
         // Drive Train Commands
         reverseButton.whenPressed(new ReverseDrive());
@@ -50,6 +52,7 @@ public class OI {
         captureButton.toggleWhenPressed(new CaptureBoulder());
         bowlButton.whenPressed(new Bowl());
         primeButton.whenPressed(new Prime());
+        //fireButton.whenPressed(new Fire());
     }
 
     /**
