@@ -24,10 +24,10 @@ public class OI {
     public static final int REVERSE = Gamepad.Buttons.BACK.getNumber();
     // Boulder Buttons
     public static final int CAPTURE = 3;
-    public static final int BOWL = 1;
+    public static final int BOWL = 2;
     public static final int PRIME = 5;
     public static final int UNPRIME = 6;
-    public static final int FIRE = 2;
+    public static final int FIRE = 1;
 
     /**
      * Create a new instance of the operator interface
