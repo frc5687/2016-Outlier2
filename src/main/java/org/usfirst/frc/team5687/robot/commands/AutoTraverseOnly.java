@@ -1,7 +1,9 @@
 package org.usfirst.frc.team5687.robot.commands;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import org.usfirst.frc.team5687.robot.Constants;
 import org.usfirst.frc.team5687.robot.Robot;
 
@@ -10,13 +12,17 @@ import static org.usfirst.frc.team5687.robot.Robot.driveTrain;
 /**
  *
  */
-public class AutoTraverseOnly extends CommandGroup{
+public class AutoTraverseOnly extends Command {
 
-    double traverseSpeed;
-    double rotateAngle;
+    public  AutoTraverseOnly() {
+
+
+    }
 
 
     protected void initialize() {
+        double traverseSpeed = 0;
+        double rotateAngle = 0;
 
         switch (Robot.robot.getSelectedDefense()){
             case "LowBar":
@@ -54,24 +60,38 @@ public class AutoTraverseOnly extends CommandGroup{
                 rotateAngle=-25;
                 break;
         }
+
+        DriverStation.reportError("Traversing "+Robot.robot.getSelectedDefense()+", in position "+Robot.robot.getSelectedPosition()+", at "+traverseSpeed+" speed.",false);
+
+        // Run forward 36 inches
+        Scheduler.getInstance().add(new AutoDrive(.4, 36));
+
+        // Traverse the selected defense
+        Scheduler.getInstance().add(new AutoTraverseStaticDefense(traverseSpeed));
+
+        // Turn towards the tower
+        Scheduler.getInstance().add(new AutoAlign(rotateAngle));
+
+
     }
 
-
+    @Override
     protected void execute() {
 
     }
 
+    @Override
+    protected boolean isFinished() {
+        return true;
+    }
 
+    @Override
+    protected void end() {
 
-    public  AutoTraverseOnly() {
+    }
 
-        //none of this will work 'til it is merged with Rotate and AutoTraverse commands
-
-        addSequential(new AutoDrive(.5,2));
-        addSequential(new AutoTraverseStaticDefense(traverseSpeed));
-        addSequential(new AutoAlign(rotateAngle));
-
-        DriverStation.reportError("Traversing "+Robot.robot.getSelectedDefense()+", in position "+Robot.robot.getSelectedPosition()+", at "+traverseSpeed+" speed.",false);
+    @Override
+    protected void interrupted() {
 
     }
 }
