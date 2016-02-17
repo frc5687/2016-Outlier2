@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.USBCamera;
 import org.usfirst.frc.team5687.robot.commands.AutoChaseTarget;
+import org.usfirst.frc.team5687.robot.commands.AutoTraverseOnly;
 import org.usfirst.frc.team5687.robot.commands.AutonomousDoNothing;
 import org.usfirst.frc.team5687.robot.commands.AutonomousTestCVT;
 import org.usfirst.frc.team5687.robot.subsystems.Arms;
@@ -68,10 +69,10 @@ public class Robot extends IterativeRobot {
     public static Robot robot;
 
     Command autonomousCommand;
-    SendableChooser autoFullCommandChooser;
+    private SendableChooser autonomousModeChooser;
 
-    public SendableChooser autoDefenseChooser;
-    public SendableChooser autoPositionChooser;
+    public SendableChooser defenseChooser;
+    public SendableChooser positionChooser;
 
     CustomCameraServer cameraServer;
 
@@ -91,32 +92,32 @@ public class Robot extends IterativeRobot {
         shooter = new Shooter();
         intake = new Intake();
         arms = new Arms();
-        autoFullCommandChooser = new SendableChooser();
-        autoDefenseChooser = new SendableChooser();
-        autoPositionChooser = new SendableChooser();
+        autonomousModeChooser = new SendableChooser();
+        defenseChooser = new SendableChooser();
+        positionChooser = new SendableChooser();
 
         powerDistributionPanel = new PowerDistributionPanel();
         //TODO: new object(); DriveTrain
 
-        autoFullCommandChooser.addDefault("Do Nothing At All", new AutonomousDoNothing());
-        autoFullCommandChooser.addObject("Calibrate CVT", new AutonomousTestCVT());
-        autoFullCommandChooser.addObject("Chase Target", new AutoChaseTarget());
-        autoFullCommandChooser.addObject("Use Position and Defense", new AutoChaseTarget());
-        SmartDashboard.putData("Full Autonomous mode", autoFullCommandChooser);
+        autonomousModeChooser.addDefault("Do Nothing At All", new AutonomousDoNothing());
+        autonomousModeChooser.addObject("Calibrate CVT", new AutonomousTestCVT());
+        autonomousModeChooser.addObject("Chase Target", new AutoChaseTarget());
+        autonomousModeChooser.addObject("Traverse Chosen Defense", new AutoTraverseOnly());
+        SmartDashboard.putData("Autonomous mode", autonomousModeChooser);
 
-        autoDefenseChooser.addDefault("Low Bar", "LowBar");
-        autoDefenseChooser.addObject("Moat", "Moat");
-        autoDefenseChooser.addObject("Rock Wall","RockWall");
-        autoDefenseChooser.addObject("Rough Terrain","RoughTerrain");
-        autoDefenseChooser.addObject("Rampart","Rampart");
-        SmartDashboard.putData("Select Defense", autoDefenseChooser);
+        defenseChooser.addDefault("Low Bar", "LowBar");
+        defenseChooser.addObject("Moat", "Moat");
+        defenseChooser.addObject("Rock Wall","RockWall");
+        defenseChooser.addObject("Rough Terrain","RoughTerrain");
+        defenseChooser.addObject("Rampart","Rampart");
+        SmartDashboard.putData("Defense to Cross", defenseChooser);
 
-        autoPositionChooser.addDefault("A (Low Bar)","A");
-        autoPositionChooser.addObject("B","B");
-        autoPositionChooser.addObject("C","C");
-        autoPositionChooser.addObject("D","D");
-        autoPositionChooser.addObject("E","E");
-        SmartDashboard.putData("Select Position", autoPositionChooser);
+        positionChooser.addDefault("1 (Low Bar)","1");
+        positionChooser.addObject("2","2");
+        positionChooser.addObject("3","3");
+        positionChooser.addObject("4","4");
+        positionChooser.addObject("5","5");
+        SmartDashboard.putData("Start Position", positionChooser);
 
 
         // Report git info to the dashboard
@@ -164,7 +165,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousInit() {
         // schedule the autonomous command (example)
-        autonomousCommand = (Command) autoFullCommandChooser.getSelected();
+        autonomousCommand = (Command) autonomousModeChooser.getSelected();
         if (autonomousCommand!=null) {
             autonomousCommand.start();
         }
@@ -264,11 +265,11 @@ public class Robot extends IterativeRobot {
     }
 
     public String getSelectedDefense() {
-        return (String)autoDefenseChooser.getSelected();
+        return (String) defenseChooser.getSelected();
     }
 
     public String getSelectedPosition() {
-        return (String)autoPositionChooser.getSelected();
+        return (String) positionChooser.getSelected();
     }
 
 }

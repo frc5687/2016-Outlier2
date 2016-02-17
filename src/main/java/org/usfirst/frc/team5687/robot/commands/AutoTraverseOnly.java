@@ -38,19 +38,19 @@ public class AutoTraverseOnly extends CommandGroup{
 
 
         switch (Robot.robot.getSelectedPosition()){
-            case "A":
+            case "1":
                 rotateAngle=50;
                 break;
-            case "B":
+            case "2":
                rotateAngle=30;
                 break;
-            case "C":
+            case "3":
                 rotateAngle=15;
                 break;
-            case "D":
+            case "4":
                 rotateAngle=-10;
                 break;
-            case "E":
+            case "5":
                 rotateAngle=-25;
                 break;
         }
@@ -67,9 +67,9 @@ public class AutoTraverseOnly extends CommandGroup{
 
         //none of this will work 'til it is merged with Rotate and AutoTraverse commands
 
-        //addSequential(new AutoDrive(.5,2));
-        // addSequential(new autoTraverseStaticDefense(traverseSpeed));
-        //addSequential(new autoAllign(rotateAngle));
+        addSequential(new AutoDrive(.5,2));
+        addSequential(new AutoTraverseStaticDefense(traverseSpeed));
+        //addSequential(new AutoAllign(rotateAngle));
 
         DriverStation.reportError("Traversing "+Robot.robot.getSelectedDefense()+", in position "+Robot.robot.getSelectedPosition()+", at "+traverseSpeed+" speed.",false);
 
