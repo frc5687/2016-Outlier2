@@ -42,6 +42,16 @@ public class Constants {
     public class Autonomous {
         public static final double MIN_AUTO_TRAVERSE_ANGLE = 9; // the minimum angle the robot will pitch when traversing a defense
         public static final double MAX_AUTO_TRAVERSE_SECONDS = 5; // the maximum time the robot should need to travers a defense in Autonomous,
+
+        public class staticDefenseTraverseSpeeds {
+            //speeds the robot should travel at when traversing defenses, should be between 0 and 1
+            public static final double LOW_BAR_SPEED =.5;
+            public static final double MOAT_SPEED =.5;
+            public static final double ROCK_WALL_SPEED =.3;
+            public static final double RAMPARTS_SPEED =.3;
+            public static final double ROUGH_TERRAIN_SPEED =.7;
+        }
+
     }
 
     public class InfraRedConstants {
@@ -78,11 +88,6 @@ public class Constants {
          * Speed to run the intake to fire the boulder for shooting a high goal
          */
         public static final double FIRE_SPEED = 1.0;
-
-        /**
-         * Time allowed for a boulder to move away from the intake roller to shooter wheels for firing
-         */
-        public static final long FIRE_TIME = 750;
 
         /**
          * Time it takes for a boulder to clear the intake roller when bowling (in milliseconds).

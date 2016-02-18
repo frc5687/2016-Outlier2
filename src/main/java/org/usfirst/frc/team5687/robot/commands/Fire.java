@@ -10,7 +10,7 @@ import org.usfirst.frc.team5687.robot.Constants;
 public class Fire extends CommandGroup{
 
     public Fire() {
-        addSequential(new SetIntakeSpeed(Constants.Intake.FIRE_SPEED, Constants.Intake.FIRE_TIME));
+        addSequential(new FireBoulder());
         addSequential(new SetShooterSpeed(0, Constants.Shooter.UNPRIME_TIME));
     }
 }

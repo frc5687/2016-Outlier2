@@ -28,6 +28,8 @@ public class OI {
     public static final int PRIME = 5;
     public static final int UNPRIME = 6;
     public static final int FIRE = 1;
+    // Camera switch
+    public static int RESET_CAMERA = 7;
 
     /**
      * Create a new instance of the operator interface
@@ -44,6 +46,7 @@ public class OI {
         JoystickButton primeButton = new JoystickButton(joystick, PRIME);
         JoystickButton unprimeButton = new JoystickButton(joystick, UNPRIME);
         JoystickButton fireButton = new JoystickButton(joystick, FIRE);
+        JoystickButton resetCameraButton = new JoystickButton(joystick, RESET_CAMERA);
 
         // Drive Train Commands
         reverseButton.whenPressed(new ReverseDrive());
@@ -53,6 +56,8 @@ public class OI {
         primeButton.whenPressed(new Prime());
         unprimeButton.whenPressed(new CancelPrime());
         fireButton.whenPressed(new Fire());
+        // Reset Camera Command
+        resetCameraButton.whenPressed(new ResetCamera());
     }
 
     /**

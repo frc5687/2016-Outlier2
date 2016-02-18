@@ -67,12 +67,15 @@ public class Robot extends IterativeRobot {
     public static Robot robot;
 
     Command autonomousCommand;
-    SendableChooser autoChooser;
+    private SendableChooser autoChooser;
+
+    public SendableChooser defenseChooser;
+    public SendableChooser positionChooser;
 
     CustomCameraServer cameraServer;
 
-    USBCamera hornsCamera = new USBCamera(RobotMap.Cameras.hornsEnd);
-    USBCamera intakeCamera = new USBCamera(RobotMap.Cameras.intakeEnd);
+    USBCamera hornsCamera = null;
+    USBCamera intakeCamera = null;
 
     String camera = RobotMap.Cameras.hornsEnd;
 
@@ -90,8 +93,35 @@ public class Robot extends IterativeRobot {
         intake = new Intake();
         arms = new Arms();
         autoChooser = new SendableChooser();
+        defenseChooser = new SendableChooser();
+        positionChooser = new SendableChooser();
+
         powerDistributionPanel = new PowerDistributionPanel();
 
+        autoChooser.addDefault("Do Nothing At All", new AutonomousDoNothing());
+        autoChooser.addObject("Calibrate CVT", new AutonomousTestCVT());
+        autoChooser.addObject("Chase Target", new AutoChaseTarget());
+        autoChooser.addObject("Traverse Chosen Defense", new AutoTraverseOnly());
+        SmartDashboard.putData("Autonomous mode", autoChooser);
+
+        defenseChooser.addDefault("Low Bar", "LowBar");
+        defenseChooser.addObject("Moat", "Moat");
+        defenseChooser.addObject("Rock Wall","RockWall");
+        defenseChooser.addObject("Rough Terrain","RoughTerrain");
+        defenseChooser.addObject("Rampart","Rampart");
+        SmartDashboard.putData("Defense to Cross", defenseChooser);
+        initializeCameras();
+
+        positionChooser.addDefault("1 (Low Bar)","1");
+        positionChooser.addObject("2","2");
+        positionChooser.addObject("3","3");
+        positionChooser.addObject("4","4");
+        positionChooser.addObject("5","5");
+        SmartDashboard.putData("Start Position", positionChooser);
+
+
+        // Report git info to the dashboard
+        SmartDashboard.putString("Git Info", Reader.gitInfo);
         try {
             // Try to connect to the navX imu.
             imu = new AHRS(SPI.Port.kMXP);
@@ -112,6 +142,7 @@ public class Robot extends IterativeRobot {
         autoChooser.addDefault("Do Nothing At All", new AutonomousDoNothing());
         autoChooser.addObject("Calibrate CVT", new AutonomousTestCVT());
         autoChooser.addObject("Chase Target", new AutoChaseTarget());
+        autoChooser.addObject("Traverse Defense", new AutoTraverseOnly());
         autoChooser.addObject("Left 90", new AutoAlign(-90));
         autoChooser.addObject("Right 90", new AutoAlign(90));
         autoChooser.addObject("Drive 12", new AutoDrive(-.4, 12f));
@@ -150,7 +181,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousInit() {
         // schedule the autonomous command (example)
-        autonomousCommand = (Command)autoChooser.getSelected();
+        autonomousCommand = (Command) autoChooser.getSelected();
         if (autonomousCommand!=null) {
             autonomousCommand.start();
         }
@@ -203,6 +234,7 @@ public class Robot extends IterativeRobot {
         DriverStation.reportError("Camera now streaming: "+camera,false);
     }
 
+
     protected void sendIMUData() {
         if (imu==null) {
             // If we can't find the imu, report that to the dashboard and return.
@@ -246,5 +278,55 @@ public class Robot extends IterativeRobot {
         // Connectivity Debugging Support
         SmartDashboard.putNumber(   "IMU_Byte_Count",       imu.getByteCount());
         SmartDashboard.putNumber(   "IMU_Update_Count",     imu.getUpdateCount());
+    }
+
+    public String getSelectedDefense() {
+        return (String) defenseChooser.getSelected();
+    }
+
+    public String getSelectedPosition() {
+        return (String) positionChooser.getSelected();
+    }
+
+
+
+    public void initializeCameras() {
+        if (hornsCamera!=null) {
+            hornsCamera.closeCamera();
+            hornsCamera = null;
+        }
+        if (intakeCamera!=null) {
+            intakeCamera.closeCamera();
+            intakeCamera = null;
+        }
+
+        try {
+            hornsCamera = new USBCamera(RobotMap.Cameras.hornsEnd);
+        } catch (Exception e) {
+            hornsCamera = null;
+        }
+
+        try {
+            intakeCamera = new USBCamera(RobotMap.Cameras.intakeEnd);
+        } catch (Exception e) {
+            intakeCamera = null;
+        }
+
+       if (cameraServer==null){
+        //Setup Camera Code
+            cameraServer = CustomCameraServer.getInstance();
+           cameraServer.setQuality(50);
+       }
+
+        if (camera.equals(RobotMap.Cameras.hornsEnd)) {
+            camera = RobotMap.Cameras.intakeEnd;
+            cameraServer.startAutomaticCapture(intakeCamera);
+        }else {
+            camera = RobotMap.Cameras.hornsEnd;
+            cameraServer.startAutomaticCapture(hornsCamera);
+        }
+
+
+
     }
 }
