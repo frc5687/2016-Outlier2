@@ -1,30 +1,20 @@
 package org.usfirst.frc.team5687.robot.commands;
 
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.Scheduler;
 import org.usfirst.frc.team5687.robot.Constants;
 import org.usfirst.frc.team5687.robot.Robot;
-
-import static org.usfirst.frc.team5687.robot.Robot.driveTrain;
-
 /**
  *
  */
-public class AutoTraverseOnly extends Command {
+public class AutoTraverseOnly extends CommandGroup {
 
-    public  AutoTraverseOnly() {
+    public  AutoTraverseOnly(String defense, int position) {
 
-
-    }
-
-
-    protected void initialize() {
         double traverseSpeed = 0;
         double rotateAngle = 0;
 
-        switch (Robot.robot.getSelectedDefense()){
+        switch (defense){
             case "LowBar":
                 traverseSpeed = Constants.Autonomous.staticDefenseTraverseSpeeds.LOW_BAR_SPEED;
                 break;
@@ -43,55 +33,33 @@ public class AutoTraverseOnly extends Command {
         }
 
 
-        switch (Robot.robot.getSelectedPosition()){
-            case "1":
+        switch (position){
+            case 1:
                 rotateAngle=50;
                 break;
-            case "2":
-               rotateAngle=30;
+            case 2:
+                rotateAngle=30;
                 break;
-            case "3":
+            case 3:
                 rotateAngle=15;
                 break;
-            case "4":
+            case 4:
                 rotateAngle=-10;
                 break;
-            case "5":
+            case 5:
                 rotateAngle=-25;
                 break;
         }
 
-        DriverStation.reportError("Traversing "+Robot.robot.getSelectedDefense()+", in position "+Robot.robot.getSelectedPosition()+", at "+traverseSpeed+" speed.",false);
-
-        // Run forward 36 inches
-        //Scheduler.getInstance().add(new AutoDrive(.4, 42.0f));
+        // Run forward 42 inches
+        addSequential(new AutoDrive(.4, 42.0f));
 
         // Traverse the selected defense
-        Scheduler.getInstance().add(new AutoTraverseStaticDefense(traverseSpeed));
+        addSequential(new AutoTraverseStaticDefense(traverseSpeed));
 
         // Turn towards the tower
-        // Scheduler.getInstance().add(new AutoAlign(rotateAngle));
-
-
-    }
-
-    @Override
-    protected void execute() {
+        addSequential(new AutoAlign(rotateAngle));
 
     }
 
-    @Override
-    protected boolean isFinished() {
-        return true;
-    }
-
-    @Override
-    protected void end() {
-
-    }
-
-    @Override
-    protected void interrupted() {
-
-    }
 }
