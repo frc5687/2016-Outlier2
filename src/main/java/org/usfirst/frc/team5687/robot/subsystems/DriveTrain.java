@@ -30,7 +30,7 @@ public class DriveTrain extends Subsystem {
         drive = new RobotDrive(leftFrontMotor, leftRearMotor, rightFrontMotor, rightRearMotor);
         rightEncoder = initializeEncoder(RobotMap.Drive.RIGHT_ENCODER_CHANNEL_A, RobotMap.Drive.RIGHT_ENCODER_CHANNEL_B, Constants.Encoders.RightDrive.REVERSED, Constants.Encoders.RightDrive.INCHES_PER_PULSE);
         leftEncoder = initializeEncoder(RobotMap.Drive.LEFT_ENCODER_CHANNEL_A, RobotMap.Drive.LEFT_ENCODER_CHANNEL_B, Constants.Encoders.LeftDrive.REVERSED, Constants.Encoders.LeftDrive.INCHES_PER_PULSE);
-        armEncoder = new Encoder(RobotMap.Drive.ENCODER_CHANNEL_A, RobotMap.Drive.ENCODER_CHANNEL_B, false, CounterBase.EncodingType.k4X);
+        armEncoder = new Encoder(RobotMap.Drive.ENCODER_CHANNEL_A, RobotMap.Drive.ENCODER_CHANNEL_B, false, CounterBase.EncodingType.k4X);//TODO: Is this the right constructor? I noticed you used a different one...
 
     }
 
