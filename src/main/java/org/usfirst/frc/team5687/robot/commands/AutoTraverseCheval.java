@@ -107,8 +107,7 @@ public class AutoTraverseCheval extends Command{
 
     @Override
     protected void end() {
-
-
+        
     }
 
     @Override
