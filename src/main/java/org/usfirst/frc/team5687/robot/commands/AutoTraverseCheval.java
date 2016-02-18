@@ -17,9 +17,12 @@ public class AutoTraverseCheval extends Command{
     double currentLeftDistance;
     double currentRightDistance;
     double currentArmPosition;
-    private double desiredAngle;
+    private double desiredAngle = calculateDesiredAngle();//TODO: will this send the return to the variable? That's what I want...
     boolean onRamp = false;
     boolean armsDown = false;
+    double edgeWheelHeight = y; //TODO: add in this value.
+    double wheelContactRamp = z; //TODO: add in this value.
+
 
     DriveTrain driveTrain = Robot.driveTrain;
 
@@ -32,10 +35,9 @@ public class AutoTraverseCheval extends Command{
     }
 
 //TODO: add in calculateDesiredAngle method. Reference and send value to desiredAngle.
-    desiredAngle = new AutoDrive();
 
     private double calculateDesiredAngle(){
-        
+        return Math.sin(edgeWheelHeight/wheelContactRamp);
     }
 
 /* desiredAngle=sin(y/z) where
@@ -45,11 +47,16 @@ public class AutoTraverseCheval extends Command{
 //Get the distance of the robot, to be used when gauging if robot is halfway over the cheval
 
 
-    private boolean isOnRamp() {
+    private void isOnRamp() {
         if (currentAngle == desiredAngle) {
             onRamp = true;
         }
     }
+
+    @Override
+    protected void initialize() {
+
+        }
 
     protected void execute () {
         thePitch();
@@ -89,5 +96,18 @@ public class AutoTraverseCheval extends Command{
         }
     }
 
+    @Override
+    protected boolean isFinished() {
+        return false;
+    }
 
+    @Override
+    protected void end() {
+
+    }
+
+    @Override
+    protected void interrupted() {
+
+    }
 }
