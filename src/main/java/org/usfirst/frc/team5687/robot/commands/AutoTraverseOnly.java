@@ -64,13 +64,13 @@ public class AutoTraverseOnly extends Command {
         DriverStation.reportError("Traversing "+Robot.robot.getSelectedDefense()+", in position "+Robot.robot.getSelectedPosition()+", at "+traverseSpeed+" speed.",false);
 
         // Run forward 36 inches
-        Scheduler.getInstance().add(new AutoDrive(.4, 36));
+        //Scheduler.getInstance().add(new AutoDrive(.4, 42.0f));
 
         // Traverse the selected defense
         Scheduler.getInstance().add(new AutoTraverseStaticDefense(traverseSpeed));
 
         // Turn towards the tower
-        Scheduler.getInstance().add(new AutoAlign(rotateAngle));
+        // Scheduler.getInstance().add(new AutoAlign(rotateAngle));
 
 
     }
