@@ -214,7 +214,7 @@ public class Robot extends IterativeRobot {
      */
     public void switchCameras() {
         //cameraServer.stopAutomaticCapture();
-        if (camera.equals(RobotMap.Cameras.hornsEnd)) {
+        if (oi.getDirection()==-1) {
             camera = RobotMap.Cameras.intakeEnd;
             cameraServer.startAutomaticCapture(intakeCamera);
         } else {
