@@ -54,5 +54,6 @@ public class Arms extends Subsystem {
 
     public void updateDashboard() {
         SmartDashboard.putBoolean("Arms limit", isAtLimit());
+        SmartDashboard.putNumber("Potentiometer value is", armsPot.get());
     }
 }
