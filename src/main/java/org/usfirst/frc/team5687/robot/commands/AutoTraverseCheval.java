@@ -17,11 +17,12 @@ public class AutoTraverseCheval extends Command{
     double currentLeftDistance;
     double currentRightDistance;
     double currentArmPosition;
-    private double desiredAngle = calculateDesiredAngle();//TODO: will this send the return to the variable? That's what I want...
+    double lengthOfCheval = q;//TODO: over two feet, but I can't find the width of the ramp on the first rulebook.
+    private double desiredAngle = calculateDesiredAngle();//Question: will this send the return to the variable? That's what I want...
     boolean onRamp = false;
     boolean armsDown = false;
-    double edgeWheelHeight = y; //TODO: add in this value.
-    double wheelContactRamp = z; //TODO: add in this value.
+    double edgeWheelHeight = y; //TODO: add in this value. If you're wondering why I don't have these, wait until you can see me face-to-face to ask.
+    double wheelContactRamp = z; //TODO: add in this value. Same as above.
 
 
     DriveTrain driveTrain = Robot.driveTrain;
@@ -33,8 +34,6 @@ public class AutoTraverseCheval extends Command{
     private float thePitch(){
         return Robot.imu.getPitch();
     }
-
-//TODO: add in calculateDesiredAngle method. Reference and send value to desiredAngle.
 
     private double calculateDesiredAngle(){
         return Math.sin(edgeWheelHeight/wheelContactRamp);
@@ -63,11 +62,13 @@ public class AutoTraverseCheval extends Command{
         currentAngle = thePitch();
         isOnRamp();
         moveArmsUp();
+        areArmsDown();
         currentRightDistance = driveTrain.getRightDistance();//TODO: so put `DriveTrain driveTrain = Robot.driveTrain and call driveTrain.getLeftDistance(); instead
         currentLeftDistance = driveTrain.getLeftDistance();
         currentArmPosition = driveTrain.getArmDistance();
 
         if (onRamp) {
+            //TODO: can't reset encoder because it is private; need an alternative.
             driveTrain.tankDrive(0,0);//stop driving
             moveArmsDown();//If on ramp, move arms down.
         }
@@ -98,11 +99,15 @@ public class AutoTraverseCheval extends Command{
 
     @Override
     protected boolean isFinished() {
+        if (currentLeftDistance == lengthOfCheval){ //Question: is it fine to just pick one?
+            if(currentAngle == 0){return true;}
+        }
         return false;
     }
 
     @Override
     protected void end() {
+
 
     }
 
