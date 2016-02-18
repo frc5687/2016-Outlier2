@@ -26,8 +26,16 @@ public class Arms extends Subsystem {
         setDefaultCommand(new RunArmsManually());
     }
 
-    public void setSpeed (double speed) {
-        armsMotor.set(Helpers.applySensitivityTransform(speed));
+    public void setSpeed(double speed) {
+        if (speed >= 0 && isAtLimit()) {
+            armsMotor.set(0);
+        } else {
+            armsMotor.set(Helpers.applySensitivityTransform(speed));
+        }
+    }
+
+    public void stop() {
+        armsMotor.set(0);
     }
 
     /**
