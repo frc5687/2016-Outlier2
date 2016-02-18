@@ -67,7 +67,7 @@ public class AutoTraverseCheval extends Command{
         currentLeftDistance = driveTrain.getLeftDistance();
         currentArmPosition = driveTrain.getArmDistance();
 
-        if (isOnRamp()) {
+        if (onRamp) {
             driveTrain.tankDrive(0,0);//stop driving
             moveArmsDown();//If on ramp, move arms down.
         }
@@ -75,15 +75,15 @@ public class AutoTraverseCheval extends Command{
             driveTrain.tankDrive(.5,.5); //TODO: is this a good speed?
         }//Add something that can tell when the cheval is down all the way
 
-        if (currentAngle == 0 && currentLeftDistance == x && currentRightDistance == x) {
-        }// Lift arms when robot angle evens out and the distance driven is equal to half the ramp, both with a range set on the values.
-    }
+        if (currentAngle == 0 && currentLeftDistance == x && currentRightDistance == x){//TODO: Need distance per pulse to set values {//TODO: This will probably need a deadband.
+        moveArmsUp();}//Lift arms when robot angle evens out and the distance driven is equal to half the ramp, both with a range set on the values.
+}
 
     /**
      *Methods that pull the arms up/down to the desired height.
      */
     private void moveArmsUp() {
-        autoarmshigh = new AutoDrive(0.5, Constants.Autonomous.ARMS_HIGH);
+        autoarmshigh = new AutoDrive(0.5, Constants.Autonomous.ARMS_HIGH);//TODO: is this a good speed?
     }
 
     public void moveArmsDown() {
