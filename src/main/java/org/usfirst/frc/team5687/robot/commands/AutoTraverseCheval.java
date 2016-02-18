@@ -15,6 +15,8 @@ public class AutoTraverseCheval extends Command{
     double currentLeftDistance;
     double currentRightDistance;
 
+    DriveTrain driveTrain = Robot.driveTrain;
+
 
     private float thePitch(){
         return Robot.imu.getPitch();
@@ -47,8 +49,8 @@ public class AutoTraverseCheval extends Command{
         currentAngle = thePitch();
         isOnRamp();
         moveArmsUp();
-        currentRightDistance = Robot.driveTrain.getRightDistance();//TODO: so put `DriveTrain driveTrain = Robot.driveTrain and call driveTrain.getLeftDistance(); instead
-        currentLeftDistance = Robot.driveTrain.getLeftDistance();
+        currentRightDistance = driveTrain.getRightDistance();//TODO: so put `DriveTrain driveTrain = Robot.driveTrain and call driveTrain.getLeftDistance(); instead
+        currentLeftDistance = driveTrain.getLeftDistance();
         if (isOnRamp()) {
             driveTrain.tankDrive(0,0);//stop driving
             moveArmsDown();//If on ramp, move arms down.
