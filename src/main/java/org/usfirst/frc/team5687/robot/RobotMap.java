@@ -21,6 +21,8 @@ public class RobotMap {
         public static final int LEFT_ENCODER_CHANNEL_B = 9;
         public static final int RIGHT_ENCODER_CHANNEL_A = 6;
         public static final int RIGHT_ENCODER_CHANNEL_B = 7;
+        public static final int ENCODER_CHANNEL_A = x;//TODO: add these.
+        public static final int ENCODER_CHANNEL_B = y;
     }
 
     /**
@@ -40,6 +42,8 @@ public class RobotMap {
 
     public static class Arms {
         public static final int ARMS_MOTOR = 4;
+
+
     }
 
     public static class Cameras {

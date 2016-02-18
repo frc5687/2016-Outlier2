@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5687.robot.subsystems;
 
+import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -19,6 +20,7 @@ public class DriveTrain extends Subsystem {
     private VictorSP rightRearMotor;
     private Encoder rightEncoder;
     private Encoder leftEncoder;
+    private Encoder armEncoder;
 
     public DriveTrain(){
         leftFrontMotor = new VictorSP(RobotMap.Drive.LEFT_MOTOR_FRONT);
@@ -28,6 +30,8 @@ public class DriveTrain extends Subsystem {
         drive = new RobotDrive(leftFrontMotor, leftRearMotor, rightFrontMotor, rightRearMotor);
         rightEncoder = initializeEncoder(RobotMap.Drive.RIGHT_ENCODER_CHANNEL_A, RobotMap.Drive.RIGHT_ENCODER_CHANNEL_B, Constants.Encoders.RightDrive.REVERSED, Constants.Encoders.RightDrive.INCHES_PER_PULSE);
         leftEncoder = initializeEncoder(RobotMap.Drive.LEFT_ENCODER_CHANNEL_A, RobotMap.Drive.LEFT_ENCODER_CHANNEL_B, Constants.Encoders.LeftDrive.REVERSED, Constants.Encoders.LeftDrive.INCHES_PER_PULSE);
+        armEncoder = new Encoder(RobotMap.Drive.ENCODER_CHANNEL_A, RobotMap.Drive.ENCODER_CHANNEL_B, false, CounterBase.EncodingType.k4X);
+
     }
 
     @Override
@@ -74,6 +78,10 @@ public class DriveTrain extends Subsystem {
 
     public double getRightSpeed() {
         return rightFrontMotor.getSpeed();
+    }
+
+    public double getArmDistance(){
+        return armEncoder.getDistance();
     }
 
     public double getRightRPS() {
