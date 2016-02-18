@@ -26,7 +26,7 @@ public class FireBoulder extends Command {
 
     @Override
     protected boolean isFinished() {
-        return intake.isDetected();
+        return !intake.isDetected() || !intake.isPrimed();
     }
 
     @Override
