@@ -49,6 +49,7 @@ public class RobotMap {
     public static class Arms {
         public static final int ARMS_MOTOR = 5;
         public static final int ARMS_POT = 2;
+        public static final int ARMS_HALL = 1;
     }
 
     /**

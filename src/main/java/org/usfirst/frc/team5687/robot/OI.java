@@ -24,9 +24,10 @@ public class OI {
     public static final int REVERSE = Gamepad.Buttons.BACK.getNumber();
     // Boulder Buttons
     public static final int CAPTURE = 3;
-    public static final int BOWL = 1;
+    public static final int BOWL = 2;
     public static final int PRIME = 5;
     public static final int UNPRIME = 6;
+    public static final int FIRE = 1;
     // Camera switch
     public static int RESET_CAMERA = 7;
 
@@ -44,6 +45,7 @@ public class OI {
         JoystickButton bowlButton = new JoystickButton(joystick, BOWL);
         JoystickButton primeButton = new JoystickButton(joystick, PRIME);
         JoystickButton unprimeButton = new JoystickButton(joystick, UNPRIME);
+        JoystickButton fireButton = new JoystickButton(joystick, FIRE);
         JoystickButton resetCameraButton = new JoystickButton(joystick, RESET_CAMERA);
 
         // Drive Train Commands
@@ -53,6 +55,7 @@ public class OI {
         bowlButton.whenPressed(new Bowl());
         primeButton.whenPressed(new Prime());
         unprimeButton.whenPressed(new CancelPrime());
+        fireButton.whenPressed(new Fire());
         // Reset Camera Command
         resetCameraButton.whenPressed(new ResetCamera());
     }
