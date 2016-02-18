@@ -55,12 +55,11 @@ public class Constants {
     }
 
     public class InfraRedConstants {
-
-        public static final int DETECTION_THRESHOLD = 100;
-        public static final int PRIMED_OPTIMAL = 1000; // Optimal position of boulder for Priming the Shooter Wheel
+        public static final int DETECTION_THRESHOLD = 600;
+        public static final int PRIMED_OPTIMAL = 1200; // Optimal position of boulder for Priming the Shooter Wheel
         public static final int PRIMED_TOLERANCE = 100; // Tolerance in either direction of boulder position for Priming
-        public static final int CAPTURED_OPTIMAL = 1300; // Optimal position of boulder for storing bolder and traversing defenses
-        public static final int CAPTURED_TOLERANCE = 200; // Tolerance in either direction of boulder position for carrying boulder
+        public static final int CAPTURED_OPTIMAL = 1400; // Optimal position of boulder for storing bolder and traversing defenses
+        public static final int CAPTURED_TOLERANCE = 100; // Tolerance in either direction of boulder position for carrying boulder
     }
 
     public class Horns {
@@ -85,6 +84,11 @@ public class Constants {
         public static final double UNPRIME_SPEED = 0.3;
 
         /**
+         * Speed to run the intake to fire the boulder for shooting a high goal
+         */
+        public static final double FIRE_SPEED = 1.0;
+
+        /**
          * Time it takes for a boulder to clear the intake roller when bowling (in milliseconds).
          */
         public static final long BOWL_TIME = 1000;
@@ -102,14 +106,14 @@ public class Constants {
         public static final long PRIME_TIME = 1750;
 
         /**
+         * Time allowed for shooter wheels to stop before unpriming or after firing the boulder
+         */
+        public static final long UNPRIME_TIME = 1500;
+
+        /**
          * Speed to run the shooter wheels to shoot high goal
          */
         public static final double SHOOTER_SPEED = 1.0;
-
-        /**
-         * Time allowed for shooter wheels to stop before unpriming the boulder
-         */
-        public static final long UNPRIME_TIME = 1500;
     }
 
     public class Encoders {
