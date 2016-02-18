@@ -55,12 +55,11 @@ public class Constants {
     }
 
     public class InfraRedConstants {
-
-        public static final int DETECTION_THRESHOLD = 100;
-        public static final int PRIMED_OPTIMAL = 1000; // Optimal position of boulder for Priming the Shooter Wheel
+        public static final int DETECTION_THRESHOLD = 600;
+        public static final int PRIMED_OPTIMAL = 1200; // Optimal position of boulder for Priming the Shooter Wheel
         public static final int PRIMED_TOLERANCE = 100; // Tolerance in either direction of boulder position for Priming
-        public static final int CAPTURED_OPTIMAL = 1300; // Optimal position of boulder for storing bolder and traversing defenses
-        public static final int CAPTURED_TOLERANCE = 200; // Tolerance in either direction of boulder position for carrying boulder
+        public static final int CAPTURED_OPTIMAL = 1400; // Optimal position of boulder for storing bolder and traversing defenses
+        public static final int CAPTURED_TOLERANCE = 100; // Tolerance in either direction of boulder position for carrying boulder
     }
 
     public class Horns {
