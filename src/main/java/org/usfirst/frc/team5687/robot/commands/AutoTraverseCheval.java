@@ -1,6 +1,8 @@
 package org.usfirst.frc.team5687.robot.commands;
 
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team5687.robot.Constants;
 import org.usfirst.frc.team5687.robot.Robot;
 import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
 
@@ -32,6 +34,10 @@ public class AutoTraverseCheval extends Command{
 //TODO: add in calculateDesiredAngle method. Reference and send value to desiredAngle.
     desiredAngle = new AutoDrive();
 
+    private double calculateDesiredAngle(){
+        
+    }
+
 /* desiredAngle=sin(y/z) where
 * y = height from edge of wheel contact on ramp to ground and
 * z = wheel contact w/ ramp
@@ -58,12 +64,11 @@ public class AutoTraverseCheval extends Command{
             driveTrain.tankDrive(0,0);//stop driving
             moveArmsDown();//If on ramp, move arms down.
         }
-        if (areArmsDown()){//If arms are down, drive.
+        if (armsDown){//If arms are down, drive.
             driveTrain.tankDrive(.5,.5); //TODO: is this a good speed?
         }//Add something that can tell when the cheval is down all the way
 
-        if (currentAngle == 0 && currentLeftDistance == x && currentRightDistance == x) {//TODO: How to check for a specific distance? How to communicate w/ encoder though ticks?
-            moveArmsUp();
+        if (currentAngle == 0 && currentLeftDistance == x && currentRightDistance == x) {
         }// Lift arms when robot angle evens out and the distance driven is equal to half the ramp, both with a range set on the values.
     }
 
@@ -71,15 +76,15 @@ public class AutoTraverseCheval extends Command{
      *Methods that pull the arms up/down to the desired height.
      */
     private void moveArmsUp() {
-        autoarmshigh = new AutoDrive(0.5, ARMS_HIGH);//TODO: Add in armses. :D
+        autoarmshigh = new AutoDrive(0.5, Constants.Autonomous.ARMS_HIGH);
     }
 
     public void moveArmsDown() {
-        autoarmslow = new AutoDrive(-0.5, ARMS_LOW);
+        autoarmslow = new AutoDrive(-0.5, Constants.Autonomous.ARMS_LOW);
     }
 
-    private boolean areArmsDown(){
-        if(currentArmPosition == ARMS_LOW){
+    private void areArmsDown(){
+        if(currentArmPosition == Constants.Autonomous.ARMS_LOW){
             armsDown = true;
         }
     }

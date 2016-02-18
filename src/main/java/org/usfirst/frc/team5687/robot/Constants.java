@@ -42,6 +42,9 @@ public class Constants {
     public class Autonomous {
         public static final double MIN_AUTO_TRAVERSE_ANGLE = 9; // the minimum angle the robot will pitch when traversing a defense
         public static final double MAX_AUTO_TRAVERSE_SECONDS = 5; // the maximum time the robot should need to travers a defense in Autonomous,
+        public static final double ARMS_HIGH = x;//TODO: Add arm extension length.
+        public static final double ARMS_LOW = x;//TODO: Add arm retraction length.
+
     }
 
     public class InfraRedConstants {
@@ -91,5 +94,13 @@ public class Constants {
             public static final boolean REVERSED = true;
             public static final double INCHES_PER_PULSE = Defaults.INCHES_PER_PULSE;
         }
+
+        public class ArmMovement {
+            public static final boolean REVERSED = Defaults.REVERSED;
+            public static final double INCHES_PER_PULSE = Defaults.INCHES_PER_PULSE;
+
+        }
+
+
     }
 }
