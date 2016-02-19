@@ -95,8 +95,10 @@ public class Robot extends IterativeRobot {
 
         powerDistributionPanel = new PowerDistributionPanel();
 
-        // Report git info to the dashboard
+        // Report commit info to dashboard and driver station
         SmartDashboard.putString("Git Info", Reader.gitInfo);
+        DriverStation.reportError("Deployed commit: " + Reader.gitInfo , false);
+
         try {
             // Try to connect to the navX imu.
             imu = new AHRS(SPI.Port.kMXP);
