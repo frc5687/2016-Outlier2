@@ -11,19 +11,23 @@ import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
  */
 public class AutoTraverseCheval extends Command{
 
-    private AutoDrive autoarmshigh;
-    private AutoDrive autoarmslow;
+    AutoDrive driveforward;
+    AutoDrive autormshigh;
+    AutoDrive autoarmslow;
+    DriveTrain stopmoving;
     private float currentAngle;
     double currentLeftDistance;
     double currentRightDistance;
     double currentArmPosition;
     double lengthOfCheval = q;//TODO: over two feet, but I can't find the width of the ramp on the first rulebook.
+
     private double desiredAngle = calculateDesiredAngle();//Question: will this send the return to the variable? That's what I want...
     boolean onRamp = false;
     boolean armsDown = false;
-    double edgeWheelHeight = y; //TODO: add in this value. If you're wondering why I don't have these, wait until you can see me face-to-face to ask.
+    double edgeWheelHeight = y; //TODO: add in this value. If you're wondering why I don't have these, know that I will need to take a few minutes to explain my thinking.
     double wheelContactRamp = z; //TODO: add in this value. Same as above.
-
+    double onRampDistance = 13;//Distance to drive onto ramp
+    double centerChevalDistance = x;//TODO: one foot plus any extra distance on current ramp
 
     DriveTrain driveTrain = Robot.driveTrain;
 
@@ -31,9 +35,7 @@ public class AutoTraverseCheval extends Command{
        this.desiredAngle = desiredAngle;
     }
 
-    private float thePitch(){
-        return Robot.imu.getPitch();
-    }
+
 
     private double calculateDesiredAngle(){
         return Math.sin(edgeWheelHeight/wheelContactRamp);
@@ -46,32 +48,29 @@ public class AutoTraverseCheval extends Command{
 //Get the distance of the robot, to be used when gauging if robot is halfway over the cheval
 
 
-    private void isOnRamp() {
-        if (currentAngle == desiredAngle) {
-            onRamp = true;
-        }
-    }
-
     @Override
     protected void initialize() {
 
         }
 
     protected void execute () {
-        thePitch();
-        currentAngle = thePitch();
-        isOnRamp();
+
+        driveForward();
         moveArmsUp();
-        areArmsDown();
+
+        thePitch();//Get the current pitch
+        currentAngle = thePitch();
+        isOnRamp();//Check to see if the robot's two front wheels are on the ramp
+        if(onRamp){//If it's on the ramp, move the arms down
+            stopmoving.tankDrive(0,0);//TODO: reset encoder
+            moveArmsDown();
+            driveforward = new AutoDrive(0.5, centerChevalDistance);
+        }
+
         currentRightDistance = driveTrain.getRightDistance();//TODO: so put `DriveTrain driveTrain = Robot.driveTrain and call driveTrain.getLeftDistance(); instead
         currentLeftDistance = driveTrain.getLeftDistance();
         currentArmPosition = driveTrain.getArmDistance();
-
-        if (onRamp) {
-            //TODO: can't reset encoder because it is private; need an alternative.
-            driveTrain.tankDrive(0,0);//stop driving
-            moveArmsDown();//If on ramp, move arms down.
-        }
+        
         if (armsDown){//If arms are down, drive.
             driveTrain.tankDrive(.5,.5); //TODO: is this a good speed?
         }//Add something that can tell when the cheval is down all the way
@@ -80,14 +79,30 @@ public class AutoTraverseCheval extends Command{
         moveArmsUp();}//Lift arms when robot angle evens out and the distance driven is equal to half the ramp, both with a range set on the values.
 }
 
-    /**
-     *Methods that pull the arms up/down to the desired height.
-     */
+    private void driveForward(){
+        driveforward = new AutoDrive(0.5, onRampDistance); //TODO: q = time to drive forward
+
+    }
+
     private void moveArmsUp() {
         autoarmshigh = new AutoDrive(0.5, Constants.Autonomous.ARMS_HIGH);//TODO: is this a good speed?
     }
 
-    public void moveArmsDown() {
+    private float thePitch(){
+        return Robot.imu.getPitch();
+    }
+
+    private void isOnRamp() {
+        if (currentAngle == desiredAngle) {
+            onRamp = true;
+        }
+    }
+
+    /**
+     *Methods that pull the arms up/down to the desired height.
+     */
+
+    private void moveArmsDown() {
         autoarmslow = new AutoDrive(-0.5, Constants.Autonomous.ARMS_LOW);
     }
 
