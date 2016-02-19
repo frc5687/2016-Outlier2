@@ -103,11 +103,6 @@ public class Constants {
 
     public class Shooter {
         /**
-         * Time for running shooter wheels for priming
-         */
-        public static final long PRIME_TIME = 1750;
-
-        /**
          * Time allowed for shooter wheels to stop before unpriming or after firing the boulder
          */
         public static final long UNPRIME_TIME = 1500;
