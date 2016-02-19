@@ -104,7 +104,7 @@ public class OI {
      */
     public double getShooterSpeed(){
         // Joystick's throttle axis range is set to the forward range of the shooter speed
-        return Helpers.applyDeadband((joystick.getThrottle() + 1) / 2, Constants.Deadbands.SHOOTER_WHEELS);
+        return Helpers.applyDeadband((joystick.getThrottle() + 1) / 2, Constants.Deadbands.SHOOTER_STICK);
     }
 
     /**
@@ -122,7 +122,7 @@ public class OI {
      */
     public double getArmsSpeed() {
         double value = Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.LEFT_TRIGGER), Constants.Deadbands.ARMS) - Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.RIGHT_TRIGGER), Constants.Deadbands.ARMS);
-        SmartDashboard.putNumber("Arms Speed", value);
+        SmartDashboard.putBoolean("Arms Moving", value!=0);
         return value;
     }
 

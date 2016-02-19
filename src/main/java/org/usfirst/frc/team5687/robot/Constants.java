@@ -14,13 +14,13 @@ public class Constants {
         public static final boolean RIGHT_MOTOR_REAR_INVERTED = true;
     }
 
+    /**
+     * Deadband threshold for joysticks
+     */
     public class Deadbands {
-        /**
-         * Deadband threshold for drive joysticks
-         */
         public static final double DRIVE_STICK = 0.1;
-        public static final double SHOOTER_WHEELS = 0.1;
-        public static final double INTAKE_STICK = 0.1;
+        public static final double SHOOTER_STICK = 0.2;
+        public static final double INTAKE_STICK = 0.25;
         public static final double ARMS = 0.1;
     }
 
