@@ -2,14 +2,16 @@ package org.usfirst.frc.team5687.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5687.robot.Constants;
+
 import static org.usfirst.frc.team5687.robot.Robot.intake;
 
 /**
- * Command to run intake motor until a boulder is detected
+ * Command to prime the intake or move the boulder back to primed position
+ * @author wil
  */
-public class CaptureBoulder extends Command {
+public class PrimeBoulder extends Command {
 
-    public CaptureBoulder() {
+    public PrimeBoulder() {
         requires(intake);
     }
 
@@ -19,12 +21,12 @@ public class CaptureBoulder extends Command {
 
     @Override
     protected void execute() {
-        intake.setSpeed(Constants.Intake.CAPTURE_SPEED);
+        intake.setSpeed(Constants.Intake.PRIME_SPEED);
     }
 
     @Override
     protected boolean isFinished() {
-        return intake.isCaptured();
+        return intake.isPrimed();
     }
 
     @Override
@@ -34,6 +36,5 @@ public class CaptureBoulder extends Command {
 
     @Override
     protected void interrupted() {
-        end();
     }
 }

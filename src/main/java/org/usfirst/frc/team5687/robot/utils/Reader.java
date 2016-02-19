@@ -13,4 +13,4 @@ package org.usfirst.frc.team5687.robot.utils;
 
 public class Reader {
     public static final String gitInfo = "default commit";
- }
+}

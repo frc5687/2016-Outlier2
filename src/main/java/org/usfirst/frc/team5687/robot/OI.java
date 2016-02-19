@@ -2,9 +2,8 @@ package org.usfirst.frc.team5687.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import org.usfirst.frc.team5687.robot.commands.CaptureBoulder;
-import org.usfirst.frc.team5687.robot.commands.Bowl;
-import org.usfirst.frc.team5687.robot.commands.ReverseDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team5687.robot.commands.*;
 import org.usfirst.frc.team5687.robot.utils.Gamepad;
 import org.usfirst.frc.team5687.robot.utils.Helpers;
 
@@ -17,15 +16,20 @@ public class OI {
     private Joystick joystick;
 
     // Drive Train Elements
-    public static final int FORWARD_DIRECTION = 1;
-    public static final int REVERSE_DIRECTION = -1;
-    private static int currentDirection = FORWARD_DIRECTION; //Initial drive direction
+    public static final int HORNS_DIRECTION = 1;
+    public static final int INTAKE_DIRECTION = -1;
+    private static int currentDirection = HORNS_DIRECTION; //Initial drive direction
 
     // Drive Train Buttons
     public static final int REVERSE = Gamepad.Buttons.BACK.getNumber();
-    // Shooter Buttons
+    // Boulder Buttons
     public static final int CAPTURE = 3;
-    public static final int BOWL = 1;
+    public static final int BOWL = 2;
+    public static final int PRIME = 5;
+    public static final int UNPRIME = 6;
+    public static final int FIRE = 1;
+    // Camera switch
+    public static int RESET_CAMERA = 7;
 
     /**
      * Create a new instance of the operator interface
@@ -39,12 +43,21 @@ public class OI {
         // Joystick Buttons
         JoystickButton captureButton = new JoystickButton(joystick, CAPTURE);
         JoystickButton bowlButton = new JoystickButton(joystick, BOWL);
+        JoystickButton primeButton = new JoystickButton(joystick, PRIME);
+        JoystickButton unprimeButton = new JoystickButton(joystick, UNPRIME);
+        JoystickButton fireButton = new JoystickButton(joystick, FIRE);
+        JoystickButton resetCameraButton = new JoystickButton(joystick, RESET_CAMERA);
 
         // Drive Train Commands
         reverseButton.whenPressed(new ReverseDrive());
-        // Shooter Commands
-        captureButton.whenPressed(new CaptureBoulder());
+        // Boulder Commands
+        captureButton.toggleWhenPressed(new CaptureBoulder());
         bowlButton.whenPressed(new Bowl());
+        primeButton.whenPressed(new Prime());
+        unprimeButton.whenPressed(new CancelPrime());
+        fireButton.whenPressed(new Fire());
+        // Reset Camera Command
+        resetCameraButton.whenPressed(new ResetCamera());
     }
 
     /**
@@ -68,10 +81,10 @@ public class OI {
      * @return the control value for the right drive motors
      */
     public double getLeftSpeed(){
-        if (currentDirection == REVERSE_DIRECTION) {
-            return currentDirection * transformStickToSpeed(Gamepad.Axes.RIGHT_Y);
+        if (currentDirection == INTAKE_DIRECTION) {
+            return currentDirection * transformStickToSpeed(Gamepad.Axes.LEFT_Y);
         }
-        return transformStickToSpeed(Gamepad.Axes.LEFT_Y);
+        return transformStickToSpeed(Gamepad.Axes.RIGHT_Y);
     }
 
     /**
@@ -79,10 +92,10 @@ public class OI {
      * @return the control value for the right drive motors
      */
     public double getRightSpeed(){
-        if (currentDirection == REVERSE_DIRECTION) {
-            return currentDirection * transformStickToSpeed(Gamepad.Axes.LEFT_Y);
+        if (currentDirection == INTAKE_DIRECTION) {
+            return currentDirection * transformStickToSpeed(Gamepad.Axes.RIGHT_Y);
         }
-        return transformStickToSpeed(Gamepad.Axes.RIGHT_Y);
+        return transformStickToSpeed(Gamepad.Axes.LEFT_Y);
     }
 
     /**
@@ -108,7 +121,9 @@ public class OI {
      * @return the control value for the arms' motor
      */
     public double getArmsSpeed() {
-        return Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.LEFT_TRIGGER), Constants.Deadbands.ARMS) - Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.RIGHT_TRIGGER), Constants.Deadbands.ARMS);
+        double value = Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.LEFT_TRIGGER), Constants.Deadbands.ARMS) - Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.RIGHT_TRIGGER), Constants.Deadbands.ARMS);
+        SmartDashboard.putNumber("Arms Speed", value);
+        return value;
     }
 
     /**

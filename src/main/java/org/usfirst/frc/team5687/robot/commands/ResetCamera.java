@@ -8,35 +8,26 @@ import static org.usfirst.frc.team5687.robot.Robot.oi;
 import static org.usfirst.frc.team5687.robot.Robot.robot;
 
 /**
- * Command for reversing the drive's direction
- * @author wil
+ * Command for resetting the cameras
  */
-public class ReverseDrive extends Command{
-    private int direction;
-    private int prevDirection;
+public class ResetCamera extends Command{
+
+    boolean executed = false;
 
     @Override
     protected void initialize() {
-        direction = oi.getDirection();
-        prevDirection = direction;
-
-        direction *= -1;
-        oi.setDirection(direction);
-
-        //disabling cameraSwitching for now
-        robot.switchCameras();
-
-        SmartDashboard.putString("Drive Facing", (direction == OI.HORNS_DIRECTION) ? "Horns" : "Intake");
+        executed = false;
     }
 
     @Override
     protected void execute() {
-
+        robot.initializeCameras();
+        executed = true;
     }
 
     @Override
     protected boolean isFinished() {
-        return direction != prevDirection;
+        return executed;
     }
 
     @Override
