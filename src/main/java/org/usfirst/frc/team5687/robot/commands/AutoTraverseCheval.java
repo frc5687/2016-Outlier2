@@ -67,16 +67,24 @@ public class AutoTraverseCheval extends Command{
             driveforward = new AutoDrive(0.5, centerChevalDistance);
         }
 
-        currentRightDistance = driveTrain.getRightDistance();//TODO: so put `DriveTrain driveTrain = Robot.driveTrain and call driveTrain.getLeftDistance(); instead
-        currentLeftDistance = driveTrain.getLeftDistance();
+        driveTrain.getLeftDistance();
+        driveTrain.getRightDistance();
         currentArmPosition = driveTrain.getArmDistance();
-        
+
+        /** Lift arms when robot angle evens out and the distance driven
+         * is equal to half the ramp, both with a range set on the values.
+         * This is done at Morneau's request so the arms don't scrape against the cheval.
+         */
+
+        if (currentAngle == 0 && currentLeftDistance == x && currentRightDistance == x){//TODO: Need distance per pulse to set values {//TODO: This will probably need a deadband.
+            moveArmsUp();
+        }
+
+        areArmsDown();
         if (armsDown){//If arms are down, drive.
             driveTrain.tankDrive(.5,.5); //TODO: is this a good speed?
         }//Add something that can tell when the cheval is down all the way
 
-        if (currentAngle == 0 && currentLeftDistance == x && currentRightDistance == x){//TODO: Need distance per pulse to set values {//TODO: This will probably need a deadband.
-        moveArmsUp();}//Lift arms when robot angle evens out and the distance driven is equal to half the ramp, both with a range set on the values.
 }
 
     private void driveForward(){
