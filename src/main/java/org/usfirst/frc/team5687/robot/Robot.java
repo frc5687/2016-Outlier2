@@ -92,7 +92,6 @@ public class Robot extends IterativeRobot {
         autoChooser = new SendableChooser();
         defenseChooser = new SendableChooser();
         positionChooser = new SendableChooser();
-
         powerDistributionPanel = new PowerDistributionPanel();
 
         // Report git info to the dashboard

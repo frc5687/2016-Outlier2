@@ -48,7 +48,7 @@ public class Constants {
 
     public class Autonomous {
 
-
+        public static final double ON_RAMP_DISTANCE = 13; //TODO: Important! is this one full turn of the wheel?
         public static final double ARMS_HIGH = 9.375;//Height of cheval - 1/4 inch to allow for the four inches off of the ground.
         public static final double ARMS_LOW = 4;//Is the height off of the floor in inches that Norris told me.
 

@@ -18,11 +18,9 @@ public class Arms extends Subsystem {
 
     private VictorSP armsMotor;
     private DigitalInput armsSensor;
-    public static Encoder armEncoder;
     public Arms() {
         armsMotor = new VictorSP(RobotMap.Arms.ARMS_MOTOR);
         armsSensor = new DigitalInput(RobotMap.Arms.ARMS_HALL);
-        armEncoder = new Encoder(RobotMap.Drive.ENCODER_CHANNEL_A, RobotMap.Drive.ENCODER_CHANNEL_B, false, CounterBase.EncodingType.k4X);//TODO: is this the correct EncodingType?
     }
 
     @Override
