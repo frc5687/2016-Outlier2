@@ -19,7 +19,6 @@ public class DriveTrain extends Subsystem {
     private VictorSP rightRearMotor;
     private Encoder rightEncoder;
     private Encoder leftEncoder;
-    private Encoder armEncoder;
 
     public DriveTrain(){
         leftFrontMotor = new VictorSP(RobotMap.Drive.LEFT_MOTOR_FRONT);
@@ -35,8 +34,7 @@ public class DriveTrain extends Subsystem {
         drive = new RobotDrive(leftFrontMotor, leftRearMotor, rightFrontMotor, rightRearMotor);
         rightEncoder = initializeEncoder(RobotMap.Drive.RIGHT_ENCODER_CHANNEL_A, RobotMap.Drive.RIGHT_ENCODER_CHANNEL_B, Constants.Encoders.RightDrive.REVERSED, Constants.Encoders.RightDrive.INCHES_PER_PULSE);
         leftEncoder = initializeEncoder(RobotMap.Drive.LEFT_ENCODER_CHANNEL_A, RobotMap.Drive.LEFT_ENCODER_CHANNEL_B, Constants.Encoders.LeftDrive.REVERSED, Constants.Encoders.LeftDrive.INCHES_PER_PULSE);
-        armEncoder = initializeEncoder(RobotMap.Drive.ENCODER_CHANNEL_A,RobotMap.Drive.ENCODER_CHANNEL_B,Constants.Encoders.ArmMovement.REVERSED, Constants.Encoders.ArmMovement.INCHES_PER_PULSE);//TODO: any reason why this should not be the same?
-//TODO: delete armEncoder from here
+
     }
 
     @Override
@@ -85,9 +83,6 @@ public class DriveTrain extends Subsystem {
         return rightFrontMotor.getSpeed();
     }
 
-    public double getArmDistance(){
-        return armEncoder.getDistance();
-    }
 
     public double getRightRPS() {
         return getRightRate() / (Constants.Encoders.Defaults.PULSES_PER_ROTATION * Constants.Encoders.Defaults.INCHES_PER_PULSE);

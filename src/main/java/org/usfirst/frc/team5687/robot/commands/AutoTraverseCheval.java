@@ -1,9 +1,11 @@
 package org.usfirst.frc.team5687.robot.commands;
 
 import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5687.robot.Constants;
 import org.usfirst.frc.team5687.robot.Robot;
+import org.usfirst.frc.team5687.robot.subsystems.Arms;
 import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
 
 /**
@@ -30,6 +32,7 @@ public class AutoTraverseCheval extends Command{
     double centerChevalDistance = x;//TODO: one foot plus any extra distance on current ramp
 
     DriveTrain driveTrain = Robot.driveTrain;
+    Encoder armEncoder = Arms.armEncoder;
 
     public AutoTraverseCheval(double desiredAngle){
        this.desiredAngle = desiredAngle;
@@ -69,7 +72,7 @@ public class AutoTraverseCheval extends Command{
 
         driveTrain.getLeftDistance();
         driveTrain.getRightDistance();
-        currentArmPosition = driveTrain.getArmDistance();
+        currentArmPosition = armEncoder.getDistance();
 
         /** Lift arms when robot angle evens out and the distance driven
          * is equal to half the ramp, both with a range set on the values.

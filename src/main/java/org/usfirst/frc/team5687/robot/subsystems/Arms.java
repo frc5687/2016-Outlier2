@@ -18,7 +18,7 @@ public class Arms extends Subsystem {
 
     private VictorSP armsMotor;
     private DigitalInput armsSensor;
-    private Encoder armEncoder;
+    public static Encoder armEncoder;
     public Arms() {
         armsMotor = new VictorSP(RobotMap.Arms.ARMS_MOTOR);
         armsSensor = new DigitalInput(RobotMap.Arms.ARMS_HALL);
