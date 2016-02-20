@@ -10,7 +10,7 @@ import static org.usfirst.frc.team5687.robot.Robot.shooter;
  * @author wil
  */
 public class RecoverBoulder extends Command {
-    private static final double speed = -.6;
+    private static final double speed = -0.2f;
     private static final long time = 5000;
     private long endTime;
 
