@@ -28,8 +28,6 @@ public class OI {
     public static final int PRIME = 5;
     public static final int UNPRIME = 6;
     public static final int FIRE = 1;
-    // Arms Buttons
-    public static final int ARMS_AWAY = Gamepad.Buttons.Y.getNumber();
     // Camera switch
     public static int RESET_CAMERA = 7;
 
@@ -42,7 +40,6 @@ public class OI {
 
         // Gamepad Buttons
         JoystickButton reverseButton = new JoystickButton(gamepad, REVERSE);
-        JoystickButton keepArmsButton = new JoystickButton(gamepad, ARMS_AWAY);
         // Joystick Buttons
         JoystickButton captureButton = new JoystickButton(joystick, CAPTURE);
         JoystickButton bowlButton = new JoystickButton(joystick, BOWL);
@@ -59,8 +56,6 @@ public class OI {
         primeButton.whenPressed(new Prime());
         unprimeButton.whenPressed(new CancelPrime());
         fireButton.whenPressed(new Fire());
-        // Arms Commands
-        keepArmsButton.whenPressed(new MoveArmsAway());
         // Reset Camera Command
         resetCameraButton.whenPressed(new ResetCamera());
     }

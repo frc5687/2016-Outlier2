@@ -4,13 +4,12 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team5687.robot.Constants;
 import org.usfirst.frc.team5687.robot.RobotMap;
 import org.usfirst.frc.team5687.robot.commands.RunArmsManually;
 import org.usfirst.frc.team5687.robot.utils.Helpers;
 
 /**
- * Arms subsystem for crossing non-static defenses by lifting or lowering arms
+ * This controls the Arms which move up and down to presumably lift something
  */
 public class Arms extends Subsystem {
 
@@ -28,16 +27,11 @@ public class Arms extends Subsystem {
     }
 
     public void setSpeed(double speed) {
-        boolean movingUp = speed > 0;
-        armsMotor.set((movingUp && isAtUpperLimit()) ? 0 : Helpers.applySensitivityTransform(speed));
-    }
-
-    public void moveUp() {
-        armsMotor.set(Constants.Arms.ARMS_SPEED);
-    }
-
-    public void moveDown() {
-        armsMotor.set(-Constants.Arms.ARMS_SPEED);
+        if (speed >= 0 && isAtLimit()) {
+            armsMotor.set(0);
+        } else {
+            armsMotor.set(Helpers.applySensitivityTransform(speed));
+        }
     }
 
     public void stop() {
@@ -45,14 +39,14 @@ public class Arms extends Subsystem {
     }
 
     /**
-     * Check if arms is at upper limit
-     * @return hall effect sensor state of upper limit
+     * Check if arms is at limit
+     * @return hall effect sensor state
      */
-    public boolean isAtUpperLimit() {
+    public boolean isAtLimit() {
         return !armsSensor.get();
     }
 
     public void updateDashboard() {
-        SmartDashboard.putBoolean("Arms upper limit", isAtUpperLimit());
+        SmartDashboard.putBoolean("Arms limit", isAtLimit());
     }
 }
