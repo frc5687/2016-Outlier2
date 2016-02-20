@@ -69,11 +69,6 @@ public class Constants {
         public static final int CAPTURED_TOLERANCE = 100; // Tolerance in either direction of boulder position for carrying boulder
     }
 
-    public class Horns {
-        public static final double MAX_SPEED = .5; //Speed is Capped at this
-        public static final double SESNITIVITY = 2; // Speed is divided by this
-    }
-
     public class Intake {
         /**
          * Speed to run the intake roller to capture the boulder until detected
@@ -116,6 +111,10 @@ public class Constants {
          * Speed to run the shooter wheels to shoot high goal
          */
         public static final double SHOOTER_SPEED = 1.0;
+    }
+
+    public class Arms {
+        public static final double ARMS_SPEED = 0.5;
     }
 
     public class Encoders {
