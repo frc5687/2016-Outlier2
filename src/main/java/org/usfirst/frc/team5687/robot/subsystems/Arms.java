@@ -41,7 +41,7 @@ public class Arms extends Subsystem {
      * @return true if arms cannot move more in current direction
      */
     public boolean isArmsBeyondLimit() {
-        return armsPot.get() >= Constants.Arms.ARMS_MAX_DEGREES || armsPot.get() <= Constants.Arms.ARMS_MIN_DEGRESS;
+        return armsPot.get() > Constants.Arms.ARMS_MAX_DEGREES || armsPot.get() < Constants.Arms.ARMS_MIN_DEGRESS;
     }
 
     /**
