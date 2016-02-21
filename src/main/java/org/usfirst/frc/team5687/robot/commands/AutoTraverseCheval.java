@@ -26,11 +26,11 @@ public class AutoTraverseCheval extends CommandGroup {
 
     public AutoTraverseCheval(){
     addSequential(new AutoDrive(.5,x)); //driveForward//TODO: add
-    addSequential(new AutoTraverseCheval());
+
     // addSequential( );
 
 
-        );    // Stop moving when on ramp
+         // Stop moving when on ramp );  
     //Arms down while on ramp
     //drive forward until center
     //Stop moving while at center
