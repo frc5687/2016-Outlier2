@@ -120,8 +120,8 @@ public class Constants {
         // TODO: Change pot scale factor and limit values with robot
         public static final int ARMS_SCALE = 360;
         public static final int ARMS_OFFSET = 0;
-        public static final double ARMS_MAX_DEGREES = 120.0;
-        public static final double ARMS_MIN_DEGRESS = 0.0;
+        public static final double ARMS_MAX_DEGREES = 135.0;
+        public static final double ARMS_MIN_DEGRESS = 85;
     }
 
     public class Encoders {

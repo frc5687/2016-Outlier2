@@ -34,7 +34,8 @@ public class Arms extends Subsystem {
 
     public void setSpeed (double speed) {
         armsMotor.set(Helpers.applySensitivityTransform(speed));
-    }
+
+        }
 
     /**
      * Returns if arms is beyond limit
