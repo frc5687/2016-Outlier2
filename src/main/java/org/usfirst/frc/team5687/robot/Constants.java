@@ -14,13 +14,13 @@ public class Constants {
         public static final boolean RIGHT_MOTOR_REAR_INVERTED = true;
     }
 
+    /**
+     * Deadband threshold for joysticks
+     */
     public class Deadbands {
-        /**
-         * Deadband threshold for drive joysticks
-         */
         public static final double DRIVE_STICK = 0.1;
-        public static final double SHOOTER_WHEELS = 0.1;
-        public static final double INTAKE_STICK = 0.1;
+        public static final double SHOOTER_STICK = 0.2;
+        public static final double INTAKE_STICK = 0.25;
         public static final double ARMS = 0.1;
     }
 
@@ -69,11 +69,6 @@ public class Constants {
         public static final int CAPTURED_TOLERANCE = 100; // Tolerance in either direction of boulder position for carrying boulder
     }
 
-    public class Horns {
-        public static final double MAX_SPEED = .5; //Speed is Capped at this
-        public static final double SESNITIVITY = 2; // Speed is divided by this
-    }
-
     public class Intake {
         /**
          * Speed to run the intake roller to capture the boulder until detected
@@ -108,11 +103,6 @@ public class Constants {
 
     public class Shooter {
         /**
-         * Time for running shooter wheels for priming
-         */
-        public static final long PRIME_TIME = 1750;
-
-        /**
          * Time allowed for shooter wheels to stop before unpriming or after firing the boulder
          */
         public static final long UNPRIME_TIME = 1500;
@@ -121,6 +111,10 @@ public class Constants {
          * Speed to run the shooter wheels to shoot high goal
          */
         public static final double SHOOTER_SPEED = 1.0;
+    }
+
+    public class Arms {
+        public static final double ARMS_SPEED = 0.5;
     }
 
     public class Encoders {

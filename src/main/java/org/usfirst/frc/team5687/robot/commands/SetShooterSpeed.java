@@ -1,9 +1,9 @@
 package org.usfirst.frc.team5687.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team5687.robot.Constants;
 
 import static org.usfirst.frc.team5687.robot.Robot.shooter;
+import static org.usfirst.frc.team5687.robot.Robot.intake;
 
 /**
  * Command to set speed of shooter motor
@@ -13,6 +13,7 @@ public class SetShooterSpeed extends Command {
     private double speed;
     private long time;
     private long endTime;
+    private boolean isToFire;
 
     /**
      * Constructor for SetShooterSpeed
@@ -23,6 +24,16 @@ public class SetShooterSpeed extends Command {
         requires(shooter);
         this.speed = speed;
         this.time = time;
+    }
+
+    /**
+     * Constructor SetShooterSpeed for Fire command
+     * @param speed motor speed to run the shooter
+     */
+    public SetShooterSpeed(double speed) {
+        requires(shooter);
+        this.speed = speed;
+        isToFire = true;
     }
 
     @Override
@@ -37,14 +48,20 @@ public class SetShooterSpeed extends Command {
 
     @Override
     protected boolean isFinished() {
-        return System.currentTimeMillis() > endTime;
+        if (isToFire) {
+            return !intake.isPrimed();
+        } else {
+            return System.currentTimeMillis() > endTime;
+        }
     }
 
     @Override
     protected void end() {
+        shooter.stop();
     }
 
     @Override
     protected void interrupted() {
+        end();
     }
 }

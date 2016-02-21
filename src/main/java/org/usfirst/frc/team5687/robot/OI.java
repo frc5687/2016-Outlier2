@@ -29,6 +29,8 @@ public class OI {
     public static final int UNPRIME = 6;
     public static final int FIRE = 1;
     public static final int RECOVER = 4;
+    // Arms Buttons
+    public static final int STOW_ARMS = Gamepad.Buttons.Y.getNumber();
     // Camera switch
     public static int RESET_CAMERA = 7;
 
@@ -41,6 +43,7 @@ public class OI {
 
         // Gamepad Buttons
         JoystickButton reverseButton = new JoystickButton(gamepad, REVERSE);
+        JoystickButton stowArmsButton = new JoystickButton(gamepad, STOW_ARMS);
         // Joystick Buttons
         JoystickButton captureButton = new JoystickButton(joystick, CAPTURE);
         JoystickButton bowlButton = new JoystickButton(joystick, BOWL);
@@ -59,6 +62,8 @@ public class OI {
         unprimeButton.whenPressed(new CancelPrime());
         fireButton.whenPressed(new Fire());
         recoverButton.whenPressed(new RecoverBoulder());
+        // Arms Commands
+        stowArmsButton.whenPressed(new MoveArmsAway());
         // Reset Camera Command
         resetCameraButton.whenPressed(new ResetCamera());
     }
@@ -116,7 +121,7 @@ public class OI {
      */
     public double getArmsSpeed() {
         double value = Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.LEFT_TRIGGER), Constants.Deadbands.ARMS) - Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.RIGHT_TRIGGER), Constants.Deadbands.ARMS);
-        SmartDashboard.putNumber("Arms Speed", value);
+        SmartDashboard.putBoolean("Arms Moving", value!=0);
         return value;
     }
 
