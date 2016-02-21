@@ -119,7 +119,7 @@ public abstract class AutoTraverse extends Command{
     }
 
     protected void end() {
-
+        driveTrain.tankDrive(0,0);
     }
 
     @Override

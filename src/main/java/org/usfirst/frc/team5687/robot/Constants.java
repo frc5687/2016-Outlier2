@@ -47,12 +47,12 @@ public class Constants {
     }
 
     public class Autonomous {
-        public static final double MIN_AUTO_TRAVERSE_ANGLE = 8; // the minimum angle the robot will pitch when traversing a defense
-        public static final double MAX_AUTO_TRAVERSE_SECONDS = 8; // the maximum time the robot should need to travers a defense in Autonomous,
+        public static final double MIN_AUTO_TRAVERSE_ANGLE = 7; // the minimum angle the robot will pitch when traversing a defense
+        public static final double MAX_AUTO_TRAVERSE_SECONDS = 4; // the maximum time the robot should need to travers a defense in Autonomous,
 
         public class staticDefenseTraverseSpeeds {
             //speeds the robot should travel at when traversing defenses, should be between 0 and 1
-            public static final double LOW_BAR_SPEED =.6;
+            public static final double LOW_BAR_SPEED =.5;
             public static final double MOAT_SPEED =.5;
             public static final double ROCK_WALL_SPEED =.3;
             public static final double RAMPARTS_SPEED =.3;

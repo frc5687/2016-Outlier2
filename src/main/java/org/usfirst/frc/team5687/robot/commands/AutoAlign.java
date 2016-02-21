@@ -17,10 +17,12 @@ public class AutoAlign extends Command implements PIDOutput{
     private static final double kI = 0.005;
     private static final double kD = 0.00;
     private static final double kF = 0.00;//Q: What is this for?
-    private static final double rotationDeadband = 0.1;
+    private static final double rotationDeadband = 0.01;
     private static final double kToleranceDegrees = 2.0f;
     private double rotateToAngleRate; //Q: how does the PIDcontroller object know to use this variable?
     private double targetAngle;
+    private double getYaw;
+
 
     public AutoAlign(double targetAngle) {
         this.targetAngle = targetAngle;  //Q:What value does targetAngle hold? i.e., how does the robot know if it needs to stay straight without a numerical value?
@@ -42,7 +44,9 @@ public class AutoAlign extends Command implements PIDOutput{
         turnController.enable();
         SmartDashboard.putNumber("AutoAlign/Rotating Rate", rotateToAngleRate);
         driveTrain.tankDrive(rotateToAngleRate, -1*rotateToAngleRate);//Q: Doesn't this make the robot turn right? What if the distance to turn left is shorter?
-    }
+        double currentAngle = imu.getYaw();
+        SmartDashboard.putNumber("AutoAlign/CurrentAngle", currentAngle);
+        }
 
     protected boolean isFinished() {
         // Stop rotating when the PID speed drops below our deadband.
