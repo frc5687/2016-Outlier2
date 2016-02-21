@@ -13,44 +13,49 @@ import static org.usfirst.frc.team5687.robot.Robot.driveTrain;
  */
 public class AutoAlign extends Command implements PIDOutput{
     public static PIDController turnController;
-    private static final double kP = 0.03;
-    private static final double kI = 0.005;
-    private static final double kD = 0.00;
-    private static final double kF = 0.00;//Q: What is this for?
+    private static final double kP = 0.3;
+    private static final double kI = 0.05;
+    private static final double kD = 0.1;
+    private static final double kF = 0.1;//Q: What is this for?
     private static final double rotationDeadband = 0.01;
     private static final double kToleranceDegrees = 2.0f;
-    private double rotateToAngleRate; //Q: how does the PIDcontroller object know to use this variable?
-    private double targetAngle;
-    private double getYaw;
+    private double rotateToAngleRate = 0; //Q: how does the PIDcontroller object know to use this variable?
+    private double targetAngle = 0;
+    private double currentAngle = 0;
 
 
     public AutoAlign(double targetAngle) {
+        requires(driveTrain);
         this.targetAngle = targetAngle;  //Q:What value does targetAngle hold? i.e., how does the robot know if it needs to stay straight without a numerical value?
-        turnController = new PIDController(kP, kI, kD, imu, this);
+        imu.setPIDSourceType(PIDSourceType.kRate);
+        turnController = new PIDController(kP, kI, kD, kF, imu, this);
         turnController.setInputRange(-180.0f,  180.0f);
         turnController.setOutputRange(-0.5, 0.5);
         turnController.setAbsoluteTolerance(kToleranceDegrees);
         turnController.setContinuous(true);
-    }
+        }
 
     protected void initialize(){
         DriverStation.reportError("Starting autoalign", false);
         SmartDashboard.putNumber("AutoAlign/Target Angle", targetAngle);
+        turnController.setSetpoint(targetAngle);
         turnController.enable();
         }
 
     protected void execute(){
-        // Base turning on the rotateToAngleRate...
-        turnController.enable();
-        SmartDashboard.putNumber("AutoAlign/Rotating Rate", rotateToAngleRate);
-        driveTrain.tankDrive(rotateToAngleRate, -1*rotateToAngleRate);//Q: Doesn't this make the robot turn right? What if the distance to turn left is shorter?
-        double currentAngle = imu.getYaw();
-        SmartDashboard.putNumber("AutoAlign/CurrentAngle", currentAngle);
+        synchronized (this) {
+            // Base turning on the rotateToAngleRate...
+            //turnController.enable();
+            SmartDashboard.putNumber("AutoAlign/Rotating Rate", rotateToAngleRate);
+            DriverStation.reportError("AutoAlign/Rotating Rate " + rotateToAngleRate, false);
+            currentAngle = imu.getYaw();
+            SmartDashboard.putNumber("AutoAlign/CurrentAngle", currentAngle);
         }
+    }
 
     protected boolean isFinished() {
         // Stop rotating when the PID speed drops below our deadband.
-        boolean done = Math.abs(rotateToAngleRate)< rotationDeadband;
+        boolean done = Math.abs(targetAngle-currentAngle) < kToleranceDegrees;
         if (done) {
             SmartDashboard.putNumber("AutoAlign/Done at", rotateToAngleRate);
             DriverStation.reportError("Ending autoalign", false);
@@ -68,8 +73,12 @@ public class AutoAlign extends Command implements PIDOutput{
 
     @Override
     public void pidWrite(double output) {
-        SmartDashboard.putNumber("AutoAlign/PID Output", output);
-        rotateToAngleRate = output;
+        synchronized (this) {
+            SmartDashboard.putNumber("AutoAlign/PID Output", output);
+            DriverStation.reportError("AutoAlign/PID Output " + output, false);
+            rotateToAngleRate = output;
+            driveTrain.tankDrive(rotateToAngleRate, -1 * rotateToAngleRate, true);
+        }
     }
 
 }
