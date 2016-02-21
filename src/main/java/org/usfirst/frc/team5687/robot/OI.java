@@ -28,6 +28,7 @@ public class OI {
     public static final int PRIME = 5;
     public static final int UNPRIME = 6;
     public static final int FIRE = 1;
+    public int CALIBRATE;
     // Camera switch
     public static int RESET_CAMERA = 7;
 
@@ -47,6 +48,7 @@ public class OI {
         JoystickButton unprimeButton = new JoystickButton(joystick, UNPRIME);
         JoystickButton fireButton = new JoystickButton(joystick, FIRE);
         JoystickButton resetCameraButton = new JoystickButton(joystick, RESET_CAMERA);
+        JoystickButton potentiometerCalibrateButton = new JoystickButton(joystick, CALIBRATE);
 
         // Drive Train Commands
         reverseButton.whenPressed(new ReverseDrive());
@@ -93,7 +95,7 @@ public class OI {
      */
     public double getRightSpeed(){
         if (currentDirection == REVERSE_DIRECTION) {
-            return currentDirection * transformStickToSpeed(Gamepad.Axes.LEFT_Y);
+             return currentDirection * transformStickToSpeed(Gamepad.Axes.LEFT_Y);
         }
         return transformStickToSpeed(Gamepad.Axes.RIGHT_Y);
     }
