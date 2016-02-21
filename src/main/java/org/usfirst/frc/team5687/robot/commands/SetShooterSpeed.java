@@ -57,9 +57,11 @@ public class SetShooterSpeed extends Command {
 
     @Override
     protected void end() {
+        shooter.stop();
     }
 
     @Override
     protected void interrupted() {
+        end();
     }
 }

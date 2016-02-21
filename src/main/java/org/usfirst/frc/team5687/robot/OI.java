@@ -107,18 +107,6 @@ public class OI {
     }
 
     /**
-<<<<<<< HEAD
-     * Gets the desired speed for the shooter wheels
-     * @return the control value for the shooter motor
-     */
-    public double getShooterSpeed(){
-        // Joystick's throttle axis range is set to the forward range of the shooter speed
-        return Helpers.applyDeadband((joystick.getThrottle() + 1) / 2, Constants.Deadbands.SHOOTER_STICK);
-    }
-
-    /**
-=======
->>>>>>> 1dcca3d8bca74de29691b31e533d8fb5173da98e
      * Gets the desired speed for the intake
      * @return the control value for the intake motor
      */
