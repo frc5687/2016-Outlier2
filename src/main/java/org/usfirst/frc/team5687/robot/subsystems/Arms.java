@@ -33,7 +33,12 @@ public class Arms extends Subsystem {
     }
 
     public void setSpeed (double speed) {
-        armsMotor.set(Helpers.applySensitivityTransform(speed));
+        if (armsPot.get() < Constants.Arms.ARMS_MAX_DEGREES && !(Helpers.applySensitivityTransform(speed)<0)) {
+                armsMotor.set(Helpers.applySensitivityTransform(speed));
+
+        } else {
+            armsMotor.set(0);
+        }
 
         }
 
