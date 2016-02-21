@@ -131,8 +131,8 @@ public class Robot extends IterativeRobot {
 
         autoChooser.addDefault("Do Nothing At All", new AutonomousDoNothing());
         autoChooser.addObject("Calibrate CVT", new AutonomousTestCVT());
-        autoChooser.addObject("Chase Target", new AutoChaseTarget());
         autoChooser.addObject("Traverse Defense", new AutoTraverseBuilder());
+        autoChooser.addObject("Chase Target", new AutoChaseTarget());
         autoChooser.addObject("Left 90", new AutoAlign(-90));
         autoChooser.addObject("Right 90", new AutoAlign(90));
         autoChooser.addObject("Drive 12", new AutoDrive(-.4, 12f));
@@ -214,7 +214,7 @@ public class Robot extends IterativeRobot {
      */
     public void switchCameras() {
         //cameraServer.stopAutomaticCapture();
-        if (camera.equals(RobotMap.Cameras.hornsEnd)) {
+        if (oi.getDirection()==-1) {
             camera = RobotMap.Cameras.intakeEnd;
             cameraServer.startAutomaticCapture(intakeCamera);
         } else {

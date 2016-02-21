@@ -28,6 +28,7 @@ public class OI {
     public static final int PRIME = 5;
     public static final int UNPRIME = 6;
     public static final int FIRE = 1;
+    public static final int RECOVER = 4;
     // Camera switch
     public static int RESET_CAMERA = 7;
 
@@ -46,6 +47,7 @@ public class OI {
         JoystickButton primeButton = new JoystickButton(joystick, PRIME);
         JoystickButton unprimeButton = new JoystickButton(joystick, UNPRIME);
         JoystickButton fireButton = new JoystickButton(joystick, FIRE);
+        JoystickButton recoverButton = new JoystickButton(joystick, RECOVER);
         JoystickButton resetCameraButton = new JoystickButton(joystick, RESET_CAMERA);
 
         // Drive Train Commands
@@ -56,6 +58,7 @@ public class OI {
         primeButton.whenPressed(new Prime());
         unprimeButton.whenPressed(new CancelPrime());
         fireButton.whenPressed(new Fire());
+        recoverButton.whenPressed(new RecoverBoulder());
         // Reset Camera Command
         resetCameraButton.whenPressed(new ResetCamera());
     }
@@ -96,15 +99,6 @@ public class OI {
             return currentDirection * transformStickToSpeed(Gamepad.Axes.RIGHT_Y);
         }
         return transformStickToSpeed(Gamepad.Axes.LEFT_Y);
-    }
-
-    /**
-     * Gets the desired speed for the shooter wheels
-     * @return the control value for the shooter motor
-     */
-    public double getShooterSpeed(){
-        // Joystick's throttle axis range is set to the forward range of the shooter speed
-        return Helpers.applyDeadband((joystick.getThrottle() + 1) / 2, Constants.Deadbands.SHOOTER_WHEELS);
     }
 
     /**
