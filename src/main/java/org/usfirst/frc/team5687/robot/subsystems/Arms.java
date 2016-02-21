@@ -31,15 +31,16 @@ public class Arms extends Subsystem {
     protected void initDefaultCommand() {
         setDefaultCommand(new RunArmsManually());
     }
-
+    public boolean isBreakingLimit(double input){
+        return (armsPot.get() > Constants.Arms.ARMS_MAX_DEGREES && input > 0) || (input < 0 && armsPot.get() < Constants.Arms.ARMS_MIN_DEGRESS);
+    }
     public void setSpeed (double speed) {
-        if (armsPot.get() > Constants.Arms.ARMS_MAX_DEGREES && Helpers.applySensitivityTransform(speed)<0) {
-            armsMotor.set(0);
-        } else {
+        if (!isBreakingLimit(Helpers.applySensitivityTransform(speed))){
             armsMotor.set(Helpers.applySensitivityTransform(speed));
+        } else{
+            armsMotor.set(0);
         }
-
-        }
+    }
 
     /**
      * Returns if arms is beyond limit
