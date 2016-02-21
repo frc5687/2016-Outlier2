@@ -3,7 +3,6 @@ package org.usfirst.frc.team5687.robot.subsystems;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team5687.robot.RobotMap;
-import org.usfirst.frc.team5687.robot.commands.RunShooterManually;
 
 public class Shooter extends Subsystem {
 
@@ -39,6 +38,5 @@ public class Shooter extends Subsystem {
      * Set the default command for the shooter subsystem
      */
     public void initDefaultCommand() {
-        setDefaultCommand(new RunShooterManually());
     }
 }

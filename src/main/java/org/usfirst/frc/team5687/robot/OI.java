@@ -28,6 +28,7 @@ public class OI {
     public static final int PRIME = 5;
     public static final int UNPRIME = 6;
     public static final int FIRE = 1;
+    public static final int RECOVER = 4;
     // Arms Buttons
     public static final int STOW_ARMS = Gamepad.Buttons.Y.getNumber();
     // Camera switch
@@ -49,6 +50,7 @@ public class OI {
         JoystickButton primeButton = new JoystickButton(joystick, PRIME);
         JoystickButton unprimeButton = new JoystickButton(joystick, UNPRIME);
         JoystickButton fireButton = new JoystickButton(joystick, FIRE);
+        JoystickButton recoverButton = new JoystickButton(joystick, RECOVER);
         JoystickButton resetCameraButton = new JoystickButton(joystick, RESET_CAMERA);
 
         // Drive Train Commands
@@ -59,6 +61,7 @@ public class OI {
         primeButton.whenPressed(new Prime());
         unprimeButton.whenPressed(new CancelPrime());
         fireButton.whenPressed(new Fire());
+        recoverButton.whenPressed(new RecoverBoulder());
         // Arms Commands
         stowArmsButton.whenPressed(new MoveArmsAway());
         // Reset Camera Command
@@ -104,6 +107,7 @@ public class OI {
     }
 
     /**
+<<<<<<< HEAD
      * Gets the desired speed for the shooter wheels
      * @return the control value for the shooter motor
      */
@@ -113,6 +117,8 @@ public class OI {
     }
 
     /**
+=======
+>>>>>>> 1dcca3d8bca74de29691b31e533d8fb5173da98e
      * Gets the desired speed for the intake
      * @return the control value for the intake motor
      */
