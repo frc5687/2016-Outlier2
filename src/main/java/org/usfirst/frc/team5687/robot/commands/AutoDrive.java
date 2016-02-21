@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5687.robot.commands;
 
+import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5687.robot.OI;
@@ -16,6 +17,7 @@ import java.util.Date;
 
 public class AutoDrive extends Command {
     DriveTrain driveTrain = Robot.driveTrain;
+    AHRS imu = Robot.imu;
     OI oi = Robot.oi;
     private long end = 0;
     private int timeToDrive = 0;
@@ -24,6 +26,7 @@ public class AutoDrive extends Command {
     private double leftSpeed = 0;
     private double inchesDriven = 0;
     private boolean driveByTime;
+    private float currentAngle = imu.getPitch();
 
     //Drive based on time
     public AutoDrive(double speed, int timeToDrive) {
@@ -46,6 +49,20 @@ public class AutoDrive extends Command {
 
         DriverStation.reportError("Driving by Distance",false);
     }
+
+    public boolean isOnRamp() {
+        imu.getPitch();
+        boolean onRamp = false;
+
+        if (currentAngle == desiredAngle) {
+            return onRamp = true;
+        }
+    }
+
+    public AutoDrive(boolean onRamp){
+        
+        }
+
 
     @Override
     protected void initialize() {
@@ -72,7 +89,13 @@ public class AutoDrive extends Command {
             return now > end;
         }
     return true;
+
+        if(){
+
+         }
     }
+
+
 
     @Override
     protected void end() {

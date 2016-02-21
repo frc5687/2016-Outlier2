@@ -25,7 +25,11 @@ public class AutoTraverseCheval extends CommandGroup {
     }
 
     public AutoTraverseCheval(){
-    addSequential(new AutoDrive(.5,x)); //driveForward//TODO: add
+    addSequential(new AutoDrive(.5,x)); //driveForward//TODO: add how far forward
+        /* When it is on the ramp, stop, put arms down, drive forward until center.
+
+
+    */
 
     // addSequential( );
 
