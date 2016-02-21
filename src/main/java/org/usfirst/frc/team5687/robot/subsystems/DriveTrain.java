@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5687.robot.subsystems;
 
+import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -9,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.Constants;
 import org.usfirst.frc.team5687.robot.Robot;
 import org.usfirst.frc.team5687.robot.RobotMap;
+import org.usfirst.frc.team5687.robot.commands.AutoDrive;
 import org.usfirst.frc.team5687.robot.commands.DriveWith2Joysticks;
 
 public class DriveTrain extends Subsystem {
@@ -19,6 +21,9 @@ public class DriveTrain extends Subsystem {
     private VictorSP rightRearMotor;
     private Encoder rightEncoder;
     private Encoder leftEncoder;
+    private AHRS currentAngle;
+
+    public boolean onRamp = false;
 
     public DriveTrain(){
         leftFrontMotor = new VictorSP(RobotMap.Drive.LEFT_MOTOR_FRONT);
@@ -34,6 +39,7 @@ public class DriveTrain extends Subsystem {
         drive = new RobotDrive(leftFrontMotor, leftRearMotor, rightFrontMotor, rightRearMotor);
         rightEncoder = initializeEncoder(RobotMap.Drive.RIGHT_ENCODER_CHANNEL_A, RobotMap.Drive.RIGHT_ENCODER_CHANNEL_B, Constants.Encoders.RightDrive.REVERSED, Constants.Encoders.RightDrive.INCHES_PER_PULSE);
         leftEncoder = initializeEncoder(RobotMap.Drive.LEFT_ENCODER_CHANNEL_A, RobotMap.Drive.LEFT_ENCODER_CHANNEL_B, Constants.Encoders.LeftDrive.REVERSED, Constants.Encoders.LeftDrive.INCHES_PER_PULSE);
+        currentAngle = Robot.imu;
 
     }
 
@@ -83,10 +89,24 @@ public class DriveTrain extends Subsystem {
         return rightFrontMotor.getSpeed();
     }
 
+    public double getCurrentAngle(){return currentAngle.getPitch();}
+
 
     public double getRightRPS() {
         return getRightRate() / (Constants.Encoders.Defaults.PULSES_PER_ROTATION * Constants.Encoders.Defaults.INCHES_PER_PULSE);
     }
+
+    /**
+    *Checks if Robot is on the ramp
+    */
+
+    public void isOnRamp() {
+        if (getCurrentAngle() == Constants.Autonomous.MIN_AUTO_TRAVERSE_ANGLE){
+            onRamp = true;
+            }
+        }
+
+
 
     private Encoder initializeEncoder(int channelA, int channelB, boolean reversed, double distancePerPulse) {
         Encoder encoder = new Encoder(channelA, channelB, reversed, Encoder.EncodingType.k4X);

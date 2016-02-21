@@ -10,7 +10,7 @@ public class CrossCheval extends CommandGroup {
     public CrossCheval(){
         addSequential(new AutoDrive(0.5, Constants.Autonomous.ON_RAMP_DISTANCE));//Drive up to ramp
         //TODO:pull cheval down, make this dependent on the robot being on the ramp (you could use a method similar to draft 2's isOnRamp)
-        
+        //
     }
 
 
