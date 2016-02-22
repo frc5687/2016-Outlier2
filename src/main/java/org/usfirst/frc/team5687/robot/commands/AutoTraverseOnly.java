@@ -13,29 +13,31 @@ public class AutoTraverseOnly extends CommandGroup {
         double traverseSpeed = 0;
         double rotateAngle = 0;
 
+        long defaultInchesToCross = 20;
+        double defaultRollThreshold = 8.0;
+        double defaultTraverseSpeed = .5;
+
         // Run forward 72 inches
         addSequential(new AutoDrive(.7, 72.0f));
 
         switch (defense){
+
+            //(traverseSpeed, inchesToCross, rollThreshold)
+
             case "LowBar":
-                traverseSpeed = Constants.Autonomous.staticDefenseTraverseSpeeds.LOW_BAR_SPEED;
-                addSequential(new AutoTraverseStaticDefense(traverseSpeed));
+                addSequential(new AutoTraverseStaticDefense(defaultTraverseSpeed,defaultInchesToCross,defaultRollThreshold));
                 break;
             case "Moat":
-                traverseSpeed = Constants.Autonomous.staticDefenseTraverseSpeeds.MOAT_SPEED;
-                addSequential(new AutoTraverseStaticDefense(traverseSpeed));
+                addSequential(new AutoTraverseStaticDefense(defaultTraverseSpeed,10,16));
                 break;
             case "RockWall":
-                traverseSpeed = Constants.Autonomous.staticDefenseTraverseSpeeds.ROCK_WALL_SPEED;
-                addSequential(new AutoTraverseStaticDefense(traverseSpeed));
+                addSequential(new AutoTraverseStaticDefense(.3,1,12));
                 break;
             case "Ramparts":
-                traverseSpeed = Constants.Autonomous.staticDefenseTraverseSpeeds.RAMPARTS_SPEED;
-                addSequential(new AutoTraverseStaticDefense(traverseSpeed));
+                addSequential(new AutoTraverseStaticDefense(.3,1,defaultRollThreshold));
                 break;
             case "RoughTerrain":
-                traverseSpeed = Constants.Autonomous.staticDefenseTraverseSpeeds.ROUGH_TERRAIN_SPEED;
-                addSequential(new AutoTraverseStaticDefense(traverseSpeed));
+                addSequential(new AutoTraverseStaticDefense(defaultTraverseSpeed,1,defaultRollThreshold));
                 break;
             case "Cheval":
                 //addSequential(new AutoTraverseCheval());
