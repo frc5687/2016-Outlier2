@@ -69,11 +69,6 @@ public class Constants {
         public static final int CAPTURED_TOLERANCE = 100; // Tolerance in either direction of boulder position for carrying boulder
     }
 
-    public class Horns {
-        public static final double MAX_SPEED = .5; //Speed is Capped at this
-        public static final double SESNITIVITY = 2; // Speed is divided by this
-    }
-
     public class Intake {
         /**
          * Speed to run the intake roller to capture the boulder until detected
@@ -124,7 +119,7 @@ public class Constants {
     }
 
     public class Arms {
-        // TODO: Change pot scale factor and limit values with robot
+        public static final double ARMS_SPEED = 0.5;
         public static final int ARMS_SCALE = 360;
         public static final int ARMS_OFFSET = 0;
         public static final double ARMS_MAX_DEGREES = 135.0;

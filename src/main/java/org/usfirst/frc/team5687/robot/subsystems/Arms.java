@@ -12,7 +12,7 @@ import org.usfirst.frc.team5687.robot.commands.RunArmsManually;
 import org.usfirst.frc.team5687.robot.utils.Helpers;
 
 /**
- * This controls the Arms which move up and down to presumably lift something
+ * Class for arms subsystem to cross defenses by lifting or lowering
  */
 public class Arms extends Subsystem {
 
@@ -34,6 +34,14 @@ public class Arms extends Subsystem {
     public void setSpeed(double speed) {
         boolean movingUp = speed > 0;
         armsMotor.set((movingUp && isAtUpperLimit()) ? 0 : Helpers.applySensitivityTransform(speed));
+    }
+
+    public void moveUp() {
+        armsMotor.set(Constants.Arms.ARMS_SPEED);
+    }
+
+    public void moveDown() {
+        armsMotor.set(-Constants.Arms.ARMS_SPEED);
     }
 
     public void stop() {
