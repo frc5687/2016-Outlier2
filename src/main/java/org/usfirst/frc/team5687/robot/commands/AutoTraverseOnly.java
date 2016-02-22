@@ -1,9 +1,8 @@
 package org.usfirst.frc.team5687.robot.commands;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc.team5687.robot.Constants;
-import org.usfirst.frc.team5687.robot.Robot;
+
 /**
  *
  */
@@ -14,7 +13,7 @@ public class AutoTraverseOnly extends CommandGroup {
         double traverseSpeed = 0;
         double rotateAngle = 0;
 
-        // Run forward 42 inches
+        // Run forward 72 inches
         addSequential(new AutoDrive(.7, 72.0f));
 
         switch (defense){
@@ -37,6 +36,12 @@ public class AutoTraverseOnly extends CommandGroup {
             case "RoughTerrain":
                 traverseSpeed = Constants.Autonomous.staticDefenseTraverseSpeeds.ROUGH_TERRAIN_SPEED;
                 addSequential(new AutoTraverseStaticDefense(traverseSpeed));
+                break;
+            case "Cheval":
+                //addSequential(new AutoTraverseCheval());
+                break;
+            case "Portcullis":
+                //addSequential(new AutoTraversePortcullis());
                 break;
         }
 
