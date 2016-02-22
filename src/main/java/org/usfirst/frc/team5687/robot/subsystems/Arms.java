@@ -32,16 +32,18 @@ public class Arms extends Subsystem {
     }
 
     public void setSpeed(double speed) {
-        boolean movingUp = speed > 0;
-        armsMotor.set((movingUp && isAtUpperLimit()) ? 0 : Helpers.applySensitivityTransform(speed));
+        boolean movingUp = speed < 0;
+        SmartDashboard.putString("Arms motion", movingUp ? "UP" : "DOWN");
+        armsMotor.set((movingUp && isAboveLimit() || !movingUp && isBelowLimit()) ? 0 : Helpers.applySensitivityTransform(speed));
+        //armsMotor.set((movingUp && isAtUpperLimit()) ? 0 : Helpers.applySensitivityTransform(speed));
     }
 
     public void moveUp() {
-        armsMotor.set(Constants.Arms.ARMS_SPEED);
+        armsMotor.set(-Constants.Arms.ARMS_SPEED);
     }
 
     public void moveDown() {
-        armsMotor.set(-Constants.Arms.ARMS_SPEED);
+        armsMotor.set(Constants.Arms.ARMS_SPEED);
     }
 
     public void stop() {
@@ -57,15 +59,24 @@ public class Arms extends Subsystem {
     }
 
     /**
-     * Returns if arms is beyond pot limit
-     * @return whether arms exceeds limit value
+     * Returns if arms is above pot limit
+     * @return whether arms exceeds max value
      */
-    public boolean isBeyondLimit() {
-        return armsPot.get() < Constants.Arms.MIN_DEGREES || armsPot.get() > Constants.Arms.MAX_DEGREES;
+    public boolean isAboveLimit() {
+        return armsPot.get() > Constants.Arms.MAX_DEGREES;
+    }
+
+    /**
+     * Returns if arms is below pot limit
+     * @return whether arms recedes min value
+     */
+    public boolean isBelowLimit() {
+        return armsPot.get() < Constants.Arms.MIN_DEGREES;
     }
 
     public void updateDashboard() {
         SmartDashboard.putBoolean("Arms upper limit", isAtUpperLimit());
-        SmartDashboard.putNumber("Arms pot", armsPot.get());
+        SmartDashboard.putBoolean("Arms MAX", isAboveLimit());
+        SmartDashboard.putBoolean("Arms MIN", isBelowLimit());
     }
 }
