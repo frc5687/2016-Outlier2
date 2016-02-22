@@ -76,11 +76,7 @@ public class AutoDrive extends Command {
 
     @Override
     protected void end() {
-        DriverStation.reportError(String.format("   Right speed: %1$f\n", driveTrain.getRightSpeed()), false);
-        DriverStation.reportError(String.format("    Right rate: %1$f\n", driveTrain.getRightRate()), false);
-        DriverStation.reportError(String.format("    Left speed: %1$f\n", driveTrain.getLeftSpeed()), false);
-        DriverStation.reportError(String.format("     Left rate: %1$f\n", driveTrain.getLeftRate()), false);
-        DriverStation.reportError("====================\n", false);
+        driveTrain.tankDrive(0,0);
     }
 
     @Override

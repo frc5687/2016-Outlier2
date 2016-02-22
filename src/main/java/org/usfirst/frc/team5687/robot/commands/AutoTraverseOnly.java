@@ -18,7 +18,7 @@ public class AutoTraverseOnly extends CommandGroup {
         double defaultTraverseSpeed = .5;
 
         // Run forward 72 inches
-        addSequential(new AutoDrive(.7, 72.0f));
+        addSequential(new AutoDrive(.7, 36.0f));
 
         switch (defense){
 
@@ -28,16 +28,16 @@ public class AutoTraverseOnly extends CommandGroup {
                 addSequential(new AutoTraverseStaticDefense(defaultTraverseSpeed,defaultInchesToCross,defaultRollThreshold));
                 break;
             case "Moat":
-                addSequential(new AutoTraverseStaticDefense(defaultTraverseSpeed,10,16));
+                addSequential(new AutoTraverseStaticDefense(defaultTraverseSpeed, 20, 15));
                 break;
             case "RockWall":
-                addSequential(new AutoTraverseStaticDefense(.3,1,12));
+                addSequential(new AutoTraverseStaticDefense(.4,2,18));
                 break;
             case "Ramparts":
-                addSequential(new AutoTraverseStaticDefense(.3,1,defaultRollThreshold));
+                addSequential(new AutoTraverseStaticDefense(.3,4,defaultRollThreshold));
                 break;
             case "RoughTerrain":
-                addSequential(new AutoTraverseStaticDefense(defaultTraverseSpeed,1,defaultRollThreshold));
+                addSequential(new AutoTraverseStaticDefense(defaultTraverseSpeed,12,12));
                 break;
             case "Cheval":
                 //addSequential(new AutoTraverseCheval());
@@ -57,16 +57,16 @@ public class AutoTraverseOnly extends CommandGroup {
                 break;
             case 3:
                 // Turn towards the tower
-                addSequential(new AutoAlign(15));
+                addSequential(new AutoAlign(20));
 
                 // Run forward 24 inches
-                addSequential(new AutoDrive(.5, 24.0f));
+                addSequential(new AutoDrive(.5, 35.0f));
 
                 // Turn towards the tower
                 addSequential(new AutoAlign(-2.0f));
 
-                // Run forward 24 inches
-                addSequential(new AutoDrive(.5, 24.0f));
+                // Run forward 60 inches
+                addSequential(new AutoDrive(.5, 50.0f));
 
                 break;
             case 4:

@@ -111,7 +111,7 @@ public class Constants {
         /**
          * Speed to run the shooter wheels to shoot high goal
          */
-        public static final double SHOOTER_SPEED = 1.0;
+        public static final double SHOOTER_SPEED = .94;
     }
 
     public class Encoders {

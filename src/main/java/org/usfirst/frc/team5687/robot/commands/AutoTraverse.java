@@ -34,8 +34,8 @@ public abstract class AutoTraverse extends Command{
 
     public AutoTraverse(long inchesToCross, double rollThreshold){
 
-        inchesToCross = this.inchesToCross;
-        rollThreshold = this.rollThreshold;
+        this.inchesToCross = inchesToCross;
+        this.rollThreshold = rollThreshold;
 
         if (imu==null) {
             throw new IllegalArgumentException("AutoTraverse commands require the IMU.");
