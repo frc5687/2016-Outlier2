@@ -57,15 +57,15 @@ public class Arms extends Subsystem {
     }
 
     /**
-     * Returns if arms is beyond limit
-     * @return true if arms cannot move more in current direction
+     * Returns if arms is beyond pot limit
+     * @return whether arms exceeds limit value
      */
-    public boolean isArmsBeyondLimit() {
-        return armsPot.get() > Constants.Arms.ARMS_MAX_DEGREES || armsPot.get() < Constants.Arms.ARMS_MIN_DEGRESS;
+    public boolean isBeyondLimit() {
+        return armsPot.get() < Constants.Arms.MIN_DEGREES || armsPot.get() > Constants.Arms.MAX_DEGREES;
     }
 
     public void updateDashboard() {
         SmartDashboard.putBoolean("Arms upper limit", isAtUpperLimit());
-        SmartDashboard.putNumber("Pot value", armsPot.get());
+        SmartDashboard.putNumber("Arms pot", armsPot.get());
     }
 }
