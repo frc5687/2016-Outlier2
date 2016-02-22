@@ -60,7 +60,7 @@ public class AutoDrive extends Command {
     }
 
     public AutoDrive(boolean onRamp){
-        
+        if(isOnRamp())
         }
 
 
