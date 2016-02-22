@@ -12,10 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.USBCamera;
 import org.usfirst.frc.team5687.robot.commands.*;
-import org.usfirst.frc.team5687.robot.subsystems.Arms;
-import org.usfirst.frc.team5687.robot.subsystems.Intake;
-import org.usfirst.frc.team5687.robot.subsystems.Shooter;
-import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team5687.robot.subsystems.*;
 import org.usfirst.frc.team5687.robot.utils.CustomCameraServer;
 import org.usfirst.frc.team5687.robot.utils.Reader;
 
@@ -50,6 +47,11 @@ public class Robot extends IterativeRobot {
      * Represents the robot's arm
      */
     public static Arms arms;
+
+    /**
+     * Represents the robot's climber
+     */
+    public static Climber climber;
 
     /**
      * Represents the operator interface/ controls
@@ -89,6 +91,7 @@ public class Robot extends IterativeRobot {
         shooter = new Shooter();
         intake = new Intake();
         arms = new Arms();
+        climber = new Climber();
         autoChooser = new SendableChooser();
         defenseChooser = new SendableChooser();
         positionChooser = new SendableChooser();

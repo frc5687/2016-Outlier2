@@ -123,6 +123,11 @@ public class Constants {
         public static final double SHOOTER_SPEED = 1.0;
     }
 
+    public class Climber {
+        public static final double RAISE_SPEED = 1.0;
+        public static final double LOWER_SPEED = -1.0;
+    }
+
     public class Encoders {
         public class Defaults {
             public static final boolean REVERSED = false;
