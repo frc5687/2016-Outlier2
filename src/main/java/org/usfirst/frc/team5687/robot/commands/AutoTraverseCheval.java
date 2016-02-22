@@ -16,16 +16,12 @@ import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
 public class AutoTraverseCheval extends CommandGroup {
 
 
-    @Override
-    protected void execute() {
-        super.execute();
-        while (Robot.driveTrain.onRamp == false){
-        }
-
-    }
-
     public AutoTraverseCheval(){
     addSequential(new AutoDrive(.5,x)); //driveForward//TODO: add how far forward
+    addSequential(new AutoDrive(onRamp))
+
+//isFinished() {isOnRamp method return true if on ramp}
+
         /* When it is on the ramp, stop, put arms down, drive forward until center.
 
 
