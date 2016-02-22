@@ -6,6 +6,9 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import org.usfirst.frc.team5687.robot.Robot;
 
 /**
+ * Shell command to add an auto-traverse routine to the scheduler.
+ * This is needed to allow us to read the dashboard as "run time" instead of at "initialize time"
+
  * Created by Ben Bernard on 2/18/2016.
  */
 public class AutoTraverseBuilder extends Command {
