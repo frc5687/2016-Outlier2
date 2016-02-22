@@ -34,7 +34,7 @@ public class Shooter extends Subsystem {
             SmartDashboard.putNumber("Shooter Wheel Spin Time", 0);
             SmartDashboard.putBoolean("Shooter Wheel At Speed", false);
         }
-        if (SmartDashboard.getNumber("Shoter Wheel Spin Time", 0) > Constants.Shooter.PRIME_TIME) {
+        if (SmartDashboard.getNumber("Shooter Wheel Spin Time", 0) > Constants.Shooter.PRIME_TIME) {
             SmartDashboard.putBoolean("Shooter Wheel At Speed", true);
         }
     }
