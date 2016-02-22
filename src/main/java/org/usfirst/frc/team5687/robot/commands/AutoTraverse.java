@@ -2,7 +2,6 @@ package org.usfirst.frc.team5687.robot.commands;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5687.robot.Constants;
-import org.usfirst.frc.team5687.robot.Robot;
 
 import static org.usfirst.frc.team5687.robot.Robot.imu;
 import static org.usfirst.frc.team5687.robot.Robot.driveTrain;
@@ -13,7 +12,7 @@ public abstract class AutoTraverse extends Command{
      */
     static final long inchesToTraverseDefense = 90;
     static final long inchesToClear = 3;
-    static final long inchesToTCross = 20;
+    static final long inchesToCross = 20;
     static final double rollThreshold = 8.0;
     static final double rollErrorMargin = 1.0;
 
@@ -65,7 +64,7 @@ public abstract class AutoTraverse extends Command{
                 }
                 break;
             case CROSS:
-                if (inchesInState > inchesToTCross) {
+                if (inchesInState > inchesToCross) {
                     state = TraverseState.ROLL_DOWN;
                     startingStateInches = distance;
                     DriverStation.reportError("Cross inches threshold reached!  Starting roll down.", false);
