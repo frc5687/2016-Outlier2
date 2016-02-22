@@ -117,7 +117,7 @@ public class DriveTrain extends Subsystem {
     }
 
     public void tankDrive(double leftSpeed, double rightSpeed, boolean overrideCaps) {
-        if (overrideCaps) {
+        if (!overrideCaps) {
             // Limit change in leftSpeed to +/- ACCELERATION_CAP
             leftSpeed = Math.min(leftSpeed, leftFrontMotor.get() + Constants.Limits.ACCELERATION_CAP);
             leftSpeed = Math.max(leftSpeed, leftFrontMotor.get() - Constants.Limits.ACCELERATION_CAP);
