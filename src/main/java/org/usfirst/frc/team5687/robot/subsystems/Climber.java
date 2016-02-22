@@ -20,7 +20,7 @@ public class Climber extends Subsystem {
         setDefaultCommand(new ClimbManually());
     }
 
-    public void setTapeMeasureSpeed(double speed) {
+    public void setSpeed(double speed) {
         climberMotor.set(speed);
     }
 

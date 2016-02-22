@@ -125,9 +125,9 @@ public class OI {
      * @return the value for the climber motor
      */
     public double getClimberSpeed() {
-        if (gamepad.getRawButton(Gamepad.Buttons.START)) {
+        if (gamepad.getRawButton(Gamepad.Buttons.X)) {
             return Constants.Climber.RAISE_SPEED;
-        } else if (gamepad.getRawButton(Gamepad.Buttons.X)) {
+        } else if (gamepad.getRawButton(Gamepad.Buttons.B)) {
             return Constants.Climber.LOWER_SPEED;
         }
         return 0;

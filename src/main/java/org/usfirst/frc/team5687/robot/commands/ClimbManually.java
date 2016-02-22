@@ -23,7 +23,7 @@ public class ClimbManually extends Command {
 
     @Override
     protected void execute() {
-        climber.setTapeMeasureSpeed(oi.getClimberSpeed());
+        climber.setSpeed(oi.getClimberSpeed());
     }
 
     @Override

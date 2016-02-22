@@ -124,8 +124,8 @@ public class Constants {
     }
 
     public class Climber {
-        public static final double RAISE_SPEED = 1.0;
-        public static final double LOWER_SPEED = -1.0;
+        public static final double RAISE_SPEED = 0.6;
+        public static final double LOWER_SPEED = -0.6;
     }
 
     public class Encoders {
