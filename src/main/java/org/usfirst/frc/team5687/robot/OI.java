@@ -16,9 +16,9 @@ public class OI {
     private Joystick joystick;
 
     // Drive Train Elements
-    public static final int FORWARD_DIRECTION = 1;
-    public static final int REVERSE_DIRECTION = -1;
-    private static int currentDirection = FORWARD_DIRECTION; //Initial drive direction
+    public static final int HORNS_DIRECTION = 1;
+    public static final int INTAKE_DIRECTION = -1;
+    private static int currentDirection = HORNS_DIRECTION; //Initial drive direction
 
     // Drive Train Buttons
     public static final int REVERSE = Gamepad.Buttons.BACK.getNumber();
@@ -28,7 +28,7 @@ public class OI {
     public static final int PRIME = 5;
     public static final int UNPRIME = 6;
     public static final int FIRE = 1;
-    public int CALIBRATE;
+    public static final int RECOVER = 4;
     // Camera switch
     public static int RESET_CAMERA = 7;
 
@@ -47,8 +47,8 @@ public class OI {
         JoystickButton primeButton = new JoystickButton(joystick, PRIME);
         JoystickButton unprimeButton = new JoystickButton(joystick, UNPRIME);
         JoystickButton fireButton = new JoystickButton(joystick, FIRE);
+        JoystickButton recoverButton = new JoystickButton(joystick, RECOVER);
         JoystickButton resetCameraButton = new JoystickButton(joystick, RESET_CAMERA);
-        JoystickButton potentiometerCalibrateButton = new JoystickButton(joystick, CALIBRATE);
 
         // Drive Train Commands
         reverseButton.whenPressed(new ReverseDrive());
@@ -58,6 +58,7 @@ public class OI {
         primeButton.whenPressed(new Prime());
         unprimeButton.whenPressed(new CancelPrime());
         fireButton.whenPressed(new Fire());
+        recoverButton.whenPressed(new RecoverBoulder());
         // Reset Camera Command
         resetCameraButton.whenPressed(new ResetCamera());
     }
@@ -83,10 +84,10 @@ public class OI {
      * @return the control value for the right drive motors
      */
     public double getLeftSpeed(){
-        if (currentDirection == REVERSE_DIRECTION) {
-            return currentDirection * transformStickToSpeed(Gamepad.Axes.RIGHT_Y);
+        if (currentDirection == INTAKE_DIRECTION) {
+            return currentDirection * transformStickToSpeed(Gamepad.Axes.LEFT_Y);
         }
-        return transformStickToSpeed(Gamepad.Axes.LEFT_Y);
+        return transformStickToSpeed(Gamepad.Axes.RIGHT_Y);
     }
 
     /**
@@ -94,19 +95,10 @@ public class OI {
      * @return the control value for the right drive motors
      */
     public double getRightSpeed(){
-        if (currentDirection == REVERSE_DIRECTION) {
-             return currentDirection * transformStickToSpeed(Gamepad.Axes.LEFT_Y);
+        if (currentDirection == INTAKE_DIRECTION) {
+            return currentDirection * transformStickToSpeed(Gamepad.Axes.RIGHT_Y);
         }
-        return transformStickToSpeed(Gamepad.Axes.RIGHT_Y);
-    }
-
-    /**
-     * Gets the desired speed for the shooter wheels
-     * @return the control value for the shooter motor
-     */
-    public double getShooterSpeed(){
-        // Joystick's throttle axis range is set to the forward range of the shooter speed
-        return Helpers.applyDeadband((joystick.getThrottle() + 1) / 2, Constants.Deadbands.SHOOTER_WHEELS);
+        return transformStickToSpeed(Gamepad.Axes.LEFT_Y);
     }
 
     /**

@@ -7,6 +7,13 @@ package org.usfirst.frc.team5687.robot;
 public class Constants {
     public static final int CYCLES_PER_SECOND = 50;
 
+    public class Drive {
+        public static final boolean LEFT_MOTOR_FRONT_INVERTED = true;
+        public static final boolean RIGHT_MOTOR_FRONT_INVERTED = true;
+        public static final boolean LEFT_MOTOR_REAR_INVERTED = true;
+        public static final boolean RIGHT_MOTOR_REAR_INVERTED = true;
+    }
+
     public class Deadbands {
         /**
          * Deadband threshold for drive joysticks
@@ -40,8 +47,8 @@ public class Constants {
     }
 
     public class Autonomous {
-        public static final double MIN_AUTO_TRAVERSE_ANGLE = 9; // the minimum angle the robot will pitch when traversing a defense
-        public static final double MAX_AUTO_TRAVERSE_SECONDS = 5; // the maximum time the robot should need to travers a defense in Autonomous,
+        public static final double MIN_AUTO_TRAVERSE_ANGLE = 7; // the minimum angle the robot will pitch when traversing a defense
+        public static final double MAX_AUTO_TRAVERSE_SECONDS = 4; // the maximum time the robot should need to travers a defense in Autonomous,
 
         public class staticDefenseTraverseSpeeds {
             //speeds the robot should travel at when traversing defenses, should be between 0 and 1
@@ -49,7 +56,7 @@ public class Constants {
             public static final double MOAT_SPEED =.5;
             public static final double ROCK_WALL_SPEED =.3;
             public static final double RAMPARTS_SPEED =.3;
-            public static final double ROUGH_TERRAIN_SPEED =.7;
+            public static final double ROUGH_TERRAIN_SPEED =.5;
         }
 
     }

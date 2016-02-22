@@ -2,7 +2,6 @@ package org.usfirst.frc.team5687.robot.subsystems;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.interfaces.Potentiometer;
@@ -31,15 +30,22 @@ public class Arms extends Subsystem {
     protected void initDefaultCommand() {
         setDefaultCommand(new RunArmsManually());
     }
-    public boolean isBreakingLimit(double input){
-        return (armsPot.get() > Constants.Arms.ARMS_MAX_DEGREES && input > 0) || (input < 0 && armsPot.get() < Constants.Arms.ARMS_MIN_DEGRESS);
+
+    public void setSpeed(double speed) {
+        boolean movingUp = speed > 0;
+        armsMotor.set((movingUp && isAtUpperLimit()) ? 0 : Helpers.applySensitivityTransform(speed));
     }
-    public void setSpeed (double speed) {
-        if (!isBreakingLimit(Helpers.applySensitivityTransform(speed))){
-            armsMotor.set(Helpers.applySensitivityTransform(speed));
-        } else{
-            armsMotor.set(0);
-        }
+
+    public void stop() {
+        armsMotor.set(0);
+    }
+
+    /**
+     * Check if arms is at upper limit
+     * @return hall effect sensor state
+     */
+    public boolean isAtUpperLimit() {
+        return !armsSensor.get();
     }
 
     /**
@@ -50,16 +56,8 @@ public class Arms extends Subsystem {
         return armsPot.get() > Constants.Arms.ARMS_MAX_DEGREES || armsPot.get() < Constants.Arms.ARMS_MIN_DEGRESS;
     }
 
-    /**
-     * Check if arms is at limit
-     * @return hall effect sensor state
-     */
-    public boolean isAtLimit() {
-        return !armsSensor.get();
-    }
-
     public void updateDashboard() {
-        SmartDashboard.putBoolean("Arms limit", isAtLimit());
-        SmartDashboard.putNumber("Potentiometer value is", armsPot.get());
+        SmartDashboard.putBoolean("Arms upper limit", isAtUpperLimit());
+        SmartDashboard.putNumber("Pot value", armsPot.get());
     }
 }

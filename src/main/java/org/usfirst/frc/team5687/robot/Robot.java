@@ -95,28 +95,6 @@ public class Robot extends IterativeRobot {
 
         powerDistributionPanel = new PowerDistributionPanel();
 
-        autoChooser.addDefault("Do Nothing At All", new AutonomousDoNothing());
-        autoChooser.addObject("Calibrate CVT", new AutonomousTestCVT());
-        autoChooser.addObject("Chase Target", new AutoChaseTarget());
-        autoChooser.addObject("Traverse Chosen Defense", new AutoTraverseOnly());
-        SmartDashboard.putData("Autonomous mode", autoChooser);
-
-        defenseChooser.addDefault("Low Bar", "LowBar");
-        defenseChooser.addObject("Moat", "Moat");
-        defenseChooser.addObject("Rock Wall","RockWall");
-        defenseChooser.addObject("Rough Terrain","RoughTerrain");
-        defenseChooser.addObject("Rampart","Rampart");
-        SmartDashboard.putData("Defense to Cross", defenseChooser);
-        initializeCameras();
-
-        positionChooser.addDefault("1 (Low Bar)","1");
-        positionChooser.addObject("2","2");
-        positionChooser.addObject("3","3");
-        positionChooser.addObject("4","4");
-        positionChooser.addObject("5","5");
-        SmartDashboard.putData("Start Position", positionChooser);
-
-
         // Report git info to the dashboard
         SmartDashboard.putString("Git Info", Reader.gitInfo);
         try {
@@ -136,10 +114,25 @@ public class Robot extends IterativeRobot {
         // Commands need to be instantiated AFTER the subsystems.  Since the OI constructor instantiates several commands, we need it to be instantiated last.
         oi = new OI();
 
+        defenseChooser.addDefault("Low Bar", "LowBar");
+        defenseChooser.addObject("Moat", "Moat");
+        defenseChooser.addObject("Rock Wall","RockWall");
+        defenseChooser.addObject("Rough Terrain","RoughTerrain");
+        defenseChooser.addObject("Rampart","Rampart");
+        SmartDashboard.putData("Defense to Cross", defenseChooser);
+        initializeCameras();
+
+        positionChooser.addDefault("1 (Low Bar)","1");
+        positionChooser.addObject("2","2");
+        positionChooser.addObject("3","3");
+        positionChooser.addObject("4","4");
+        positionChooser.addObject("5","5");
+        SmartDashboard.putData("Start Position", positionChooser);
+
         autoChooser.addDefault("Do Nothing At All", new AutonomousDoNothing());
         autoChooser.addObject("Calibrate CVT", new AutonomousTestCVT());
+        autoChooser.addObject("Traverse Defense", new AutoTraverseBuilder());
         autoChooser.addObject("Chase Target", new AutoChaseTarget());
-        autoChooser.addObject("Traverse Defense", new AutoTraverseOnly());
         autoChooser.addObject("Left 90", new AutoAlign(-90));
         autoChooser.addObject("Right 90", new AutoAlign(90));
         autoChooser.addObject("Drive 12", new AutoDrive(-.4, 12f));
@@ -153,7 +146,6 @@ public class Robot extends IterativeRobot {
         cameraServer = CustomCameraServer.getInstance();
         cameraServer.setQuality(50);
         cameraServer.startAutomaticCapture(hornsCamera);
-
     }
 
 	/**
@@ -222,7 +214,7 @@ public class Robot extends IterativeRobot {
      */
     public void switchCameras() {
         //cameraServer.stopAutomaticCapture();
-        if (camera.equals(RobotMap.Cameras.hornsEnd)) {
+        if (oi.getDirection()==-1) {
             camera = RobotMap.Cameras.intakeEnd;
             cameraServer.startAutomaticCapture(intakeCamera);
         } else {

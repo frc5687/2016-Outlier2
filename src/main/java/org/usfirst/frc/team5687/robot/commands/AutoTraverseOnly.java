@@ -1,97 +1,83 @@
 package org.usfirst.frc.team5687.robot.commands;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.Scheduler;
 import org.usfirst.frc.team5687.robot.Constants;
-import org.usfirst.frc.team5687.robot.Robot;
-
-import static org.usfirst.frc.team5687.robot.Robot.driveTrain;
 
 /**
  *
  */
-public class AutoTraverseOnly extends Command {
+public class AutoTraverseOnly extends CommandGroup {
 
-    public  AutoTraverseOnly() {
+    public  AutoTraverseOnly(String defense, int position) {
 
-
-    }
-
-
-    protected void initialize() {
         double traverseSpeed = 0;
         double rotateAngle = 0;
 
-        switch (Robot.robot.getSelectedDefense()){
+        // Run forward 72 inches
+        addSequential(new AutoDrive(.7, 72.0f));
+
+        switch (defense){
             case "LowBar":
                 traverseSpeed = Constants.Autonomous.staticDefenseTraverseSpeeds.LOW_BAR_SPEED;
+                addSequential(new AutoTraverseStaticDefense(traverseSpeed));
                 break;
             case "Moat":
                 traverseSpeed = Constants.Autonomous.staticDefenseTraverseSpeeds.MOAT_SPEED;
+                addSequential(new AutoTraverseStaticDefense(traverseSpeed));
                 break;
             case "RockWall":
                 traverseSpeed = Constants.Autonomous.staticDefenseTraverseSpeeds.ROCK_WALL_SPEED;
+                addSequential(new AutoTraverseStaticDefense(traverseSpeed));
                 break;
             case "Ramparts":
                 traverseSpeed = Constants.Autonomous.staticDefenseTraverseSpeeds.RAMPARTS_SPEED;
+                addSequential(new AutoTraverseStaticDefense(traverseSpeed));
                 break;
             case "RoughTerrain":
                 traverseSpeed = Constants.Autonomous.staticDefenseTraverseSpeeds.ROUGH_TERRAIN_SPEED;
+                addSequential(new AutoTraverseStaticDefense(traverseSpeed));
+                break;
+            case "Cheval":
+                //addSequential(new AutoTraverseCheval());
+                break;
+            case "Portcullis":
+                //addSequential(new AutoTraversePortcullis());
                 break;
         }
 
 
-        switch (Robot.robot.getSelectedPosition()){
-            case "1":
+        switch (position){
+            case 1:
                 rotateAngle=50;
                 break;
-            case "2":
-               rotateAngle=30;
+            case 2:
+                rotateAngle=30;
                 break;
-            case "3":
-                rotateAngle=15;
+            case 3:
+                // Turn towards the tower
+                addSequential(new AutoAlign(15));
+
+                // Run forward 24 inches
+                addSequential(new AutoDrive(.5, 24.0f));
+
+                // Turn towards the tower
+                addSequential(new AutoAlign(-2.0f));
+
+                // Run forward 24 inches
+                addSequential(new AutoDrive(.5, 24.0f));
+
                 break;
-            case "4":
+            case 4:
                 rotateAngle=-10;
                 break;
-            case "5":
+            case 5:
                 rotateAngle=-25;
                 break;
         }
 
-        DriverStation.reportError("Traversing "+Robot.robot.getSelectedDefense()+", in position "+Robot.robot.getSelectedPosition()+", at "+traverseSpeed+" speed.",false);
 
-        // Run forward 36 inches
-        Scheduler.getInstance().add(new AutoDrive(.4, 36));
-
-        // Traverse the selected defense
-        Scheduler.getInstance().add(new AutoTraverseStaticDefense(traverseSpeed));
-
-        // Turn towards the tower
-        Scheduler.getInstance().add(new AutoAlign(rotateAngle));
 
 
     }
 
-    @Override
-    protected void execute() {
-
-    }
-
-    @Override
-    protected boolean isFinished() {
-        return true;
-    }
-
-    @Override
-    protected void end() {
-
-    }
-
-    @Override
-    protected void interrupted() {
-
-    }
 }

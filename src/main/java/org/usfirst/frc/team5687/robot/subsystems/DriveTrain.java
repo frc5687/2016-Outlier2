@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5687.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.VictorSP;
@@ -24,6 +25,12 @@ public class DriveTrain extends Subsystem {
         leftRearMotor = new VictorSP(RobotMap.Drive.LEFT_MOTOR_REAR);
         rightFrontMotor = new VictorSP(RobotMap.Drive.RIGHT_MOTOR_FRONT);
         rightRearMotor = new VictorSP(RobotMap.Drive.RIGHT_MOTOR_REAR);
+
+        leftFrontMotor.setInverted(Constants.Drive.LEFT_MOTOR_FRONT_INVERTED);
+        leftRearMotor.setInverted(Constants.Drive.LEFT_MOTOR_REAR_INVERTED);
+        rightFrontMotor.setInverted(Constants.Drive.RIGHT_MOTOR_FRONT_INVERTED);
+        rightRearMotor.setInverted(Constants.Drive.RIGHT_MOTOR_REAR_INVERTED);
+
         drive = new RobotDrive(leftFrontMotor, leftRearMotor, rightFrontMotor, rightRearMotor);
         rightEncoder = initializeEncoder(RobotMap.Drive.RIGHT_ENCODER_CHANNEL_A, RobotMap.Drive.RIGHT_ENCODER_CHANNEL_B, Constants.Encoders.RightDrive.REVERSED, Constants.Encoders.RightDrive.INCHES_PER_PULSE);
         leftEncoder = initializeEncoder(RobotMap.Drive.LEFT_ENCODER_CHANNEL_A, RobotMap.Drive.LEFT_ENCODER_CHANNEL_B, Constants.Encoders.LeftDrive.REVERSED, Constants.Encoders.LeftDrive.INCHES_PER_PULSE);
@@ -106,13 +113,19 @@ public class DriveTrain extends Subsystem {
      * @param rightSpeed desired speed for right motors
      */
     public void tankDrive(double leftSpeed, double rightSpeed) {
-        // Limit change in leftSpeed to +/- ACCELERATION_CAP
-        leftSpeed = Math.min(leftSpeed, leftFrontMotor.get() + Constants.Limits.ACCELERATION_CAP);
-        leftSpeed = Math.max(leftSpeed, leftFrontMotor.get() - Constants.Limits.ACCELERATION_CAP);
+        tankDrive(leftSpeed, rightSpeed, false);
+    }
 
-        // Limit change in rightSpeed to +/- ACCELERATION_CAP
-        rightSpeed = Math.min(rightSpeed, rightFrontMotor.get() + Constants.Limits.ACCELERATION_CAP);
-        rightSpeed = Math.max(rightSpeed, rightFrontMotor.get() - Constants.Limits.ACCELERATION_CAP);
+    public void tankDrive(double leftSpeed, double rightSpeed, boolean overrideCaps) {
+        if (!overrideCaps) {
+            // Limit change in leftSpeed to +/- ACCELERATION_CAP
+            leftSpeed = Math.min(leftSpeed, leftFrontMotor.get() + Constants.Limits.ACCELERATION_CAP);
+            leftSpeed = Math.max(leftSpeed, leftFrontMotor.get() - Constants.Limits.ACCELERATION_CAP);
+
+            // Limit change in rightSpeed to +/- ACCELERATION_CAP
+            rightSpeed = Math.min(rightSpeed, rightFrontMotor.get() + Constants.Limits.ACCELERATION_CAP);
+            rightSpeed = Math.max(rightSpeed, rightFrontMotor.get() - Constants.Limits.ACCELERATION_CAP);
+        }
 
         drive.tankDrive(leftSpeed, rightSpeed, false);
 
