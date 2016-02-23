@@ -54,6 +54,11 @@ public class Robot extends IterativeRobot {
     public static Climber climber;
 
     /**
+     * Represents the robot's lights
+     */
+    public static Lights lights;
+
+    /**
      * Represents the operator interface/ controls
      */
     public static OI oi;
@@ -92,6 +97,7 @@ public class Robot extends IterativeRobot {
         intake = new Intake();
         arms = new Arms();
         climber = new Climber();
+        lights = new Lights();
         autoChooser = new SendableChooser();
         defenseChooser = new SendableChooser();
         positionChooser = new SendableChooser();
