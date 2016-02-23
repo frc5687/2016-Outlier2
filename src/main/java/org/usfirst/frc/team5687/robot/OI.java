@@ -115,9 +115,20 @@ public class OI {
      * @return the control value for the arms' motor
      */
     public double getArmsSpeed() {
-        double value = Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.LEFT_TRIGGER), Constants.Deadbands.ARMS) - Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.RIGHT_TRIGGER), Constants.Deadbands.ARMS);
-        SmartDashboard.putNumber("Arms Speed", value);
-        return value;
+        return (Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.LEFT_TRIGGER), Constants.Deadbands.ARMS) - Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.RIGHT_TRIGGER), Constants.Deadbands.ARMS)) * 0.9;
+    }
+
+    /**
+     * Gets the desired speed for the climber
+     * @return the value for the climber motor
+     */
+    public double getClimberSpeed() {
+        if (gamepad.getRawButton(Gamepad.Buttons.X)) {
+            return Constants.Climber.RAISE_SPEED;
+        } else if (gamepad.getRawButton(Gamepad.Buttons.B)) {
+            return Constants.Climber.LOWER_SPEED;
+        }
+        return 0;
     }
 
     /**
