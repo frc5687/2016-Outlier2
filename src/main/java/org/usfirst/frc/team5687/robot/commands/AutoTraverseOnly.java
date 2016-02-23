@@ -28,13 +28,13 @@ public class AutoTraverseOnly extends CommandGroup {
                 addSequential(new AutoTraverseStaticDefense(defaultTraverseSpeed,defaultInchesToCross,defaultRollThreshold));
                 break;
             case "Moat":
-                addSequential(new AutoTraverseStaticDefense(defaultTraverseSpeed, 20, 15));
+                addSequential(new AutoTraverseStaticDefense(defaultTraverseSpeed, 20, 15)); //Tested and tuned
                 break;
             case "RockWall":
-                addSequential(new AutoTraverseStaticDefense(.4,2,18));
+                addSequential(new AutoTraverseStaticDefense(.4,2,18)); //Tested and tuned
                 break;
-            case "Ramparts":
-                addSequential(new AutoTraverseStaticDefense(.3,4,defaultRollThreshold));
+            case "Rampart":
+                addSequential(new AutoTraverseStaticDefense(.4,24,13.5));
                 break;
             case "RoughTerrain":
                 addSequential(new AutoTraverseStaticDefense(defaultTraverseSpeed,12,12));
@@ -70,10 +70,17 @@ public class AutoTraverseOnly extends CommandGroup {
 
                 break;
             case 4:
+
                 rotateAngle=-10;
                 break;
             case 5:
-                rotateAngle=-25;
+
+                // Run forward 24 inches
+                addSequential(new AutoDrive(.5, 135.0f));
+
+                // Turn towards the tower
+                addSequential(new AutoAlign(-25));
+
                 break;
         }
 

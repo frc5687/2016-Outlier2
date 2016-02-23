@@ -22,7 +22,7 @@ public abstract class AutoTraverse extends Command{
     long inchesToCross;
     double rollThreshold;
 
-    private TraverseState state;
+    private TraverseState state = TraverseState.ROLL_UP;
     private long startingStateInches;
 
     private boolean inchesToTraverseReached = false;
