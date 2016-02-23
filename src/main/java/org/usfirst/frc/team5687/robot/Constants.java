@@ -104,9 +104,14 @@ public class Constants {
         public static final long UNPRIME_TIME = 1500;
 
         /**
-         * Speed to run the shooter wheels to shoot high goal
+         * Speed to run the shooter wheels to shoot a high goal with a new boulder
          */
-        public static final double SHOOTER_SPEED = .94;
+        public static final double NEW_SHOOTER_SPEED = .94;
+
+        /**
+         * Speed to run the shooter wheels to shoot a high goal with an old/worn boulder
+         */
+        public static final double OLD_SHOOTER_SPEED = 0.94;
     }
 
     public class Arms {

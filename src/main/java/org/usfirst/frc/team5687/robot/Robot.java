@@ -73,6 +73,7 @@ public class Robot extends IterativeRobot {
 
     public SendableChooser defenseChooser;
     public SendableChooser positionChooser;
+    public SendableChooser boulderCondition;
 
     CustomCameraServer cameraServer;
 
@@ -95,6 +96,7 @@ public class Robot extends IterativeRobot {
         autoChooser = new SendableChooser();
         defenseChooser = new SendableChooser();
         positionChooser = new SendableChooser();
+        boulderCondition = new SendableChooser();
 
         powerDistributionPanel = new PowerDistributionPanel();
 
@@ -146,6 +148,10 @@ public class Robot extends IterativeRobot {
         autoChooser.addObject("Drive 48", new AutoDrive(-.4, 48f));
         autoChooser.addObject("Drive 96", new AutoDrive(-.4, 96f));
         SmartDashboard.putData("Autonomous mode", autoChooser);
+
+        boulderCondition.addDefault("New Boulder", "1");
+        boulderCondition.addObject("Old Boulder", "2");
+        SmartDashboard.putData("Boulder Condition", boulderCondition);
 
 
         //Setup Camera Code
@@ -282,6 +288,10 @@ public class Robot extends IterativeRobot {
 
     public String getSelectedPosition() {
         return (String) positionChooser.getSelected();
+    }
+
+    public String getBoulderCondition() {
+        return (String) boulderCondition.getSelected();
     }
 
 
