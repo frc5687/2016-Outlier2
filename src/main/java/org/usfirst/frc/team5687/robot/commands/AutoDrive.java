@@ -3,6 +3,7 @@ package org.usfirst.frc.team5687.robot.commands;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team5687.robot.Constants;
 import org.usfirst.frc.team5687.robot.OI;
 import org.usfirst.frc.team5687.robot.Robot;
 import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
@@ -19,6 +20,9 @@ public class AutoDrive extends Command {
     DriveTrain driveTrain = Robot.driveTrain;
     AHRS imu = Robot.imu;
     OI oi = Robot.oi;
+    DriveTrain stopMoving;
+    AutoDrive driveForward;
+    AutoDrive autoArmsLow;
     private long end = 0;
     private int timeToDrive = 0;
     private double inchesToDrive = 0;
@@ -27,6 +31,8 @@ public class AutoDrive extends Command {
     private double inchesDriven = 0;
     private boolean driveByTime;
     private float currentAngle = imu.getPitch();
+    public boolean onRamp = false;
+    public double centerChevalDistance = x; //TODO: add in x.
 
     //Drive based on time
     public AutoDrive(double speed, int timeToDrive) {
@@ -50,19 +56,18 @@ public class AutoDrive extends Command {
         DriverStation.reportError("Driving by Distance",false);
     }
 
-    public boolean isOnRamp() {
-        imu.getPitch();
-        boolean onRamp = false;
 
-        if (currentAngle == desiredAngle) {
-            return onRamp = true;
+    public AutoDrive(boolean onRamp){
+        if(onRamp){
+            stopMoving.tankDrive(0,0); //stop//TODO: reset encoder
+            moveArmsDown(); //lower arms
+            driveForward = new AutoDrive(0.5, centerChevalDistance); //drive forward
         }
     }
 
-    public AutoDrive(boolean onRamp){
-        if(isOnRamp())
-        }
-
+    private void moveArmsDown() {
+        autoArmsLow = new AutoDrive(-0.5, Constants.Autonomous.ARMS_LOW);
+    }
 
     @Override
     protected void initialize() {
@@ -75,9 +80,11 @@ public class AutoDrive extends Command {
     @Override
     protected void execute() {
         driveTrain.tankDrive(leftSpeed, rightSpeed);
-    
-
-
+        public boolean isOnRamp() {
+            if (currentAngle == desiredAngle) {
+                onRamp = true;
+            }
+        }
     }
 
     @Override
