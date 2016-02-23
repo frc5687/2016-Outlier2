@@ -82,7 +82,15 @@ public class AutoDrive extends Command implements PIDOutput{
 
     @Override
     protected void execute() {
-//If the speed is faster than
+/**If the speed is faster than itself plus the PIDoutput speed, make it go the PIDoutput speed
+ * If the speed is slower than itself minus the PIDoutput speed, go the PIDoutput speed
+ */
+
+        leftSpeed = Math.min(leftSpeed + rotateToAngleRate, rotateToAngleRate);
+        leftSpeed = Math.max(leftSpeed - rotateToAngleRate, rotateToAngleRate);
+        rightSpeed = Math.min(rightSpeed + rotateToAngleRate, rotateToAngleRate);
+        rightSpeed = Math.max(rightSpeed + rotateToAngleRate, rotateToAngleRate);
+
 
         driveTrain.tankDrive(leftSpeed, rightSpeed);
 
