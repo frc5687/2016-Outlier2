@@ -12,14 +12,17 @@ public abstract class AutoTraverse extends Command{
      */
     static final long inchesToTraverseDefense = 90;
     static final long inchesToClear = 3;
-    static final long inchesToCross = 20;
-    static final double rollThreshold = 8.0;
+    //static final long inchesToCross = 20;
+    //static final double rollThreshold = 8.0;
     static final double rollErrorMargin = 1.0;
 
     double timeStarted;
     long startingInches;
 
-    private TraverseState state;
+    long inchesToCross;
+    double rollThreshold;
+
+    private TraverseState state = TraverseState.ROLL_UP;
     private long startingStateInches;
 
     private boolean inchesToTraverseReached = false;
@@ -29,7 +32,10 @@ public abstract class AutoTraverse extends Command{
 
     double inchesLevel;
 
-    public AutoTraverse(){
+    public AutoTraverse(long inchesToCross, double rollThreshold){
+
+        this.inchesToCross = inchesToCross;
+        this.rollThreshold = rollThreshold;
 
         if (imu==null) {
             throw new IllegalArgumentException("AutoTraverse commands require the IMU.");

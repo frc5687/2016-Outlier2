@@ -53,10 +53,10 @@ public class RobotMap {
     }
 
     /**
-     * Hanger ports
+     * Climber ports
      */
-    public static class Hanger {
-        public static final int HANGER_MOTOR = 4;
+    public static class Climber {
+        public static final int CLIMBER_MOTOR = 4;
     }
 
     /**

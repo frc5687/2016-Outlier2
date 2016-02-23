@@ -12,10 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.USBCamera;
 import org.usfirst.frc.team5687.robot.commands.*;
-import org.usfirst.frc.team5687.robot.subsystems.Arms;
-import org.usfirst.frc.team5687.robot.subsystems.Intake;
-import org.usfirst.frc.team5687.robot.subsystems.Shooter;
-import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team5687.robot.subsystems.*;
 import org.usfirst.frc.team5687.robot.utils.CustomCameraServer;
 import org.usfirst.frc.team5687.robot.utils.Reader;
 
@@ -50,6 +47,11 @@ public class Robot extends IterativeRobot {
      * Represents the robot's arm
      */
     public static Arms arms;
+
+    /**
+     * Represents the robot's climber
+     */
+    public static Climber climber;
 
     /**
      * Represents the operator interface/ controls
@@ -89,14 +91,17 @@ public class Robot extends IterativeRobot {
         shooter = new Shooter();
         intake = new Intake();
         arms = new Arms();
+        climber = new Climber();
         autoChooser = new SendableChooser();
         defenseChooser = new SendableChooser();
         positionChooser = new SendableChooser();
 
         powerDistributionPanel = new PowerDistributionPanel();
 
-        // Report git info to the dashboard
+        // Report commit info to dashboard and driver station
         SmartDashboard.putString("Git Info", Reader.gitInfo);
+        DriverStation.reportError("Deployed commit: " + Reader.gitInfo , false);
+
         try {
             // Try to connect to the navX imu.
             imu = new AHRS(SPI.Port.kMXP);
@@ -132,6 +137,7 @@ public class Robot extends IterativeRobot {
         autoChooser.addDefault("Do Nothing At All", new AutonomousDoNothing());
         autoChooser.addObject("Calibrate CVT", new AutonomousTestCVT());
         autoChooser.addObject("Traverse Defense", new AutoTraverseBuilder());
+        autoChooser.addObject("Traverse And Shoot", new AutoTraverseAndShootBuilder());
         autoChooser.addObject("Chase Target", new AutoChaseTarget());
         autoChooser.addObject("Left 90", new AutoAlign(-90));
         autoChooser.addObject("Right 90", new AutoAlign(90));
