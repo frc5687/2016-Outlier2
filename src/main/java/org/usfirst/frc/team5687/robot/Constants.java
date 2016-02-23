@@ -49,16 +49,7 @@ public class Constants {
     public class Autonomous {
         public static final double MIN_AUTO_TRAVERSE_ANGLE = 7; // the minimum angle the robot will pitch when traversing a defense
         public static final double MAX_AUTO_TRAVERSE_SECONDS = 4; // the maximum time the robot should need to travers a defense in Autonomous,
-
-        public class staticDefenseTraverseSpeeds {
-            //speeds the robot should travel at when traversing defenses, should be between 0 and 1
-            public static final double LOW_BAR_SPEED =.5;
-            public static final double MOAT_SPEED =.5;
-            public static final double ROCK_WALL_SPEED =.3;
-            public static final double RAMPARTS_SPEED =.3;
-            public static final double ROUGH_TERRAIN_SPEED =.5;
-        }
-
+        
     }
 
     public class InfraRedConstants {
@@ -120,7 +111,7 @@ public class Constants {
         /**
          * Speed to run the shooter wheels to shoot high goal
          */
-        public static final double SHOOTER_SPEED = 1.0;
+        public static final double SHOOTER_SPEED = .94;
     }
 
     public class Encoders {

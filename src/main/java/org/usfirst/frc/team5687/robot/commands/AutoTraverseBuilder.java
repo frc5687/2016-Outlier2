@@ -19,7 +19,7 @@ public class AutoTraverseBuilder extends Command {
         String defense = Robot.robot.getSelectedDefense();
         int position = Integer.parseInt(Robot.robot.getSelectedPosition());
 
-        DriverStation.reportError("Building autotraverse for defense " + defense + " in position " + defense,false);
+        DriverStation.reportError("Building autotraverse for defense " + defense + " in position " + position,false);
 
         // Traverse the selected defense
         Scheduler.getInstance().add(new AutoTraverseOnly(defense, position));
