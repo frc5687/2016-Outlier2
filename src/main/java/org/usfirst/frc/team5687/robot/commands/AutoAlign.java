@@ -27,20 +27,20 @@ public class AutoAlign extends Command implements PIDOutput{
     public AutoAlign(double targetAngle) {
         requires(driveTrain);
         this.targetAngle = targetAngle;  //Q:What value does targetAngle hold? i.e., how does the robot know if it needs to stay straight without a numerical value?
+    }
+
+    protected void initialize(){
+        DriverStation.reportError("Starting autoalign", false);
+        SmartDashboard.putNumber("AutoAlign/Target Angle", targetAngle);
         imu.setPIDSourceType(PIDSourceType.kRate);
         turnController = new PIDController(kP, kI, kD, kF, imu, this);
         turnController.setInputRange(-180.0f,  180.0f);
         turnController.setOutputRange(-0.5, 0.5);
         turnController.setAbsoluteTolerance(kToleranceDegrees);
         turnController.setContinuous(true);
-        }
-
-    protected void initialize(){
-        DriverStation.reportError("Starting autoalign", false);
-        SmartDashboard.putNumber("AutoAlign/Target Angle", targetAngle);
         turnController.setSetpoint(targetAngle);
         turnController.enable();
-        }
+    }
 
     protected void execute(){
         synchronized (this) {
