@@ -2,7 +2,6 @@ package org.usfirst.frc.team5687.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.commands.*;
 import org.usfirst.frc.team5687.robot.utils.Gamepad;
 import org.usfirst.frc.team5687.robot.utils.Helpers;
@@ -29,6 +28,8 @@ public class OI {
     public static final int UNPRIME = 6;
     public static final int FIRE = 1;
     public static final int RECOVER = 4;
+    // Vision Lights Button
+    public static final int SWITCH_RING_LIGHT = 12;
     // Camera switch
     public static int RESET_CAMERA = 7;
 
@@ -49,6 +50,7 @@ public class OI {
         JoystickButton fireButton = new JoystickButton(joystick, FIRE);
         JoystickButton recoverButton = new JoystickButton(joystick, RECOVER);
         JoystickButton resetCameraButton = new JoystickButton(joystick, RESET_CAMERA);
+        JoystickButton switchVisionLightButton = new JoystickButton(joystick, SWITCH_RING_LIGHT);
 
         // Drive Train Commands
         reverseButton.whenPressed(new ReverseDrive());
@@ -59,6 +61,8 @@ public class OI {
         unprimeButton.whenPressed(new CancelPrime());
         fireButton.whenPressed(new Fire());
         recoverButton.whenPressed(new RecoverBoulder());
+        // Light Switch Command
+        switchVisionLightButton.whenPressed(new ToggleVisionLight());
         // Reset Camera Command
         resetCameraButton.whenPressed(new ResetCamera());
     }
