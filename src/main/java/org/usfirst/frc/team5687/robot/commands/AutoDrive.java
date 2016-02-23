@@ -2,6 +2,7 @@ package org.usfirst.frc.team5687.robot.commands;
 
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -10,6 +11,8 @@ import org.usfirst.frc.team5687.robot.Robot;
 import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
 
 import java.util.Date;
+
+import static org.usfirst.frc.team5687.robot.Robot.imu;
 
 /**
  * Autonomous command to run the drivetrain.
@@ -20,6 +23,7 @@ import java.util.Date;
 public class AutoDrive extends Command implements PIDOutput{
     DriveTrain driveTrain = Robot.driveTrain;
     AHRS imu = Robot.imu;
+    PIDController turnController = AutoAlign.turnController;
     OI oi = Robot.oi;
     private long end = 0;
     private int timeToDrive = 0;
@@ -67,7 +71,8 @@ public class AutoDrive extends Command implements PIDOutput{
         end = (new Date()).getTime() + timeToDrive;
         targetAngle = imu.getYaw();
         driveTrain.resetDriveEncoders();
-        turnController.setInputRange(-180.0f,  180.0f);
+        turnController = new PIDController(kP, kI, kD, kF, imu, this);
+        turnController.setInputRange(-0.1f, 0.1f);
         turnController.setOutputRange(-0.5, 0.5);
         turnController.setAbsoluteTolerance(kToleranceDegrees);
         turnController.setContinuous(true);
@@ -77,6 +82,7 @@ public class AutoDrive extends Command implements PIDOutput{
 
     @Override
     protected void execute() {
+//If the speed is faster than
 
         driveTrain.tankDrive(leftSpeed, rightSpeed);
 
