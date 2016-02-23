@@ -63,7 +63,10 @@ public class AutoTraverseOnly extends CommandGroup {
 
                 break;
             case 2:
-                rotateAngle=30;
+                addSequential(new AutoDrive(.5, 150.0f));
+
+                // Turn towards the tower
+                addSequential(new AutoAlign(40.0f));
                 break;
             case 3:
                 // Turn towards the tower
