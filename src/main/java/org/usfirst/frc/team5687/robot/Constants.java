@@ -111,7 +111,7 @@ public class Constants {
         /**
          * Speed to run the shooter wheels to shoot a high goal with an old/worn boulder
          */
-        public static final double OLD_SHOOTER_SPEED = 0.94;
+        public static final double OLD_SHOOTER_SPEED = 1.0;
     }
 
     public class Arms {
