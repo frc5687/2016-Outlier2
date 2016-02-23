@@ -60,6 +60,14 @@ public class RobotMap {
     }
 
     /**
+     * Lights ports
+     */
+    public static class Lights {
+        public static final int FLASHLIGHT = 0;
+        public static final int RINGLIGHT = 1;
+    }
+
+    /**
      * Camera ports
      */
     public static class Cameras {

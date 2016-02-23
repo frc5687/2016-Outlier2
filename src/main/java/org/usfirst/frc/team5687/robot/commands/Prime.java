@@ -10,6 +10,7 @@ import org.usfirst.frc.team5687.robot.Constants;
 public class Prime extends CommandGroup{
 
     public Prime() {
+        addSequential(new EnableFlashlight());
         addSequential(new PrimeBoulder());
         addSequential(new SetShooterSpeed(Constants.Shooter.SHOOTER_SPEED, Constants.Shooter.PRIME_TIME));
     }
