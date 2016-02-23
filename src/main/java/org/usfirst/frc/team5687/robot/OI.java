@@ -115,9 +115,7 @@ public class OI {
      * @return the control value for the arms' motor
      */
     public double getArmsSpeed() {
-        double value = Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.LEFT_TRIGGER), Constants.Deadbands.ARMS) - Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.RIGHT_TRIGGER), Constants.Deadbands.ARMS);
-        SmartDashboard.putNumber("Arms Speed", value);
-        return value;
+        return (Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.LEFT_TRIGGER), Constants.Deadbands.ARMS) - Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.RIGHT_TRIGGER), Constants.Deadbands.ARMS)) * 0.9;
     }
 
     /**
