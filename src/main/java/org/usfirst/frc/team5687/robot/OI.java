@@ -119,6 +119,19 @@ public class OI {
     }
 
     /**
+     * Gets the desired speed for the climber
+     * @return the value for the climber motor
+     */
+    public double getClimberSpeed() {
+        if (gamepad.getRawButton(Gamepad.Buttons.X)) {
+            return Constants.Climber.RAISE_SPEED;
+        } else if (gamepad.getRawButton(Gamepad.Buttons.B)) {
+            return Constants.Climber.LOWER_SPEED;
+        }
+        return 0;
+    }
+
+    /**
      * Get the requested stick position from the gamepad, apply deadband and sensitivity transforms, and return the result.
      * @param stick the gamepad axis to adjust and use
      * @return the adjusted control value from the gamepad
