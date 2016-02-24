@@ -5,13 +5,13 @@ import org.usfirst.frc.team5687.robot.Robot;
 import org.usfirst.frc.team5687.robot.subsystems.Lights;
 
 /**
- * Command to turn flashlight off
+ * Command to toggle ring light
  * @author wil
  */
-public class DisableFlashlight extends Command {
+public class ToggleFlashlight extends Command {
     Lights lights = Robot.lights;
 
-    public DisableFlashlight() {
+    public ToggleFlashlight() {
         requires(lights);
     }
 
@@ -21,12 +21,12 @@ public class DisableFlashlight extends Command {
 
     @Override
     protected void execute() {
-        lights.turnFlashlightOff();
+        lights.toggleFlashlight();
     }
 
     @Override
     protected boolean isFinished() {
-        return !lights.getFlashlight();
+        return true;
     }
 
     @Override

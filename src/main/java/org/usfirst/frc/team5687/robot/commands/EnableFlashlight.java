@@ -11,9 +11,12 @@ import org.usfirst.frc.team5687.robot.subsystems.Lights;
 public class EnableFlashlight extends Command {
     Lights lights = Robot.lights;
 
+    public EnableFlashlight() {
+        requires(lights);
+    }
+
     @Override
     protected void initialize() {
-        requires(lights);
     }
 
     @Override
