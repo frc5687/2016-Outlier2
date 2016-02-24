@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.USBCamera;
@@ -85,7 +86,11 @@ public class Robot extends IterativeRobot {
     USBCamera intakeCamera = null;
 
     String camera = RobotMap.Cameras.hornsEnd;
+    NetworkTable pitracker = null;
 
+    public Robot() {
+        pitracker = NetworkTable.getTable("PITracker/tracking");
+    }
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -103,6 +108,10 @@ public class Robot extends IterativeRobot {
         positionChooser = new SendableChooser();
 
         powerDistributionPanel = new PowerDistributionPanel();
+
+        String test = pitracker.getString("Test", "Bad");
+        DriverStation.reportError("Found test " + test, false);
+
 
         // Report commit info to dashboard and driver station
         SmartDashboard.putString("Git Info", Reader.gitInfo);
@@ -212,6 +221,9 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().run();
         intake.updateDashboard();
         arms.updateDashboard();
+
+        double centerX = SmartDashboard.getNumber("PITracker/centerX");
+        SmartDashboard.putNumber("RepeatedCenterX", centerX);
     }
 
     /**
