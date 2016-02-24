@@ -98,7 +98,9 @@ public class DriveTrain extends Subsystem {
     /**
      * @return average of leftDistance and rightDistance
      */
-    public double getDistance() { return (Robot.driveTrain.getLeftDistance()+Robot.driveTrain.getRightDistance()/2);}
+    public double getDistance() {
+        return (getLeftDistance()+getRightDistance())/2;
+    }
 
     public void sendAmpDraw() {
         SmartDashboard.putNumber("Current Draw/LeftFrontMotor", Robot.powerDistributionPanel.getCurrent(RobotMap.Drive.PDP_LEFT_MOTOR_FRONT));

@@ -1,18 +1,14 @@
 package org.usfirst.frc.team5687.robot.commands;
 
-import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team5687.robot.OI;
-import org.usfirst.frc.team5687.robot.Robot;
-import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
+import static org.usfirst.frc.team5687.robot.Robot.driveTrain;
+import static org.usfirst.frc.team5687.robot.Robot.imu;
 
 import java.util.Date;
-
-import static org.usfirst.frc.team5687.robot.Robot.imu;
 
 /**
  * Autonomous command to run the drivetrain.
@@ -21,59 +17,58 @@ import static org.usfirst.frc.team5687.robot.Robot.imu;
  */
 
 public class AutoDrive extends Command implements PIDOutput{
-    DriveTrain driveTrain = Robot.driveTrain;
-    AHRS imu = Robot.imu;
-    PIDController turnController = AutoAlign.turnController;
-    OI oi = Robot.oi;
-    private long end = 0;
+    PIDController turnController = null;
+
+    private long endTime = 0;
     private int timeToDrive = 0;
     private double inchesToDrive = 0;
-    private double rightSpeed = 0;
-    private double leftSpeed = 0;
+    private double speed = 0;
     private double inchesDriven = 0;
+    private double inchesAtStart = 0;
     private boolean driveByTime;
 
     private static final double kP = 0.3;
     private static final double kI = 0.05;
     private static final double kD = 0.1;
-    private static final double kF = 0.1;//Q: What is this for?
-    private static final double rotationDeadband = 0.01;
-    private static final double kToleranceDegrees = 2.0f;
-    private double rotateToAngleRate = 0; //Q: how does the PIDcontroller object know to use this variable?
+    private static final double kF = 0.0;
+    private static final double kToleranceDegrees = 0.0f;
+    private double rotateToAngleRate = 0;
     private double targetAngle = 0;
-    private double currentAngle = 0;
 
-    //Drive based on time
-    public AutoDrive(double speed, int timeToDrive) {
+    /**
+     * Drive at a specified speed for a time specified in milliseconds.
+     */
+    public AutoDrive(double speed, int millisToDrive) {
         requires(driveTrain);
-        this.leftSpeed = speed;
-        this.rightSpeed = speed;
-        this.timeToDrive = timeToDrive;
+        this.speed = speed;
+        this.timeToDrive = millisToDrive;
         this.driveByTime = true;
-
-        DriverStation.reportError("Driving by Time",false);
     }
 
-    //Drive based on distance
+    /**
+     * Drive at a specified speed for a distance specified in inches.
+     */
     public AutoDrive(double speed, double inchesToDrive) {
         requires(driveTrain);
-        this.leftSpeed = speed;
-        this.rightSpeed = speed;
+        this.speed = speed;
         this.inchesToDrive = inchesToDrive;
         this.driveByTime = false;
-
-        DriverStation.reportError("Driving by Distance",false);
     }
 
     @Override
     protected void initialize() {
-        DriverStation.reportError(String.format("Accelerating to %1$f\n", rightSpeed), false);
-        end = (new Date()).getTime() + timeToDrive;
+        if (driveByTime) {
+            DriverStation.reportError(String.format("Driving at %1$f for %2$i milliseconds.\n", speed, timeToDrive), false);
+            endTime = (new Date()).getTime() + timeToDrive;
+        } else {
+            DriverStation.reportError(String.format("Driving at %1$f for %2$f inches.\n", speed, timeToDrive), false);
+            driveTrain.resetDriveEncoders();
+        }
+        inchesAtStart = driveTrain.getRightDistance();
         targetAngle = imu.getYaw();
-        driveTrain.resetDriveEncoders();
         turnController = new PIDController(kP, kI, kD, kF, imu, this);
-        turnController.setInputRange(-0.1f, 0.1f);
-        turnController.setOutputRange(-0.5, 0.5);
+        turnController.setInputRange(-180f, 180f);
+        turnController.setOutputRange(-0.1, 0.1);
         turnController.setAbsoluteTolerance(kToleranceDegrees);
         turnController.setContinuous(true);
         turnController.setSetpoint(targetAngle);
@@ -82,32 +77,28 @@ public class AutoDrive extends Command implements PIDOutput{
 
     @Override
     protected void execute() {
-/**If the speed is faster than itself plus the PIDoutput speed, make it go the PIDoutput speed
- * If the speed is slower than itself minus the PIDoutput speed, go the PIDoutput speed
- */
-
-        leftSpeed = Math.min(leftSpeed + rotateToAngleRate, rotateToAngleRate);
-        leftSpeed = Math.max(leftSpeed - rotateToAngleRate, rotateToAngleRate);
-        rightSpeed = Math.min(rightSpeed + rotateToAngleRate, rotateToAngleRate);
-        rightSpeed = Math.max(rightSpeed + rotateToAngleRate, rotateToAngleRate);
-
-
-        driveTrain.tankDrive(leftSpeed, rightSpeed);
-
+        int directionFactor = driveByTime || (inchesToDrive>=0) ? 1 : -1;
+        driveTrain.tankDrive(directionFactor * speed + rotateToAngleRate, directionFactor * speed - rotateToAngleRate);
     }
 
     @Override
     protected boolean isFinished() {
-        if (!driveByTime) {
-            inchesDriven = driveTrain.getRightDistance();
-            return Math.abs(inchesDriven)>=Math.abs(inchesToDrive);
-        }
-
-        else if(driveByTime) {
+        if (driveByTime) {
             long now = (new Date()).getTime();
-            return now > end;
+            return now > endTime;
+        } else if (inchesToDrive<0){
+            // Start at 100...
+            // Get -10...
+            // Move to 95
+            // Inches driven should be -5
+            inchesDriven = driveTrain.getRightDistance() - inchesAtStart;
+            return inchesDriven <= inchesToDrive;
+        } else if (inchesToDrive>0) {
+            inchesDriven = driveTrain.getRightDistance() - inchesAtStart;
+            return  inchesDriven >= inchesToDrive;
+        } else {
+            return true;
         }
-    return true;
     }
 
     @Override
@@ -124,7 +115,6 @@ public class AutoDrive extends Command implements PIDOutput{
     public void pidWrite(double output) {
         synchronized (this) {
             SmartDashboard.putNumber("AutoAlign/PID Output", output);
-            DriverStation.reportError("AutoAlign/PID Output " + output, false);
             rotateToAngleRate = output;
         }
     }
