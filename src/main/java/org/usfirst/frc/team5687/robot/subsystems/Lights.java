@@ -33,6 +33,11 @@ public class Lights extends Subsystem {
         flashlight.set(false);
     }
 
+    public void toggleFlashlight() {
+        boolean state = flashlight.get();
+        flashlight.set(!state);
+    }
+
     public void toggleRingLight() {
         boolean state = ringLight.get();
         ringLight.set(!state);
