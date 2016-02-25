@@ -188,6 +188,11 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        sendIMUData();
+        driveTrain.sendAmpDraw();
+        intake.updateDashboard();
+        arms.updateDashboard();
+
     }
 
     public void teleopInit() {
@@ -196,13 +201,13 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
+        driveTrain.setSafeMode(true);
     }
 
     /**
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-        driveTrain.setSafeMode(true);
         sendIMUData();
         driveTrain.sendAmpDraw();
         Scheduler.getInstance().run();
