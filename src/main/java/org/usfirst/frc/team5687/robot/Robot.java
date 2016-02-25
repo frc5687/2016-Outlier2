@@ -154,10 +154,10 @@ public class Robot extends IterativeRobot {
         autoChooser.addObject("Chase Target", new AutoChaseTarget());
         autoChooser.addObject("Left 90", new AutoAlign(-90));
         autoChooser.addObject("Right 90", new AutoAlign(90));
-        autoChooser.addObject("Drive 12", new AutoDrive(-.4, 12f));
-        autoChooser.addObject("Drive 24", new AutoDrive(-.4, 24f));
-        autoChooser.addObject("Drive 48", new AutoDrive(-.4, 48f));
-        autoChooser.addObject("Drive 96", new AutoDrive(-.4, 96f));
+        autoChooser.addObject("Drive 12", new AutoDrive(0.4, 12f));
+        autoChooser.addObject("Drive 24", new AutoDrive(0.4, 24f));
+        autoChooser.addObject("Drive 48", new AutoDrive(0.4, 48f));
+        autoChooser.addObject("Drive 96", new AutoDrive(0.4, 96f));
         SmartDashboard.putData("Autonomous mode", autoChooser);
 
 
@@ -189,6 +189,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousInit() {
         // schedule the autonomous command (example)
+        driveTrain.setSafeMode(false);
         autonomousCommand = (Command) autoChooser.getSelected();
         if (autonomousCommand!=null) {
             autonomousCommand.start();
@@ -200,6 +201,11 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        sendIMUData();
+        driveTrain.sendAmpDraw();
+        intake.updateDashboard();
+        arms.updateDashboard();
+
     }
 
     public void teleopInit() {
@@ -208,6 +214,7 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
+        driveTrain.setSafeMode(true);
     }
 
     /**
@@ -252,41 +259,41 @@ public class Robot extends IterativeRobot {
         }
 
         // Display 6-axis Processed Angle Data
-        SmartDashboard.putBoolean(  "IMU_Connected",        imu.isConnected());
-        SmartDashboard.putBoolean(  "IMU_IsCalibrating",    imu.isCalibrating());
-        SmartDashboard.putNumber(   "IMU_Yaw",              imu.getYaw());
-        SmartDashboard.putNumber(   "IMU_Pitch",            imu.getPitch());
-        SmartDashboard.putNumber(   "IMU_Roll",             imu.getRoll());
+        SmartDashboard.putBoolean(  "IMU/Connected",        imu.isConnected());
+        SmartDashboard.putBoolean(  "IMU/IsCalibrating",    imu.isCalibrating());
+        SmartDashboard.putNumber(   "IMU/Yaw",              imu.getYaw());
+        SmartDashboard.putNumber(   "IMU/Pitch",            imu.getPitch());
+        SmartDashboard.putNumber(   "IMU/Roll",             imu.getRoll());
 
         // Display tilt-corrected, Magnetometer-based heading (requires magnetometer calibration to be useful)
-        SmartDashboard.putNumber(   "IMU_CompassHeading",   imu.getCompassHeading());
+        SmartDashboard.putNumber(   "IMU/CompassHeading",   imu.getCompassHeading());
 
         // Display 9-axis Heading (requires magnetometer calibration to be useful)
-        SmartDashboard.putNumber(   "IMU_FusedHeading",     imu.getFusedHeading());
+        SmartDashboard.putNumber(   "IMU/FusedHeading",     imu.getFusedHeading());
 
 
         // These functions are compatible w/the WPI Gyro Class, providing a simple
         // path for upgrading from the Kit-of-Parts gyro to the navx MXP
-        SmartDashboard.putNumber(   "IMU_TotalYaw",         imu.getAngle());
-        SmartDashboard.putNumber(   "IMU_YawRateDPS",       imu.getRate());
+        SmartDashboard.putNumber(   "IMU/TotalYaw",         imu.getAngle());
+        SmartDashboard.putNumber(   "IMU/YawRateDPS",       imu.getRate());
 
         // Display Processed Acceleration Data (Linear Acceleration, Motion Detect)
-        SmartDashboard.putNumber(   "IMU_Accel_X",          imu.getWorldLinearAccelX());
-        SmartDashboard.putNumber(   "IMU_Accel_Y",          imu.getWorldLinearAccelY());
-        SmartDashboard.putBoolean(  "IMU_IsMoving",         imu.isMoving());
-        SmartDashboard.putBoolean(  "IMU_IsRotating",       imu.isRotating());
+        SmartDashboard.putNumber(   "IMU/Accel_X",          imu.getWorldLinearAccelX());
+        SmartDashboard.putNumber(   "IMU/Accel_Y",          imu.getWorldLinearAccelY());
+        SmartDashboard.putBoolean(  "IMU/IsMoving",         imu.isMoving());
+        SmartDashboard.putBoolean(  "IMU/IsRotating",       imu.isRotating());
 
         // Display estimates of velocity/displacement.  Note that these values are not expected to be accurate enough
         // for estimating robot position on a FIRST FRC Robotics Field, due to accelerometer noise and the compounding
         // of these errors due to single (velocity) integration and especially double (displacement) integration.
-        SmartDashboard.putNumber(   "Velocity_X",           imu.getVelocityX());
-        SmartDashboard.putNumber(   "Velocity_Y",           imu.getVelocityY());
-        SmartDashboard.putNumber(   "Displacement_X",       imu.getDisplacementX());
-        SmartDashboard.putNumber(   "Displacement_Y",       imu.getDisplacementY());
+        SmartDashboard.putNumber(   "IMU/Velocity_X",           imu.getVelocityX());
+        SmartDashboard.putNumber(   "IMU/Velocity_Y",           imu.getVelocityY());
+        SmartDashboard.putNumber(   "IMU/Displacement_X",       imu.getDisplacementX());
+        SmartDashboard.putNumber(   "IMU/Displacement_Y",       imu.getDisplacementY());
 
         // Connectivity Debugging Support
-        SmartDashboard.putNumber(   "IMU_Byte_Count",       imu.getByteCount());
-        SmartDashboard.putNumber(   "IMU_Update_Count",     imu.getUpdateCount());
+        SmartDashboard.putNumber(   "IMU/Byte_Count",       imu.getByteCount());
+        SmartDashboard.putNumber(   "IMU/Update_Count",     imu.getUpdateCount());
     }
 
     public String getSelectedDefense() {
