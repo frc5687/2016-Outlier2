@@ -42,4 +42,12 @@ public class Lights extends Subsystem {
         boolean state = ringLight.get();
         ringLight.set(!state);
     }
+
+    public void turnRingLightOn() {
+        ringLight.set(true);
+    }
+
+    public void turnRingLightOff() {
+        ringLight.set(false);
+    }
 }

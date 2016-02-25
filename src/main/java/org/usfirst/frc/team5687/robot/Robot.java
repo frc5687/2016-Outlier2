@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.USBCamera;
@@ -85,7 +86,13 @@ public class Robot extends IterativeRobot {
     USBCamera intakeCamera = null;
 
     String camera = RobotMap.Cameras.hornsEnd;
+    public static NetworkTable pitracker = null;
+    public static NetworkTable pitrackerInputs = null;
 
+    public Robot() {
+        pitracker = NetworkTable.getTable("PITracker/tracking");
+        pitrackerInputs = NetworkTable.getTable("PITracker/inputs");
+    }
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
