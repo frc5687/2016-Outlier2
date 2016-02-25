@@ -37,6 +37,9 @@ public class AutoDrive extends Command implements PIDOutput{
 
     /**
      * Drive at a specified speed for a time specified in milliseconds.
+     *
+     * @param speed Speed to drive (range -1 to +1
+     * @param millisToDrive Milliseconds to drive
      */
     public AutoDrive(double speed, int millisToDrive) {
         requires(driveTrain);
@@ -47,6 +50,9 @@ public class AutoDrive extends Command implements PIDOutput{
 
     /**
      * Drive at a specified speed for a distance specified in inches.
+     *
+     * @param speed Speed to drive (range 0 to +1
+     * @param inchesToDrive Inches to drive (negative for reverse)
      */
     public AutoDrive(double speed, double inchesToDrive) {
         requires(driveTrain);
@@ -58,10 +64,10 @@ public class AutoDrive extends Command implements PIDOutput{
     @Override
     protected void initialize() {
         if (driveByTime) {
-            DriverStation.reportError(String.format("Driving at %1$f for %2$i milliseconds.\n", speed, timeToDrive), false);
+            DriverStation.reportError("Driving at " + speed + " for " + timeToDrive + " milliseconds.\n", false);
             endTime = (new Date()).getTime() + timeToDrive;
         } else {
-            DriverStation.reportError(String.format("Driving at %1$f for %2$f inches.\n", speed, timeToDrive), false);
+            DriverStation.reportError("Driving at " + speed + " for " + inchesToDrive + " inches.\n", false);
             driveTrain.resetDriveEncoders();
         }
         inchesAtStart = driveTrain.getRightDistance();
@@ -87,10 +93,6 @@ public class AutoDrive extends Command implements PIDOutput{
             long now = (new Date()).getTime();
             return now > endTime;
         } else if (inchesToDrive<0){
-            // Start at 100...
-            // Get -10...
-            // Move to 95
-            // Inches driven should be -5
             inchesDriven = driveTrain.getRightDistance() - inchesAtStart;
             return inchesDriven <= inchesToDrive;
         } else if (inchesToDrive>0) {
@@ -103,7 +105,9 @@ public class AutoDrive extends Command implements PIDOutput{
 
     @Override
     protected void end() {
+        DriverStation.reportError("AutoDrive done.\n", false);
         driveTrain.tankDrive(0,0);
+
     }
 
     @Override

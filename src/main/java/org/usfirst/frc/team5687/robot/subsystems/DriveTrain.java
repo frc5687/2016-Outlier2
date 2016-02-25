@@ -132,19 +132,23 @@ public class DriveTrain extends Subsystem {
         drive.tankDrive(leftSpeed, rightSpeed, false);
 
 
-        SmartDashboard.putNumber("Right distance", getRightDistance());
-        SmartDashboard.putNumber("Left distance", getLeftDistance());
+        SmartDashboard.putNumber("drive/Right distance", getRightDistance());
+        SmartDashboard.putNumber("drive/Left distance", getLeftDistance());
 
-        SmartDashboard.putNumber("Right ticks", getRightTicks());
-        SmartDashboard.putNumber("Left ticks", getLeftTicks());
+        SmartDashboard.putNumber("drive/Right ticks", getRightTicks());
+        SmartDashboard.putNumber("drive/Left ticks", getLeftTicks());
 
-        SmartDashboard.putNumber("Right rate", getRightRate());
-        SmartDashboard.putNumber("Left rate", getLeftRate());
+        SmartDashboard.putNumber("drive/Right rate", getRightRate());
+        SmartDashboard.putNumber("drive/Left rate", getLeftRate());
 
-        SmartDashboard.putNumber("Right speed", getRightSpeed());
-        SmartDashboard.putNumber("Left speed", getLeftSpeed());
+        SmartDashboard.putNumber("drive/Right speed", getRightSpeed());
+        SmartDashboard.putNumber("drive/Left speed", getLeftSpeed());
 
-        SmartDashboard.putNumber("Right RPS" , getRightRPS());
-        SmartDashboard.putNumber("Left RPS" , getLeftRPS());
+        SmartDashboard.putNumber("drive/Right RPS" , getRightRPS());
+        SmartDashboard.putNumber("drive/Left RPS" , getLeftRPS());
+    }
+
+    public void setSafeMode(boolean enabled) {
+        drive.setSafetyEnabled(enabled);
     }
 }
