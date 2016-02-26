@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5687.robot.commands;
 
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5687.robot.OI;
 import org.usfirst.frc.team5687.robot.Robot;
@@ -12,6 +13,16 @@ import org.usfirst.frc.team5687.robot.subsystems.Arms;
 public class RunArmsManually extends Command {
     Arms arms = Robot.arms;
     OI oi = Robot.oi;
+    private VictorSP armsMotor;
+    double speed;
+    double time;
+    double direction;
+
+    public RunArmsManually(double speed, double time, double direction){
+        this.speed = speed;
+        this.time = time;
+        this.direction = direction;
+    }
 
     public RunArmsManually() {
         requires(arms);
