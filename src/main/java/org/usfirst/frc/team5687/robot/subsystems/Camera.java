@@ -2,13 +2,15 @@ package org.usfirst.frc.team5687.robot.subsystems;
 
 import com.ni.vision.NIVision;
 import com.ni.vision.NIVision.Image;
-import edu.wpi.first.wpilibj.CameraServer;
+import com.sun.webkit.ContextMenu;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.vision.USBCamera;
 import org.usfirst.frc.team5687.robot.RobotMap;
 import org.usfirst.frc.team5687.robot.commands.StreamCamera;
 import org.usfirst.frc.team5687.robot.utils.CustomCameraServer;
+
+import static org.usfirst.frc.team5687.robot.Robot.pitracker;
 
 /**
  * Created by Ben Bernard on 2/25/2016.
@@ -19,7 +21,7 @@ public class Camera extends Subsystem {
     private static final int kSize320x240 = 1;
     private static final int kSize160x120 = 2;
 
-    CameraServer cameraServer;
+    CustomCameraServer cameraServer;
     USBCamera hornsCamera;
     USBCamera intakeCamera;
     USBCamera activeCamera;
@@ -31,16 +33,17 @@ public class Camera extends Subsystem {
 
     private int trackingX = 0;
     private int trackingY = 0;
-    private boolean track = false;
+    private boolean sighted = false;
+    private boolean track = true;
+
 
     public Camera() {
         frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
 
     }
 
-    public synchronized void setTrackingX(int x,  int y) {
-        this.trackingX = x;
-        this.trackingY = y;
+    public synchronized void setTrack(boolean on) {
+        track = on;
     }
 
 
@@ -53,19 +56,34 @@ public class Camera extends Subsystem {
         DriverStation.reportError("exec", false);
         initialize();
         getImage();
-        alterImage();
+        if (track) {
+            getTracking();
+            alterImage();
+        }
         cameraServer.setImage(frame);
     }
 
-    public void getImage() {
-        m_size = 1; //cameraServer.getSize();
-        m_fps = 25; //cameraServer.getFPS();
 
-        switch(cameraName) {
-            case RobotMap.Cameras.hornsEnd:
-                hornsCamera.getImage(frame);
-            case RobotMap.Cameras.intakeEnd:
-                intakeCamera.getImage(frame);
+    public void getTracking() {
+        trackingX =  0;
+        trackingY = 0;
+        sighted = pitracker.getBoolean("TargetSighted", false);
+        double width = pitracker.getNumber("width", 0);
+        double centerX = pitracker.getNumber("centerX", 0);
+        double targetX = -106; // pitracker.getNumber("inputs/TARGET_CENTER_X", 0);
+        double targetWidth = 148; //pitracker.getNumber("inputs/TARGET_WIDTH", 0);
+
+        trackingX = (int)(centerX - targetX);
+        trackingY = (int)(width - targetWidth) * 10;
+
+    }
+
+    public void getImage() {
+        m_size = cameraServer.getSize();
+        m_fps = cameraServer.getFPS();
+
+        if (activeCamera!=null) {
+            activeCamera.getImage(frame);
         }
     }
 
@@ -106,27 +124,42 @@ public class Camera extends Subsystem {
                 return;
         }
 
+        int tX;
+        int tY;
+        boolean tS = false;
+        synchronized(this) {
+            tX = cX + trackingX;
+            tY = cY + trackingY;
+            tS = sighted;
+        }
+
+        int targetColor = 255;
 
         NIVision.Rect targetRect = new NIVision.Rect(cY - (targetHeight / 2), cX - (targetWidth / 2), targetWidth, targetHeight);
 
-        // Draw the target circle...
-        NIVision.imaqDrawShapeOnImage(frame,frame, targetRect, NIVision.DrawMode.DRAW_VALUE, NIVision.ShapeMode.SHAPE_OVAL, 255);
-
-        int tX;
-        int tY;
-
-        synchronized(this) {
-            trackingX = 100;
-            trackingY = 100;
-            tX = cX + trackingX;
-            tY = cY + trackingY;
+        // SHow the target as green if the tracking circle is inside it!
+        if (tX>targetRect.left && tY>targetRect.top
+                && tX + trackingSize < targetRect.left + targetRect.width
+                && tY + trackingSize < targetRect.top + targetRect.height) {
+            targetColor = 0x00FF00;
         }
+        // Draw the target circle...
+        NIVision.imaqDrawShapeOnImage(frame,frame, targetRect, NIVision.DrawMode.DRAW_VALUE, NIVision.ShapeMode.SHAPE_OVAL, targetColor);
 
-        NIVision.Rect trackingRect = new NIVision.Rect(tY, tX, trackingSize, trackingSize);
 
-        DriverStation.reportError("Drawing oval at " + tX + "," + tY + " width " + trackingSize + " height " + trackingSize, false);
-        // Draw the tracking circle...
-        // NIVision.imaqDrawShapeOnImage(frame, frame, trackingRect, NIVision.DrawMode.DRAW_VALUE, NIVision.ShapeMode.SHAPE_OVAL, 0x00FF00);
+        if (tS) {
+            NIVision.Rect trackingRect = new NIVision.Rect(tY, tX, trackingSize, trackingSize);
+            if (trackingRect.left < 0) { trackingRect.left = 0; }
+            if (trackingRect.top < 0) { trackingRect.top = 0; }
+
+            if (trackingRect.top > (cY * 2) - trackingSize) { trackingRect.top = (cY * 2) - trackingSize; }
+            if (trackingRect.left > (cX * 2) - trackingSize) { trackingRect.left = (cX * 2) - trackingSize; }
+
+            DriverStation.reportError("Tracking rect: " + trackingRect.top + "," + trackingRect.left + "," + trackingRect.height + "," + trackingRect.width, false);
+
+            // Draw the tracking circle...
+            NIVision.imaqDrawShapeOnImage(frame, frame, trackingRect, NIVision.DrawMode.DRAW_VALUE, NIVision.ShapeMode.SHAPE_OVAL, 0x00FF00);
+        }
     }
 
     /**
@@ -142,6 +175,7 @@ public class Camera extends Subsystem {
             activeCamera = hornsCamera;
         }
         startCapture();
+        // cameraServer.startAutomaticCapture(activeCamera);
         DriverStation.reportError("Camera now streaming: "+ cameraName, false);
     }
 
@@ -163,7 +197,7 @@ public class Camera extends Subsystem {
             DriverStation.reportError("Initializing cameraserver!", false);
             hornsCamera = new USBCamera(RobotMap.Cameras.hornsEnd);
             intakeCamera = new USBCamera(RobotMap.Cameras.intakeEnd);
-            cameraServer = CameraServer.getInstance();
+            cameraServer = CustomCameraServer.getInstance();
             cameraServer.setQuality(50);
             switchCameras(1);
         }

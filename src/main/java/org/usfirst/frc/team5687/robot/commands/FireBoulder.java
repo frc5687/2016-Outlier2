@@ -3,6 +3,7 @@ package org.usfirst.frc.team5687.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5687.robot.Constants;
 
+import static org.usfirst.frc.team5687.robot.Robot.camera;
 import static org.usfirst.frc.team5687.robot.Robot.intake;
 
 /**
@@ -32,6 +33,7 @@ public class FireBoulder extends Command {
     @Override
     protected void end() {
         intake.stop();
+        camera.setTrack(false);
     }
 
     @Override
