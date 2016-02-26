@@ -2,6 +2,7 @@ package org.usfirst.frc.team5687.robot.commands;
 
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team5687.robot.Constants;
 import org.usfirst.frc.team5687.robot.OI;
 import org.usfirst.frc.team5687.robot.Robot;
 import org.usfirst.frc.team5687.robot.subsystems.Arms;
@@ -17,11 +18,17 @@ public class RunArmsManually extends Command {
     double speed;
     double time;
     double direction;
+    public boolean isDown;
 
-    public RunArmsManually(double speed, double time, double direction){
+    public RunArmsManually(double speed, double time, boolean isDown){
         this.speed = speed;
         this.time = time;
-        this.direction = direction;
+        armsMotor.setInverted(Constants.Cheval.ARM_MOTOR_INVERTED);
+    }
+
+    public RunArmsManually(double speed, double time){
+        this.speed = speed;
+        this.time = time;
     }
 
     public RunArmsManually() {

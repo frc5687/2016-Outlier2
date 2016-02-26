@@ -129,6 +129,11 @@ public class Constants {
         public static final double SHOOTER_SPEED = 1.0;
     }
 
+    public class Cheval{
+        public static final boolean ARM_MOTOR_INVERTED = true;
+    }
+
+
     public class Encoders {
         public class Defaults {
             public static final boolean REVERSED = false;
