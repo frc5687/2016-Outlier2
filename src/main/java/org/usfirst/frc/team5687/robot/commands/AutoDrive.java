@@ -54,11 +54,10 @@ public class AutoDrive extends Command {
         DriverStation.reportError("Driving by Distance", false);
     }
 
-    public AutoDrive(double speed, double inchesToDrive, boolean ramp) {
+    public AutoDrive(double speed, boolean ramp) {
         this.leftSpeed = speed;
         this.rightSpeed = speed;
         this.ramp = ramp;
-        this.inchesToDrive = inchesToDrive;
         isOnRamp = true;
     }
 

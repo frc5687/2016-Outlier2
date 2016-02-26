@@ -16,8 +16,7 @@ import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
 public class AutoTraverseCheval extends CommandGroup {
     public AutoTraverseCheval() {
         addSequential(new Arms(x, y));//TODO: add in set time and speed to raise arms.    Raise arms by running motor at a set time and speed to a desired distance.
-        addSequential(new AutoDrive(.5, x)); //driveForward//TODO: add how far forward
-        addSequential(new AutoDrive(.5, x, true));//Stop moving when at correct angle //TODO: add in inchesToDrive
+        addSequential(new AutoDrive(.5, true));//Drive forward and stop moving when at correct angle
         addSequential(new Arms(x, -y));//TODO: add in set time and speed to lower arms. While stopped, lower arms.
         addSequential(new AutoDrive(.5, x));//TODO: add in double distance to drive until the center point of the cheval
         addSequential(new Arms(x, y));//Is same as beginning
