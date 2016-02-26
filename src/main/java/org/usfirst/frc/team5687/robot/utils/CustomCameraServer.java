@@ -27,6 +27,7 @@ import com.ni.vision.NIVision;
 import com.ni.vision.NIVision.Image;
 import com.ni.vision.NIVision.RawData;
 import com.ni.vision.VisionException;
+import com.ni.vision.NIVision.Rect;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
@@ -42,9 +43,9 @@ public class CustomCameraServer {
     private static final int kSize320x240 = 1;
     private static final int kSize160x120 = 2;
     private static final int kHardwareCompression = -1;
-    private static final String kDefaultCameraName = "cam1";
     private static final int kMaxImageSize = 200000;
     private static CustomCameraServer server;
+
 
     public static CustomCameraServer getInstance() {
         if (server == null) {
@@ -55,11 +56,11 @@ public class CustomCameraServer {
 
     private Thread serverThread;
     private int m_quality;
-    private boolean m_autoCaptureStarted;
+    private int m_fps;
     private boolean m_hwClient = true;
-    private USBCamera m_camera;
     private CameraData m_imageData;
     private Deque<ByteBuffer> m_imageDataPool;
+    private int m_size;
 
     private class CameraData {
         RawData data;
@@ -73,7 +74,6 @@ public class CustomCameraServer {
 
     private CustomCameraServer() {
         m_quality = 50;
-        m_camera = null;
         m_imageData = null;
         m_imageDataPool = new ArrayDeque<>(3);
         for (int i = 0; i < 3; i++) {
@@ -111,7 +111,6 @@ public class CustomCameraServer {
      * 640x480 video, this method could take between 40 and 50 milliseconds to
      * complete.
      *
-     * This shouldn't be called if {@link #startAutomaticCapture} is called.
      *
      * @param image The IMAQ image to show on the dashboard
      */
@@ -147,107 +146,6 @@ public class CustomCameraServer {
         setImageData(data, index);
     }
 
-    /**
-     * Start automatically capturing images to send to the dashboard. You should
-     * call this method to just see a camera feed on the dashboard without doing
-     * any vision processing on the roboRIO. {@link #setImage} shouldn't be called
-     * after this is called. This overload calles
-     * {@link #startAutomaticCapture(String)} with the default camera name
-     */
-    public void startAutomaticCapture() {
-        startAutomaticCapture(USBCamera.kDefaultCameraName);
-    }
-
-    /**
-     * Start automatically capturing images to send to the dashboard.
-     *
-     * You should call this method to just see a camera feed on the dashboard
-     * without doing any vision processing on the roboRIO. {@link #setImage}
-     * shouldn't be called after this is called.
-     *
-     * @param cameraName The name of the camera interface (e.g. "cam1")
-     */
-    public void startAutomaticCapture(String cameraName) {
-        try {
-            USBCamera camera = new USBCamera(cameraName);
-            camera.openCamera();
-            startAutomaticCapture(camera);
-        } catch (VisionException ex) {
-            DriverStation.reportError(
-                    "Error when starting the camera: " + cameraName + " " + ex.getMessage(), true);
-        }
-    }
-
-    public synchronized void startAutomaticCapture(USBCamera camera) {
-        if (camera==null) {
-            return;
-        }
-
-        if (m_autoCaptureStarted) {
-            m_camera.stopCapture();
-            m_camera = camera;
-            m_camera.startCapture();
-            return;
-        }
-        m_autoCaptureStarted = true;
-        m_camera = camera;
-
-        m_camera.startCapture();
-
-        Thread captureThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                capture();
-            }
-        });
-        captureThread.setName("Camera Capture Thread");
-        captureThread.start();
-    }
-
-    protected void capture() {
-        Image frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
-        while (true) {
-            boolean hwClient;
-            ByteBuffer dataBuffer = null;
-            synchronized (this) {
-                hwClient = m_hwClient;
-                if (hwClient) {
-                    dataBuffer = m_imageDataPool.removeLast();
-                }
-            }
-
-            try {
-                if (hwClient && dataBuffer != null) {
-                    // Reset the image buffer limit
-                    dataBuffer.limit(dataBuffer.capacity() - 1);
-                    m_camera.getImageData(dataBuffer);
-                    setImageData(new RawData(dataBuffer), 0);
-                } else {
-                    m_camera.getImage(frame);
-                    setImage(frame);
-                }
-            } catch (VisionException ex) {
-                DriverStation.reportError("Error when getting image from the camera: " + ex.getMessage(),
-                        true);
-                if (dataBuffer != null) {
-                    synchronized (this) {
-                        m_imageDataPool.addLast(dataBuffer);
-                        Timer.delay(.1);
-                    }
-                }
-            }
-        }
-    }
-
-
-
-    /**
-     * check if auto capture is started
-     *
-     */
-    public synchronized boolean isAutoCaptureStarted() {
-        return m_autoCaptureStarted;
-    }
 
     /**
      * Sets the size of the image to use. Use the public kSize constants to set
@@ -257,19 +155,19 @@ public class CustomCameraServer {
      * @param size The size to use
      */
     public synchronized void setSize(int size) {
-        if (m_camera == null)
-            return;
-        switch (size) {
-            case kSize640x480:
-                m_camera.setSize(640, 480);
-                break;
-            case kSize320x240:
-                m_camera.setSize(320, 240);
-                break;
-            case kSize160x120:
-                m_camera.setSize(160, 120);
-                break;
-        }
+        m_size = size;
+    }
+
+    public synchronized int getSize() {
+        return m_size;
+    }
+
+    public synchronized void setFPS(int fps) {
+        m_fps = fps;
+    }
+
+    public synchronized int getFPS() {
+        return m_fps;
     }
 
     /**
@@ -325,14 +223,7 @@ public class CustomCameraServer {
 
                 // Wait for the camera
                 synchronized (this) {
-                    System.out.println("Camera not yet ready, awaiting image");
-                    if (m_camera == null)
-                        wait();
-                    m_hwClient = compression == kHardwareCompression;
-                    if (!m_hwClient)
-                        setQuality(100 - compression);
-                    else if (m_camera != null)
-                        m_camera.setFPS(fps);
+                    setFPS(fps);
                     setSize(size);
                 }
 

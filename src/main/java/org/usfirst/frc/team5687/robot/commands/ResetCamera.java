@@ -21,7 +21,7 @@ public class ResetCamera extends Command{
 
     @Override
     protected void execute() {
-        robot.initializeCameras();
+        robot.camera.reset();
         executed = true;
     }
 

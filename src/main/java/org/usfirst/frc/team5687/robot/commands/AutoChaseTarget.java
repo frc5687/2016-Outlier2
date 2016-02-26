@@ -16,8 +16,8 @@ import static org.usfirst.frc.team5687.robot.Robot.lights;
 public class AutoChaseTarget extends Command {
 
     // Keeping these constants here rather than in Constants because they ar peripheral to the robot's main function.
-    private static final double deadbandWidth = 10;
-    private static final double deadbandX = 10;
+    private static final double deadbandWidth = 50;
+    private static final double deadbandX = 20;
 
     private static final double baseSpeed = 0.6;
     private static final double twist = .2;
@@ -53,9 +53,9 @@ public class AutoChaseTarget extends Command {
 
         if (sighted) {
             if (centerX > targetX + deadbandX) {
-                offset = -1 * twist;
-            } else if (centerX < targetX - deadbandX) {
                 offset = +1 * twist;
+            } else if (centerX < targetX - deadbandX) {
+                offset = -1 * twist;
             } else {
                 offset = 0;
                 centered = true;

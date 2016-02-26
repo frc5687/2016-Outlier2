@@ -69,6 +69,8 @@ public class Robot extends IterativeRobot {
      */
     public static PowerDistributionPanel powerDistributionPanel;
 
+    public static Camera camera;
+
     /**
      * Provides static access to the singleton Robot instance
      */
@@ -80,12 +82,6 @@ public class Robot extends IterativeRobot {
     public SendableChooser defenseChooser;
     public SendableChooser positionChooser;
 
-    CustomCameraServer cameraServer;
-
-    USBCamera hornsCamera = null;
-    USBCamera intakeCamera = null;
-
-    String camera = RobotMap.Cameras.hornsEnd;
     public static NetworkTable pitracker = null;
     public static NetworkTable pitrackerInputs = null;
 
@@ -105,6 +101,8 @@ public class Robot extends IterativeRobot {
         arms = new Arms();
         climber = new Climber();
         lights = new Lights();
+        camera = new Camera();
+
         autoChooser = new SendableChooser();
         defenseChooser = new SendableChooser();
         positionChooser = new SendableChooser();
@@ -138,7 +136,6 @@ public class Robot extends IterativeRobot {
         defenseChooser.addObject("Rough Terrain","RoughTerrain");
         defenseChooser.addObject("Rampart","Rampart");
         SmartDashboard.putData("Defense to Cross", defenseChooser);
-        initializeCameras();
 
         positionChooser.addDefault("1 (Low Bar)","1");
         positionChooser.addObject("2","2");
@@ -161,10 +158,6 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData("Autonomous mode", autoChooser);
 
 
-        //Setup Camera Code
-        cameraServer = CustomCameraServer.getInstance();
-        cameraServer.setQuality(50);
-        cameraServer.startAutomaticCapture(hornsCamera);
     }
 
 	/**
@@ -173,6 +166,7 @@ public class Robot extends IterativeRobot {
      * the robot is disabled.
      */
     public void disabledInit() {
+        Scheduler.getInstance().add(camera.getCurrentCommand());
     }
 
     public void disabledPeriodic() {
@@ -235,20 +229,6 @@ public class Robot extends IterativeRobot {
         LiveWindow.run();
     }
 
-    /**
-     * This function will switch the camera currently streaming to the DriverStation
-     */
-    public void switchCameras() {
-        //cameraServer.stopAutomaticCapture();
-        if (oi.getDirection()==-1) {
-            camera = RobotMap.Cameras.intakeEnd;
-            cameraServer.startAutomaticCapture(intakeCamera);
-        } else {
-            camera = RobotMap.Cameras.hornsEnd;
-            cameraServer.startAutomaticCapture(hornsCamera);
-        }
-        DriverStation.reportError("Camera now streaming: "+camera,false);
-    }
 
 
     protected void sendIMUData() {
@@ -304,45 +284,4 @@ public class Robot extends IterativeRobot {
         return (String) positionChooser.getSelected();
     }
 
-
-
-    public void initializeCameras() {
-        if (hornsCamera!=null) {
-            hornsCamera.closeCamera();
-            hornsCamera = null;
-        }
-        if (intakeCamera!=null) {
-            intakeCamera.closeCamera();
-            intakeCamera = null;
-        }
-
-        try {
-            hornsCamera = new USBCamera(RobotMap.Cameras.hornsEnd);
-        } catch (Exception e) {
-            hornsCamera = null;
-        }
-
-        try {
-            intakeCamera = new USBCamera(RobotMap.Cameras.intakeEnd);
-        } catch (Exception e) {
-            intakeCamera = null;
-        }
-
-       if (cameraServer==null){
-        //Setup Camera Code
-            cameraServer = CustomCameraServer.getInstance();
-           cameraServer.setQuality(50);
-       }
-
-        if (camera.equals(RobotMap.Cameras.hornsEnd)) {
-            camera = RobotMap.Cameras.intakeEnd;
-            cameraServer.startAutomaticCapture(intakeCamera);
-        }else {
-            camera = RobotMap.Cameras.hornsEnd;
-            cameraServer.startAutomaticCapture(hornsCamera);
-        }
-
-
-
-    }
 }

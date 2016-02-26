@@ -2,10 +2,10 @@ package org.usfirst.frc.team5687.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team5687.robot.OI;
 
 import static org.usfirst.frc.team5687.robot.Robot.oi;
 import static org.usfirst.frc.team5687.robot.Robot.robot;
+import static org.usfirst.frc.team5687.robot.Robot.camera;
 
 /**
  * Command for reversing the drive's direction
@@ -24,7 +24,7 @@ public class ReverseDrive extends Command{
         oi.setDirection(direction);
 
         //disabling cameraSwitching for now
-        robot.switchCameras();
+        camera.switchCameras(direction);
 
         SmartDashboard.putString("Drive Facing", (oi.getDirection()==-1) ? "Horns" : "Intake");
     }
