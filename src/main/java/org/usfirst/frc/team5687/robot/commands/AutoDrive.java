@@ -21,7 +21,7 @@ public class AutoDrive extends Command {
     AHRS imu = Robot.imu;
     OI oi = Robot.oi;
     DriveTrain stopMoving;
-    private float desiredAngle = x; //TODO: Need to read the angle on the imu when the two front wheels of the robot are on the cheval's ramp
+    private float desiredAngle = 1/8; //TODO: Need to read the angle on the imu when the two front wheels of the robot are on the cheval's ramp
     private long end = 0;
     private int timeToDrive = 0;
     private double inchesToDrive = 0;
