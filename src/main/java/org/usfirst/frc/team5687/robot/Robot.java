@@ -157,7 +157,6 @@ public class Robot extends IterativeRobot {
         autoChooser.addObject("Drive 96", new AutoDrive(0.4, 96f));
         SmartDashboard.putData("Autonomous mode", autoChooser);
 
-
     }
 
 	/**
@@ -166,11 +165,11 @@ public class Robot extends IterativeRobot {
      * the robot is disabled.
      */
     public void disabledInit() {
-        Scheduler.getInstance().add(camera.getCurrentCommand());
     }
 
     public void disabledPeriodic() {
         Scheduler.getInstance().run();
+        camera.execute();
     }
 
     /**

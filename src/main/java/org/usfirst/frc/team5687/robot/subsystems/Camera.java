@@ -53,7 +53,6 @@ public class Camera extends Subsystem {
     }
 
     public void execute() {
-        DriverStation.reportError("exec", false);
         initialize();
         getImage();
         if (track) {
@@ -155,8 +154,6 @@ public class Camera extends Subsystem {
             if (trackingRect.top > (cY * 2) - trackingSize) { trackingRect.top = (cY * 2) - trackingSize; }
             if (trackingRect.left > (cX * 2) - trackingSize) { trackingRect.left = (cX * 2) - trackingSize; }
 
-            DriverStation.reportError("Tracking rect: " + trackingRect.top + "," + trackingRect.left + "," + trackingRect.height + "," + trackingRect.width, false);
-
             // Draw the tracking circle...
             NIVision.imaqDrawShapeOnImage(frame, frame, trackingRect, NIVision.DrawMode.DRAW_VALUE, NIVision.ShapeMode.SHAPE_OVAL, 0x00FF00);
         }
@@ -181,13 +178,13 @@ public class Camera extends Subsystem {
 
     private void stopCapture() {
         if (activeCamera!=null) {
-            // activeCamera.stopCapture();
+            activeCamera.stopCapture();
+            activeCamera = null;
         }
     }
 
     private void startCapture() {
         if (activeCamera!=null) {
-            DriverStation.reportError("Starting capture: "+ cameraName, false);
             activeCamera.startCapture();
         }
     }
