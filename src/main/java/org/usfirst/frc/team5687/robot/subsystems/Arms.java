@@ -16,11 +16,18 @@ import org.usfirst.frc.team5687.robot.utils.Helpers;
  */
 public class Arms extends Subsystem {
 
+    private int timeToRaise = 0; //TODO: add in timeToRaise.
+    private int speedToRaise = 0; //TODO: add in speedToRaise.
     private VictorSP armsMotor;
     private DigitalInput armsSensor;
     public Arms() {
         armsMotor = new VictorSP(RobotMap.Arms.ARMS_MOTOR);
         armsSensor = new DigitalInput(RobotMap.Arms.ARMS_HALL);
+    }
+
+    public Arms(int timeToRaise, int speedToRaise){
+        this.timeToRaise = timeToRaise;
+        this.speedToRaise = speedToRaise;
     }
 
     @Override
