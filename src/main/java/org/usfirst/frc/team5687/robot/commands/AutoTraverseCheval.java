@@ -18,7 +18,8 @@ public class AutoTraverseCheval extends CommandGroup {
 
     public AutoTraverseCheval(){
     addSequential(new AutoDrive(.5,x)); //driveForward//TODO: add how far forward
-    addSequential(new AutoDrive(onRamp))
+    addSequential(new AutoDrive(.5, x, true));//Stop moving when at correct angle //TODO: add in inchesToDrive
+    addSequential(new AutoDrive(0.5, centerChevalDistance)); //drive forward
 
 //isFinished() {isOnRamp method return true if on ramp}
 

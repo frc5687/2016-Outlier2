@@ -21,8 +21,7 @@ public class AutoDrive extends Command {
     AHRS imu = Robot.imu;
     OI oi = Robot.oi;
     DriveTrain stopMoving;
-    AutoDrive driveForward;
-    AutoDrive autoArmsLow;
+    private float desiredAngle = x; //TODO: Need to read the angle on the imu when the two front wheels of the robot are on the cheval's ramp
     private long end = 0;
     private int timeToDrive = 0;
     private double inchesToDrive = 0;
@@ -31,8 +30,8 @@ public class AutoDrive extends Command {
     private double inchesDriven = 0;
     private boolean driveByTime;
     private float currentAngle = imu.getPitch();
-    public boolean onRamp = false;
-    public double centerChevalDistance = x; //TODO: add in x.
+    public boolean isOnRamp = false;
+    public boolean ramp;
 
     //Drive based on time
     public AutoDrive(double speed, int timeToDrive) {
@@ -42,7 +41,7 @@ public class AutoDrive extends Command {
         this.timeToDrive = timeToDrive;
         this.driveByTime = true;
 
-        DriverStation.reportError("Driving by Time",false);
+        DriverStation.reportError("Driving by Time", false);
     }
 
     //Drive based on distance
@@ -52,21 +51,15 @@ public class AutoDrive extends Command {
         this.rightSpeed = speed;
         this.inchesToDrive = inchesToDrive;
         this.driveByTime = false;
-
-        DriverStation.reportError("Driving by Distance",false);
+        DriverStation.reportError("Driving by Distance", false);
     }
 
-
-    public AutoDrive(boolean onRamp){
-        if(onRamp){
-            stopMoving.tankDrive(0,0); //stop//TODO: reset encoder
-            moveArmsDown(); //lower arms
-            driveForward = new AutoDrive(0.5, centerChevalDistance); //drive forward
-        }
-    }
-
-    private void moveArmsDown() {
-        autoArmsLow = new AutoDrive(-0.5, Constants.Autonomous.ARMS_LOW);
+    public AutoDrive(double speed, double inchesToDrive, boolean ramp) {
+        this.leftSpeed = speed;
+        this.rightSpeed = speed;
+        this.ramp = ramp;
+        this.inchesToDrive = inchesToDrive;
+        isOnRamp = true;
     }
 
     @Override
@@ -80,31 +73,23 @@ public class AutoDrive extends Command {
     @Override
     protected void execute() {
         driveTrain.tankDrive(leftSpeed, rightSpeed);
-        public boolean isOnRamp() {
-            if (currentAngle == desiredAngle) {
-                onRamp = true;
-            }
-        }
     }
 
     @Override
     protected boolean isFinished() {
         if (!driveByTime) {
             inchesDriven = driveTrain.getRightDistance();
-            return Math.abs(inchesDriven)>=Math.abs(inchesToDrive);
-        }
-
-        else if(driveByTime) {
+            return Math.abs(inchesDriven) >= Math.abs(inchesToDrive);
+        } else if (driveByTime) {
             long now = (new Date()).getTime();
             return now > end;
+        } else if (isOnRamp && currentAngle == desiredAngle) {
+            return true;
         }
-    return true;
 
-        if(){
+        return true;
 
-         }
     }
-
 
 
     @Override
@@ -121,3 +106,4 @@ public class AutoDrive extends Command {
 
     }
 }
+
