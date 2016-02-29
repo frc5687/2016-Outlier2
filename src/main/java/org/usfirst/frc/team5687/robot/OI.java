@@ -27,6 +27,7 @@ public class OI {
     public static final int PRIME = 5;
     public static final int UNPRIME = 6;
     public static final int FIRE = 1;
+    public static final int SCORE = 10;
     public static final int RECOVER = 4;
     // Lights Buttons
     public static final int SWITCH_RING_LIGHT = 12;
@@ -49,6 +50,7 @@ public class OI {
         JoystickButton primeButton = new JoystickButton(joystick, PRIME);
         JoystickButton unprimeButton = new JoystickButton(joystick, UNPRIME);
         JoystickButton fireButton = new JoystickButton(joystick, FIRE);
+        JoystickButton scoreButton = new JoystickButton(joystick, SCORE);
         JoystickButton recoverButton = new JoystickButton(joystick, RECOVER);
         JoystickButton resetCameraButton = new JoystickButton(joystick, RESET_CAMERA);
         JoystickButton visionLightSwitch = new JoystickButton(joystick, SWITCH_RING_LIGHT);
@@ -62,6 +64,7 @@ public class OI {
         primeButton.whenPressed(new Prime());
         unprimeButton.whenPressed(new CancelPrime());
         fireButton.whenPressed(new Fire());
+        scoreButton.whenPressed(new AutoScore());
         recoverButton.whenPressed(new RecoverBoulder());
         // Light Switch Commands
         visionLightSwitch.whenPressed(new ToggleVisionLight());
