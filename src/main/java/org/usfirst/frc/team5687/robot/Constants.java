@@ -51,6 +51,8 @@ public class Constants {
         public static final double ON_RAMP_DISTANCE = 13; //TODO: Important! is this one full turn of the wheel?
         public static final double ARMS_HIGH = 9.375;//Height of cheval - 1/4 inch to allow for the four inches off of the ground.
         public static final double ARMS_LOW = 4;//Is the height off of the floor in inches that Norris told me.
+        public static final double ARM_SPEED = .5;
+
 
         public static final double MIN_AUTO_TRAVERSE_ANGLE = 8; // the minimum angle the robot will pitch when traversing a defense
         public static final double MAX_AUTO_TRAVERSE_SECONDS = 8; // the maximum time the robot should need to travers a defense in Autonomous,

@@ -20,13 +20,7 @@ public class RunArmsManually extends Command {
     double direction;
     public boolean isDown;
 
-    public RunArmsManually(double speed, double time, boolean isDown){
-        this.speed = speed;
-        this.time = time;
-        armsMotor.setInverted(Constants.Cheval.ARM_MOTOR_INVERTED);
-    }
-
-    public RunArmsManually(double speed, double time){
+    public RunArmsManually(double speed, double time){//TODO: Was this here before?
         this.speed = speed;
         this.time = time;
     }
