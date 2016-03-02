@@ -1,14 +1,6 @@
 package org.usfirst.frc.team5687.robot.commands;
 
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import org.usfirst.frc.team5687.robot.Constants;
-import org.usfirst.frc.team5687.robot.Robot;
-import org.usfirst.frc.team5687.robot.subsystems.Arms;
-import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
 
 /**
  * Created by Baxter on 2/18/2016.
