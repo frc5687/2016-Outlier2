@@ -41,12 +41,6 @@ import org.usfirst.frc.team5687.robot.subsystems.Arms;
         }
 
 
-
-        public boolean areArmsUp(){
-            if(currentspeed == Constants.Autonomous.ARM_SPEED && ){}//TODO: add speed and distance requirement to be at desired height.
-
-        }
-
         //Method to check if the motor has run for the correct time and speed, declared in constants
         //Another or same method to check when the arms are moving back down
 
@@ -60,11 +54,11 @@ import org.usfirst.frc.team5687.robot.subsystems.Arms;
         protected void execute(){}
         @Override
         protected boolean isFinished(){
+                if(arms.isAtLimit() == true){
+                    return(true);
+                }
+            }
 
-            //If method == true, the command is finished
-            //If the arms are fully lowered, the command is finished
-
-        }
         @Override
         protected void end(){}
 
