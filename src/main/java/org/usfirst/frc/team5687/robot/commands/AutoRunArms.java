@@ -15,35 +15,35 @@ import org.usfirst.frc.team5687.robot.subsystems.Arms;
      * Created by Maya on 3/2/2016.
      */
     public class AutoRunArms extends Command {
-
         Arms arms = Robot.arms;
         OI oi = Robot.oi;
         double desiredspeed;
         private VictorSP armsMotor;
 
-        armsMotor = new VictorSP(RobotMap.Arms.ARMS_MOTOR);
         double currentspeed = armsMotor.getSpeed();
         double time;
-        double direction;
         public boolean isDown;
-
-
-        public AutoRunArms(){requires(arms);}
+        private boolean armsThere = false;//TODO: Important: Ask if the isAtLimit method returns true when the arms are high or low
 
         public AutoRunArms(double speed, double time, boolean isDown){
+            armsMotor = new VictorSP(RobotMap.Arms.ARMS_MOTOR);
             this.currentspeed = speed;
             this.time = time;
             armsMotor.setInverted(Constants.Cheval.ARM_MOTOR_INVERTED);
+            requires(arms);
         }
+
         public AutoRunArms(double speed, double time){
             this.currentspeed = speed;
             this.time = time;
+            requires(arms);
         }
 
-
-        //Method to check if the motor has run for the correct time and speed, declared in constants
-        //Another or same method to check when the arms are moving back down
-
+        private void atTheLimit(){
+            if(arms.isAtLimit() == true){
+                armsThere = true;
+            }
+        }
 
         @Override
         protected void interrupted(){}
@@ -51,13 +51,16 @@ import org.usfirst.frc.team5687.robot.subsystems.Arms;
         @Override
         protected void initialize(){}
         @Override
-        protected void execute(){}
+        protected void execute(){armsMotor.set(desiredspeed);}
         @Override
-        protected boolean isFinished(){
-                if(arms.isAtLimit() == true){
-                    return(true);
-                }
+        protected boolean isFinished() {
+            if(armsThere){//TODO: Question: If I'm checking if the arms are there, what's the point in having set speed and time?
+                return true;
             }
+            else {
+                return false;
+            }
+        }
 
         @Override
         protected void end(){}
