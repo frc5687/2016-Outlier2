@@ -3,7 +3,7 @@ package org.usfirst.frc.team5687.robot.commands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- * Created by Baxter on 2/18/2016.
+ * Created by Maya on 2/18/2016.
  */
 public class AutoTraverseCheval extends CommandGroup {
     public AutoTraverseCheval() {
