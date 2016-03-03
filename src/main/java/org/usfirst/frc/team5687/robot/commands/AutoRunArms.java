@@ -29,7 +29,7 @@ public class AutoRunArms extends Command implements PIDOutput{
 
    public AutoRunArms(double speed, boolean isDown){//TODO: no longer need doubles speed or time
             armsmotor = new VictorSP(RobotMap.Arms.ARMS_MOTOR);
-            this.armrotationspeed = speed;
+            this.armrotationspeed = speed;//TODO: ask: how do I make sure that the speed used here is armrotationspeed?
             armsmotor.setInverted(Constants.Cheval.ARM_MOTOR_INVERTED);
             requires(arms);
         }
