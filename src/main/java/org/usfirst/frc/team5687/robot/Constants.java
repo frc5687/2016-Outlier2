@@ -7,6 +7,12 @@ package org.usfirst.frc.team5687.robot;
 public class Constants {
     public static final int CYCLES_PER_SECOND = 50;
 
+
+    public class Arms{
+        public static final double DESIRED_DEGREES = 120.0;
+    }
+
+
     public class Drive {
         public static final boolean LEFT_MOTOR_FRONT_INVERTED = true;
         public static final boolean RIGHT_MOTOR_FRONT_INVERTED = true;

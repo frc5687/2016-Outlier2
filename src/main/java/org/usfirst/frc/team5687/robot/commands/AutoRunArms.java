@@ -18,7 +18,6 @@ import org.usfirst.frc.team5687.robot.subsystems.Arms;
 public class AutoRunArms extends Command {
    Arms arms = Robot.arms;
    OI oi = Robot.oi;
-   double desiredspeed;
    private VictorSP armsmotor;
 
    double currentspeed = armsmotor.getSpeed();
@@ -40,11 +39,6 @@ public class AutoRunArms extends Command {
             requires(arms);
         }
 
-   private void atTheLimit(){
-            if(arms.isAtLimit()){
-                armsthere = true;
-            }
-        }
 
    @Override
    protected void interrupted(){}
@@ -53,13 +47,11 @@ public class AutoRunArms extends Command {
     protected void initialize(){}
 
     @Override
-    protected void execute(){
-        if(//Arms are not there and are currently moving){
-        armsmotor.set(desiredspeed);
-
-        else if(){}
+    protected void execute() {
+        if (arms.belowTarget()) {//Arms are not there and are currently moving
+            // Run the arms motor
+        }
     }
-
 
     @Override
     protected boolean isFinished() {

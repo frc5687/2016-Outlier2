@@ -1,10 +1,8 @@
 package org.usfirst.frc.team5687.robot.subsystems;
 
-import edu.wpi.first.wpilibj.CounterBase;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.Constants;
 import org.usfirst.frc.team5687.robot.RobotMap;
@@ -16,7 +14,8 @@ import org.usfirst.frc.team5687.robot.utils.Helpers;
  */
 public class Arms extends Subsystem {
 
-
+    private PIDOutput armsPotOutput;
+    private Potentiometer armsPot;
     private VictorSP armsMotor;
     private DigitalInput armsSensor;
     public Arms() {
@@ -50,6 +49,20 @@ public class Arms extends Subsystem {
     public boolean isAtLimit() {
         return !armsSensor.get();
     }
+
+    /**
+     * Check if arms are below limit
+     * @return receeds min value
+     */
+
+    public boolean belowTarget(){
+        return armsPot.get()< Constants.Arms.DESIRED_DEGREES; //TODO: is .get correct?
+    }
+
+    public void armsUp(){
+        armsMotor.set(armsPotOutput.);));
+    }
+
 
     public void updateDashboard() {
         SmartDashboard.putBoolean("Arms limit", isAtLimit());
