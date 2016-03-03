@@ -34,8 +34,13 @@ public class Arms extends Subsystem {
     public void setSpeed(double speed) {
         boolean movingUp = speed < 0;
         SmartDashboard.putString("Arms motion", movingUp ? "UP" : "DOWN");
-        armsMotor.set((movingUp && isAboveLimit() || !movingUp && isBelowLimit()) ? 0 : Helpers.applySensitivityTransform(speed));
-        //armsMotor.set((movingUp && isAtUpperLimit()) ? 0 : Helpers.applySensitivityTransform(speed));
+        armsMotor.set(Helpers.applySensitivityTransform(speed));
+
+        /*
+        TODO: Calibrate safeguards for arms, pot v hall, before using
+        armsMotor.set((movingUp && isAtUpperLimit() || movingUp && isAboveLimit() || !movingUp && isBelowLimit())
+            ? 0 : Helpers.applySensitivityTransform(speed));
+         */
     }
 
     public void moveUp() {
