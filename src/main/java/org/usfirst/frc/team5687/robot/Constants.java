@@ -106,7 +106,7 @@ public class Constants {
         /**
          * Speed to run the shooter wheels to shoot high goal
          */
-        public static final double SHOOTER_SPEED = .94;
+        public static final double SHOOTER_SPEED = 0.96;
     }
 
     public class Arms {
@@ -119,7 +119,7 @@ public class Constants {
 
     public class Climber {
         public static final double RAISE_SPEED = 0.6;
-        public static final double LOWER_SPEED = -0.6;
+        public static final double LOWER_SPEED = -1;
     }
 
     public class Encoders {
