@@ -1,7 +1,9 @@
 package org.usfirst.frc.team5687.robot.commands;
 
+import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.Constants;
 import org.usfirst.frc.team5687.robot.OI;
 import org.usfirst.frc.team5687.robot.Robot;
@@ -15,15 +17,16 @@ import org.usfirst.frc.team5687.robot.subsystems.Arms;
      * Created by Maya on 3/2/2016.
      */
 
-public class AutoRunArms extends Command {
+public class AutoRunArms extends Command implements PIDOutput{
    Arms arms = Robot.arms;
    OI oi = Robot.oi;
    private VictorSP armsmotor;
 
+   private double armrotationspeed;//TODO: fix so that has camelcase. Brag to john.
    double currentspeed = armsmotor.getSpeed();
    double time;
    public boolean isDown;
-   private boolean armsthere = false;//TODO: Important: Ask if the isAtLimit method returns true when the arms are high or low
+   private boolean armsthere = false;
 
    public AutoRunArms(double speed, double time, boolean isDown){
             armsmotor = new VictorSP(RobotMap.Arms.ARMS_MOTOR);
@@ -49,13 +52,13 @@ public class AutoRunArms extends Command {
     @Override
     protected void execute() {
         if (arms.belowTarget()) {//Arms are not there and are currently moving
-            // Run the arms motor
+           armsmotor.set(armrotationspeed); // Run the arms motor at armrotationspeed //TODO: Is .set correct?
         }
     }
 
     @Override
     protected boolean isFinished() {
-        if(armsthere){//TODO: Question: If I'm checking if the arms are there, what's the point in having set time?
+        if(armsthere){
                 return true;
         } else {
                 return false;
@@ -64,5 +67,12 @@ public class AutoRunArms extends Command {
 
     @Override
     protected void end(){}
+
+
+    @Override
+    public void pidWrite(double output){
+        SmartDashboard.putNumber("Arm/PID output", output);
+        armrotationspeed = output;
+    }
 
     }

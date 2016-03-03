@@ -14,7 +14,6 @@ import org.usfirst.frc.team5687.robot.utils.Helpers;
  */
 public class Arms extends Subsystem {
 
-    private PIDOutput armsPotOutput;
     private Potentiometer armsPot;
     private VictorSP armsMotor;
     private DigitalInput armsSensor;
@@ -59,9 +58,6 @@ public class Arms extends Subsystem {
         return armsPot.get()< Constants.Arms.DESIRED_DEGREES; //TODO: is .get correct?
     }
 
-    public void armsUp(){
-        armsMotor.set(armsPotOutput.);));
-    }
 
 
     public void updateDashboard() {
