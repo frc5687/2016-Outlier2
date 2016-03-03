@@ -22,26 +22,30 @@ public class AutoRunArms extends Command implements PIDOutput{
    OI oi = Robot.oi;
    private VictorSP armsmotor;
 
-   private double armrotationspeed;//TODO: fix so that has camelcase. Brag to john.
-   double currentspeed = armsmotor.getSpeed();
+   public double armrotationspeed;//TODO: fix so that has camelcase. Brag to john.
    double time;
    public boolean isDown;
    private boolean armsthere = false;
 
-   public AutoRunArms(double speed, double time, boolean isDown){
+   public AutoRunArms(double speed, boolean isDown){//TODO: no longer need doubles speed or time
             armsmotor = new VictorSP(RobotMap.Arms.ARMS_MOTOR);
-            this.currentspeed = speed;
-            this.time = time;
+            this.armrotationspeed = speed;
             armsmotor.setInverted(Constants.Cheval.ARM_MOTOR_INVERTED);
             requires(arms);
         }
 
-   public AutoRunArms(double speed, double time){
-            this.currentspeed = speed;
-            this.time = time;
+   public AutoRunArms(double speed){
+            this.armrotationspeed = speed;
             requires(arms);
         }
 
+   public void areArmsThere(){
+       if(arms.atTarget()){
+           armsthere = true;
+       } else{
+           armsthere = false;
+       }
+   }
 
    @Override
    protected void interrupted(){}
@@ -51,6 +55,7 @@ public class AutoRunArms extends Command implements PIDOutput{
 
     @Override
     protected void execute() {
+        areArmsThere();
         if (arms.belowTarget()) {//Arms are not there and are currently moving
            armsmotor.set(armrotationspeed); // Run the arms motor at armrotationspeed //TODO: Is .set correct?
         }

@@ -58,6 +58,10 @@ public class Arms extends Subsystem {
         return armsPot.get()< Constants.Arms.DESIRED_DEGREES; //TODO: is .get correct?
     }
 
+    public boolean atTarget(){
+        return armsPot.get() == Constants.Arms.DESIRED_DEGREES;//TODO: is .get correct?
+    }
+
 
 
     public void updateDashboard() {
