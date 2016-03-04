@@ -37,6 +37,10 @@ public class Arms extends Subsystem {
         }
     }
 
+    public void setInvertedSpeed(double thespeed){
+        if(thespeed <= 0); //TODO: add limit?
+    }
+
     public void stop() {
         armsMotor.set(0);
     }
@@ -56,9 +60,7 @@ public class Arms extends Subsystem {
 
     public boolean belowTarget(){
         return armsPot.get()< Constants.Arms.DESIRED_DEGREES; //TODO: is .get correct?
-    }
-
-    public boolean atTarget(){
+    }{
         return armsPot.get() == Constants.Arms.DESIRED_DEGREES;//TODO: is .get correct?
     }
 
