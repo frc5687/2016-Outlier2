@@ -8,11 +8,6 @@ public class Constants {
     public static final int CYCLES_PER_SECOND = 50;
 
 
-    public class Arms{
-        public static final double DESIRED_DEGREES = 120.0;
-    }
-
-
     public class Drive {
         public static final boolean LEFT_MOTOR_FRONT_INVERTED = true;
         public static final boolean RIGHT_MOTOR_FRONT_INVERTED = true;
@@ -26,7 +21,7 @@ public class Constants {
          */
         public static final double DRIVE_STICK = 0.1;
         public static final double SHOOTER_WHEELS = 0.1;
-        public static final double INTAKE_STICK = 0.1;
+        public static final double INTAKE_STICK = 0.2;
         public static final double ARMS = 0.1;
     }
 
@@ -59,10 +54,6 @@ public class Constants {
         public static final double ARMS_LOW = 4;//Is the height off of the floor in inches that Norris told me.
         public static final double ARM_SPEED = .5;
 
-
-        public static final double MIN_AUTO_TRAVERSE_ANGLE = 8; // the minimum angle the robot will pitch when traversing a defense
-        public static final double MAX_AUTO_TRAVERSE_SECONDS = 8; // the maximum time the robot should need to travers a defense in Autonomous,
-
         public class staticDefenseTraverseSpeeds {
             //speeds the robot should travel at when traversing defenses, should be between 0 and 1
             public static final double LOW_BAR_SPEED =.6;
@@ -73,6 +64,9 @@ public class Constants {
         }
 
 
+        public static final double MIN_AUTO_TRAVERSE_ANGLE = 7; // the minimum angle the robot will pitch when traversing a defense
+        public static final double MAX_AUTO_TRAVERSE_SECONDS = 4; // the maximum time the robot should need to travers a defense in Autonomous,
+        
     }
 
     public class InfraRedConstants {
@@ -81,11 +75,6 @@ public class Constants {
         public static final int PRIMED_TOLERANCE = 100; // Tolerance in either direction of boulder position for Priming
         public static final int CAPTURED_OPTIMAL = 1400; // Optimal position of boulder for storing bolder and traversing defenses
         public static final int CAPTURED_TOLERANCE = 100; // Tolerance in either direction of boulder position for carrying boulder
-    }
-
-    public class Horns {
-        public static final double MAX_SPEED = .5; //Speed is Capped at this
-        public static final double SESNITIVITY = 2; // Speed is divided by this
     }
 
     public class Intake {
@@ -134,7 +123,21 @@ public class Constants {
         /**
          * Speed to run the shooter wheels to shoot high goal
          */
-        public static final double SHOOTER_SPEED = 1.0;
+        public static final double SHOOTER_SPEED = 0.96;
+    }
+
+    public class Arms {
+        public static final double ARMS_SPEED = 0.5;
+        public static final int ARMS_SCALE = 232;
+        public static final int ARMS_OFFSET = -94;
+        public static final double MAX_DEGREES = 136.0;
+        public static final double MIN_DEGREES = 0.5;
+        public static final double DESIRED_DEGREES = 120.0;
+    }
+
+    public class Climber {
+        public static final double RAISE_SPEED = 0.6;
+        public static final double LOWER_SPEED = -1;
     }
 
     public class Cheval{

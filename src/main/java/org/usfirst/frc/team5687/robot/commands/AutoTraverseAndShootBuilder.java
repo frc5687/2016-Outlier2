@@ -11,7 +11,7 @@ import org.usfirst.frc.team5687.robot.Robot;
 
  * Created by Ben Bernard on 2/18/2016.
  */
-public class AutoTraverseBuilder extends Command {
+public class AutoTraverseAndShootBuilder extends Command {
 
 
     @Override
@@ -19,10 +19,10 @@ public class AutoTraverseBuilder extends Command {
         String defense = Robot.robot.getSelectedDefense();
         int position = Integer.parseInt(Robot.robot.getSelectedPosition());
 
-        DriverStation.reportError("Building autotraverse for defense " + defense + " in position " + position,false);
+        DriverStation.reportError("Building autotraverse-and-shoot for defense " + defense + " in position " + position,false);
 
         // Traverse the selected defense
-        Scheduler.getInstance().add(new AutoTraverseOnly(defense, position));
+        Scheduler.getInstance().add(new AutoTraverseAndShoot(defense, position));
 
     }
 

@@ -2,11 +2,13 @@ package org.usfirst.frc.team5687.robot.commands;
 
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team5687.robot.Constants;
 import org.usfirst.frc.team5687.robot.OI;
 import org.usfirst.frc.team5687.robot.Robot;
 import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.util.Date;
 
@@ -16,41 +18,62 @@ import java.util.Date;
  * Eventually we will want to add distance-based options.
  */
 
-public class AutoDrive extends Command {
-    DriveTrain driveTrain = Robot.driveTrain;
+
+public class AutoDrive extends Command implements PIDOutput{
+    PIDController turnController = null;
     AHRS imu = Robot.imu;
     OI oi = Robot.oi;
-    DriveTrain stopMoving;
+    DriveTrain driveTrain = Robot.driveTrain;
     private float desiredAngle = 1/8; //TODO: Check that is is the correct angle
     private long end = 0;
+    private long endTime = 0;
     private int timeToDrive = 0;
     private double inchesToDrive = 0;
-    private double rightSpeed = 0;
-    private double leftSpeed = 0;
+    private double speed = 0;
     private double inchesDriven = 0;
+    private double inchesAtStart = 0;
     private boolean driveByTime;
     private float currentAngle = imu.getPitch();
     public boolean isOnRamp = false;
     public boolean ramp;
+    public double leftSpeed;
+    public double rightSpeed;
 
-    //Drive based on time
-    public AutoDrive(double speed, int timeToDrive) {
+    private static final double kP = 0.3;
+    private static final double kI = 0.05;
+    private static final double kD = 0.1;
+    private static final double kF = 0.0;
+    private static final double kToleranceDegrees = 0.0f;
+    private double rotateToAngleRate = 0;
+    private double targetAngle = 0;
+
+    /**
+     * Drive at a specified speed for a time specified in milliseconds.
+     *
+     * @param speed Speed to drive (range -1 to +1
+     * @param millisToDrive Milliseconds to drive
+     */
+    public AutoDrive(double speed, int millisToDrive) {
         requires(driveTrain);
-        this.leftSpeed = speed;
-        this.rightSpeed = speed;
-        this.timeToDrive = timeToDrive;
+        this.speed = speed;
+        this.timeToDrive = millisToDrive;
         this.driveByTime = true;
 
         DriverStation.reportError("Driving by Time", false);
     }
 
-    //Drive based on distance
+    /**
+     * Drive at a specified speed for a distance specified in inches.
+     *
+     * @param speed Speed to drive (range 0 to +1
+     * @param inchesToDrive Inches to drive (negative for reverse)
+     */
     public AutoDrive(double speed, double inchesToDrive) {
-        requires(driveTrain);
-        this.leftSpeed = speed;
-        this.rightSpeed = speed;
+        requires(driveTrain);//TODO: Why can't requires be applied to driveTrain?
+        this.speed = speed;
         this.inchesToDrive = inchesToDrive;
         this.driveByTime = false;
+
         DriverStation.reportError("Driving by Distance", false);
     }
 
@@ -59,50 +82,76 @@ public class AutoDrive extends Command {
         this.rightSpeed = speed;
         this.ramp = ramp;
         isOnRamp = true;
+
     }
 
     @Override
     protected void initialize() {
-        DriverStation.reportError(String.format("Accelerating to %1$f\n", rightSpeed), false);
-        end = (new Date()).getTime() + timeToDrive;
-
-        driveTrain.resetDriveEncoders();
+        if (driveByTime) {
+            DriverStation.reportError("Driving at " + speed + " for " + timeToDrive + " milliseconds.\n", false);
+            endTime = (new Date()).getTime() + timeToDrive;
+        } else {
+            DriverStation.reportError("Driving at " + speed + " for " + inchesToDrive + " inchres.\n", false);
+            driveTrain.resetDriveEncoders();
+        }
+        inchesAtStart = driveTrain.getRightDistance();
+        targetAngle = imu.getYaw();
+        turnController = new PIDController(kP, kI, kD, kF, imu, this);
+        turnController.setInputRange(-180f, 180f);
+        turnController.setOutputRange(-0.1, 0.1);
+        turnController.setAbsoluteTolerance(kToleranceDegrees);
+        turnController.setContinuous(true);
+        turnController.setSetpoint(targetAngle);
+        turnController.enable();
     }
 
     @Override
     protected void execute() {
-        driveTrain.tankDrive(leftSpeed, rightSpeed);
+        int directionFactor = driveByTime || (inchesToDrive>=0) ? 1 : -1;
+        driveTrain.tankDrive(directionFactor * speed + rotateToAngleRate, directionFactor * speed - rotateToAngleRate);
     }
 
     @Override
     protected boolean isFinished() {
-        if (!driveByTime) {
-            inchesDriven = driveTrain.getRightDistance();
-            return Math.abs(inchesDriven) >= Math.abs(inchesToDrive);
-        } else if (driveByTime) {
+
+        if (driveByTime) {
             long now = (new Date()).getTime();
-            return now > end;
-        } else if (isOnRamp && currentAngle == desiredAngle) {
-            return true;
+            return now > endTime;
+        } else if (inchesToDrive<0){
+            inchesDriven = driveTrain.getRightDistance() - inchesAtStart;
+            return inchesDriven <= inchesToDrive;
+        } else if (inchesToDrive>0) {
+            inchesDriven = driveTrain.getRightDistance() - inchesAtStart;
+            return  inchesDriven >= inchesToDrive;
+        } else if (isOnRamp){
+            return currentAngle == desiredAngle;
         }
 
-        return true;
+        else {
+            return true;
+        }
 
     }
 
 
     @Override
     protected void end() {
-        DriverStation.reportError(String.format("   Right speed: %1$f\n", driveTrain.getRightSpeed()), false);
-        DriverStation.reportError(String.format("    Right rate: %1$f\n", driveTrain.getRightRate()), false);
-        DriverStation.reportError(String.format("    Left speed: %1$f\n", driveTrain.getLeftSpeed()), false);
-        DriverStation.reportError(String.format("     Left rate: %1$f\n", driveTrain.getLeftRate()), false);
-        DriverStation.reportError("====================\n", false);
+        DriverStation.reportError("AutoDrive done.\n", false);
+        driveTrain.tankDrive(0,0);
+
     }
 
     @Override
     protected void interrupted() {
 
+    }
+
+    @Override
+    public void pidWrite(double output) {
+        synchronized (this) {
+            SmartDashboard.putNumber("AutoAlign/PID Output", output);
+            rotateToAngleRate = output;
+        }
     }
 }
 

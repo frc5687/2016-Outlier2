@@ -2,9 +2,11 @@ package org.usfirst.frc.team5687.robot.commands;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
-import org.usfirst.frc.team5687.robot.Robot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import static org.usfirst.frc.team5687.robot.Robot.driveTrain;
+import static org.usfirst.frc.team5687.robot.Robot.pitracker;
+import static org.usfirst.frc.team5687.robot.Robot.pitrackerInputs;
+import static org.usfirst.frc.team5687.robot.Robot.lights;
 
 /**
  * Autonomous command for chasing a predefined target using input from a vision source via NetworkTables.
@@ -12,67 +14,89 @@ import static org.usfirst.frc.team5687.robot.Robot.driveTrain;
  * Created by Ben Bernard on 1/31/2016.
  */
 public class AutoChaseTarget extends Command {
-    NetworkTable tracking;
-
 
     // Keeping these constants here rather than in Constants because they ar peripheral to the robot's main function.
-    private static final double targetWidth = 110;
-    private static final double speed = 0.4;
+    private static final double deadbandWidth = 10;
+    private static final double deadbandX = 10;
+
+    private static final double baseSpeed = 0.6;
     private static final double twist = .2;
-    private static final double deadband = 30;
+
+    private boolean centered = false;
+    private boolean inRange = false;
+
+
+    private double targetWidth = 148;
+    private double targetX = -106;
 
     @Override
     protected void initialize() {
-        driveTrain = Robot.driveTrain;
-        tracking = NetworkTable.getTable("/GRIP/tracking");
-        DriverStation.reportError("Starting autochasetarget", false);
+        centered = false;
+        inRange = false;
+        targetWidth = pitrackerInputs.getNumber("TARGET_WIDTH", targetWidth);
+        targetX = pitrackerInputs.getNumber("TARGET_X", targetX);
+        DriverStation.reportError("Starting autochasetarget to width=" + targetWidth + " and X=" + targetX, false);
+        lights.turnRingLightOn();
     }
 
     @Override
     protected void execute() {
 
-        // read network tables
-        double[] defaultvalue = new double[0];
-        double[] widths = tracking.getNumberArray("width", defaultvalue);
-        double width = widths.length==0?0:widths[0];
-
-        double[] centerXs = tracking.getNumberArray("centerX", defaultvalue);
-        double centerX = centerXs.length==0?0:centerXs[0];
-
-        DriverStation.reportError("Cycle" + Double.toString(width), false);
-
+        // read pitracker
+        boolean sighted = pitracker.getBoolean("TargetSighted", false);
+        double width = pitracker.getNumber("width", 0);
+        double centerX = pitracker.getNumber("centerX", 0);
         double offset = 0;
+        double speed = 0;
+        centered = false;
+        inRange = false;
 
-        if (centerX > 300 + deadband) {
-            offset = -1*twist;
-        } else if (centerX < 300 - deadband) {
-            offset = +1*twist;
-        }
-        DriverStation.reportError("Offset " + Double.toString(offset), false);
+        if (sighted) {
+            if (centerX > targetX + deadbandX) {
+                offset = -1 * twist;
+            } else if (centerX < targetX - deadbandX) {
+                offset = +1 * twist;
+            } else {
+                offset = 0;
+                centered = true;
+            }
 
-        if (width==0) {
-            driveTrain.tankDrive(0,0);
-        } else if (width<targetWidth - 10) {
-            // set motor speed
-            DriverStation.reportError("Move forward " + Double.toString(speed), false);
-            driveTrain.tankDrive(-1*speed + offset, -1*speed - offset);
-        } else if (width>targetWidth + 10) {
-            DriverStation.reportError("Move back " + Double.toString(speed), false);
-            driveTrain.tankDrive(speed, speed);
+            if (width == 0) {
+                speed = 0;
+            } else if (width < targetWidth - deadbandWidth) {
+                // set motor speed
+                speed = baseSpeed;
+            } else if (width > targetWidth + deadbandWidth) {
+                speed = -1 * baseSpeed;
+            } else {
+                inRange = true;
+                speed = 0;
+            }
         } else {
-            driveTrain.tankDrive(offset, -1*offset);
-
+            offset = 0;
+            speed = 0;
         }
+        SmartDashboard.putNumber("autochase/offset", offset);
+        SmartDashboard.putNumber("autochase/speed", speed);
+
+        SmartDashboard.putBoolean("autochase/centered", centered);
+        SmartDashboard.putBoolean("autochase/inRange", inRange);
+
+        SmartDashboard.putString("autochase/centering", offset < 0 ? "Turning left" : offset > 0 ? "Turning right" : "Centered");
+        SmartDashboard.putString("autochase/range", speed < 0 ? "Moving back" : speed > 0 ? "Moving in" : "In Range");
+
+        driveTrain.tankDrive(speed - offset, speed + offset);
     }
 
     @Override
     protected boolean isFinished() {
-        return false;
+        return centered && inRange;
     }
 
     @Override
     protected void end() {
-
+        lights.turnRingLightOff();
+        DriverStation.reportError(centered && inRange ? "Found target" : "Ran out of time", false);
     }
 
     @Override

@@ -16,7 +16,7 @@ import org.usfirst.frc.team5687.robot.subsystems.Arms;
      * Created by Maya on 3/2/2016.
      */
 
-public class AutoRunArms extends Command implements PIDOutput{//TODO: get rid of PID
+public class AutoRunArms extends Command {//TODO: get rid of PID
 
    Arms arms = Robot.arms;
    OI oi = Robot.oi;
@@ -27,11 +27,10 @@ public class AutoRunArms extends Command implements PIDOutput{//TODO: get rid of
    private boolean armsthere = false;
 
    public AutoRunArms(boolean isDown){
-            this.desiredAngle = Constants.Autonomous.ARMS_HIGH;
-            (Constants.Cheval.ARM_MOTOR_INVERTED);
-       //TODO: invert  motor
-            this.isDown = isDown;
-            requires(arms);
+       requires(arms);
+       this.desiredAngle = Constants.Autonomous.ARMS_HIGH;
+       arms.invertMotor();
+       this.isDown = isDown;
         }
 
    public AutoRunArms(){
@@ -55,9 +54,15 @@ public class AutoRunArms extends Command implements PIDOutput{//TODO: get rid of
     @Override
     protected void execute() {
         areArmsThere();
-        if (arms.belowTarget()) {//Arms are not there and are currently moving
-           arms.setSpeed(armrotationspeed); // Run the arms motor at armrotationspeed
-        }
+        if (arms.isBelowTarget() && !isDown) {//Arms are not there and are currently moving
+           arms.setSpeed(armrotationspeed);
+        } // Run the arms motor at armrotationspeed
+            else if (arms.isAboveTarget() && isDown){
+            arms.setSpeed(-armrotationspeed);
+            }
+            else{
+            arms.setSpeed(0);
+            }
     }
 
     @Override
@@ -72,11 +77,5 @@ public class AutoRunArms extends Command implements PIDOutput{//TODO: get rid of
     @Override
     protected void end(){}
 
-
-    @Override
-    public void pidWrite(double output){
-        SmartDashboard.putNumber("Arm/PID output", output);
-        armrotationspeed = output;
-    }
 
     }

@@ -3,21 +3,18 @@ package org.usfirst.frc.team5687.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5687.robot.OI;
 import org.usfirst.frc.team5687.robot.Robot;
-import org.usfirst.frc.team5687.robot.subsystems.Shooter;
+import org.usfirst.frc.team5687.robot.subsystems.Climber;
 
 /**
- * Command for basic manual-control of the shooter wheels
- * Created by Ryan on 2/7/16.
+ * Command to extend the tape measure up for climbing
+ * @author wil
  */
-public class RunShooterManually extends Command {
-    Shooter shooter = Robot.shooter;
+public class ClimbManually extends Command {
+    Climber climber = Robot.climber;
     OI oi = Robot.oi;
 
-    /**
-     * Constructor
-     */
-    public RunShooterManually() {
-        requires(shooter);
+    public ClimbManually() {
+        requires(climber);
     }
 
     @Override
@@ -26,7 +23,7 @@ public class RunShooterManually extends Command {
 
     @Override
     protected void execute() {
-        shooter.setSpeed(oi.getShooterSpeed());
+        climber.setSpeed(oi.getClimberSpeed());
     }
 
     @Override

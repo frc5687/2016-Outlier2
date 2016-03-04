@@ -2,7 +2,6 @@ package org.usfirst.frc.team5687.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.commands.*;
 import org.usfirst.frc.team5687.robot.utils.Gamepad;
 import org.usfirst.frc.team5687.robot.utils.Helpers;
@@ -28,6 +27,10 @@ public class OI {
     public static final int PRIME = 5;
     public static final int UNPRIME = 6;
     public static final int FIRE = 1;
+    public static final int RECOVER = 4;
+    // Lights Buttons
+    public static final int SWITCH_RING_LIGHT = 12;
+    public static final int SWITCH_FLASHLIGHT = 11;
     // Camera switch
     public static int RESET_CAMERA = 7;
 
@@ -46,7 +49,10 @@ public class OI {
         JoystickButton primeButton = new JoystickButton(joystick, PRIME);
         JoystickButton unprimeButton = new JoystickButton(joystick, UNPRIME);
         JoystickButton fireButton = new JoystickButton(joystick, FIRE);
+        JoystickButton recoverButton = new JoystickButton(joystick, RECOVER);
         JoystickButton resetCameraButton = new JoystickButton(joystick, RESET_CAMERA);
+        JoystickButton visionLightSwitch = new JoystickButton(joystick, SWITCH_RING_LIGHT);
+        JoystickButton flashlightSwitch = new JoystickButton(joystick, SWITCH_FLASHLIGHT);
 
         // Drive Train Commands
         reverseButton.whenPressed(new ReverseDrive());
@@ -56,6 +62,10 @@ public class OI {
         primeButton.whenPressed(new Prime());
         unprimeButton.whenPressed(new CancelPrime());
         fireButton.whenPressed(new Fire());
+        recoverButton.whenPressed(new RecoverBoulder());
+        // Light Switch Commands
+        visionLightSwitch.whenPressed(new ToggleVisionLight());
+        flashlightSwitch.whenPressed(new ToggleFlashlight());
         // Reset Camera Command
         resetCameraButton.whenPressed(new ResetCamera());
     }
@@ -99,15 +109,6 @@ public class OI {
     }
 
     /**
-     * Gets the desired speed for the shooter wheels
-     * @return the control value for the shooter motor
-     */
-    public double getShooterSpeed(){
-        // Joystick's throttle axis range is set to the forward range of the shooter speed
-        return Helpers.applyDeadband((joystick.getThrottle() + 1) / 2, Constants.Deadbands.SHOOTER_WHEELS);
-    }
-
-    /**
      * Gets the desired speed for the intake
      * @return the control value for the intake motor
      */
@@ -121,9 +122,20 @@ public class OI {
      * @return the control value for the arms' motor
      */
     public double getArmsSpeed() {
-        double value = Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.LEFT_TRIGGER), Constants.Deadbands.ARMS) - Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.RIGHT_TRIGGER), Constants.Deadbands.ARMS);
-        SmartDashboard.putNumber("Arms Speed", value);
-        return value;
+        return (Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.LEFT_TRIGGER), Constants.Deadbands.ARMS) - Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.RIGHT_TRIGGER), Constants.Deadbands.ARMS)) * 0.9;
+    }
+
+    /**
+     * Gets the desired speed for the climber
+     * @return the value for the climber motor
+     */
+    public double getClimberSpeed() {
+        if (gamepad.getRawButton(Gamepad.Buttons.X)) {
+            return Constants.Climber.RAISE_SPEED;
+        } else if (gamepad.getRawButton(Gamepad.Buttons.B)) {
+            return Constants.Climber.LOWER_SPEED;
+        }
+        return 0;
     }
 
     /**

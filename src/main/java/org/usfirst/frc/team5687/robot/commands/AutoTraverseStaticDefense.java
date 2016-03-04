@@ -13,8 +13,8 @@ public class AutoTraverseStaticDefense extends AutoTraverse {
 
     private double speed;
 
-    public AutoTraverseStaticDefense(double speed){
-        super();
+    public AutoTraverseStaticDefense(double speed, long inchesToCross, double rollThreshold){
+        super(inchesToCross,rollThreshold);
         this.speed = speed;
     }
     protected void initialize() {
