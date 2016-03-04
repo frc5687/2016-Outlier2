@@ -21,10 +21,10 @@ public class AutoRunArms extends Command {//TODO: get rid of PID
    Arms arms = Robot.arms;
    OI oi = Robot.oi;
 
-   public double armrotationspeed;//TODO: fix so that has camelcase. Brag to john.
+   public double armRotationSpeed;
    public boolean isDown;
    double desiredAngle;
-   private boolean armsthere = false;
+   private boolean armsThere = false;
 
    public AutoRunArms(boolean isDown){
        requires(arms);
@@ -39,9 +39,9 @@ public class AutoRunArms extends Command {//TODO: get rid of PID
 
    public void areArmsThere(){
        if(arms.atTarget()){
-           armsthere = true;
+           armsThere = true;
        } else{
-           armsthere = false;
+           armsThere = false;
        }
    }
 
@@ -55,10 +55,10 @@ public class AutoRunArms extends Command {//TODO: get rid of PID
     protected void execute() {
         areArmsThere();
         if (arms.isBelowTarget() && !isDown) {//Arms are not there and are currently moving
-           arms.setSpeed(armrotationspeed);
-        } // Run the arms motor at armrotationspeed
+           arms.setSpeed(armRotationSpeed);
+        } // Run the arms motor at armRotationSpeed
             else if (arms.isAboveTarget() && isDown){
-            arms.setSpeed(-armrotationspeed);
+            arms.setSpeed(-armRotationSpeed);
             }
             else{
             arms.setSpeed(0);
@@ -67,7 +67,7 @@ public class AutoRunArms extends Command {//TODO: get rid of PID
 
     @Override
     protected boolean isFinished() {
-        if(armsthere){
+        if(armsThere){
                 return true;
         } else {
                 return false;
