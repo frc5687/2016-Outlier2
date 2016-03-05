@@ -14,6 +14,6 @@ public class Prime extends CommandGroup{
     public Prime() {
         addSequential(new EnableFlashlight());
         addSequential(new PrimeBoulder());
-        addSequential(new SetShooterSpeed(oi.getPrimeSpeed(), Constants.Shooter.PRIME_TIME));
+        addSequential(new ToggleShooter(true));
     }
 }

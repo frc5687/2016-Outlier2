@@ -1,43 +1,41 @@
 package org.usfirst.frc.team5687.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team5687.robot.Constants;
 
 import static org.usfirst.frc.team5687.robot.Robot.shooter;
 
 /**
- * Command to try to suckset speed of shooter motor
+ * Command to set speed of shooter motor
  * @author wil
  */
-public class RecoverBoulder extends Command {
-    private static final double speed = -0.8f;
-    private static final long time = 5000;
+public class ToggleShooter extends Command {
+    private boolean _on;
     private long endTime;
 
-    /**
-     * Constructor for RecoverBoulder
-     */
-    public RecoverBoulder() {
+    public ToggleShooter(boolean on) {
         requires(shooter);
+        _on = on;
     }
+
 
     @Override
     protected void initialize() {
-        endTime = System.currentTimeMillis() + time;
+        endTime = System.currentTimeMillis() + Constants.Shooter.PRIME_TIME;
     }
 
     @Override
     protected void execute() {
-        shooter.setSpeed(speed);
+        shooter.toggle(_on);
     }
 
     @Override
     protected boolean isFinished() {
-        return /*intake.isCaptured() ||*/ System.currentTimeMillis() > endTime;
+        return !_on || System.currentTimeMillis() > endTime;
     }
 
     @Override
     protected void end() {
-        shooter.toggle(false);
     }
 
     @Override
