@@ -9,10 +9,10 @@ import static org.usfirst.frc.team5687.robot.Robot.shooter;
  * @author wil
  */
 public class RecoverBoulder extends Command {
-    private static final double speed = -0.8f;
-    private static final long time = 5000;
+    private static final double speed = -1f;
+    private static final long time = 40;
     private long endTime;
-
+    private double previous;
     /**
      * Constructor for RecoverBoulder
      */
@@ -22,25 +22,29 @@ public class RecoverBoulder extends Command {
 
     @Override
     protected void initialize() {
+        previous = shooter.getSpeed();
         endTime = System.currentTimeMillis() + time;
-    }
-
-    @Override
-    protected void execute() {
         shooter.setSpeed(speed);
     }
 
     @Override
+    protected void execute() {
+        shooter.toggle(true);
+    }
+
+    @Override
     protected boolean isFinished() {
-        return /*intake.isCaptured() ||*/ System.currentTimeMillis() > endTime;
+        return System.currentTimeMillis() > endTime;
     }
 
     @Override
     protected void end() {
         shooter.toggle(false);
+        shooter.setSpeed(previous);
     }
 
     @Override
     protected void interrupted() {
+        end();
     }
 }

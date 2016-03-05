@@ -47,7 +47,7 @@ public class AutoTraverseOnly extends CommandGroup {
                 break;
         }
 
-
+/*
         switch (position){
             case 1:
 
@@ -97,7 +97,7 @@ public class AutoTraverseOnly extends CommandGroup {
                 break;
         }
 
-
+*/
 
 
     }
