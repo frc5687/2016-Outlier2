@@ -2,6 +2,7 @@ package org.usfirst.frc.team5687.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.commands.*;
 import org.usfirst.frc.team5687.robot.utils.Gamepad;
 import org.usfirst.frc.team5687.robot.utils.Helpers;
@@ -28,6 +29,10 @@ public class OI {
     public static final int UNPRIME = 6;
     public static final int FIRE = 1;
     public static final int RECOVER = 4;
+    // Prime Speed Buttons
+    public static final int LOW_PRIME_SPEED = 8; // 0.94
+    public static final int MID_PRIME_SPEED = 10; // 0.95
+    public static final int DEFAULT_PRIME_SPEED = 9; // 0.96 Optimal
     // Lights Buttons
     public static final int SWITCH_RING_LIGHT = 12;
     public static final int SWITCH_FLASHLIGHT = 11;
@@ -115,6 +120,23 @@ public class OI {
     public double getIntakeSpeed() {
         // Joystick's y-axis is set to control intake speed
         return Helpers.applyDeadband(joystick.getRawAxis(1), Constants.Deadbands.INTAKE_STICK);
+    }
+
+    /**
+     * Gets the desired speed for priming
+     * @return the control speed selected by operator
+     */
+    public double getPrimeSpeed() {
+        double speed = Constants.Shooter.SHOOTER_SPEED;
+        if (joystick.getRawButton(LOW_PRIME_SPEED)) {
+            speed = 0.94;
+        } else if (joystick.getRawButton(MID_PRIME_SPEED)) {
+            speed = 0.95;
+        } else if (joystick.getRawButton(DEFAULT_PRIME_SPEED)) {
+            speed = Constants.Shooter.SHOOTER_SPEED;
+        }
+        SmartDashboard.putNumber("PRIME speed", speed);
+        return speed;
     }
 
     /**
