@@ -205,7 +205,7 @@ public class Robot extends IterativeRobot {
         driveTrain.sendAmpDraw();
         intake.updateDashboard();
         arms.updateDashboard();
-
+        lights.updateDashboard();
     }
 
     public void teleopInit() {
@@ -226,6 +226,7 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().run();
         intake.updateDashboard();
         arms.updateDashboard();
+        lights.updateDashboard();
     }
 
     /**

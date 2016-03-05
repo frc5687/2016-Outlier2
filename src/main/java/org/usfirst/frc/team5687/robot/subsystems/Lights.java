@@ -2,6 +2,7 @@ package org.usfirst.frc.team5687.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.RobotMap;
 
 /**
@@ -49,5 +50,10 @@ public class Lights extends Subsystem {
 
     public void turnRingLightOff() {
         ringLight.set(false);
+    }
+
+    public void updateDashboard() {
+        SmartDashboard.putBoolean("lights/flashlight", flashlight.get());
+        SmartDashboard.putBoolean("lights/ringlight", flashlight.get());
     }
 }
