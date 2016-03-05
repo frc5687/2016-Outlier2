@@ -151,6 +151,7 @@ public class Robot extends IterativeRobot {
         autoChooser.addObject("Calibrate CVT", new AutonomousTestCVT());
         autoChooser.addObject("Traverse Defense", new AutoTraverseBuilder());
         autoChooser.addObject("Traverse And Shoot", new AutoTraverseAndShootBuilder());
+        autoChooser.addObject("Target and Shoot", new AutoShootOnly());
         autoChooser.addObject("Chase Target", new AutoChaseTarget());
         autoChooser.addObject("Left 90", new AutoAlign(-90));
         autoChooser.addObject("Right 90", new AutoAlign(90));
