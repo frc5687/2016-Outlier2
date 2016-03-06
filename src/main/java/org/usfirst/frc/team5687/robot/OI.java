@@ -38,7 +38,7 @@ public class OI {
     public static final int SWITCH_RING_LIGHT = 12;
     public static final int SWITCH_FLASHLIGHT = 11;
     // Camera switch
-    public static int RESET_CAMERA = 7;
+    public static int RESET_CAMERA = Gamepad.Buttons.A.getNumber();
 
     /**
      * Create a new instance of the operator interface
