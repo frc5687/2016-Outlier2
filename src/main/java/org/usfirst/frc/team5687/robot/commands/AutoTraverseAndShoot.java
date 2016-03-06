@@ -10,8 +10,8 @@ public class AutoTraverseAndShoot extends CommandGroup {
     public AutoTraverseAndShoot(String defense, int position) {
 
         addSequential(new AutoTraverseOnly(defense, position));
+        addParallel(new Prime());
         addSequential(new AutoChaseTarget());
-        addSequential(new Prime());
         addSequential(new Fire());
 
 
