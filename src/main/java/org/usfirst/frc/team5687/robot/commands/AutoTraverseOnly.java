@@ -47,12 +47,11 @@ public class AutoTraverseOnly extends CommandGroup {
                 break;
         }
 
-
         switch (position){
             case 1:
 
-                // Run forward 112 inches
-                addSequential(new AutoDrive(.7, 124.0f));
+                // Run forward 100 inches
+                addSequential(new AutoDrive(.7, 100.0f));
 
                 // Turn towards the tower
                 addSequential(new AutoAlign(50));
@@ -96,9 +95,6 @@ public class AutoTraverseOnly extends CommandGroup {
 
                 break;
         }
-
-
-
 
     }
 

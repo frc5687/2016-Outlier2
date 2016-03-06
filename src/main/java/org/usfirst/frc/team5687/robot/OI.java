@@ -2,6 +2,7 @@ package org.usfirst.frc.team5687.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.commands.*;
 import org.usfirst.frc.team5687.robot.utils.Gamepad;
 import org.usfirst.frc.team5687.robot.utils.Helpers;
@@ -28,6 +29,11 @@ public class OI {
     public static final int UNPRIME = 6;
     public static final int FIRE = 1;
     public static final int RECOVER = 4;
+    // Prime Speed Buttons
+    public static final int LOW_PRIME_SPEED = 8; // 0.92
+    public static final int DEFAULT_PRIME_SPEED = 7; // 0.94
+    public static final int HIGH_PRIME_SPEED = 10; // 0.96
+    public static final int EXTREME_PRIME_SPEED = 9; // 0.98
     // Lights Buttons
     public static final int SWITCH_RING_LIGHT = 12;
     public static final int SWITCH_FLASHLIGHT = 11;
@@ -54,6 +60,11 @@ public class OI {
         JoystickButton visionLightSwitch = new JoystickButton(joystick, SWITCH_RING_LIGHT);
         JoystickButton flashlightSwitch = new JoystickButton(joystick, SWITCH_FLASHLIGHT);
 
+        JoystickButton lowSpeedButton = new JoystickButton(joystick, LOW_PRIME_SPEED);
+        JoystickButton normalSpeedButton = new JoystickButton(joystick, DEFAULT_PRIME_SPEED);
+        JoystickButton highSpeedButton = new JoystickButton(joystick, HIGH_PRIME_SPEED);
+        JoystickButton extremeSpeedButton = new JoystickButton(joystick, EXTREME_PRIME_SPEED);
+
         // Drive Train Commands
         reverseButton.whenPressed(new ReverseDrive());
         // Boulder Commands
@@ -68,6 +79,11 @@ public class OI {
         flashlightSwitch.whenPressed(new ToggleFlashlight());
         // Reset Camera Command
         resetCameraButton.whenPressed(new ResetCamera());
+
+        lowSpeedButton.whenPressed(new SetShooterSpeed(Constants.Shooter.SHOOTER_SPEED_LOW));
+        normalSpeedButton.whenPressed(new SetShooterSpeed(Constants.Shooter.SHOOTER_SPEED));
+        highSpeedButton.whenPressed(new SetShooterSpeed(Constants.Shooter.SHOOTER_SPEED_HIGH));
+        extremeSpeedButton.whenPressed(new SetShooterSpeed(Constants.Shooter.SHOOTER_SPEED_EXTREME));
     }
 
     /**
@@ -116,6 +132,7 @@ public class OI {
         // Joystick's y-axis is set to control intake speed
         return Helpers.applyDeadband(joystick.getRawAxis(1), Constants.Deadbands.INTAKE_STICK);
     }
+
 
     /**
      * Gets the desired speed for the arms

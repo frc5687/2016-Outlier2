@@ -22,7 +22,7 @@ public class AutoTraverseBuilder extends Command {
         DriverStation.reportError("Building autotraverse for defense " + defense + " in position " + position,false);
 
         // Traverse the selected defense
-        Scheduler.getInstance().add(new AutoTraverseOnly(defense, position));
+        Scheduler.getInstance().add(new AutoTraverseOnly(defense, 0));
 
     }
 

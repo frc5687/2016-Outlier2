@@ -19,8 +19,8 @@ public class AutoChaseTarget extends Command {
     private static final double deadbandWidth = 50;
     private static final double deadbandX = 20;
 
-    private static final double baseSpeed = 0.6;
-    private static final double twist = .2;
+    private static final double baseSpeed = 0.4;
+    private static final double twist = .1;
 
     private boolean centered = false;
     private boolean inRange = false;

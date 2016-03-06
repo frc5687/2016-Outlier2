@@ -11,6 +11,8 @@ import static org.usfirst.frc.team5687.robot.Robot.intake;
  * @author wil
  */
 public class FireBoulder extends Command {
+    private long endTime;
+
 
     public FireBoulder() {
         requires(intake);
@@ -18,6 +20,7 @@ public class FireBoulder extends Command {
 
     @Override
     protected void initialize() {
+        endTime = System.currentTimeMillis() + Constants.Shooter.UNPRIME_TIME;
     }
 
     @Override
@@ -27,7 +30,7 @@ public class FireBoulder extends Command {
 
     @Override
     protected boolean isFinished() {
-        return !intake.isPrimed();
+        return !intake.isPrimed() && System.currentTimeMillis() > endTime;
     }
 
     @Override

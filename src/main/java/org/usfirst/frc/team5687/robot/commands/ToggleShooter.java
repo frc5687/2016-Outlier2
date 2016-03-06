@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5687.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team5687.robot.Constants;
 
 import static org.usfirst.frc.team5687.robot.Robot.shooter;
 
@@ -8,27 +9,29 @@ import static org.usfirst.frc.team5687.robot.Robot.shooter;
  * Command to set speed of shooter motor
  * @author wil
  */
-public class SetShooterSpeed extends Command {
-    private double _speed;
+public class ToggleShooter extends Command {
+    private boolean _on;
+    private long endTime;
 
-    public SetShooterSpeed(double speed) {
+    public ToggleShooter(boolean on) {
         requires(shooter);
-        _speed = speed;
+        _on = on;
     }
 
 
     @Override
     protected void initialize() {
-        shooter.setSpeed(_speed);
+        endTime = System.currentTimeMillis() + Constants.Shooter.PRIME_TIME;
     }
 
     @Override
     protected void execute() {
+        shooter.toggle(_on);
     }
 
     @Override
     protected boolean isFinished() {
-        return true;
+        return !_on || System.currentTimeMillis() > endTime;
     }
 
     @Override
