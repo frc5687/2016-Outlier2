@@ -9,10 +9,9 @@ public class AutoShootOnly extends CommandGroup {
 
     public AutoShootOnly() {
 
-        addSequential(new AutoChaseTarget());
         addSequential(new Prime());
+        addSequential(new AutoChaseTarget());
         addSequential(new Fire());
-
     }
 
 }
