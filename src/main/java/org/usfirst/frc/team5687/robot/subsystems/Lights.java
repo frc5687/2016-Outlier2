@@ -54,6 +54,6 @@ public class Lights extends Subsystem {
 
     public void updateDashboard() {
         SmartDashboard.putBoolean("lights/flashlight", flashlight.get());
-        SmartDashboard.putBoolean("lights/ringlight", flashlight.get());
+        SmartDashboard.putBoolean("lights/ringlight", ringLight.get());
     }
 }

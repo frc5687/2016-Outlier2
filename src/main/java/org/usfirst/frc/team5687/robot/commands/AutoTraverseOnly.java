@@ -8,7 +8,7 @@ import org.usfirst.frc.team5687.robot.Constants;
  */
 public class AutoTraverseOnly extends CommandGroup {
 
-    public  AutoTraverseOnly(String defense, int position) {
+    public  AutoTraverseOnly(String defense) {
 
         double traverseSpeed = 0;
         double rotateAngle = 0;
@@ -44,55 +44,6 @@ public class AutoTraverseOnly extends CommandGroup {
                 break;
             case "Portcullis":
                 //addSequential(new AutoTraversePortcullis());
-                break;
-        }
-
-        switch (position){
-            case 1:
-
-                // Run forward 100 inches
-                addSequential(new AutoDrive(.7, 100.0f));
-
-                // Turn towards the tower
-                addSequential(new AutoAlign(50));
-
-                // Run forward 112 inches
-                addSequential(new AutoDrive(.7, 48.0f));
-
-
-                break;
-            case 2:
-                addSequential(new AutoDrive(.5, 150.0f));
-
-                // Turn towards the tower
-                addSequential(new AutoAlign(40.0f));
-                break;
-            case 3:
-                // Turn towards the tower
-                addSequential(new AutoAlign(20));
-
-                // Run forward 35 inches
-                addSequential(new AutoDrive(.5, 35.0f));
-
-                // Turn towards the tower
-                addSequential(new AutoAlign(-2.0f));
-
-                // Run forward 50 inches
-                addSequential(new AutoDrive(.5, 50.0f));
-
-                break;
-            case 4:
-
-                rotateAngle=-10;
-                break;
-            case 5:
-
-                // Run forward 135 inches
-                addSequential(new AutoDrive(.5, 135.0f));
-
-                // Turn towards the tower
-                addSequential(new AutoAlign(-25));
-
                 break;
         }
 
