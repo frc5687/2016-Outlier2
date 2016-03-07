@@ -108,7 +108,6 @@ public class Robot extends IterativeRobot {
         autoChooser = new SendableChooser();
         defenseChooser = new SendableChooser();
         positionChooser = new SendableChooser();
-
         powerDistributionPanel = new PowerDistributionPanel();
 
         // Report commit info to dashboard and driver station

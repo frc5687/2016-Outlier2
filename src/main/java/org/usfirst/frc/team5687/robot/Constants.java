@@ -7,6 +7,7 @@ package org.usfirst.frc.team5687.robot;
 public class Constants {
     public static final int CYCLES_PER_SECOND = 50;
 
+
     public class Drive {
         public static final boolean LEFT_MOTOR_FRONT_INVERTED = true;
         public static final boolean RIGHT_MOTOR_FRONT_INVERTED = true;
@@ -47,6 +48,22 @@ public class Constants {
     }
 
     public class Autonomous {
+
+        public static final double ON_RAMP_DISTANCE = 13; //TODO: Important! is this one full turn of the wheel?
+        public static final double ARMS_HIGH = 9.375;//Height of cheval - 1/4 inch to allow for the four inches off of the ground.
+        public static final double ARMS_LOW = 4;//Is the height off of the floor in inches that Norris told me.
+        public static final double ARM_SPEED = .5;
+
+        public class staticDefenseTraverseSpeeds {
+            //speeds the robot should travel at when traversing defenses, should be between 0 and 1
+            public static final double LOW_BAR_SPEED =.6;
+            public static final double MOAT_SPEED =.5;
+            public static final double ROCK_WALL_SPEED =.3;
+            public static final double RAMPARTS_SPEED =.3;
+            public static final double ROUGH_TERRAIN_SPEED =.5;
+        }
+
+
         public static final double MIN_AUTO_TRAVERSE_ANGLE = 7; // the minimum angle the robot will pitch when traversing a defense
         public static final double MAX_AUTO_TRAVERSE_SECONDS = 4; // the maximum time the robot should need to travers a defense in Autonomous,
         
@@ -118,12 +135,18 @@ public class Constants {
         public static final int ARMS_OFFSET = -94;
         public static final double MAX_DEGREES = 136.0;
         public static final double MIN_DEGREES = 0.5;
+        public static final double DESIRED_DEGREES = 120.0;
     }
 
     public class Climber {
         public static final double RAISE_SPEED = 0.6;
         public static final double LOWER_SPEED = -1;
     }
+
+    public class Cheval{
+        public static final boolean ARM_MOTOR_INVERTED = true;
+    }
+
 
     public class Encoders {
         public class Defaults {
@@ -146,5 +169,13 @@ public class Constants {
             public static final boolean REVERSED = true;
             public static final double INCHES_PER_PULSE = Defaults.INCHES_PER_PULSE;
         }
+
+        public class ArmMovement {
+            public static final boolean REVERSED = Defaults.REVERSED;
+            public static final double INCHES_PER_PULSE = Defaults.INCHES_PER_PULSE;
+
+        }
+
+
     }
 }

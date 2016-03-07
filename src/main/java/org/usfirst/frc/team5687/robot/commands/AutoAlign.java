@@ -17,15 +17,21 @@ public class AutoAlign extends Command implements PIDOutput{
     private static final double kF = 0.1;//Q: What is this for?
     private static final double rotationDeadband = 0.01;
     private static final double kToleranceDegrees = 2.0f;
+
+
     private double rotateToAngleRate = 0; //Q: how does the PIDcontroller object know to use this variable?
     private double targetAngle = 0;
     private double currentAngle = 0;
-
-
     public AutoAlign(double targetAngle) {
         requires(driveTrain);
-        this.targetAngle = targetAngle;  //Q:What value does targetAngle hold? i.e., how does the robot know if it needs to stay straight without a numerical value?
+        this.targetAngle = targetAngle;
+        turnController = new PIDController(kP, kI, kD, imu, this);
+        turnController.setInputRange(-180.0f,  180.0f);
+        turnController.setOutputRange(-0.5, 0.5);
+        turnController.setAbsoluteTolerance(kToleranceDegrees);
+        turnController.setContinuous(true);
     }
+
 
     protected void initialize(){
         DriverStation.reportError("Starting autoalign", false);
@@ -41,14 +47,18 @@ public class AutoAlign extends Command implements PIDOutput{
     }
 
     protected void execute(){
-        synchronized (this) {
+    synchronized (this) {
+        // Base turning on the rotateToAngleRate...
+        turnController.enable();
+        SmartDashboard.putNumber("AutoAlign/Rotating Rate", rotateToAngleRate);
+        driveTrain.tankDrive(rotateToAngleRate, -1*rotateToAngleRate);
+        currentAngle = imu.getYaw();
+        SmartDashboard.putNumber("AutoAlign/CurrentAngle", currentAngle);
             // Base turning on the rotateToAngleRate...
             //turnController.enable();
-            SmartDashboard.putNumber("AutoAlign/Rotating Rate", rotateToAngleRate);
-            DriverStation.reportError("AutoAlign/Rotating Rate " + rotateToAngleRate, false);
-            currentAngle = imu.getYaw();
-            SmartDashboard.putNumber("AutoAlign/CurrentAngle", currentAngle);
+
         }
+
     }
 
     protected boolean isFinished() {

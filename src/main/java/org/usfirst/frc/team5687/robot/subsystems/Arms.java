@@ -1,7 +1,9 @@
 package org.usfirst.frc.team5687.robot.subsystems;
 
-import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DigitalInput;
+
+
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.interfaces.Potentiometer;
@@ -16,14 +18,18 @@ import org.usfirst.frc.team5687.robot.utils.Helpers;
  */
 public class Arms extends Subsystem {
 
+    private Potentiometer armsPot;
     private VictorSP armsMotor;
     private DigitalInput armsSensor;
-    private Potentiometer armsPot;
 
     public Arms() {
         armsMotor = new VictorSP(RobotMap.Arms.ARMS_MOTOR);
         armsSensor = new DigitalInput(RobotMap.Arms.ARMS_HALL);
         armsPot = new AnalogPotentiometer(RobotMap.Arms.ARMS_POT, Constants.Arms.ARMS_SCALE, Constants.Arms.ARMS_OFFSET);
+    }
+
+    public void invertMotor(){
+        armsMotor.setInverted(true);
     }
 
     @Override
@@ -51,6 +57,10 @@ public class Arms extends Subsystem {
         armsMotor.set(Constants.Arms.ARMS_SPEED);
     }
 
+    public void setInvertedSpeed(double thespeed){
+        if(thespeed <= 0); //TODO: add limit?
+    }
+
     public void stop() {
         armsMotor.set(0);
     }
@@ -64,9 +74,10 @@ public class Arms extends Subsystem {
     }
 
     /**
-     * Returns if arms is above pot limit
-     * @return whether arms exceeds max value
-     */
+
+    /* Returns if arms is above pot limit
+    * @return whether arms exceeds max value
+    */
     public boolean isAboveLimit() {
         return armsPot.get() > Constants.Arms.MAX_DEGREES;
     }
@@ -78,6 +89,15 @@ public class Arms extends Subsystem {
     public boolean isBelowLimit() {
         return armsPot.get() < Constants.Arms.MIN_DEGREES;
     }
+    public boolean atTarget(){
+        return armsPot.get() == Constants.Arms.DESIRED_DEGREES; }
+
+    public boolean isBelowTarget(){
+        return armsPot.get() < Constants.Arms.DESIRED_DEGREES;
+    }
+
+    public boolean isAboveTarget(){
+        return armsPot.get() > Constants.Arms.DESIRED_DEGREES;}
 
     public void updateDashboard() {
         SmartDashboard.putBoolean("Arms upper limit", isAtUpperLimit());

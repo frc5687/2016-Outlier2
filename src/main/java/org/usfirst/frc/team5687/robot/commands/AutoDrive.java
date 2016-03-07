@@ -1,12 +1,14 @@
 package org.usfirst.frc.team5687.robot.commands;
 
+import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team5687.robot.OI;
+import org.usfirst.frc.team5687.robot.Robot;
+import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import static org.usfirst.frc.team5687.robot.Robot.driveTrain;
-import static org.usfirst.frc.team5687.robot.Robot.imu;
 
 import java.util.Date;
 
@@ -16,9 +18,14 @@ import java.util.Date;
  * Eventually we will want to add distance-based options.
  */
 
+
 public class AutoDrive extends Command implements PIDOutput{
     PIDController turnController = null;
-
+    AHRS imu = Robot.imu;
+    OI oi = Robot.oi;
+    DriveTrain driveTrain = Robot.driveTrain;
+    private float desiredAngle = 1/8; //TODO: Check that is is the correct angle
+    private long end = 0;
     private long endTime = 0;
     private int timeToDrive = 0;
     private double inchesToDrive = 0;
@@ -26,6 +33,11 @@ public class AutoDrive extends Command implements PIDOutput{
     private double inchesDriven = 0;
     private double inchesAtStart = 0;
     private boolean driveByTime;
+    private float currentAngle = imu.getPitch();
+    public boolean isOnRamp = false;
+    public boolean ramp;
+    public double leftSpeed;
+    public double rightSpeed;
 
     private static final double kP = 0.3;
     private static final double kI = 0.05;
@@ -46,6 +58,8 @@ public class AutoDrive extends Command implements PIDOutput{
         this.speed = speed;
         this.timeToDrive = millisToDrive;
         this.driveByTime = true;
+
+        DriverStation.reportError("Driving by Time", false);
     }
 
     /**
@@ -55,10 +69,20 @@ public class AutoDrive extends Command implements PIDOutput{
      * @param inchesToDrive Inches to drive (negative for reverse)
      */
     public AutoDrive(double speed, double inchesToDrive) {
-        requires(driveTrain);
+        requires(driveTrain);//TODO: Why can't requires be applied to driveTrain?
         this.speed = speed;
         this.inchesToDrive = inchesToDrive;
         this.driveByTime = false;
+
+        DriverStation.reportError("Driving by Distance", false);
+    }
+
+    public AutoDrive(double speed, boolean ramp) {
+        this.leftSpeed = speed;
+        this.rightSpeed = speed;
+        this.ramp = ramp;
+        isOnRamp = true;
+
     }
 
     @Override
@@ -67,7 +91,7 @@ public class AutoDrive extends Command implements PIDOutput{
             DriverStation.reportError("Driving at " + speed + " for " + timeToDrive + " milliseconds.\n", false);
             endTime = (new Date()).getTime() + timeToDrive;
         } else {
-            DriverStation.reportError("Driving at " + speed + " for " + inchesToDrive + " inches.\n", false);
+            DriverStation.reportError("Driving at " + speed + " for " + inchesToDrive + " inchres.\n", false);
             driveTrain.resetDriveEncoders();
         }
         inchesAtStart = driveTrain.getRightDistance();
@@ -89,6 +113,7 @@ public class AutoDrive extends Command implements PIDOutput{
 
     @Override
     protected boolean isFinished() {
+
         if (driveByTime) {
             long now = (new Date()).getTime();
             return now > endTime;
@@ -98,10 +123,16 @@ public class AutoDrive extends Command implements PIDOutput{
         } else if (inchesToDrive>0) {
             inchesDriven = driveTrain.getRightDistance() - inchesAtStart;
             return  inchesDriven >= inchesToDrive;
-        } else {
+        } else if (isOnRamp){
+            return currentAngle == desiredAngle;
+        }
+
+        else {
             return true;
         }
+
     }
+
 
     @Override
     protected void end() {
@@ -123,3 +154,4 @@ public class AutoDrive extends Command implements PIDOutput{
         }
     }
 }
+
