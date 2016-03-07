@@ -11,7 +11,7 @@ public abstract class AutoTraverse extends Command{
      *
      */
     static final long inchesToTraverseDefense = 90;
-    static final long inchesToClear = 3;
+    static final long inchesToClear = 12; //TODO! back to 3 with Rotation
     //static final long inchesToCross = 20;
     //static final double rollThreshold = 8.0;
     static final double rollErrorMargin = 1.0;

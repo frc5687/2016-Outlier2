@@ -13,6 +13,8 @@ public class Shooter extends Subsystem {
      */
     private VictorSP wheelMotor;
 
+    private double shooterSpeed = Constants.Shooter.SHOOTER_SPEED;
+
     /**
      * Constructor
      */
@@ -26,28 +28,21 @@ public class Shooter extends Subsystem {
      * @param speed the desired speed control value
      */
     public void setSpeed(double speed) {
+        shooterSpeed = speed;
+        SmartDashboard.putNumber("Shooter Wheel Set Speed", speed);
+    }
+
+    public double getSpeed() {
+        return  shooterSpeed;
+    }
+
+    public void toggle(boolean on) {
+        double speed = on?shooterSpeed:0;
+
         wheelMotor.set(speed);
-
-        if (speed > 0) {
-            SmartDashboard.putNumber("Shooter Wheel Spin Time", SmartDashboard.getNumber("Shooter Wheel Spin Time", 0) + 20);
-        } else {
-            SmartDashboard.putNumber("Shooter Wheel Spin Time", 0);
-            SmartDashboard.putBoolean("Shooter Wheel At Speed", false);
-        }
-        if (SmartDashboard.getNumber("Shooter Wheel Spin Time", 0) > Constants.Shooter.PRIME_TIME) {
-            SmartDashboard.putBoolean("Shooter Wheel At Speed", true);
-        }
+        SmartDashboard.putBoolean("Shooter Wheel Running", on);
     }
 
-    /**
-     * Stops the shooter motor
-     */
-    public void stop() {
-        wheelMotor.set(0);
-
-        SmartDashboard.putNumber("Shooter Wheel Spin Time", 0);
-        SmartDashboard.putBoolean("Shooter Wheel At Speed", false);
-    }
 
     /**
      * Set the default command for the shooter subsystem

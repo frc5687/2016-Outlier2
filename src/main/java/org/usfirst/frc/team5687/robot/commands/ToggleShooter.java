@@ -3,38 +3,39 @@ package org.usfirst.frc.team5687.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5687.robot.Constants;
 
-import static org.usfirst.frc.team5687.robot.Robot.intake;
+import static org.usfirst.frc.team5687.robot.Robot.shooter;
 
 /**
- * Command to fire the boulder from the intake to shooter wheels
+ * Command to set speed of shooter motor
  * @author wil
  */
-public class FireBoulder extends Command {
+public class ToggleShooter extends Command {
+    private boolean _on;
     private long endTime;
 
-
-    public FireBoulder() {
-        requires(intake);
+    public ToggleShooter(boolean on) {
+        requires(shooter);
+        _on = on;
     }
+
 
     @Override
     protected void initialize() {
-        endTime = System.currentTimeMillis() + Constants.Shooter.UNPRIME_TIME;
+        endTime = System.currentTimeMillis() + Constants.Shooter.PRIME_TIME;
     }
 
     @Override
     protected void execute() {
-        intake.setSpeed(Constants.Intake.FIRE_SPEED);
+        shooter.toggle(_on);
     }
 
     @Override
     protected boolean isFinished() {
-        return !intake.isPrimed() && System.currentTimeMillis() > endTime;
+        return !_on || System.currentTimeMillis() > endTime;
     }
 
     @Override
     protected void end() {
-        intake.stop();
     }
 
     @Override

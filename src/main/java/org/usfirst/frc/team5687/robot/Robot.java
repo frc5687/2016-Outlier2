@@ -148,16 +148,19 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData("Start Position", positionChooser);
 
         autoChooser.addDefault("Do Nothing At All", new AutonomousDoNothing());
-        autoChooser.addObject("Calibrate CVT", new AutonomousTestCVT());
         autoChooser.addObject("Traverse Defense", new AutoTraverseBuilder());
         autoChooser.addObject("Traverse And Shoot", new AutoTraverseAndShootBuilder());
+        autoChooser.addDefault("---Below are for Testing---", new AutonomousDoNothing());
+        autoChooser.addObject("Target and Shoot", new AutoShootOnly());
         autoChooser.addObject("Chase Target", new AutoChaseTarget());
+        autoChooser.addObject("Calibrate CVT", new AutonomousTestCVT());
         autoChooser.addObject("Left 90", new AutoAlign(-90));
         autoChooser.addObject("Right 90", new AutoAlign(90));
         autoChooser.addObject("Drive 12", new AutoDrive(0.4, 12f));
         autoChooser.addObject("Drive 24", new AutoDrive(0.4, 24f));
         autoChooser.addObject("Drive 48", new AutoDrive(0.4, 48f));
         autoChooser.addObject("Drive 96", new AutoDrive(0.4, 96f));
+        autoChooser.addObject("Calibrate CVT", new AutonomousTestCVT());
         SmartDashboard.putData("Autonomous mode", autoChooser);
 
 
@@ -205,7 +208,7 @@ public class Robot extends IterativeRobot {
         driveTrain.sendAmpDraw();
         intake.updateDashboard();
         arms.updateDashboard();
-
+        lights.updateDashboard();
     }
 
     public void teleopInit() {
@@ -226,6 +229,7 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().run();
         intake.updateDashboard();
         arms.updateDashboard();
+        lights.updateDashboard();
     }
 
     /**

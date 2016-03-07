@@ -20,7 +20,7 @@ public class Constants {
          */
         public static final double DRIVE_STICK = 0.1;
         public static final double SHOOTER_WHEELS = 0.1;
-        public static final double INTAKE_STICK = 0.2;
+        public static final double INTAKE_STICK = 0.8;
         public static final double ARMS = 0.1;
     }
 
@@ -106,7 +106,10 @@ public class Constants {
         /**
          * Speed to run the shooter wheels to shoot high goal
          */
-        public static final double SHOOTER_SPEED = 0.96;
+        public static final double SHOOTER_SPEED_LOW = 0.92;
+        public static final double SHOOTER_SPEED = 0.94;
+        public static final double SHOOTER_SPEED_HIGH = 0.96;
+        public static final double SHOOTER_SPEED_EXTREME = 0.98;
     }
 
     public class Arms {
