@@ -3,18 +3,18 @@ package org.usfirst.frc.team5687.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5687.robot.OI;
 import org.usfirst.frc.team5687.robot.Robot;
-import org.usfirst.frc.team5687.robot.subsystems.Climber;
+import org.usfirst.frc.team5687.robot.subsystems.IntakeLifter;
 
 /**
- * Command to extend the tape measure up for climbing
+ * Command to control intake lifter
  * @author wil
  */
-public class ClimbManually extends Command {
-    Climber climber = Robot.climber;
+public class PositionIntake extends Command {
+    IntakeLifter intakeLifter = Robot.intakeLifter;
     OI oi = Robot.oi;
 
-    public ClimbManually() {
-        requires(climber);
+    public PositionIntake() {
+        requires(intakeLifter);
     }
 
     @Override
@@ -23,7 +23,7 @@ public class ClimbManually extends Command {
 
     @Override
     protected void execute() {
-        climber.setSpeed(oi.getClimberSpeed());
+        intakeLifter.setSpeed(oi.getIntakeLifterSpeed());
     }
 
     @Override

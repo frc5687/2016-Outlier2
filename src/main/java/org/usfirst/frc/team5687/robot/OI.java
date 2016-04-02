@@ -2,7 +2,6 @@ package org.usfirst.frc.team5687.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.commands.*;
 import org.usfirst.frc.team5687.robot.utils.Gamepad;
 import org.usfirst.frc.team5687.robot.utils.Helpers;
@@ -133,6 +132,18 @@ public class OI {
         return Helpers.applyDeadband(joystick.getRawAxis(1), Constants.Deadbands.INTAKE_STICK);
     }
 
+    /**
+     * Gets the desired speed for the intake lifter extension
+     * @return the value for the intake lifter motor
+     */
+    public double getIntakeLifterSpeed() {
+        if (gamepad.getRawButton(Gamepad.Buttons.X)) {
+            return Constants.IntakeLifter.OUTWARD_SPEED;
+        } else if (gamepad.getRawButton(Gamepad.Buttons.B)) {
+            return Constants.IntakeLifter.INWARD_SPEED;
+        }
+        return 0;
+    }
 
     /**
      * Gets the desired speed for the arms
@@ -140,19 +151,6 @@ public class OI {
      */
     public double getArmsSpeed() {
         return (Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.LEFT_TRIGGER), Constants.Deadbands.ARMS) - Helpers.applyDeadband(gamepad.getRawAxis(Gamepad.Axes.RIGHT_TRIGGER), Constants.Deadbands.ARMS)) * 0.9;
-    }
-
-    /**
-     * Gets the desired speed for the climber
-     * @return the value for the climber motor
-     */
-    public double getClimberSpeed() {
-        if (gamepad.getRawButton(Gamepad.Buttons.X)) {
-            return Constants.Climber.RAISE_SPEED;
-        } else if (gamepad.getRawButton(Gamepad.Buttons.B)) {
-            return Constants.Climber.LOWER_SPEED;
-        }
-        return 0;
     }
 
     /**
