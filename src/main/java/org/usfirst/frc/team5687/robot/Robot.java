@@ -45,14 +45,14 @@ public class Robot extends IterativeRobot {
     public static Intake intake;
 
     /**
+     * Represents the robot's intake lifter
+     */
+    public static IntakeLifter intakeLifter;
+
+    /**
      * Represents the robot's arm
      */
     public static Arms arms;
-
-    /**
-     * Represents the robot's climber
-     */
-    public static Climber climber;
 
     /**
      * Represents the robot's lights
@@ -102,8 +102,8 @@ public class Robot extends IterativeRobot {
         driveTrain = new DriveTrain();
         shooter = new Shooter();
         intake = new Intake();
+        intakeLifter = new IntakeLifter();
         arms = new Arms();
-        climber = new Climber();
         lights = new Lights();
         autoChooser = new SendableChooser();
         defenseChooser = new SendableChooser();
