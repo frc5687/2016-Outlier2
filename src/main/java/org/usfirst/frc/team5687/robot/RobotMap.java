@@ -40,9 +40,13 @@ public class RobotMap {
      * Intake ports
      */
     public static class Intake {
+        // Main Intake
         public static final int INTAKE_MOTOR = 9;
-        public static final int LIFT_MOTOR = 4;
         public static final int INFRARED_SENSOR = 3;
+        // Extension
+        public static final int LIFT_MOTOR = 4;
+        public static final int LOWER_HALL = 2;
+        public static final int UPPER_HALL = 3;
     }
 
     /**

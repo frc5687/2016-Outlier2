@@ -92,8 +92,8 @@ public class Constants {
     }
 
     public class IntakeLifter {
-        public static final double INWARD_SPEED = -1;
-        public static final double OUTWARD_SPEED = 1;
+        public static final double OUTWARD_SPEED = -1;
+        public static final double INWARD_SPEED = 1;
     }
 
     public class Shooter {

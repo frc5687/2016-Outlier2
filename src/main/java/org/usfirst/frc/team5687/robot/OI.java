@@ -28,6 +28,9 @@ public class OI {
     public static final int UNPRIME = 6;
     public static final int FIRE = 1;
     public static final int RECOVER = 4;
+    // Intake Lifter Buttons
+    public static final Gamepad.Buttons LOWER_INTAKE = Gamepad.Buttons.X;
+    public static final Gamepad.Buttons RAISE_INTAKE = Gamepad.Buttons.B;
     // Prime Speed Buttons
     public static final int LOW_PRIME_SPEED = 8; // 0.92
     public static final int DEFAULT_PRIME_SPEED = 7; // 0.94
@@ -137,9 +140,9 @@ public class OI {
      * @return the value for the intake lifter motor
      */
     public double getIntakeLifterSpeed() {
-        if (gamepad.getRawButton(Gamepad.Buttons.X)) {
+        if (gamepad.getRawButton(LOWER_INTAKE)) {
             return Constants.IntakeLifter.OUTWARD_SPEED;
-        } else if (gamepad.getRawButton(Gamepad.Buttons.B)) {
+        } else if (gamepad.getRawButton(RAISE_INTAKE)) {
             return Constants.IntakeLifter.INWARD_SPEED;
         }
         return 0;
