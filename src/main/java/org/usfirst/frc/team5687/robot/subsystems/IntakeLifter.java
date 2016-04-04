@@ -13,13 +13,13 @@ import org.usfirst.frc.team5687.robot.commands.PositionIntake;
 public class IntakeLifter extends Subsystem {
 
     private VictorSP lifterMotor;
-    private DigitalInput lowerLimitHall;
-    private DigitalInput upperLimitHall;
+    //private DigitalInput lowerLimitHall;
+    //private DigitalInput upperLimitHall;
 
     public IntakeLifter() {
         lifterMotor = new VictorSP(RobotMap.Intake.LIFT_MOTOR);
-        lowerLimitHall = new DigitalInput(RobotMap.Intake.LOWER_HALL);
-        upperLimitHall = new DigitalInput(RobotMap.Intake.UPPER_HALL);
+        //lowerLimitHall = new DigitalInput(RobotMap.Intake.LOWER_HALL);
+        //upperLimitHall = new DigitalInput(RobotMap.Intake.UPPER_HALL);
     }
 
     @Override
@@ -43,6 +43,7 @@ public class IntakeLifter extends Subsystem {
         lifterMotor.set(0);
     }
 
+    /*
     public boolean isAtLowerLimit() {
         return !lowerLimitHall.get();
     }
@@ -50,5 +51,6 @@ public class IntakeLifter extends Subsystem {
     public boolean isAtUpperLimit() {
         return !upperLimitHall.get();
     }
+    */
 
 }
