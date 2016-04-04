@@ -120,6 +120,17 @@ public class Constants {
         public static final double MIN_DEGREES = 0.5;
     }
 
+    public class Tower {
+        /**
+         * Angle of Batter from carpet
+         */
+        public static final double BATTER_ANGLE = 42; //TODO: Record real values for BatterAngle
+        /**
+         * Length of Batter hypotenuse
+         */
+        public static final double BATTER_LENGTH = 42; // TODO: Record real values for BatterLength
+    }
+
     public class Climber {
         public static final double RAISE_SPEED = 0.6;
         public static final double LOWER_SPEED = -1;
