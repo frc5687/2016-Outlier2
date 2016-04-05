@@ -31,6 +31,8 @@ public class OI {
     // Intake Lifter Buttons
     public static final Gamepad.Buttons LOWER_INTAKE = Gamepad.Buttons.X;
     public static final Gamepad.Buttons RAISE_INTAKE = Gamepad.Buttons.B;
+    public static final int LOWER_INTAKE_AUTO = Gamepad.Buttons.LEFT_BUMPER.getNumber();
+    public static final int RAISE_INTAKE_AUTO = Gamepad.Buttons.RIGHT_BUMPER.getNumber();
     // Prime Speed Buttons
     public static final int LOW_PRIME_SPEED = 8; // 0.92
     public static final int DEFAULT_PRIME_SPEED = 7; // 0.94
@@ -58,6 +60,9 @@ public class OI {
         JoystickButton unprimeButton = new JoystickButton(joystick, UNPRIME);
         JoystickButton fireButton = new JoystickButton(joystick, FIRE);
         JoystickButton recoverButton = new JoystickButton(joystick, RECOVER);
+        JoystickButton lowerIntakeButton = new JoystickButton(joystick, LOWER_INTAKE_AUTO);
+        JoystickButton raiseIntakeButton = new JoystickButton(joystick, RAISE_INTAKE_AUTO);
+
         JoystickButton resetCameraButton = new JoystickButton(joystick, RESET_CAMERA);
         JoystickButton visionLightSwitch = new JoystickButton(joystick, SWITCH_RING_LIGHT);
         JoystickButton flashlightSwitch = new JoystickButton(joystick, SWITCH_FLASHLIGHT);
@@ -76,6 +81,9 @@ public class OI {
         unprimeButton.whenPressed(new CancelPrime());
         fireButton.whenPressed(new Fire());
         recoverButton.whenPressed(new RecoverBoulder());
+        // Intake Lifter Commands
+        lowerIntakeButton.whenPressed(new IntakeLower());
+        raiseIntakeButton.whenPressed(new IntakeRaise());
         // Light Switch Commands
         visionLightSwitch.whenPressed(new ToggleVisionLight());
         flashlightSwitch.whenPressed(new ToggleFlashlight());

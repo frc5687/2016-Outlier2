@@ -229,6 +229,7 @@ public class Robot extends IterativeRobot {
         driveTrain.sendAmpDraw();
         Scheduler.getInstance().run();
         intake.updateDashboard();
+        intakeLifter.updateDashboard();
         arms.updateDashboard();
         lights.updateDashboard();
     }
