@@ -1,41 +1,44 @@
 package org.usfirst.frc.team5687.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team5687.robot.OI;
 import org.usfirst.frc.team5687.robot.Robot;
-import org.usfirst.frc.team5687.robot.subsystems.Climber;
+import org.usfirst.frc.team5687.robot.subsystems.IntakeLifter;
 
 /**
- * Command to extend the tape measure up for climbing
+ * Command to lower intake extension
  * @author wil
  */
-public class ClimbManually extends Command {
-    Climber climber = Robot.climber;
-    OI oi = Robot.oi;
+public class IntakeLower extends Command {
+    IntakeLifter lifter = Robot.intakeLifter;
 
-    public ClimbManually() {
-        requires(climber);
+    public IntakeLower() {
+        requires(lifter);
     }
 
     @Override
     protected void initialize() {
+
     }
 
     @Override
     protected void execute() {
-        climber.setSpeed(oi.getClimberSpeed());
+
     }
 
     @Override
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     @Override
     protected void end() {
+
     }
 
     @Override
     protected void interrupted() {
+
     }
+
+
 }

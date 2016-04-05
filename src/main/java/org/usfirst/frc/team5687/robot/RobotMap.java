@@ -40,8 +40,13 @@ public class RobotMap {
      * Intake ports
      */
     public static class Intake {
+        // Main Intake
         public static final int INTAKE_MOTOR = 9;
         public static final int INFRARED_SENSOR = 3;
+        // Extension
+        public static final int LIFT_MOTOR = 4;
+        public static final int LOWER_HALL = 2;
+        public static final int UPPER_HALL = 3;
     }
 
     /**
@@ -51,13 +56,6 @@ public class RobotMap {
         public static final int ARMS_MOTOR = 5;
         public static final int ARMS_POT = 2;
         public static final int ARMS_HALL = 1;
-    }
-
-    /**
-     * Climber ports
-     */
-    public static class Climber {
-        public static final int CLIMBER_MOTOR = 4;
     }
 
     /**

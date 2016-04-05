@@ -19,8 +19,7 @@ public class Constants {
          * Deadband threshold for drive joysticks
          */
         public static final double DRIVE_STICK = 0.1;
-        public static final double SHOOTER_WHEELS = 0.1;
-        public static final double INTAKE_STICK = 0.8;
+        public static final double INTAKE_STICK = 0.4;
         public static final double ARMS = 0.1;
     }
 
@@ -92,6 +91,11 @@ public class Constants {
         public static final double BOWL_SPEED = -1.0;
     }
 
+    public class IntakeLifter {
+        public static final double OUTWARD_SPEED = -1;
+        public static final double INWARD_SPEED = 1;
+    }
+
     public class Shooter {
         /**
          * Time for running shooter wheels for priming
@@ -106,10 +110,10 @@ public class Constants {
         /**
          * Speed to run the shooter wheels to shoot high goal
          */
-        public static final double SHOOTER_SPEED_LOW = 0.92;
-        public static final double SHOOTER_SPEED = 0.94;
+        public static final double SHOOTER_SPEED_LOW = 0.88;
+        public static final double SHOOTER_SPEED = 0.92;
         public static final double SHOOTER_SPEED_HIGH = 0.96;
-        public static final double SHOOTER_SPEED_EXTREME = 0.98;
+        public static final double SHOOTER_SPEED_EXTREME = 1.0;
     }
 
     public class Arms {
@@ -118,11 +122,6 @@ public class Constants {
         public static final int ARMS_OFFSET = -94;
         public static final double MAX_DEGREES = 136.0;
         public static final double MIN_DEGREES = 0.5;
-    }
-
-    public class Climber {
-        public static final double RAISE_SPEED = 0.6;
-        public static final double LOWER_SPEED = -1;
     }
 
     public class Encoders {
