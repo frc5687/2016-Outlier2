@@ -6,14 +6,14 @@ import org.usfirst.frc.team5687.robot.Robot;
 import org.usfirst.frc.team5687.robot.subsystems.IntakeLifter;
 
 /**
- * Command to lower intake extension
+ * Command to retract intake extension
  * @author wil
  */
-public class IntakeLower extends Command {
+public class IntakeRaise extends Command {
     IntakeLifter lifter = Robot.intakeLifter;
     private long endTime;
 
-    public IntakeLower() {
+    public IntakeRaise() {
         requires(lifter);
     }
 
@@ -24,13 +24,13 @@ public class IntakeLower extends Command {
 
     @Override
     protected void execute() {
-        lifter.lower();
+        lifter.raise();
     }
 
     @Override
     protected boolean isFinished() {
         boolean isTimeOut = System.currentTimeMillis() > endTime;
-        return lifter.isAtLowerLimit() || isTimeOut;
+        return lifter.isAtUpperLimit() || isTimeOut;
     }
 
     @Override
