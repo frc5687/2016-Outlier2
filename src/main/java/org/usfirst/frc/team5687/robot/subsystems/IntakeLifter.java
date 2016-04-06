@@ -29,7 +29,12 @@ public class IntakeLifter extends Subsystem {
     }
 
     public void setSpeed(double speed) {
-        lifterMotor.set(speed);
+        boolean movingLower = speed < 0;
+        if (movingLower && isAtLowerLimit()) {
+            lifterMotor.set(0);
+        } else {
+            lifterMotor.set(speed);
+        }
     }
 
     public void lower() {
