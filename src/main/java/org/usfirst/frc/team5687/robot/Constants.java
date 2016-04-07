@@ -68,7 +68,7 @@ public class Constants {
         /**
          * Speed to run the intake roller to prime the boulder
          */
-        public static final double PRIME_SPEED = -0.8;
+        public static final double PRIME_SPEED = -0.3;
 
         /**
          * Speed to run the intake roller to unprime the boulder to captured position
@@ -92,8 +92,8 @@ public class Constants {
     }
 
     public class IntakeLifter {
-        public static final double OUTWARD_SPEED = -1;
-        public static final double INWARD_SPEED = 1;
+        public static final double LOWER_SPEED = -1;
+        public static final double RAISE_SPEED = 1;
         public static final long LIFT_TIME = 2000;
     }
 
@@ -111,10 +111,10 @@ public class Constants {
         /**
          * Speed to run the shooter wheels to shoot high goal
          */
-        public static final double SHOOTER_SPEED_LOW = 0.88;
-        public static final double SHOOTER_SPEED = 0.92;
-        public static final double SHOOTER_SPEED_HIGH = 0.96;
-        public static final double SHOOTER_SPEED_EXTREME = 1.0;
+        public static final double SHOOTER_SPEED_LOW = 0.84;
+        public static final double SHOOTER_SPEED = 0.88;
+        public static final double SHOOTER_SPEED_HIGH = 0.92;
+        public static final double SHOOTER_SPEED_EXTREME = 0.96;
     }
 
     public class Arms {

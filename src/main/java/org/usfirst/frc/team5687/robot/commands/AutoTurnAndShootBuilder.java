@@ -11,17 +11,18 @@ import org.usfirst.frc.team5687.robot.Robot;
 
  * Created by Ben Bernard on 2/18/2016.
  */
-public class AutoTraverseBuilder extends Command {
+public class AutoTurnAndShootBuilder extends Command {
 
 
     @Override
     protected void initialize() {
-        String defense = Robot.robot.getSelectedDefense();
+        //String defense = Robot.robot.getSelectedDefense();
+        int position = Integer.parseInt(Robot.robot.getSelectedPosition());
 
-        DriverStation.reportError("Building autotraverse for defense " + defense,false);
+        DriverStation.reportError("Building auto turn-and-shoot for position " + position,false);
 
         // Traverse the selected defense
-        Scheduler.getInstance().add(new AutoTraverseOnly(defense));
+        Scheduler.getInstance().add(new AutoTurnAndShoot(position));
 
     }
 

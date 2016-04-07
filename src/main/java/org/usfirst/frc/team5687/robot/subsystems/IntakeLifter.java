@@ -15,12 +15,12 @@ public class IntakeLifter extends Subsystem {
 
     private VictorSP lifterMotor;
     private DigitalInput lowerLimitHall;
-    private DigitalInput upperLimitHall;
+    // private DigitalInput upperLimitHall;
 
     public IntakeLifter() {
         lifterMotor = new VictorSP(RobotMap.Intake.LIFT_MOTOR);
         lowerLimitHall = new DigitalInput(RobotMap.Intake.LOWER_HALL);
-        upperLimitHall = new DigitalInput(RobotMap.Intake.UPPER_HALL);
+        // upperLimitHall = new DigitalInput(RobotMap.Intake.UPPER_HALL);
     }
 
     @Override
@@ -33,11 +33,11 @@ public class IntakeLifter extends Subsystem {
     }
 
     public void lower() {
-        lifterMotor.set(Constants.IntakeLifter.OUTWARD_SPEED);
+        lifterMotor.set(Constants.IntakeLifter.LOWER_SPEED);
     }
 
     public void raise() {
-        lifterMotor.set(Constants.IntakeLifter.INWARD_SPEED);
+        lifterMotor.set(Constants.IntakeLifter.RAISE_SPEED);
     }
 
     public void stop() {
@@ -49,12 +49,12 @@ public class IntakeLifter extends Subsystem {
     }
 
     public boolean isAtUpperLimit() {
-        return !upperLimitHall.get();
+        return false; // !upperLimitHall.get();
     }
 
     public void updateDashboard() {
         SmartDashboard.putBoolean("Lifter LowerLimit", isAtLowerLimit());
-        SmartDashboard.putBoolean("Lifter UpperLimit", isAtUpperLimit());
+        // SmartDashboard.putBoolean("Lifter UpperLimit", isAtUpperLimit());
     }
 
 }

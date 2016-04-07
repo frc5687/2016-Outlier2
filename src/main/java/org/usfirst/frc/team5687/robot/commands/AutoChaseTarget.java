@@ -19,8 +19,8 @@ public class AutoChaseTarget extends Command {
     private static final double deadbandWidth = 10;
     private static final double deadbandX = 10;
 
-    private static final double baseSpeed = 0.4;
-    private static final double twist = .1;
+    private static final double baseSpeed = 0.6;
+    private static final double twist = .2;
 
     private boolean centered = false;
     private boolean inRange = false;
@@ -84,6 +84,8 @@ public class AutoChaseTarget extends Command {
 
         SmartDashboard.putString("autochase/centering", offset < 0 ? "Turning left" : offset > 0 ? "Turning right" : "Centered");
         SmartDashboard.putString("autochase/range", speed < 0 ? "Moving back" : speed > 0 ? "Moving in" : "In Range");
+
+        DriverStation.reportError("Chase: Center=" + centerX + " Width=" + width + " LeftSpeed=" + (speed - offset) + " RightSpeed=" + (speed + offset), false);
 
         driveTrain.tankDrive(speed - offset, speed + offset);
     }
