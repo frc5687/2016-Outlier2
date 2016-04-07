@@ -25,6 +25,7 @@ public class AutoTraverseOnly extends CommandGroup {
             //(traverseSpeed, inchesToCross, rollThreshold)
 
             case "LowBar":
+                // addParallel(new IntakeLower());
                 addSequential(new AutoTraverseStaticDefense(defaultTraverseSpeed,defaultInchesToCross,defaultRollThreshold));
                 break;
             case "Moat":
