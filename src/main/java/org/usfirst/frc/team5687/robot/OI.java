@@ -29,8 +29,8 @@ public class OI {
     public static final int FIRE = 1;
     public static final int RECOVER = 4;
     // Intake Lifter Buttons
-    public static final int LOWER_INTAKE = 12;
-    public static final int RAISE_INTAKE = 11;
+    public static final int LOWER_INTAKE = 11;
+    public static final int RAISE_INTAKE = 12;
         //public static final int LOWER_INTAKE_AUTO = Gamepad.Buttons.LEFT_BUMPER.getNumber();
         //public static final int RAISE_INTAKE_AUTO = Gamepad.Buttons.RIGHT_BUMPER.getNumber();
     // Prime Speed Buttons
