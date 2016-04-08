@@ -97,7 +97,7 @@ public class AutoChaseTarget extends Command {
 
     @Override
     protected void end() {
-        lights.turnRingLightOff();
+        lights.turnVisionLightOff();
         DriverStation.reportError(centered && inRange ? "Found target" : "Ran out of time", false);
     }
 

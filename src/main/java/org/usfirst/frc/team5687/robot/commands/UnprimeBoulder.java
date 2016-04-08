@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5687.robot.Constants;
 
 import static org.usfirst.frc.team5687.robot.Robot.intake;
+import static org.usfirst.frc.team5687.robot.Robot.lights;
 
 /**
  * Command to unprime the intake or move the boulder back to captured position
@@ -35,6 +36,7 @@ public class UnprimeBoulder extends Command{
     @Override
     protected void end() {
         intake.stop();
+        lights.turnVisionLightOff();
     }
 
     @Override

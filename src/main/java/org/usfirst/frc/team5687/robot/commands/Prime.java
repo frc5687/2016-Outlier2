@@ -13,6 +13,7 @@ public class Prime extends CommandGroup{
 
     public Prime() {
         addSequential(new EnableFlashlight());
+        addSequential(new EnableVisionLight());
         addSequential(new PrimeBoulder());
         addSequential(new ToggleShooter(true));
     }

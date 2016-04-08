@@ -11,11 +11,11 @@ import org.usfirst.frc.team5687.robot.RobotMap;
  */
 public class Lights extends Subsystem {
     private Solenoid flashlight;
-    private Solenoid ringLight;
+    private Solenoid visionLight;
 
     public Lights() {
         flashlight = new Solenoid(RobotMap.Lights.FLASHLIGHT);
-        ringLight = new Solenoid(RobotMap.Lights.RINGLIGHT);
+        visionLight = new Solenoid(RobotMap.Lights.RINGLIGHT);
     }
 
     @Override
@@ -24,6 +24,11 @@ public class Lights extends Subsystem {
 
     public boolean getFlashlight() {
         return flashlight.get();
+    }
+
+
+    public boolean getVisionLight() {
+        return visionLight.get();
     }
 
     public void turnFlashlightOn() {
@@ -39,21 +44,21 @@ public class Lights extends Subsystem {
         flashlight.set(!state);
     }
 
-    public void toggleRingLight() {
-        boolean state = ringLight.get();
-        ringLight.set(!state);
+    public void toggleVisionLight() {
+        boolean state = visionLight.get();
+        visionLight.set(!state);
     }
 
     public void turnRingLightOn() {
-        ringLight.set(true);
+        visionLight.set(true);
     }
 
-    public void turnRingLightOff() {
-        ringLight.set(false);
+    public void turnVisionLightOff() {
+        visionLight.set(false);
     }
 
     public void updateDashboard() {
         SmartDashboard.putBoolean("lights/flashlight", flashlight.get());
-        SmartDashboard.putBoolean("lights/ringlight", ringLight.get());
+        SmartDashboard.putBoolean("lights/ringlight", visionLight.get());
     }
 }

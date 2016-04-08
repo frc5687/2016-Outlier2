@@ -13,5 +13,6 @@ public class Fire extends CommandGroup{
         addSequential(new FireBoulder());
         addSequential(new ToggleShooter(false));
         addSequential(new DisableFlashlight());
+        addSequential(new DisableVisionLight());
     }
 }
