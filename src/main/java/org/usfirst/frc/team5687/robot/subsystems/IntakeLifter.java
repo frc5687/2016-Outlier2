@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.Constants;
 import org.usfirst.frc.team5687.robot.RobotMap;
-import org.usfirst.frc.team5687.robot.commands.PositionIntake;
 
 /**
  * Subsystem for lifting / lowering intake system
@@ -25,9 +24,10 @@ public class IntakeLifter extends Subsystem {
 
     @Override
     protected void initDefaultCommand() {
-        setDefaultCommand(new PositionIntake());
+        //setDefaultCommand(new PositionIntake()); // Switching to separated hold buttons
     }
 
+    // Idle for present
     public void setSpeed(double speed) {
         boolean movingLower = speed < 0;
         if (movingLower && isAtLowerLimit() || !movingLower && isAtUpperLimit()) {

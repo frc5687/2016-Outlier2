@@ -1,20 +1,17 @@
 package org.usfirst.frc.team5687.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team5687.robot.OI;
 import org.usfirst.frc.team5687.robot.Robot;
 import org.usfirst.frc.team5687.robot.subsystems.IntakeLifter;
 
 /**
- * Command to control intake lifter
- * Disabled for the present
+ * Manual command to lower intake arm while held
  * @author wil
  */
-public class PositionIntake extends Command {
+public class IntakeManualLower extends Command{
     IntakeLifter intakeLifter = Robot.intakeLifter;
-    OI oi = Robot.oi;
 
-    public PositionIntake() {
+    public IntakeManualLower() {
         requires(intakeLifter);
     }
 
@@ -24,19 +21,21 @@ public class PositionIntake extends Command {
 
     @Override
     protected void execute() {
-        //intakeLifter.setSpeed(oi.getIntakeLifterSpeed());
+        intakeLifter.lower();
     }
 
     @Override
     protected boolean isFinished() {
-        return true; // Command is disabled
+        return intakeLifter.isAtLowerLimit();
     }
 
     @Override
     protected void end() {
+        intakeLifter.stop();
     }
 
     @Override
     protected void interrupted() {
+        end();
     }
 }
