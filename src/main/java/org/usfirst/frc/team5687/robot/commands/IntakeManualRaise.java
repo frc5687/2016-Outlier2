@@ -17,6 +17,7 @@ public class IntakeManualRaise extends Command{
 
     @Override
     protected void initialize() {
+        intakeLifter.initUpperCounter();
     }
 
     @Override
@@ -26,7 +27,7 @@ public class IntakeManualRaise extends Command{
 
     @Override
     protected boolean isFinished() {
-        return intakeLifter.isAtUpperLimit();
+        return intakeLifter.isUpperCounterSet() || intakeLifter.isAtUpperLimit();
     }
 
     @Override

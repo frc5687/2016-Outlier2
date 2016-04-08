@@ -17,6 +17,7 @@ public class IntakeManualLower extends Command{
 
     @Override
     protected void initialize() {
+        intakeLifter.initLowerCounter();
     }
 
     @Override
@@ -26,7 +27,7 @@ public class IntakeManualLower extends Command{
 
     @Override
     protected boolean isFinished() {
-        return intakeLifter.isAtLowerLimit();
+        return intakeLifter.isLowerCounterSet() || intakeLifter.isAtLowerLimit();
     }
 
     @Override
