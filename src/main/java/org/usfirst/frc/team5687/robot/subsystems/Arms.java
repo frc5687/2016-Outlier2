@@ -80,6 +80,7 @@ public class Arms extends Subsystem {
     }
 
     public void updateDashboard() {
+        SmartDashboard.putNumber("Arms pot", armsPot.get());
         SmartDashboard.putBoolean("Arms upper limit", isAtUpperLimit());
         SmartDashboard.putBoolean("Arms MAX", isAboveLimit());
         SmartDashboard.putBoolean("Arms MIN", isBelowLimit());
