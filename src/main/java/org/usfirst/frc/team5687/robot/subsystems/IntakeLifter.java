@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5687.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -14,12 +15,16 @@ public class IntakeLifter extends Subsystem {
 
     private VictorSP lifterMotor;
     private DigitalInput lowerLimitHall;
+    private Counter lowerCounter;
     private DigitalInput upperLimitHall;
+    private Counter upperCounter;
 
     public IntakeLifter() {
         lifterMotor = new VictorSP(RobotMap.Intake.LIFT_MOTOR);
         lowerLimitHall = new DigitalInput(RobotMap.Intake.LOWER_HALL);
+        lowerCounter = new Counter(lowerLimitHall);
         upperLimitHall = new DigitalInput(RobotMap.Intake.UPPER_HALL);
+        upperCounter = new Counter(upperLimitHall);
     }
 
     @Override
@@ -55,6 +60,22 @@ public class IntakeLifter extends Subsystem {
 
     public boolean isAtUpperLimit() {
         return !upperLimitHall.get();
+    }
+
+    public boolean isLowerCounterSet() {
+        return lowerCounter.get() > 0;
+    }
+
+    public void initLowerCounter() {
+        lowerCounter.reset();
+    }
+
+    public boolean isUpperCounterSet() {
+        return upperCounter.get() > 0;
+    }
+
+    public void initUpperCounter() {
+        upperCounter.reset();
     }
 
     public void updateDashboard() {
