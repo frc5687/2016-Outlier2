@@ -151,9 +151,9 @@ public class OI {
      */
     public double getIntakeLifterSpeed() {
         if (joystick.getRawButton(LOWER_INTAKE)) {
-            return Constants.IntakeLifter.OUTWARD_SPEED;
+            return Constants.IntakeLifter.LOWER_SPEED;
         } else if (joystick.getRawButton(RAISE_INTAKE)) {
-            return Constants.IntakeLifter.INWARD_SPEED;
+            return Constants.IntakeLifter.RAISE_SPEED;
         }
         return 0;
     }

@@ -38,11 +38,11 @@ public class IntakeLifter extends Subsystem {
     }
 
     public void lower() {
-        lifterMotor.set(Constants.IntakeLifter.OUTWARD_SPEED);
+        lifterMotor.set(Constants.IntakeLifter.LOWER_SPEED);
     }
 
     public void raise() {
-        lifterMotor.set(Constants.IntakeLifter.INWARD_SPEED);
+        lifterMotor.set(Constants.IntakeLifter.RAISE_SPEED);
     }
 
     public void stop() {
