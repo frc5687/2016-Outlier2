@@ -9,6 +9,9 @@ public class AutoTraverseAndShoot extends CommandGroup {
 
     public AutoTraverseAndShoot(String defense, int position) {
 
+        if (defense == "LowBar") {
+            addParallel(new IntakeLower());
+        }
         addSequential(new AutoTraverseOnly(defense));
         addSequential(new AutoTurnOnly(position));
         addParallel(new Prime());

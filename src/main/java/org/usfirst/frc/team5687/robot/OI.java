@@ -21,6 +21,11 @@ public class OI {
 
     // Drive Train Buttons
     public static final int REVERSE = Gamepad.Buttons.BACK.getNumber();
+
+    // Hell-Effect Override Button
+    public static final int OVERRIDE = Gamepad.Buttons.START.getNumber();
+
+
     // Boulder Buttons
     public static final int CAPTURE = 3;
     public static final int BOWL = 2;
@@ -29,20 +34,22 @@ public class OI {
     public static final int FIRE = 1;
     public static final int RECOVER = 4;
     // Intake Lifter Buttons
-    public static final Gamepad.Buttons LOWER_INTAKE = Gamepad.Buttons.X;
-    public static final Gamepad.Buttons RAISE_INTAKE = Gamepad.Buttons.B;
-    public static final int LOWER_INTAKE_AUTO = Gamepad.Buttons.LEFT_BUMPER.getNumber();
-    public static final int RAISE_INTAKE_AUTO = Gamepad.Buttons.RIGHT_BUMPER.getNumber();
+    public static final int LOWER_INTAKE = 11;
+    public static final int RAISE_INTAKE = 12;
+        //public static final int LOWER_INTAKE_AUTO = Gamepad.Buttons.LEFT_BUMPER.getNumber();
+        //public static final int RAISE_INTAKE_AUTO = Gamepad.Buttons.RIGHT_BUMPER.getNumber();
     // Prime Speed Buttons
-    public static final int LOW_PRIME_SPEED = 8; // 0.92
-    public static final int DEFAULT_PRIME_SPEED = 7; // 0.94
-    public static final int HIGH_PRIME_SPEED = 10; // 0.96
-    public static final int EXTREME_PRIME_SPEED = 9; // 0.98
+    public static final int LOW_PRIME_SPEED = 10; // 0.92
+    public static final int DEFAULT_PRIME_SPEED = 9; // 0.94
+        //public static final int HIGH_PRIME_SPEED = 10; // 0.96
+        //public static final int EXTREME_PRIME_SPEED = 9; // 0.98
     // Lights Buttons
-    public static final int SWITCH_RING_LIGHT = 12;
-    public static final int SWITCH_FLASHLIGHT = 11;
+    public static final int SWITCH_RING_LIGHT = 8;
+    public static final int SWITCH_FLASHLIGHT = 7;
     // Camera switch
     public static int RESET_CAMERA = Gamepad.Buttons.A.getNumber();
+
+    private JoystickButton overrideButton;
 
     /**
      * Create a new instance of the operator interface
@@ -53,6 +60,8 @@ public class OI {
 
         // Gamepad Buttons
         JoystickButton reverseButton = new JoystickButton(gamepad, REVERSE);
+        overrideButton = new JoystickButton(gamepad, OVERRIDE);
+
         // Joystick Buttons
         JoystickButton captureButton = new JoystickButton(joystick, CAPTURE);
         JoystickButton bowlButton = new JoystickButton(joystick, BOWL);
@@ -60,8 +69,8 @@ public class OI {
         JoystickButton unprimeButton = new JoystickButton(joystick, UNPRIME);
         JoystickButton fireButton = new JoystickButton(joystick, FIRE);
         JoystickButton recoverButton = new JoystickButton(joystick, RECOVER);
-        JoystickButton lowerIntakeButton = new JoystickButton(joystick, LOWER_INTAKE_AUTO);
-        JoystickButton raiseIntakeButton = new JoystickButton(joystick, RAISE_INTAKE_AUTO);
+        //JoystickButton lowerIntakeButton = new JoystickButton(joystick, LOWER_INTAKE_AUTO);
+        //JoystickButton raiseIntakeButton = new JoystickButton(joystick, RAISE_INTAKE_AUTO);
 
         JoystickButton resetCameraButton = new JoystickButton(joystick, RESET_CAMERA);
         JoystickButton visionLightSwitch = new JoystickButton(joystick, SWITCH_RING_LIGHT);
@@ -69,8 +78,8 @@ public class OI {
 
         JoystickButton lowSpeedButton = new JoystickButton(joystick, LOW_PRIME_SPEED);
         JoystickButton normalSpeedButton = new JoystickButton(joystick, DEFAULT_PRIME_SPEED);
-        JoystickButton highSpeedButton = new JoystickButton(joystick, HIGH_PRIME_SPEED);
-        JoystickButton extremeSpeedButton = new JoystickButton(joystick, EXTREME_PRIME_SPEED);
+        //JoystickButton highSpeedButton = new JoystickButton(joystick, HIGH_PRIME_SPEED);
+        //JoystickButton extremeSpeedButton = new JoystickButton(joystick, EXTREME_PRIME_SPEED);
 
         // Drive Train Commands
         reverseButton.whenPressed(new ReverseDrive());
@@ -81,9 +90,11 @@ public class OI {
         unprimeButton.whenPressed(new CancelPrime());
         fireButton.whenPressed(new Fire());
         recoverButton.whenPressed(new RecoverBoulder());
+        /*
         // Intake Lifter Commands
-        lowerIntakeButton.whenPressed(new IntakeLower());
-        raiseIntakeButton.whenPressed(new IntakeRaise());
+            lowerIntakeButton.whenPressed(new IntakeLower());
+            raiseIntakeButton.whenPressed(new IntakeRaise());
+        */
         // Light Switch Commands
         visionLightSwitch.whenPressed(new ToggleVisionLight());
         flashlightSwitch.whenPressed(new ToggleFlashlight());
@@ -92,8 +103,8 @@ public class OI {
 
         lowSpeedButton.whenPressed(new SetShooterSpeed(Constants.Shooter.SHOOTER_SPEED_LOW));
         normalSpeedButton.whenPressed(new SetShooterSpeed(Constants.Shooter.SHOOTER_SPEED));
-        highSpeedButton.whenPressed(new SetShooterSpeed(Constants.Shooter.SHOOTER_SPEED_HIGH));
-        extremeSpeedButton.whenPressed(new SetShooterSpeed(Constants.Shooter.SHOOTER_SPEED_EXTREME));
+        //highSpeedButton.whenPressed(new SetShooterSpeed(Constants.Shooter.SHOOTER_SPEED_HIGH));
+        //extremeSpeedButton.whenPressed(new SetShooterSpeed(Constants.Shooter.SHOOTER_SPEED_EXTREME));
     }
 
     /**
@@ -112,6 +123,10 @@ public class OI {
         currentDirection = direction;
     }
 
+
+    public boolean getOverride() {
+        return overrideButton.get();
+    }
     /**
      * Gets the desired speed for the left side of the drive
      * @return the control value for the right drive motors
@@ -148,9 +163,9 @@ public class OI {
      * @return the value for the intake lifter motor
      */
     public double getIntakeLifterSpeed() {
-        if (gamepad.getRawButton(LOWER_INTAKE)) {
+        if (joystick.getRawButton(LOWER_INTAKE)) {
             return Constants.IntakeLifter.LOWER_SPEED;
-        } else if (gamepad.getRawButton(RAISE_INTAKE)) {
+        } else if (joystick.getRawButton(RAISE_INTAKE)) {
             return Constants.IntakeLifter.RAISE_SPEED;
         }
         return 0;

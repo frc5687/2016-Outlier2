@@ -23,10 +23,10 @@ public class RobotMap {
         public static final int PDP_RIGHT_MOTOR_REAR = 13;
 
         // Encoder channel ports as of 03/02, left reversed with right
-        public static final int LEFT_ENCODER_CHANNEL_A = 7;
-        public static final int LEFT_ENCODER_CHANNEL_B = 6;
-        public static final int RIGHT_ENCODER_CHANNEL_A = 9;
-        public static final int RIGHT_ENCODER_CHANNEL_B = 8;
+        public static final int LEFT_ENCODER_CHANNEL_A = 6;
+        public static final int LEFT_ENCODER_CHANNEL_B = 7;
+        public static final int RIGHT_ENCODER_CHANNEL_A = 8;
+        public static final int RIGHT_ENCODER_CHANNEL_B = 9;
     }
 
     /**
@@ -62,7 +62,8 @@ public class RobotMap {
      * Lights ports
      */
     public static class Lights {
-        public static final int FLASHLIGHT = 1;
+        //public static final int FLASHLIGHT = 1;  // Olde one
+        public static final int FLASHLIGHT = 2;  // Center light
         public static final int RINGLIGHT = 0;
     }
 

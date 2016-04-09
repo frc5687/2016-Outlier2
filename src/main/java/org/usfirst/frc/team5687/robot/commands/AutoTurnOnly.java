@@ -56,7 +56,7 @@ public class AutoTurnOnly extends CommandGroup {
                 addSequential(new AutoAlign(2.0f));
 
                 // Run forward 50 inches
-                addSequential(new AutoDrive(.5, 50.0f));
+                addSequential(new AutoDrive(.5, 30.0f));
 
                 break;
             case 5:

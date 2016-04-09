@@ -4,12 +4,14 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5687.robot.Constants;
 
 import static org.usfirst.frc.team5687.robot.Robot.intake;
+import static org.usfirst.frc.team5687.robot.Robot.lights;
 
 /**
  * Command to unprime the intake or move the boulder back to captured position
  * @author wil
  */
 public class UnprimeBoulder extends Command{
+    private long endTime;
 
     public UnprimeBoulder() {
         requires(intake);
@@ -17,6 +19,7 @@ public class UnprimeBoulder extends Command{
 
     @Override
     protected void initialize() {
+        endTime = System.currentTimeMillis() + Constants.Shooter.UNPRIME_TIME;
     }
 
     @Override
@@ -26,15 +29,18 @@ public class UnprimeBoulder extends Command{
 
     @Override
     protected boolean isFinished() {
-        return intake.isCaptured();
+        boolean isTimeOut = System.currentTimeMillis() > endTime;
+        return isTimeOut || intake.isCaptured();
     }
 
     @Override
     protected void end() {
         intake.stop();
+        lights.turnVisionLightOff();
     }
 
     @Override
     protected void interrupted() {
+        end();
     }
 }

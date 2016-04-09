@@ -10,7 +10,7 @@ import org.usfirst.frc.team5687.robot.Constants;
 public class CancelPrime extends CommandGroup{
 
     public CancelPrime() {
-        addSequential(new ToggleShooter(false)); // Stops the shooter
+        addSequential(new StopShooter()); // Stops the shooter
         addSequential(new UnprimeBoulder()); // Unprimes the shooter to captured position
     }
 }
