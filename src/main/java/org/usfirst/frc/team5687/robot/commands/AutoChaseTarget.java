@@ -20,14 +20,14 @@ public class AutoChaseTarget extends Command {
     private static final double deadbandX = 10;
 
     private static final double baseSpeed = 0.4;
-    private static final double twist = .2;
+    private static final double twist = .1;
 
     private boolean centered = false;
     private boolean inRange = false;
 
 
     private double targetWidth = 140;
-    private double targetX = -106;
+    private double targetX = -60;
 
     @Override
     protected void initialize() {

@@ -54,6 +54,9 @@ public class Shooter extends Subsystem {
         SmartDashboard.putBoolean("Shooter Wheel Running", on);
     }
 
+    public void updateDashboard() {
+        SmartDashboard.putBoolean("Shooter running", isRunning());
+    }
 
     /**
      * Set the default command for the shooter subsystem

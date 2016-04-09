@@ -219,6 +219,7 @@ public class Robot extends IterativeRobot {
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
         driveTrain.setSafeMode(true);
+        Scheduler.getInstance().add(new StopShooter());
     }
 
     /**
@@ -232,6 +233,7 @@ public class Robot extends IterativeRobot {
         intakeLifter.updateDashboard();
         arms.updateDashboard();
         lights.updateDashboard();
+        shooter.updateDashboard();
     }
 
     /**
@@ -298,6 +300,7 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber(   "IMU/Displacement_Y",       imu.getDisplacementY());
 
         // Connectivity Debugging Support
+        SmartDashboard.putNumber(   "IMU/Byte_Count",       imu.getByteCount());
         SmartDashboard.putNumber(   "IMU/Byte_Count",       imu.getByteCount());
         SmartDashboard.putNumber(   "IMU/Update_Count",     imu.getUpdateCount());
     }
