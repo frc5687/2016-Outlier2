@@ -5,8 +5,11 @@ import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.Constants;
+import static org.usfirst.frc.team5687.robot.Robot.oi;
 import org.usfirst.frc.team5687.robot.RobotMap;
 import org.usfirst.frc.team5687.robot.commands.PositionIntake;
+
+import java.awt.font.OpenType;
 
 /**
  * Subsystem for lifting / lowering intake system
@@ -30,10 +33,12 @@ public class IntakeLifter extends Subsystem {
 
     public void setSpeed(double speed) {
         boolean movingLower = speed < 0;
-        if (movingLower && isAtLowerLimit() || !movingLower && isAtUpperLimit()) {
-            lifterMotor.set(0);
-        } else {
+        if (movingLower && !isAtLowerLimit()) {
             lifterMotor.set(speed);
+        } else if (!movingLower && (!isAtUpperLimit())) {
+            lifterMotor.set(speed);
+        } else {
+            lifterMotor.set(0);
         }
     }
 
@@ -54,6 +59,7 @@ public class IntakeLifter extends Subsystem {
     }
 
     public boolean isAtUpperLimit() {
+        if (oi.getOverride()) { return false; }
         return !upperLimitHall.get();
     }
 

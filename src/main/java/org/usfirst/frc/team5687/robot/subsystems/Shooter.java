@@ -32,14 +32,21 @@ public class Shooter extends Subsystem {
         SmartDashboard.putNumber("Shooter Wheel Set Speed", speed);
     }
 
+    public void setRawSpeed(double speed) {
+        wheelMotor.set(speed);
+    }
+
     public double getSpeed() {
         return  shooterSpeed;
     }
 
     public void toggle(boolean on) {
-        double speed = on?shooterSpeed:0;
+        if (on) {
+            wheelMotor.set(shooterSpeed);
+        } else {
+            wheelMotor.set(0);
+        }
 
-        wheelMotor.set(speed);
         SmartDashboard.putBoolean("Shooter Wheel Running", on);
     }
 

@@ -21,6 +21,11 @@ public class OI {
 
     // Drive Train Buttons
     public static final int REVERSE = Gamepad.Buttons.BACK.getNumber();
+
+    // Hell-Effect Override Button
+    public static final int OVERRIDE = Gamepad.Buttons.START.getNumber();
+
+
     // Boulder Buttons
     public static final int CAPTURE = 3;
     public static final int BOWL = 2;
@@ -44,6 +49,8 @@ public class OI {
     // Camera switch
     public static int RESET_CAMERA = Gamepad.Buttons.A.getNumber();
 
+    private JoystickButton overrideButton;
+
     /**
      * Create a new instance of the operator interface
      */
@@ -53,6 +60,8 @@ public class OI {
 
         // Gamepad Buttons
         JoystickButton reverseButton = new JoystickButton(gamepad, REVERSE);
+        overrideButton = new JoystickButton(gamepad, OVERRIDE);
+
         // Joystick Buttons
         JoystickButton captureButton = new JoystickButton(joystick, CAPTURE);
         JoystickButton bowlButton = new JoystickButton(joystick, BOWL);
@@ -114,6 +123,10 @@ public class OI {
         currentDirection = direction;
     }
 
+
+    public boolean getOverride() {
+        return overrideButton.get();
+    }
     /**
      * Gets the desired speed for the left side of the drive
      * @return the control value for the right drive motors

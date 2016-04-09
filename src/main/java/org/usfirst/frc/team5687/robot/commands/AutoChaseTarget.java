@@ -16,17 +16,17 @@ import static org.usfirst.frc.team5687.robot.Robot.lights;
 public class AutoChaseTarget extends Command {
 
     // Keeping these constants here rather than in Constants because they ar peripheral to the robot's main function.
-    private static final double deadbandWidth = 10;
+    private static final double deadbandWidth = 20;
     private static final double deadbandX = 10;
 
-    private static final double baseSpeed = 0.6;
+    private static final double baseSpeed = 0.4;
     private static final double twist = .2;
 
     private boolean centered = false;
     private boolean inRange = false;
 
 
-    private double targetWidth = 148;
+    private double targetWidth = 140;
     private double targetX = -106;
 
     @Override
