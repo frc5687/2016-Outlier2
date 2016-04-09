@@ -1,9 +1,11 @@
 package org.usfirst.frc.team5687.robot.commands;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5687.robot.Constants;
 
 import static org.usfirst.frc.team5687.robot.Robot.intake;
+import static org.usfirst.frc.team5687.robot.Robot.pitracker;
 
 /**
  * Command to fire the boulder from the intake to shooter wheels
@@ -13,13 +15,18 @@ public class FireBoulder extends Command {
     private long endTime;
 
 
+
     public FireBoulder() {
         requires(intake);
     }
 
     @Override
     protected void initialize() {
+        double width = pitracker.getNumber("width", 0);
+        double centerX = pitracker.getNumber("centerX", 0);
+
         endTime = System.currentTimeMillis() + Constants.Shooter.UNPRIME_TIME;
+        DriverStation.reportError("Boulder Fired at centerX: "+ centerX +", and width: "+ width,false);
     }
 
     @Override
