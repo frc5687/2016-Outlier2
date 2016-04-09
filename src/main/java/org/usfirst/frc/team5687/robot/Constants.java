@@ -19,7 +19,7 @@ public class Constants {
          * Deadband threshold for drive joysticks
          */
         public static final double DRIVE_STICK = 0.1;
-        public static final double INTAKE_STICK = 0.4;
+        public static final double INTAKE_STICK = 0.8;
         public static final double ARMS = 0.1;
     }
 

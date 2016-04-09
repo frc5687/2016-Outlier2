@@ -40,6 +40,10 @@ public class Shooter extends Subsystem {
         return  shooterSpeed;
     }
 
+    public boolean isRunning() {
+        return  wheelMotor.get() != 0;
+    }
+
     public void toggle(boolean on) {
         if (on) {
             wheelMotor.set(shooterSpeed);
