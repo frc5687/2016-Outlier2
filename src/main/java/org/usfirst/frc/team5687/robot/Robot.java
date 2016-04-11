@@ -206,9 +206,9 @@ public class Robot extends IterativeRobot {
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
         sendIMUData();
-        driveTrain.sendAmpDraw();
-        intake.updateDashboard();
-        arms.updateDashboard();
+        // driveTrain.sendAmpDraw();
+        // intake.updateDashboard();
+        // arms.updateDashboard();
         lights.updateDashboard();
     }
 
