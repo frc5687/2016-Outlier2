@@ -19,7 +19,7 @@ public class Constants {
          * Deadband threshold for drive joysticks
          */
         public static final double DRIVE_STICK = 0.1;
-        public static final double INTAKE_STICK = 0.4;
+        public static final double INTAKE_STICK = 0.8;
         public static final double ARMS = 0.1;
     }
 
@@ -27,7 +27,7 @@ public class Constants {
         /***
          * Minimum time (in milliseconds) it should take to go from 0 to 1 (stop to full)
          */
-        public static final double TIME_OF_ACCEL = 25;
+        public static final double TIME_OF_ACCEL = 250;
 
         /***
          * Maximum accelerations per cycle

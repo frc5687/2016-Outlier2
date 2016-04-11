@@ -16,18 +16,21 @@ import static org.usfirst.frc.team5687.robot.Robot.lights;
 public class AutoChaseTarget extends Command {
 
     // Keeping these constants here rather than in Constants because they ar peripheral to the robot's main function.
-    private static final double deadbandWidth = 20;
+    private static final double deadbandWidth = 15;
     private static final double deadbandX = 10;
 
-    private static final double baseSpeed = 0.4;
-    private static final double twist = .2;
+    private static final double runSpeed = 0.3;
+    private static final double runTwist = 0.2;
+
+    private static final double twistSpeed = 0.3;
 
     private boolean centered = false;
     private boolean inRange = false;
 
+    private double lowWidth = 40;
 
-    private double targetWidth = 140;
-    private double targetX = -106;
+    private double targetWidth = 160;
+    private double targetX = -70;
 
     @Override
     protected void initialize() {
@@ -52,10 +55,12 @@ public class AutoChaseTarget extends Command {
         inRange = false;
 
         if (sighted) {
+
+
             if (centerX > targetX + deadbandX) {
-                offset = -1 * twist;
+                offset = -1 * (speed==0 ? twistSpeed : runTwist);
             } else if (centerX < targetX - deadbandX) {
-                offset = +1 * twist;
+                offset = +1 * (speed==0 ? twistSpeed : runTwist);
             } else {
                 offset = 0;
                 centered = true;
@@ -63,15 +68,18 @@ public class AutoChaseTarget extends Command {
 
             if (width == 0) {
                 speed = 0;
+            } else if (width < lowWidth) {
+                speed = -1 * runSpeed;
             } else if (width < targetWidth - deadbandWidth) {
                 // set motor speed
-                speed = baseSpeed;
+                speed = runSpeed;
             } else if (width > targetWidth + deadbandWidth) {
-                speed = -1 * baseSpeed;
+                speed = -1 * runSpeed;
             } else {
                 inRange = true;
                 speed = 0;
             }
+
         } else {
             offset = 0;
             speed = 0;

@@ -40,6 +40,10 @@ public class Shooter extends Subsystem {
         return  shooterSpeed;
     }
 
+    public boolean isRunning() {
+        return  wheelMotor.get() != 0;
+    }
+
     public void toggle(boolean on) {
         if (on) {
             wheelMotor.set(shooterSpeed);
@@ -50,6 +54,9 @@ public class Shooter extends Subsystem {
         SmartDashboard.putBoolean("Shooter Wheel Running", on);
     }
 
+    public void updateDashboard() {
+        SmartDashboard.putBoolean("Shooter running", isRunning());
+    }
 
     /**
      * Set the default command for the shooter subsystem

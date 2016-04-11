@@ -5,6 +5,7 @@ import org.usfirst.frc.team5687.robot.OI;
 import org.usfirst.frc.team5687.robot.Robot;
 import static org.usfirst.frc.team5687.robot.Robot.intake;
 import static org.usfirst.frc.team5687.robot.Robot.oi;
+import static org.usfirst.frc.team5687.robot.Robot.shooter;
 
 /**
  * Command for basic manual control of the boulder intake
@@ -23,7 +24,9 @@ public class RunIntakeManually extends Command {
 
     @Override
     protected void execute() {
-        intake.setSpeed(oi.getIntakeSpeed());
+        // if (!shooter.isRunning() || oi.getOverride()) {
+            intake.setSpeed(oi.getIntakeSpeed());
+        // }
     }
 
     @Override
