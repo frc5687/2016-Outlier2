@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5687.robot.commands;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import static org.usfirst.frc.team5687.robot.Robot.driveTrain;
@@ -19,10 +20,10 @@ public class AutoChaseTarget extends Command {
     private static final double deadbandWidth = 15;
     private static final double deadbandX = 10;
 
-    private static final double runSpeed = 0.3;
+    private static final double runSpeed = 0.4;
     private static final double runTwist = 0.2;
 
-    private static final double twistSpeed = 0.3;
+    private static final double twistSpeed = 0.2;
 
     private boolean centered = false;
     private boolean inRange = false;
@@ -32,12 +33,27 @@ public class AutoChaseTarget extends Command {
     private double targetWidth = 160;
     private double targetX = -70;
 
+    public AutoChaseTarget() {
+        requires(driveTrain);
+    }
+
     @Override
     protected void initialize() {
         centered = false;
         inRange = false;
         targetWidth = pitrackerInputs.getNumber("TARGET_WIDTH", targetWidth);
         targetX = pitrackerInputs.getNumber("TARGET_X", targetX);
+        pitrackerInputs.putNumber("TARGET_WIDTH", targetWidth);
+        pitrackerInputs.putNumber("TARGET_X", targetX);
+
+        double width = pitracker.getNumber("width", 0);
+        double centerX = pitracker.getNumber("centerX", 0);
+        pitracker.putNumber("width", width);
+        pitracker.putNumber("centerX", centerX);
+
+        boolean sighted = pitracker.getBoolean("TargetSighted", false);
+        pitracker.putBoolean("TargetSighted", sighted);
+
         DriverStation.reportError("Starting autochasetarget to width=" + targetWidth + " and X=" + targetX, false);
         lights.turnRingLightOn();
     }
@@ -54,14 +70,16 @@ public class AutoChaseTarget extends Command {
         centered = false;
         inRange = false;
 
-        if (sighted) {
-
+        if (true) {
 
             if (centerX > targetX + deadbandX) {
+                DriverStation.reportError("Turning right " + centerX + ">" + (targetX + deadbandX), false);
                 offset = -1 * (speed==0 ? twistSpeed : runTwist);
             } else if (centerX < targetX - deadbandX) {
+                DriverStation.reportError("Turning left " + centerX + "<" + (targetX - deadbandX), false);
                 offset = +1 * (speed==0 ? twistSpeed : runTwist);
             } else {
+                DriverStation.reportError("Centered " + centerX + " + between " + (targetX - deadbandX) + " and " + (targetX + deadbandX), false);
                 offset = 0;
                 centered = true;
             }
@@ -69,13 +87,17 @@ public class AutoChaseTarget extends Command {
             if (width == 0) {
                 speed = 0;
             } else if (width < lowWidth) {
+                DriverStation.reportError("Backing up " + width + " < " + lowWidth, false);
                 speed = -1 * runSpeed;
             } else if (width < targetWidth - deadbandWidth) {
                 // set motor speed
+                DriverStation.reportError("Moving in " + width +" < " + (targetWidth - deadbandWidth), false);
                 speed = runSpeed;
             } else if (width > targetWidth + deadbandWidth) {
+                DriverStation.reportError("Backing up " + width + " > " + (targetWidth + deadbandWidth), false);
                 speed = -1 * runSpeed;
             } else {
+                DriverStation.reportError("In range " + width + " + between " + (targetWidth - deadbandWidth) + " and " + (targetWidth + deadbandWidth), false);
                 inRange = true;
                 speed = 0;
             }
@@ -111,6 +133,6 @@ public class AutoChaseTarget extends Command {
 
     @Override
     protected void interrupted() {
-
+        end();
     }
 }
