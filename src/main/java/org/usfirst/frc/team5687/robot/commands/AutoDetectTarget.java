@@ -3,6 +3,7 @@ package org.usfirst.frc.team5687.robot.commands;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team5687.robot.Constants;
 
 import static org.usfirst.frc.team5687.robot.Robot.*;
 
@@ -15,8 +16,8 @@ public class AutoDetectTarget extends Command {
     private double deadbandWidth = 10;
 
 
-    private double targetX = -70;
-    private double targetWidth = 160;
+    private double targetX = Constants.Target.X;
+    private double targetWidth = Constants.Target.WIDTH;
 
     private double minX;
     private double maxX;

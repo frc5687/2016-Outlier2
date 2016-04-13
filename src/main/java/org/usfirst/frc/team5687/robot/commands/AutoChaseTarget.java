@@ -3,6 +3,8 @@ package org.usfirst.frc.team5687.robot.commands;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team5687.robot.Constants;
+
 import static org.usfirst.frc.team5687.robot.Robot.driveTrain;
 import static org.usfirst.frc.team5687.robot.Robot.pitracker;
 import static org.usfirst.frc.team5687.robot.Robot.pitrackerInputs;
@@ -27,10 +29,10 @@ public class AutoChaseTarget extends Command {
     private boolean centered = false;
     private boolean inRange = false;
 
-    private double lowWidth = 40;
+    private double lowWidth = Constants.Target.LOW_WIDTH;
 
-    private double targetWidth = 160;
-    private double targetX = -70;
+    private double targetWidth = Constants.Target.WIDTH;
+    private double targetX = Constants.Target.X;
 
     @Override
     protected void initialize() {

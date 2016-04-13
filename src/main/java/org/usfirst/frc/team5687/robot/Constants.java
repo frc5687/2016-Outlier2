@@ -147,4 +147,10 @@ public class Constants {
             public static final double INCHES_PER_PULSE = Defaults.INCHES_PER_PULSE;
         }
     }
+
+    public class Target {
+        public static final double WIDTH = 160.0f;
+        public static final double LOW_WIDTH = 50.0f;
+        public static final double X = -70.0f;
+    }
 }

@@ -3,6 +3,7 @@ package org.usfirst.frc.team5687.robot.commands;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team5687.robot.Constants;
 
 import static org.usfirst.frc.team5687.robot.Robot.*;
 
@@ -10,8 +11,14 @@ import static org.usfirst.frc.team5687.robot.Robot.*;
  * Created by Ben Bernard on 4/12/2016.
  */
 public class AutoCenterTarget extends Command implements PIDSource, PIDOutput {
+    private static final double kP = 0.03f;
+    private static final double kI = 0.001f;
+    private static final double kD = 0.02f;
+    private static final double kF = 0.0f;
+    private static final double kTolerance = 2.0f;
 
-    private double targetX = -70;
+
+    private double targetX = Constants.Target.X;
 
     private boolean centered = false;
 
@@ -40,18 +47,24 @@ public class AutoCenterTarget extends Command implements PIDSource, PIDOutput {
         DriverStation.reportError("Starting AutoCenterTarget to centerX=" + targetX, false);
         lights.turnRingLightOn();
 
-        pidController = new PIDController(0,0,0,0,this,this);
+        pidController = new PIDController(kP, kI, kD, kF, this, this);
+        pidController.setInputRange(-200.0f,  200.0f);
+        pidController.setOutputRange(-1*twistSpeed, twistSpeed);
+        pidController.setAbsoluteTolerance(kTolerance);
+        pidController.setContinuous(false);
         pidController.setSetpoint(0);
+        pidController.enable();
+        SmartDashboard.putData("CenterPID", pidController);
     }
 
     @Override
     protected void execute() {
-        double leftSpeed = -1 * twistSpeed;
-        double rightSpeed = twistSpeed;
-
-        DriverStation.reportError("AutoCenterTarget: Center=" + centerX + " LeftSpeed=" + leftSpeed + " RightSpeed=" + rightSpeed, false);
-        driveTrain.tankDrive(leftSpeed, rightSpeed);
-
+        synchronized (this) {
+            double leftSpeed = -1 * twist;
+            double rightSpeed = twist;
+            driveTrain.tankDrive(leftSpeed, rightSpeed);
+            DriverStation.reportError("AutoCenterTarget driving " + leftSpeed + ", " + rightSpeed, false);
+        }
     }
 
     @Override
@@ -61,20 +74,25 @@ public class AutoCenterTarget extends Command implements PIDSource, PIDOutput {
 
     @Override
     protected void end() {
+        DriverStation.reportError("AutoCenterTarget complete at " + centerX, false);
+        pidController.disable();
         driveTrain.tankDrive(0, 0);
     }
 
     @Override
     protected void interrupted() {
-
+        end();
     }
 
     @Override
     public void pidWrite(double output) {
-        twist = output;
+        DriverStation.reportError("AutoCenterTarget pidWrite " + output, false);
+        synchronized (this) {
+            twist = -1 * output;
 
-        SmartDashboard.putNumber("AutoCenterTarget/twist", twist);
-        SmartDashboard.putString("AutoCenterTarget/centering", twist < 0 ? "Turning left" : twist > 0 ? "Turning right" : "Centered");
+            SmartDashboard.putNumber("AutoCenterTarget/twist", twist);
+            SmartDashboard.putString("AutoCenterTarget/centering", twist < 0 ? "Turning left" : twist > 0 ? "Turning right" : "Centered");
+        }
     }
 
     @Override
@@ -84,26 +102,31 @@ public class AutoCenterTarget extends Command implements PIDSource, PIDOutput {
 
     @Override
     public PIDSourceType getPIDSourceType() {
-        return null;
+        return PIDSourceType.kDisplacement;
     }
 
     @Override
     public double pidGet() {
-        // read pitracker
-        boolean sighted = pitracker.getBoolean("TargetSighted", false);
-        centerX = pitracker.getNumber("centerX", 0);
-        double offset = 0;
+        synchronized (this) {
+            // read pitracker
+            boolean sighted = true; //pitracker.getBoolean("TargetSighted", true);
+            centerX = pitracker.getNumber("centerX", 0);
+            double offset = 0;
 
-        if (sighted) {
-            offset = centerX - targetX;
-        } else {
-            offset = 0;
+            if (sighted) {
+                offset = centerX - targetX;
+            } else {
+                offset = 0;
+            }
+
+            centered = sighted && pidController.onTarget();
+
+            SmartDashboard.putNumber("AutoCenterTarget/offset", offset);
+            SmartDashboard.putBoolean("AutoCenterTarget/centered", centered);
+
+            DriverStation.reportError("AutoCenterTarget pidGet " + offset, false);
+
+            return offset;
         }
-
-        centered = sighted && Math.abs(offset)<1;
-
-        SmartDashboard.putNumber("AutoCenterTarget/offset", offset);
-        SmartDashboard.putBoolean("AutoCenterTarget/centered", centered);
-        return offset;
     }
 }

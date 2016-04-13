@@ -66,7 +66,7 @@ public class AutoAlign extends Command implements PIDOutput{
     }
 
     protected void interrupted() {
-        turnController.disable();
+        end();
     }
 
     @Override
