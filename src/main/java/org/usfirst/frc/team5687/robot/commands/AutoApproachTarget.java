@@ -108,7 +108,7 @@ public class AutoApproachTarget extends Command implements PIDSource, PIDOutput 
     public void pidWrite(double output) {
         DriverStation.reportError("AutoApproachTarget pidWrite " + output, false);
         synchronized (this) {
-            speed = width <= lowWidth ? -1 * runSpeed : -1 * output;
+            speed = width <= lowWidth ? -1 * runSpeed : output;
 
             SmartDashboard.putNumber("AutoApproachTarget/speed", speed);
             SmartDashboard.putString("AutoApproachTarget/approaching", speed < 0 ? "Moving out" : speed > 0 ? "Moving ing" : "In Range");
@@ -137,7 +137,7 @@ public class AutoApproachTarget extends Command implements PIDSource, PIDOutput 
             double offsetWidth = 0;
 
             if (sighted) {
-                offsetWidth = targetWidth - width;
+                offsetWidth = width-targetWidth;
             } else {
                 offsetWidth = 0;
             }
