@@ -47,7 +47,7 @@ public class Constants {
 
     public class Autonomous {
         public static final double MIN_AUTO_TRAVERSE_ANGLE = 7; // the minimum angle the robot will pitch when traversing a defense
-        public static final double MAX_AUTO_TRAVERSE_SECONDS = 4; // the maximum time the robot should need to travers a defense in Autonomous,
+        public static final double MAX_AUTO_TRAVERSE_SECONDS = 7; // the maximum time the robot should need to travers a defense in Autonomous,
         
     }
 
