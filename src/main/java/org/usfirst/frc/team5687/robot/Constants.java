@@ -149,8 +149,8 @@ public class Constants {
     }
 
     public class Target {
-        public static final double WIDTH = 160.0f;
+        public static final double WIDTH = 163.0f;
         public static final double LOW_WIDTH = 50.0f;
-        public static final double X = -70.0f;
+        public static final double X = -66.0f;
     }
 }

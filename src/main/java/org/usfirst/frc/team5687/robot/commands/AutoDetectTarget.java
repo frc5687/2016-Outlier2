@@ -12,8 +12,8 @@ import static org.usfirst.frc.team5687.robot.Robot.*;
  */
 public class AutoDetectTarget extends Command {
 
-    private double deadbandX = 10;
-    private double deadbandWidth = 10;
+    private double deadbandX = 5;
+    private double deadbandWidth = 5;
 
 
     private double targetX = Constants.Target.X;
@@ -41,15 +41,11 @@ public class AutoDetectTarget extends Command {
         centered = false;
         inRange = false;
 
-        targetX = pitrackerInputs.getNumber("TARGET_X", targetX);
-        targetWidth = pitrackerInputs.getNumber("TARGET_WIDTH", targetWidth);
-        sighted = pitracker.getBoolean("TargetSighted", false);
         minX = targetX - deadbandX;
         maxX = targetX + deadbandX;
 
         minWidth = width - deadbandWidth;
         maxWidth = width + deadbandWidth;
-
 
         DriverStation.reportError("Starting AutoDetectTarget to centerX between " + minX + " and " + maxX + ",  width between " + minWidth + " and " + maxWidth , false);
         lights.turnRingLightOn();
@@ -70,11 +66,12 @@ public class AutoDetectTarget extends Command {
         SmartDashboard.putNumber("AutoDetectTarget/width", width);
         SmartDashboard.putBoolean("AutoDetectTarget/inrange", inRange);
 
-        DriverStation.reportError("AutoDetctTarget: Center=" + centerX + " Width=" + width, false);
+        DriverStation.reportError("AutoDetctTarget: Center=" + centerX + " Width=" + width + " (looking for " + minX + " to " + maxX + " and " + minWidth + " to " + maxWidth + ")", false);
     }
 
     @Override
     protected boolean isFinished() {
+
         return centered && inRange;
     }
 
