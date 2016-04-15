@@ -1,15 +1,14 @@
 package org.usfirst.frc.team5687.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team5687.robot.Robot;
-import org.usfirst.frc.team5687.robot.subsystems.Lights;
+import static org.usfirst.frc.team5687.robot.Robot.robot;
+import static org.usfirst.frc.team5687.robot.Robot.lights;
 
 /**
  * Command to turn flashlight on
  * @author wil
  */
 public class EnableFlashlight extends Command {
-    Lights lights = Robot.lights;
 
     public EnableFlashlight() {
         requires(lights);
@@ -21,12 +20,14 @@ public class EnableFlashlight extends Command {
 
     @Override
     protected void execute() {
-        lights.turnFlashlightOn();
+        if (!robot.isAutonomous()) {
+            lights.turnFlashlightOn();
+        }
     }
 
     @Override
     protected boolean isFinished() {
-        return lights.getFlashlight();
+        return robot.isAutonomous() || lights.getFlashlight();
     }
 
     @Override

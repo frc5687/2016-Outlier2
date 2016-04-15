@@ -17,7 +17,7 @@ public class OI {
     // Drive Train Elements
     public static final int HORNS_DIRECTION = 1;
     public static final int INTAKE_DIRECTION = -1;
-    private static int currentDirection = HORNS_DIRECTION; //Initial drive direction
+    private static int currentDirection = INTAKE_DIRECTION; //Initial drive direction
 
     // Drive Train Buttons
     public static final int REVERSE = Gamepad.Buttons.BACK.getNumber();

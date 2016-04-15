@@ -150,28 +150,31 @@ public class Robot extends IterativeRobot {
         autoChooser.addDefault("Do Nothing At All", new AutonomousDoNothing());
         autoChooser.addObject("Traverse Defense", new AutoTraverseBuilder());
         autoChooser.addObject("Traverse And Shoot", new AutoTraverseAndShootBuilder());
-        autoChooser.addObject("Traverse Center And Shoot", new AutoTraverseCenterAndShootBuilder());
         autoChooser.addDefault("---Below are for Testing---", new AutonomousDoNothing());
-        autoChooser.addObject("Center and Shoot", new AutoCenterAndShoot());
-        autoChooser.addObject("Turn, Target and Shoot", new AutoTurnAndShootBuilder());
-        autoChooser.addObject("Target and Shoot", new AutoShootOnly());
-        autoChooser.addObject("Target and Shoot", new AutoShootOnly());
-        autoChooser.addObject("Chase Target", new AutoChaseTarget());
-        autoChooser.addObject("Calibrate CVT", new AutonomousTestCVT());
-        autoChooser.addObject("Left 90", new AutoAlign(-90));
-        autoChooser.addObject("Right 90", new AutoAlign(90));
-        autoChooser.addObject("Drive 12", new AutoDrive(0.4, 12f));
-        autoChooser.addObject("Drive 24", new AutoDrive(0.4, 24f));
-        autoChooser.addObject("Drive 48", new AutoDrive(0.4, 48f));
-        autoChooser.addObject("Drive 96", new AutoDrive(0.4, 96f));
-        autoChooser.addObject("Calibrate CVT", new AutonomousTestCVT());
+        autoChooser.addObject("X - Traverse Center And Shoot", new AutoTraverseCenterAndShootBuilder());
+        autoChooser.addObject("X - Center and Shoot", new AutoCenterAndShoot());
+        autoChooser.addObject("X - Turn, Target and Shoot", new AutoTurnAndShootBuilder());
+        autoChooser.addObject("X - Target and Shoot", new AutoShootOnly());
+        autoChooser.addObject("X - Target and Shoot", new AutoShootOnly());
+        autoChooser.addObject("X - Chase Target", new AutoChaseTarget());
+        autoChooser.addObject("X - Calibrate CVT", new AutonomousTestCVT());
+        autoChooser.addObject("X - Left 90", new AutoAlign(-90));
+        autoChooser.addObject("X - Right 90", new AutoAlign(90));
+        autoChooser.addObject("X - Drive 12", new AutoDrive(0.4, 12f));
+        autoChooser.addObject("X - Drive 24", new AutoDrive(0.4, 24f));
+        autoChooser.addObject("X - Drive 48", new AutoDrive(0.4, 48f));
+        autoChooser.addObject("X - Drive 96", new AutoDrive(0.4, 96f));
+        autoChooser.addObject("X - Calibrate CVT", new AutonomousTestCVT());
         SmartDashboard.putData("Autonomous mode", autoChooser);
 
 
         //Setup Camera Code
         cameraServer = CustomCameraServer.getInstance();
         cameraServer.setQuality(50);
-        cameraServer.startAutomaticCapture(hornsCamera);
+        cameraServer.startAutomaticCapture(intakeCamera);
+
+        SmartDashboard.putBoolean("FMS", DriverStation.getInstance().isFMSAttached());
+
     }
 
 	/**

@@ -111,8 +111,8 @@ public class Constants {
         /**
          * Speed to run the shooter wheels to shoot high goal
          */
-        public static final double SHOOTER_SPEED_LOW = 0.84;
-        public static final double SHOOTER_SPEED = 0.88;
+        public static final double SHOOTER_SPEED_LOW = 0.80;
+        public static final double SHOOTER_SPEED = 0.84;
         public static final double SHOOTER_SPEED_HIGH = 0.92;
         public static final double SHOOTER_SPEED_EXTREME = 0.96;
     }
