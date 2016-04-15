@@ -90,7 +90,7 @@ public class AutoChaseTarget extends Command {
                 speed = 0;
             } else if (width < lowWidth) {
                 DriverStation.reportError("Backing up " + width + " < " + lowWidth, false);
-                speed = -1 * runSpeed;
+                speed = 0;
             } else if (width < targetWidth - deadbandWidth) {
                 // set motor speed
                 DriverStation.reportError("Moving in " + width +" < " + (targetWidth - deadbandWidth), false);
