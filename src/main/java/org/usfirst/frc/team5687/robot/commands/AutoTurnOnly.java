@@ -31,6 +31,10 @@ public class AutoTurnOnly extends CommandGroup {
 
                 // Turn towards the tower
                 addSequential(new AutoAlign(60));
+
+                // Run forward
+                addSequential(new AutoDrive(.6, 14.0f));
+
                 break;
             case 3:
                 // Turn towards the center
