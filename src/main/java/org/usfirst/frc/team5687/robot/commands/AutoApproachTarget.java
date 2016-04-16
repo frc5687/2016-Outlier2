@@ -82,7 +82,7 @@ public class AutoApproachTarget extends Command implements PIDSource, PIDOutput 
             SmartDashboard.putNumber("AutoApproachTarget/leftSpeed", leftSpeed);
             SmartDashboard.putNumber("AutoApproachTarget/rightSpeed", rightSpeed);
             DriverStation.reportError("AutoApproachTarget driving " + leftSpeed + ", " + rightSpeed, false);
-            driveTrain.tankDrive(leftSpeed, rightSpeed);
+            driveTrain.tankDrive(leftSpeed, rightSpeed, true);
         }
 
     }

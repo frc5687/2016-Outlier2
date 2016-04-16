@@ -19,13 +19,13 @@ import static org.usfirst.frc.team5687.robot.Robot.lights;
 public class AutoChaseTarget extends Command {
 
     // Keeping these constants here rather than in Constants because they ar peripheral to the robot's main function.
-    private static final double deadbandWidth = 15;
-    private static final double deadbandX = 10;
+    private static final double deadbandWidth = 5;
+    private static final double deadbandX = 5;
 
     private static final double runSpeed = 0.4;
     private static final double runTwist = 0.2;
 
-    private static final double twistSpeed = 0.2;
+    private static final double twistSpeed = 0.3;
 
     private boolean centered = false;
     private boolean inRange = false;
@@ -119,7 +119,7 @@ public class AutoChaseTarget extends Command {
 
         DriverStation.reportError("Chase: Center=" + centerX + " Width=" + width + " LeftSpeed=" + (speed - offset) + " RightSpeed=" + (speed + offset), false);
 
-        driveTrain.tankDrive(speed - offset, speed + offset);
+        driveTrain.tankDrive(speed - offset, speed + offset, true);
     }
 
     @Override
