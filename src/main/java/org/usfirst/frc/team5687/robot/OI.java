@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.usfirst.frc.team5687.robot.commands.*;
 import org.usfirst.frc.team5687.robot.utils.Gamepad;
 import org.usfirst.frc.team5687.robot.utils.Helpers;
+import edu.wpi.first.wpilibj.Joystick.RumbleType;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -50,6 +51,10 @@ public class OI {
     public static int RESET_CAMERA = Gamepad.Buttons.A.getNumber();
 
     private JoystickButton overrideButton;
+
+    private boolean rumbling = false;
+    private long rumbleStopTime = 0;
+
 
     /**
      * Create a new instance of the operator interface
@@ -123,6 +128,24 @@ public class OI {
         currentDirection = direction;
     }
 
+    public void rumble (float strength, long length) {
+
+        rumbleStopTime = System.currentTimeMillis() + length;
+
+        gamepad.setRumble(RumbleType.kLeftRumble, strength);
+        gamepad.setRumble(RumbleType.kRightRumble, strength);
+
+    }
+
+    public void endRumble (){
+
+      if (rumbleStopTime>0&&System.currentTimeMillis()>rumbleStopTime) {
+          gamepad.setRumble(RumbleType.kLeftRumble, 0);
+          gamepad.setRumble(RumbleType.kRightRumble, 0);
+
+          rumbleStopTime = 0;
+      }
+    }
 
     public boolean getOverride() {
         return overrideButton.get();

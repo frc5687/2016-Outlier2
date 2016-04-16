@@ -29,7 +29,7 @@ public class AutoApproachTarget extends Command implements PIDSource, PIDOutput 
     private double centerTwist = 0.1;
 
     private double width = 0;
-    private double runSpeed = .6;
+    private double runSpeed = .4;
 
     private double speed = 0;
 
@@ -82,7 +82,7 @@ public class AutoApproachTarget extends Command implements PIDSource, PIDOutput 
             SmartDashboard.putNumber("AutoApproachTarget/leftSpeed", leftSpeed);
             SmartDashboard.putNumber("AutoApproachTarget/rightSpeed", rightSpeed);
             DriverStation.reportError("AutoApproachTarget driving " + leftSpeed + ", " + rightSpeed, false);
-            driveTrain.tankDrive(leftSpeed, rightSpeed);
+            driveTrain.tankDrive(leftSpeed, rightSpeed, true);
         }
 
     }

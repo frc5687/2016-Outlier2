@@ -15,7 +15,7 @@ public class AutoTurnOnly extends CommandGroup {
             case 1:
 
                 // Run forward
-                addSequential(new AutoDrive(.7, 92.0f));
+                addSequential(new AutoDrive(.7, 80.0f));
 
                 // Turn towards the tower
                 addSequential(new AutoAlign(60));
@@ -27,7 +27,7 @@ public class AutoTurnOnly extends CommandGroup {
                 break;
             case 2:
                 // Run forward
-                addSequential(new AutoDrive(.7, 120.0f));
+                addSequential(new AutoDrive(.7, 108.0f));
 
                 // Turn towards the tower
                 addSequential(new AutoAlign(60));
@@ -43,7 +43,7 @@ public class AutoTurnOnly extends CommandGroup {
                 addSequential(new AutoAlign(-1.0f));
 
                 // Run forward 50 inches
-                addSequential(new AutoDrive(.5, 30.0f));
+                addSequential(new AutoDrive(.5, 18.0f));
 
                 break;
             case 4:
@@ -57,7 +57,7 @@ public class AutoTurnOnly extends CommandGroup {
                 addSequential(new AutoAlign(1.0f));
 
                 // Run forward 50 inches
-                addSequential(new AutoDrive(.5, 54.0f));
+                addSequential(new AutoDrive(.5, 42.0f));
 
                 break;
             case 5:
@@ -72,7 +72,7 @@ public class AutoTurnOnly extends CommandGroup {
                 addSequential(new AutoAlign(1.0f));
 
                 // Run forward 50 inches
-                addSequential(new AutoDrive(.5, 54.0f));
+                addSequential(new AutoDrive(.5, 42.0f));
 
                 break;
         }

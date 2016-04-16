@@ -23,7 +23,7 @@ public class AutoCenterTarget extends Command implements PIDSource, PIDOutput {
     private boolean centered = false;
 
     private double centerX = 0;
-    private double twistSpeed = .3;
+    private double twistSpeed = .5;
 
     private double twist = 0;
 
@@ -35,14 +35,10 @@ public class AutoCenterTarget extends Command implements PIDSource, PIDOutput {
     @Override
     protected void initialize() {
         centered = false;
-        targetX = pitrackerInputs.getNumber("TARGET_X", targetX);
-        pitrackerInputs.putNumber("TARGET_X", targetX);
 
         double centerX = pitracker.getNumber("centerX", 0);
-        pitracker.putNumber("centerX", centerX);
 
         boolean sighted = pitracker.getBoolean("TargetSighted", false);
-        pitracker.putBoolean("TargetSighted", sighted);
 
         DriverStation.reportError("Starting AutoCenterTarget to centerX=" + targetX, false);
         lights.turnRingLightOn();
@@ -62,7 +58,7 @@ public class AutoCenterTarget extends Command implements PIDSource, PIDOutput {
         synchronized (this) {
             double leftSpeed = -1 * twist;
             double rightSpeed = twist;
-            driveTrain.tankDrive(leftSpeed, rightSpeed);
+            driveTrain.tankDrive(leftSpeed, rightSpeed, true);
             DriverStation.reportError("AutoCenterTarget driving " + leftSpeed + ", " + rightSpeed, false);
         }
     }
@@ -109,7 +105,7 @@ public class AutoCenterTarget extends Command implements PIDSource, PIDOutput {
     public double pidGet() {
         synchronized (this) {
             // read pitracker
-            boolean sighted = true; //pitracker.getBoolean("TargetSighted", true);
+            boolean sighted = pitracker.getBoolean("TargetSighted", true);
             centerX = pitracker.getNumber("centerX", 0);
             double offset = 0;
 
