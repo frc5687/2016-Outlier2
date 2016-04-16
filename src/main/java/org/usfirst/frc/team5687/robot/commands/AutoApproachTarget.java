@@ -29,7 +29,7 @@ public class AutoApproachTarget extends Command implements PIDSource, PIDOutput 
     private double centerTwist = 0.1;
 
     private double width = 0;
-    private double runSpeed = .6;
+    private double runSpeed = .4;
 
     private double speed = 0;
 

@@ -23,7 +23,7 @@ public class AutoCenterTarget extends Command implements PIDSource, PIDOutput {
     private boolean centered = false;
 
     private double centerX = 0;
-    private double twistSpeed = .3;
+    private double twistSpeed = .5;
 
     private double twist = 0;
 
