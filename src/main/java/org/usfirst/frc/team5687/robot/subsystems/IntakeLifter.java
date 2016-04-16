@@ -9,8 +9,6 @@ import static org.usfirst.frc.team5687.robot.Robot.oi;
 import org.usfirst.frc.team5687.robot.RobotMap;
 import org.usfirst.frc.team5687.robot.commands.PositionIntake;
 
-import java.awt.font.OpenType;
-
 /**
  * Subsystem for lifting / lowering intake system
  */

@@ -94,7 +94,7 @@ public class Constants {
     public class IntakeLifter {
         public static final double LOWER_SPEED = -1;
         public static final double RAISE_SPEED = 1;
-        public static final long LIFT_TIME = 2000;
+        public static final long LIFT_TIME = 3000;
     }
 
     public class Shooter {
