@@ -35,10 +35,9 @@ public class OI {
     public static final int FIRE = 1;
     public static final int RECOVER = 4;
     // Intake Lifter Buttons
-    public static final int LOWER_INTAKE = 11;
+    public static final int LOWER_INTAKE_AUTO = 11;
+        //public static final int LOWER_INTAKE = 11;
     public static final int RAISE_INTAKE = 12;
-        //public static final int LOWER_INTAKE_AUTO = Gamepad.Buttons.LEFT_BUMPER.getNumber();
-        //public static final int RAISE_INTAKE_AUTO = Gamepad.Buttons.RIGHT_BUMPER.getNumber();
     // Prime Speed Buttons
     public static final int LOW_PRIME_SPEED = 10; // 0.92
     public static final int DEFAULT_PRIME_SPEED = 9; // 0.94
@@ -74,8 +73,7 @@ public class OI {
         JoystickButton unprimeButton = new JoystickButton(joystick, UNPRIME);
         JoystickButton fireButton = new JoystickButton(joystick, FIRE);
         JoystickButton recoverButton = new JoystickButton(joystick, RECOVER);
-        //JoystickButton lowerIntakeButton = new JoystickButton(joystick, LOWER_INTAKE_AUTO);
-        //JoystickButton raiseIntakeButton = new JoystickButton(joystick, RAISE_INTAKE_AUTO);
+        JoystickButton lowerIntakeButton = new JoystickButton(joystick, LOWER_INTAKE_AUTO);
 
         JoystickButton resetCameraButton = new JoystickButton(joystick, RESET_CAMERA);
         JoystickButton visionLightSwitch = new JoystickButton(joystick, SWITCH_RING_LIGHT);
@@ -95,11 +93,8 @@ public class OI {
         unprimeButton.whenPressed(new CancelPrime());
         fireButton.whenPressed(new Fire());
         recoverButton.whenPressed(new RecoverBoulder());
-        /*
         // Intake Lifter Commands
             lowerIntakeButton.whenPressed(new IntakeLower());
-            raiseIntakeButton.whenPressed(new IntakeRaise());
-        */
         // Light Switch Commands
         visionLightSwitch.whenPressed(new ToggleVisionLight());
         flashlightSwitch.whenPressed(new ToggleFlashlight());
@@ -183,12 +178,16 @@ public class OI {
 
     /**
      * Gets the desired speed for the intake lifter extension
+     * Raise speed only for manual control
      * @return the value for the intake lifter motor
      */
     public double getIntakeLifterSpeed() {
+        /*
         if (joystick.getRawButton(LOWER_INTAKE)) {
             return Constants.IntakeLifter.LOWER_SPEED;
-        } else if (joystick.getRawButton(RAISE_INTAKE)) {
+        }
+         */
+        if (joystick.getRawButton(RAISE_INTAKE)) {
             return Constants.IntakeLifter.RAISE_SPEED;
         }
         return 0;
