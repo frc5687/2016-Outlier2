@@ -14,14 +14,13 @@ public class AutoTraverseAndShoot extends CommandGroup {
         }
         addSequential(new AutoTraverseOnly(defense));
         addSequential(new AutoTurnOnly(position));
-        if (position==1 || position==2) {
+        if (position==1 || position==2 || position==3) {
             addSequential(new Prime());
         } else {
             addParallel(new Prime());
             addSequential(new AutoChaseTarget());
         }
         addSequential(new Fire());
-
     }
 
 }

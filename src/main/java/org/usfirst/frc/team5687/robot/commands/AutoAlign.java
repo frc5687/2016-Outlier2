@@ -33,7 +33,7 @@ public class AutoAlign extends Command implements PIDOutput{
         imu.setPIDSourceType(PIDSourceType.kRate);
         turnController = new PIDController(kP, kI, kD, kF, imu, this);
         turnController.setInputRange(-180.0f,  180.0f);
-        turnController.setOutputRange(-0.5, 0.5);
+        turnController.setOutputRange(-0.6, 0.6);
         turnController.setAbsoluteTolerance(kToleranceDegrees);
         turnController.setContinuous(true);
         turnController.setSetpoint(targetAngle);
