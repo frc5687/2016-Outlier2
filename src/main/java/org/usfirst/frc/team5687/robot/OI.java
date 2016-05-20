@@ -32,17 +32,15 @@ public class OI {
     public static final int BOWL = 2;
     public static final int PRIME = 5;
     public static final int UNPRIME = 6;
-    public static final int FIRE = 1;
+    public static final int FIRE = 9; // Previous: 1, not responsive
     public static final int RECOVER = 4;
     // Intake Lifter Buttons
     public static final int LOWER_INTAKE_AUTO = 11;
         //public static final int LOWER_INTAKE = 11;
     public static final int RAISE_INTAKE = 12;
     // Prime Speed Buttons
-    public static final int LOW_PRIME_SPEED = 10; // 0.92
-    public static final int DEFAULT_PRIME_SPEED = 9; // 0.94
-        //public static final int HIGH_PRIME_SPEED = 10; // 0.96
-        //public static final int EXTREME_PRIME_SPEED = 9; // 0.98
+    public static final int LOW_PRIME_SPEED = 10; // 0.80
+    //public static final int DEFAULT_PRIME_SPEED = 9; // 0.84
     // Lights Buttons
     public static final int SWITCH_RING_LIGHT = 8;
     public static final int SWITCH_FLASHLIGHT = 7;
@@ -80,9 +78,7 @@ public class OI {
         JoystickButton flashlightSwitch = new JoystickButton(joystick, SWITCH_FLASHLIGHT);
 
         JoystickButton lowSpeedButton = new JoystickButton(joystick, LOW_PRIME_SPEED);
-        JoystickButton normalSpeedButton = new JoystickButton(joystick, DEFAULT_PRIME_SPEED);
-        //JoystickButton highSpeedButton = new JoystickButton(joystick, HIGH_PRIME_SPEED);
-        //JoystickButton extremeSpeedButton = new JoystickButton(joystick, EXTREME_PRIME_SPEED);
+        //JoystickButton normalSpeedButton = new JoystickButton(joystick, DEFAULT_PRIME_SPEED);
 
         // Drive Train Commands
         reverseButton.whenPressed(new ReverseDrive());
@@ -102,9 +98,7 @@ public class OI {
         resetCameraButton.whenPressed(new ResetCamera());
 
         lowSpeedButton.whenPressed(new SetShooterSpeed(Constants.Shooter.SHOOTER_SPEED_LOW));
-        normalSpeedButton.whenPressed(new SetShooterSpeed(Constants.Shooter.SHOOTER_SPEED));
-        //highSpeedButton.whenPressed(new SetShooterSpeed(Constants.Shooter.SHOOTER_SPEED_HIGH));
-        //extremeSpeedButton.whenPressed(new SetShooterSpeed(Constants.Shooter.SHOOTER_SPEED_EXTREME));
+        //normalSpeedButton.whenPressed(new SetShooterSpeed(Constants.Shooter.SHOOTER_SPEED));
     }
 
     /**

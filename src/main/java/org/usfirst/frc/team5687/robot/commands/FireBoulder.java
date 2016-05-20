@@ -14,8 +14,6 @@ import static org.usfirst.frc.team5687.robot.Robot.pitracker;
 public class FireBoulder extends Command {
     private long endTime;
 
-
-
     public FireBoulder() {
         requires(intake);
     }
