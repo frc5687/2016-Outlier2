@@ -35,12 +35,6 @@ public class Arms extends Subsystem {
         boolean movingUp = speed < 0;
         SmartDashboard.putString("Arms motion", movingUp ? "UP" : "DOWN");
         armsMotor.set(Helpers.applySensitivityTransform(speed));
-
-        /*
-        TODO: Calibrate safeguards for arms, pot v hall, before using
-        armsMotor.set((movingUp && isAtUpperLimit() || movingUp && isAboveLimit() || !movingUp && isBelowLimit())
-            ? 0 : Helpers.applySensitivityTransform(speed));
-         */
     }
 
     public void moveUp() {
@@ -81,6 +75,7 @@ public class Arms extends Subsystem {
 
     public void updateDashboard() {
         SmartDashboard.putBoolean("Arms upper limit", isAtUpperLimit());
+        SmartDashboard.putNumber("Arms pot", armsPot.get());
         SmartDashboard.putBoolean("Arms MAX", isAboveLimit());
         SmartDashboard.putBoolean("Arms MIN", isBelowLimit());
     }
