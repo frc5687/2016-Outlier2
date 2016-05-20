@@ -23,9 +23,12 @@ public class OI {
     // Drive Train Buttons
     public static final int REVERSE = Gamepad.Buttons.BACK.getNumber();
 
-    // Hell-Effect Override Button
-    public static final int OVERRIDE = Gamepad.Buttons.START.getNumber();
+    // Arms ButtonS
+    public static final int LOWER= Gamepad.Buttons.X.getNumber();
+    public static final int STOW = Gamepad.Buttons.B.getNumber();
 
+    // Hall-Effect Override Button
+    public static final int OVERRIDE = Gamepad.Buttons.START.getNumber();
 
     // Boulder Buttons
     public static final int CAPTURE = 3;
@@ -62,6 +65,8 @@ public class OI {
 
         // Gamepad Buttons
         JoystickButton reverseButton = new JoystickButton(gamepad, REVERSE);
+        JoystickButton lowerButton = new JoystickButton(gamepad, LOWER);
+        JoystickButton stowButton = new JoystickButton(gamepad, STOW);
         overrideButton = new JoystickButton(gamepad, OVERRIDE);
 
         // Joystick Buttons
@@ -82,6 +87,9 @@ public class OI {
 
         // Drive Train Commands
         reverseButton.whenPressed(new ReverseDrive());
+        // Arms Commands
+        lowerButton.whenPressed(new LowerArms());
+        stowButton.whenPressed(new StowArms());
         // Boulder Commands
         captureButton.toggleWhenPressed(new CaptureBoulder());
         bowlButton.whenPressed(new Bowl());

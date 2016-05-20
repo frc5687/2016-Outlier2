@@ -119,10 +119,12 @@ public class Constants {
 
     public class Arms {
         public static final double ARMS_SPEED = 0.5;
+        public static final long TIMEOUT = 2500;
+
         public static final int ARMS_SCALE = 232;
-        public static final int ARMS_OFFSET = -94;
+        public static final int ARMS_OFFSET = -13;
         public static final double MAX_DEGREES = 136.0;
-        public static final double MIN_DEGREES = 0.5;
+        public static final double MIN_DEGREES = 5;
     }
 
     public class Encoders {
