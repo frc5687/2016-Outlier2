@@ -14,6 +14,8 @@ import org.usfirst.frc.team5687.robot.subsystems.*;
 import org.usfirst.frc.team5687.robot.utils.CustomCameraServer;
 import org.usfirst.frc.team5687.robot.utils.Reader;
 
+import java.awt.*;
+
 /*
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -172,6 +174,9 @@ public class Robot extends IterativeRobot {
 
         SmartDashboard.putBoolean("FMS", DriverStation.getInstance().isFMSAttached());
 
+        lights.setStripColor(255, 200, 0);
+
+
     }
 
 	/**
@@ -180,6 +185,7 @@ public class Robot extends IterativeRobot {
      * the robot is disabled.
      */
     public void disabledInit() {
+        lights.setStripColor(255, 200, 0);
     }
 
     public void disabledPeriodic() {
@@ -201,6 +207,8 @@ public class Robot extends IterativeRobot {
         if (autonomousCommand!=null) {
             autonomousCommand.start();
         }
+        lights.setStripColor(255, 255, 255);
+
     }
 
     /**
@@ -223,6 +231,7 @@ public class Robot extends IterativeRobot {
         if (autonomousCommand != null) autonomousCommand.cancel();
         driveTrain.setSafeMode(true);
         Scheduler.getInstance().add(new StopShooter());
+        lights.setStripColor(255, 255, 100);
     }
 
     /**

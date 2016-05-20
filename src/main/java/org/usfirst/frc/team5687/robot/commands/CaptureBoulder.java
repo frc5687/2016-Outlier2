@@ -3,7 +3,11 @@ package org.usfirst.frc.team5687.robot.commands;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5687.robot.Constants;
+
+import java.awt.*;
+
 import static org.usfirst.frc.team5687.robot.Robot.intake;
+import static org.usfirst.frc.team5687.robot.Robot.lights;
 import static org.usfirst.frc.team5687.robot.Robot.oi;
 
 /**
@@ -21,12 +25,17 @@ public class CaptureBoulder extends Command {
 
     @Override
     protected void execute() {
+        lights.setStripColor(0,0,255);
         intake.setSpeed(Constants.Intake.CAPTURE_SPEED);
     }
 
     @Override
     protected boolean isFinished() {
-        return intake.isCaptured();
+        if (intake.isCaptured()) {
+            lights.setStripColor(0,255,255);
+            return true;
+        };
+        return false;
     }
 
     @Override

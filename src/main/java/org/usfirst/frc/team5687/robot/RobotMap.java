@@ -63,8 +63,14 @@ public class RobotMap {
      */
     public static class Lights {
         //public static final int FLASHLIGHT = 1;  // Olde one
-        public static final int FLASHLIGHT = 2;  // Center light
-        public static final int RINGLIGHT = 0;
+        public static final int RED_STRIP = 10;
+        public static final int GREEN_STRIP = 11;
+        public static final int BLUE_STRIP = 12;
+
+        public static final int FLASHLIGHT = 13;  // Center light  Note that this is an MXP port (0)
+        public static final int RINGLIGHT = 14;
+
+
     }
 
     /**

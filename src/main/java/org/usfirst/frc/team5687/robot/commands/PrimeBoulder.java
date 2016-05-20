@@ -3,7 +3,10 @@ package org.usfirst.frc.team5687.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5687.robot.Constants;
 
+import java.awt.*;
+
 import static org.usfirst.frc.team5687.robot.Robot.intake;
+import static org.usfirst.frc.team5687.robot.Robot.lights;
 
 /**
  * Command to prime the intake or move the boulder back to primed position
@@ -21,12 +24,17 @@ public class PrimeBoulder extends Command {
 
     @Override
     protected void execute() {
+        lights.setStripColor(255, 255, 0);
         intake.setSpeed(Constants.Intake.PRIME_SPEED);
     }
 
     @Override
     protected boolean isFinished() {
-        return intake.isPrimed();
+        if (intake.isPrimed()) {
+            lights.setStripColor(255, 0, 0);
+            return true;
+        };
+        return false;
     }
 
     @Override

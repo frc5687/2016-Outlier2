@@ -6,5 +6,5 @@ package org.usfirst.frc.team5687.robot.utils;
  */
 
 public class Reader {
-    public static final String gitInfo = "HEAD 7fc8c12 *";
+    public static final String gitInfo = "master 2e6cdf0 *";
  }
