@@ -3,12 +3,12 @@ package org.usfirst.frc.team5687.robot.commands;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5687.robot.Constants;
+import org.usfirst.frc.team5687.robot.utils.*;
+import org.usfirst.frc.team5687.robot.utils.Color;
 
 import java.awt.*;
 
-import static org.usfirst.frc.team5687.robot.Robot.intake;
-import static org.usfirst.frc.team5687.robot.Robot.lights;
-import static org.usfirst.frc.team5687.robot.Robot.oi;
+import static org.usfirst.frc.team5687.robot.Robot.*;
 
 /**
  * Command to run intake motor until a boulder is detected
@@ -25,14 +25,14 @@ public class CaptureBoulder extends Command {
 
     @Override
     protected void execute() {
-        lights.setStripColor(0,0,255);
+        ledStrip.setStripColor(Color.BLUE);
         intake.setSpeed(Constants.Intake.CAPTURE_SPEED);
     }
 
     @Override
     protected boolean isFinished() {
         if (intake.isCaptured()) {
-            lights.setStripColor(0,255,255);
+            ledStrip.setStripColor(Color.YELLOW);
             return true;
         };
         return false;
