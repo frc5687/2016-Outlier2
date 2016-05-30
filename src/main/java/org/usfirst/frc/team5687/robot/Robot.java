@@ -11,10 +11,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.USBCamera;
 import org.usfirst.frc.team5687.robot.commands.*;
 import org.usfirst.frc.team5687.robot.subsystems.*;
+import org.usfirst.frc.team5687.robot.utils.Color;
 import org.usfirst.frc.team5687.robot.utils.CustomCameraServer;
 import org.usfirst.frc.team5687.robot.utils.Reader;
-
-import java.awt.*;
+import sun.text.resources.ro.CollationData_ro;
 
 /*
  * The VM is configured to automatically run this class, and to call the
@@ -57,6 +57,11 @@ public class Robot extends IterativeRobot {
      * Represents the robot's lights
      */
     public static Lights lights;
+
+    /**
+     * Represents the robot's LED strip
+     */
+    public static LEDStrip ledStrip;
 
     /**
      * Represents the operator interface/ controls
@@ -104,6 +109,7 @@ public class Robot extends IterativeRobot {
         intakeLifter = new IntakeLifter();
         arms = new Arms();
         lights = new Lights();
+        ledStrip = new LEDStrip();
         autoChooser = new SendableChooser();
         defenseChooser = new SendableChooser();
         positionChooser = new SendableChooser();
@@ -174,7 +180,7 @@ public class Robot extends IterativeRobot {
 
         SmartDashboard.putBoolean("FMS", DriverStation.getInstance().isFMSAttached());
 
-        lights.setStripColor(255, 200, 0);
+        // ledStrip.setStripColor(255, 200, 0);
 
 
     }
@@ -185,7 +191,7 @@ public class Robot extends IterativeRobot {
      * the robot is disabled.
      */
     public void disabledInit() {
-        lights.setStripColor(255, 200, 0);
+        //Command ls = new PulseLEDStrip(Color.ORANGE, Color.CRIMSON, 500);
     }
 
     public void disabledPeriodic() {
@@ -202,12 +208,13 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousInit() {
         // schedule the autonomous command (example)
+        //Command ls = new PulseLEDStrip(new Color(62, 121, 40), new Color(200, 217, 68), 100);
+        //ls.start();
         driveTrain.setSafeMode(false);
         autonomousCommand = (Command) autoChooser.getSelected();
         if (autonomousCommand!=null) {
             autonomousCommand.start();
         }
-        lights.setStripColor(255, 255, 255);
 
     }
 
@@ -231,7 +238,9 @@ public class Robot extends IterativeRobot {
         if (autonomousCommand != null) autonomousCommand.cancel();
         driveTrain.setSafeMode(true);
         Scheduler.getInstance().add(new StopShooter());
-        lights.setStripColor(255, 255, 100);
+        // Scheduler.getInstance().add(new PulseLEDStrip(Color.GREEN, Color.RED, 10000));
+
+        ledStrip.setStripColor(Color.BLACK);
     }
 
     /**
