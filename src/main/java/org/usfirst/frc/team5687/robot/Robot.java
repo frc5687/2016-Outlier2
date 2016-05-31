@@ -237,37 +237,6 @@ public class Robot extends IterativeRobot {
         driveTrain.setSafeMode(true);
         Scheduler.getInstance().add(new StopShooter());
         // Scheduler.getInstance().add(new PulseLEDStrip(Color.GREEN, Color.RED, 10000));
-        try {
-            ledStrip.setStripColor(Color.RED);
-            Thread.sleep(5000);
-
-            ledStrip.setStripColor(Color.GREEN);
-            Thread.sleep(5000);
-
-            ledStrip.setStripColor(Color.BLUE);
-            Thread.sleep(5000);
-
-        } catch (Exception e) {
-        } finally {
-            ledStrip.setStripColor(Color.BLACK);
-
-        }
-
-        try {
-            lights.turnRingLightOn();
-            Thread.sleep(5000);
-
-            lights.turnRingLightOff();
-            lights.turnFlashlightOn();
-            Thread.sleep(5000);
-
-
-        } catch (Exception e) {
-        } finally {
-            lights.turnRingLightOff();
-            lights.turnFlashlightOff();
-
-        }
 
         ledStrip.setStripColor(Color.WHITE);
     }
