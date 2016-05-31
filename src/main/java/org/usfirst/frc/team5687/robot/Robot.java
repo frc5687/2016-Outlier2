@@ -152,12 +152,13 @@ public class Robot extends IterativeRobot {
         positionChooser.addObject("5","5");
         SmartDashboard.putData("Start Position", positionChooser);
 
-        autoChooser.addDefault("Do Nothing At All", new AutonomousDoNothing());
+//        autoChooser.addDefault("Do Nothing At All", new AutonomousDoNothing());
+        autoChooser.addDefault("X - Center and Shoot", new AutoCenterAndShoot());
         autoChooser.addObject("Traverse Defense", new AutoTraverseBuilder());
         autoChooser.addObject("Traverse And Shoot", new AutoTraverseAndShootBuilder());
         autoChooser.addDefault("---Below are for Testing---", new AutonomousDoNothing());
         autoChooser.addObject("X - Traverse Center And Shoot", new AutoTraverseCenterAndShootBuilder());
-        autoChooser.addObject("X - Center and Shoot", new AutoCenterAndShoot());
+//        autoChooser.addObject("X - Center and Shoot", new AutoCenterAndShoot());
         autoChooser.addObject("X - Turn, Target and Shoot", new AutoTurnAndShootBuilder());
         autoChooser.addObject("X - Target and Shoot", new AutoShootOnly());
         autoChooser.addObject("X - Target and Shoot", new AutoShootOnly());
@@ -174,13 +175,11 @@ public class Robot extends IterativeRobot {
 
 
         //Setup Camera Code
-        cameraServer = CustomCameraServer.getInstance();
-        cameraServer.setQuality(50);
-        cameraServer.startAutomaticCapture(intakeCamera);
+        //cameraServer = CustomCameraServer.getInstance();
+        //cameraServer.setQuality(50);
+        //cameraServer.startAutomaticCapture(intakeCamera);
 
         SmartDashboard.putBoolean("FMS", DriverStation.getInstance().isFMSAttached());
-
-        // ledStrip.setStripColor(255, 200, 0);
 
 
     }
@@ -208,8 +207,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousInit() {
         // schedule the autonomous command (example)
-        //Command ls = new PulseLEDStrip(new Color(62, 121, 40), new Color(200, 217, 68), 100);
-        //ls.start();
+        ledStrip.setStripColor(0, 200, 0);
         driveTrain.setSafeMode(false);
         autonomousCommand = (Command) autoChooser.getSelected();
         if (autonomousCommand!=null) {
@@ -239,8 +237,39 @@ public class Robot extends IterativeRobot {
         driveTrain.setSafeMode(true);
         Scheduler.getInstance().add(new StopShooter());
         // Scheduler.getInstance().add(new PulseLEDStrip(Color.GREEN, Color.RED, 10000));
+        try {
+            ledStrip.setStripColor(Color.RED);
+            Thread.sleep(5000);
 
-        ledStrip.setStripColor(Color.BLACK);
+            ledStrip.setStripColor(Color.GREEN);
+            Thread.sleep(5000);
+
+            ledStrip.setStripColor(Color.BLUE);
+            Thread.sleep(5000);
+
+        } catch (Exception e) {
+        } finally {
+            ledStrip.setStripColor(Color.BLACK);
+
+        }
+
+        try {
+            lights.turnRingLightOn();
+            Thread.sleep(5000);
+
+            lights.turnRingLightOff();
+            lights.turnFlashlightOn();
+            Thread.sleep(5000);
+
+
+        } catch (Exception e) {
+        } finally {
+            lights.turnRingLightOff();
+            lights.turnFlashlightOff();
+
+        }
+
+        ledStrip.setStripColor(Color.WHITE);
     }
 
     /**

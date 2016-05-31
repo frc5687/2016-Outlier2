@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.RobotMap;
-import org.usfirst.frc.team5687.robot.commands.PulseLEDStrip;
 
 import org.usfirst.frc.team5687.robot.utils.*;
 
@@ -14,15 +13,15 @@ import org.usfirst.frc.team5687.robot.utils.*;
  * @author wil
  */
 public class LEDStrip extends Subsystem {
-    private PWM redStrip;
-    private PWM greenStrip;
-    private PWM blueStrip;
+    private LEDController redStrip;
+    private LEDController greenStrip;
+    private LEDController blueStrip;
 
 
     public LEDStrip() {
-        redStrip = new PWM(RobotMap.Lights.RED_STRIP);
-        greenStrip = new PWM(RobotMap.Lights.GREEN_STRIP);
-        blueStrip = new PWM(RobotMap.Lights.BLUE_STRIP);
+        redStrip = new LEDController(RobotMap.Lights.RED_STRIP);
+        greenStrip = new LEDController(RobotMap.Lights.GREEN_STRIP);
+        blueStrip = new LEDController(RobotMap.Lights.BLUE_STRIP);
     }
 
     @Override

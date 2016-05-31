@@ -36,7 +36,7 @@ public class UnprimeBoulder extends Command{
     @Override
     protected void end() {
         intake.stop();
-        lights.turnVisionLightOff();
+        lights.turnRingLightOff();
     }
 
     @Override

@@ -27,7 +27,7 @@ public class Color {
     }
 
     public static final Color RED = new Color(255,0,0);
-    public static final Color CRIMSON = new Color(220,20,60);
+    public static final Color CRIMSON = new Color(255,20,60);
     public static final Color WHITE = new Color(255,255,255);
     public static final Color BLACK = new Color(0,0,0);
 

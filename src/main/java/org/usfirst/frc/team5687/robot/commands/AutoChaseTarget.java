@@ -1,7 +1,6 @@
 package org.usfirst.frc.team5687.robot.commands;
 
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.Constants;
@@ -129,7 +128,7 @@ public class AutoChaseTarget extends Command {
 
     @Override
     protected void end() {
-        lights.turnVisionLightOff();
+        lights.turnRingLightOff();
         DriverStation.reportError(centered && inRange ? "Found target" : "Ran out of time", false);
     }
 

@@ -50,14 +50,6 @@ public class PulseLEDStrip extends Command {
         double blue = _aColor.getBlue() + factor * bRange;
 
         ledStrip.setStripColor((int) red, (int) green, (int) blue);
-        SmartDashboard.putNumber("lights/period", _period);
-        SmartDashboard.putNumber("lights/offset", offset);
-
-        SmartDashboard.putNumber("lights/factor", factor);
-
-        SmartDashboard.putNumber("lights/red", red);
-        SmartDashboard.putNumber("lights/green", green);
-        SmartDashboard.putNumber("lights/blue", blue);
 
     }
 
