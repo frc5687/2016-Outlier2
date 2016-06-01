@@ -34,16 +34,19 @@ public class LEDStrip extends Subsystem {
         redStrip.setRaw(red);
         greenStrip.setRaw(green);
         blueStrip.setRaw(blue);
+        updateDashboard();
     }
 
     public void setStripColor(Color color) {
         redStrip.setRaw(color.getRed());
         greenStrip.setRaw(color.getGreen());
         blueStrip.setRaw(color.getBlue());
+        updateDashboard();
     }
 
     public void updateDashboard() {
-        //SmartDashboard.putBoolean("lights/flashlight", flashlight.getRaw()>0);
-        //SmartDashboard.putBoolean("lights/ringlight", visionLight.getRaw()>0);
+        SmartDashboard.putNumber("lights/red", redStrip.get());
+        SmartDashboard.putNumber("lights/green", greenStrip.get());
+        SmartDashboard.putNumber("lights/blue", blueStrip.get());
     }
 }

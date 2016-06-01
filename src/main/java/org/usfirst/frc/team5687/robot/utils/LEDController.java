@@ -21,7 +21,8 @@ public class LEDController extends DigitalOutput {
      */
     public LEDController(int channel) {
         super(channel);
-        super.enablePWM(_value/255);
+        super.setPWMRate(12000);
+        super.enablePWM((double)_value/255);
     }
 
     /**
@@ -38,7 +39,9 @@ public class LEDController extends DigitalOutput {
      */
     public void set(int value) {
         _value = value;
-        super.updateDutyCycle(_value/255);
+        super.set(_value>0);
+        double target = ((double)_value)/255.0;
+        super.updateDutyCycle(target);
     }
 
     /**

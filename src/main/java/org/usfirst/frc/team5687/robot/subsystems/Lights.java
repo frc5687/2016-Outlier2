@@ -41,24 +41,18 @@ public class Lights extends Subsystem {
     }
 
     public void toggleFlashlight() {
-        boolean state = flashlight.get();
-        flashlight.set(state);
+        flashlight.toggle();
     }
 
     public void toggleRingLight() {
-        DriverStation.reportError("Ringlight toggle",false);
-
-        boolean state = ringLight.get();
-        ringLight.set(state);
+        ringLight.toggle();
     }
 
     public void turnRingLightOn() {
-        DriverStation.reportError("Ringlight on",false);
         ringLight.set(true);
     }
 
     public void turnRingLightOff() {
-        DriverStation.reportError("Ringlight off",false);
         ringLight.set(false);
     }
 

@@ -3,8 +3,10 @@ package org.usfirst.frc.team5687.robot.commands;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5687.robot.Constants;
+import org.usfirst.frc.team5687.robot.utils.Color;
 
 import static org.usfirst.frc.team5687.robot.Robot.intake;
+import static org.usfirst.frc.team5687.robot.Robot.ledStrip;
 import static org.usfirst.frc.team5687.robot.Robot.pitracker;
 
 /**
@@ -40,6 +42,7 @@ public class FireBoulder extends Command {
     @Override
     protected void end() {
         intake.stop();
+        ledStrip.setStripColor(Color.WHITE);
     }
 
     @Override

@@ -32,6 +32,17 @@ public class LEDSwitch extends DigitalOutput {
         super.set(_state);
     }
 
+    /**
+     * Toggle the state of the LEDSwitch.
+     *
+     * @return  the new state (true is on, off is false)
+     */
+    public boolean toggle() {
+        _state = !_state;
+        super.set(_state);
+        return _state;
+    }
+
 
     /**
      * Get the value of the LEDSwitch (true=on, false=off).

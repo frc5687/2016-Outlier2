@@ -207,7 +207,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousInit() {
         // schedule the autonomous command (example)
-        ledStrip.setStripColor(0, 200, 0);
+        ledStrip.setStripColor(Color.GREEN);
         driveTrain.setSafeMode(false);
         autonomousCommand = (Command) autoChooser.getSelected();
         if (autonomousCommand!=null) {
@@ -226,6 +226,7 @@ public class Robot extends IterativeRobot {
         // intake.updateDashboard();
         // arms.updateDashboard();
         lights.updateDashboard();
+        ledStrip.updateDashboard();
     }
 
     public void teleopInit() {
@@ -252,6 +253,7 @@ public class Robot extends IterativeRobot {
         intakeLifter.updateDashboard();
         arms.updateDashboard();
         lights.updateDashboard();
+        ledStrip.updateDashboard();
         shooter.updateDashboard();
         oi.endRumble();
     }
