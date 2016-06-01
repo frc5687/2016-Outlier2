@@ -12,7 +12,7 @@ import static org.usfirst.frc.team5687.robot.Robot.*;
 /**
  * Created by Ben Bernard on 4/12/2016.
  */
-public class AutoCenterTarget extends Command {
+public class AutoCenterTarget extends AutoAlign {
 
     private static final double ANGLE_DEADBAND = 0.5;
     private boolean centered = false;
@@ -20,14 +20,18 @@ public class AutoCenterTarget extends Command {
     private double offsetAngle=-999;
 
     public AutoCenterTarget() {
+        super(0);
     }
 
     @Override
     protected void initialize() {
         centered = false;
 
+        // Tell the PID to do nothing to start
+        setTargetAngle(imu.getYaw());
         DriverStation.reportError("Starting AutoCenterTarget", false);
         lights.turnRingLightOn();
+        super.initialize();
     }
 
     @Override
@@ -51,7 +55,8 @@ public class AutoCenterTarget extends Command {
                     // Add the new offset angle
                     double targetAngle = angle + offsetAngle;
 
-                    Scheduler.getInstance().add(new AutoAlign(targetAngle));
+                    // Now tell the PID where to turn!
+                    setTargetAngle(targetAngle);
 
                     centered = Math.abs(newOffsetAngle) < ANGLE_DEADBAND;
                 }
@@ -59,6 +64,7 @@ public class AutoCenterTarget extends Command {
 
             SmartDashboard.putBoolean("AutoCenterTarget/centered", centered);
         }
+        super.execute();
     }
 
     @Override
@@ -68,6 +74,7 @@ public class AutoCenterTarget extends Command {
 
     @Override
     protected void end() {
+        super.end();
         DriverStation.reportError("AutoCenterTarget complete at " + offsetAngle, false);
     }
 

@@ -22,11 +22,11 @@ public class FireBoulder extends Command {
 
     @Override
     protected void initialize() {
-        double width = pitracker.getNumber("width", 0);
-        double centerX = pitracker.getNumber("centerX", 0);
+        double distance = pitracker.getNumber("distance", 0);
+        double offsetAngle = pitracker.getNumber("offsetAngle", 0);
 
         endTime = System.currentTimeMillis() + Constants.Shooter.UNPRIME_TIME;
-        DriverStation.reportError("Boulder Fired at centerX: "+ centerX +", and width: "+ width,false);
+        DriverStation.reportError("Boulder Fired at offsetAngle: "+ offsetAngle +", and distance: "+ distance, false);
     }
 
     @Override

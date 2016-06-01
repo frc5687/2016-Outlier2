@@ -24,7 +24,7 @@ public class AutoAlign extends Command implements PIDOutput{
 
     public AutoAlign(double targetAngle) {
         requires(driveTrain);
-        this.targetAngle = targetAngle;  //Q:What value does targetAngle hold? i.e., how does the robot know if it needs to stay straight without a numerical value?
+        this.targetAngle = targetAngle;
     }
 
     protected void initialize(){
@@ -40,6 +40,11 @@ public class AutoAlign extends Command implements PIDOutput{
         turnController.enable();
     }
 
+    protected void setTargetAngle(double targetAngle) {
+        this.targetAngle = targetAngle;
+        turnController.setSetpoint(targetAngle);
+        SmartDashboard.putNumber("AutoAlign/Target Angle", targetAngle);
+    }
     protected void execute(){
         synchronized (this) {
             // Base turning on the rotateToAngleRate...
