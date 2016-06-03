@@ -3,6 +3,7 @@ package org.usfirst.frc.team5687.robot.commands;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5687.robot.Constants;
+import org.usfirst.frc.team5687.robot.LEDColors;
 import org.usfirst.frc.team5687.robot.utils.*;
 import org.usfirst.frc.team5687.robot.utils.Color;
 
@@ -25,14 +26,14 @@ public class CaptureBoulder extends Command {
 
     @Override
     protected void execute() {
-        ledStrip.setStripColor(Color.BLUE);
+        ledStrip.setStripColor(LEDColors.INTAKE);
         intake.setSpeed(Constants.Intake.CAPTURE_SPEED);
     }
 
     @Override
     protected boolean isFinished() {
         if (intake.isCaptured()) {
-            ledStrip.setStripColor(Color.YELLOW);
+            ledStrip.setStripColor(LEDColors.CAPTURED);
             return true;
         };
         return false;

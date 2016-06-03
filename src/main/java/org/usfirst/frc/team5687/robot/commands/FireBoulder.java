@@ -3,6 +3,7 @@ package org.usfirst.frc.team5687.robot.commands;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5687.robot.Constants;
+import org.usfirst.frc.team5687.robot.LEDColors;
 import org.usfirst.frc.team5687.robot.utils.Color;
 
 import static org.usfirst.frc.team5687.robot.Robot.intake;
@@ -22,6 +23,7 @@ public class FireBoulder extends Command {
 
     @Override
     protected void initialize() {
+        ledStrip.setStripColor(LEDColors.FIRING);
         double distance = pitracker.getNumber("distance", 0);
         double offsetAngle = pitracker.getNumber("offsetAngle", 0);
 
@@ -42,7 +44,7 @@ public class FireBoulder extends Command {
     @Override
     protected void end() {
         intake.stop();
-        ledStrip.setStripColor(Color.WHITE);
+        ledStrip.setStripColor(LEDColors.TELEOP);
     }
 
     @Override

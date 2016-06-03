@@ -207,7 +207,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousInit() {
         // schedule the autonomous command (example)
-        ledStrip.setStripColor(Color.GREEN);
+        ledStrip.setStripColor(LEDColors.AUTONOMOUS);
         driveTrain.setSafeMode(false);
         autonomousCommand = (Command) autoChooser.getSelected();
         if (autonomousCommand!=null) {
@@ -239,7 +239,7 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().add(new StopShooter());
         // Scheduler.getInstance().add(new PulseLEDStrip(Color.GREEN, Color.RED, 10000));
 
-        ledStrip.setStripColor(Color.WHITE);
+        ledStrip.setStripColor(LEDColors.TELEOP);
     }
 
     /**

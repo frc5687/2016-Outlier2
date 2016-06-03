@@ -1,5 +1,7 @@
 package org.usfirst.frc.team5687.robot;
 
+import org.usfirst.frc.team5687.robot.utils.Color;
+
 /**
  * Collection of constant/ calibration values for the robot
  * Created by Ben Bernard on 1/23/2016.

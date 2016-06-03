@@ -2,8 +2,11 @@ package org.usfirst.frc.team5687.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5687.robot.Constants;
+import org.usfirst.frc.team5687.robot.LEDColors;
+import org.usfirst.frc.team5687.robot.utils.Color;
 
 import static org.usfirst.frc.team5687.robot.Robot.intake;
+import static org.usfirst.frc.team5687.robot.Robot.ledStrip;
 import static org.usfirst.frc.team5687.robot.Robot.lights;
 
 /**
@@ -37,6 +40,11 @@ public class UnprimeBoulder extends Command{
     protected void end() {
         intake.stop();
         lights.turnRingLightOff();
+        if (intake.isCaptured()) {
+            ledStrip.setStripColor(LEDColors.CAPTURED);
+        } else {
+            ledStrip.setStripColor(LEDColors.TELEOP);
+        }
     }
 
     @Override

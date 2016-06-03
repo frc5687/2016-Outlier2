@@ -2,6 +2,7 @@ package org.usfirst.frc.team5687.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5687.robot.Constants;
+import org.usfirst.frc.team5687.robot.LEDColors;
 import org.usfirst.frc.team5687.robot.utils.*;
 import org.usfirst.frc.team5687.robot.utils.Color;
 
@@ -27,25 +28,23 @@ public class PrimeBoulder extends Command {
 
     @Override
     protected void execute() {
-        ledStrip.setStripColor(Color.ORANGE);
+        ledStrip.setStripColor(LEDColors.PRIMING);
         intake.setSpeed(Constants.Intake.PRIME_SPEED);
     }
 
     @Override
     protected boolean isFinished() {
-        if (intake.isPrimed()) {
-            ledStrip.setStripColor(Color.RED);
-            return true;
-        };
-        return false;
+        return intake.isPrimed();
     }
 
     @Override
     protected void end() {
+        ledStrip.setStripColor(LEDColors.PRIMED);
         intake.stop();
     }
 
     @Override
     protected void interrupted() {
+        end();
     }
 }
