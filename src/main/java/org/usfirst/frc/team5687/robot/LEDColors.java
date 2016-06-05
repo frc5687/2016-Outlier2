@@ -10,8 +10,8 @@ public class LEDColors {
     public static final Color AUTONOMOUS = Color.GREEN;
     public static final Color INTAKE = Color.BLUE;
     public static final Color CAPTURED = Color.YELLOW;
-    public static final Color PRIMING = new Color(100, 0, 100);
-    public static final Color PRIMED = new Color(200, 0, 200);
+    public static final Color PRIMING = Color.BLACK; // new Color(100, 0, 100);
+    public static final Color PRIMED = Color.BLACK; // new Color(200, 0, 200);
     public static final Color FIRING = new Color(100, 0, 0);
     public static final Color BOWLING = new Color(0, 0, 100);
     public static final Color TARGETED = Color.RED;

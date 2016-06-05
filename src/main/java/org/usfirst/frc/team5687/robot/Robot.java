@@ -143,7 +143,7 @@ public class Robot extends IterativeRobot {
         defenseChooser.addObject("Rough Terrain","RoughTerrain");
         defenseChooser.addObject("Rampart","Rampart");
         SmartDashboard.putData("Defense to Cross", defenseChooser);
-        initializeCameras();
+        // initializeCameras();
 
         positionChooser.addDefault("1 (Low Bar)","1");
         positionChooser.addObject("2","2");
@@ -152,13 +152,12 @@ public class Robot extends IterativeRobot {
         positionChooser.addObject("5","5");
         SmartDashboard.putData("Start Position", positionChooser);
 
-//        autoChooser.addDefault("Do Nothing At All", new AutonomousDoNothing());
-        autoChooser.addDefault("X - Center and Shoot", new AutoCenterAndShoot());
-        autoChooser.addObject("Traverse Defense", new AutoTraverseBuilder());
+        // autoChooser.addDefault("Do Nothing At All", new AutonomousDoNothing());
+        autoChooser.addDefault("Traverse Defense", new AutoTraverseBuilder());
         autoChooser.addObject("Traverse And Shoot", new AutoTraverseAndShootBuilder());
+        autoChooser.addObject("Traverse Center And Shoot", new AutoTraverseCenterAndShootBuilder());
         autoChooser.addDefault("---Below are for Testing---", new AutonomousDoNothing());
-        autoChooser.addObject("X - Traverse Center And Shoot", new AutoTraverseCenterAndShootBuilder());
-//        autoChooser.addObject("X - Center and Shoot", new AutoCenterAndShoot());
+        autoChooser.addObject("X - Center and Shoot", new AutoCenterAndShoot());
         autoChooser.addObject("X - Turn, Target and Shoot", new AutoTurnAndShootBuilder());
         autoChooser.addObject("X - Target and Shoot", new AutoShootOnly());
         autoChooser.addObject("X - Target and Shoot", new AutoShootOnly());
@@ -239,7 +238,11 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().add(new StopShooter());
         // Scheduler.getInstance().add(new PulseLEDStrip(Color.GREEN, Color.RED, 10000));
 
-        ledStrip.setStripColor(LEDColors.TELEOP);
+        if (intake.isCaptured()) {
+            ledStrip.setStripColor(LEDColors.CAPTURED);
+        } else {
+            ledStrip.setStripColor(LEDColors.TELEOP);
+        }
     }
 
     /**
@@ -270,6 +273,7 @@ public class Robot extends IterativeRobot {
      */
     public void switchCameras() {
         //cameraServer.stopAutomaticCapture();
+        /*
         if (oi.getDirection()==-1) {
             camera = RobotMap.Cameras.intakeEnd;
             cameraServer.startAutomaticCapture(intakeCamera);
@@ -277,6 +281,7 @@ public class Robot extends IterativeRobot {
             camera = RobotMap.Cameras.hornsEnd;
             cameraServer.startAutomaticCapture(hornsCamera);
         }
+        */
         DriverStation.reportError("Camera now streaming: "+camera,false);
     }
 

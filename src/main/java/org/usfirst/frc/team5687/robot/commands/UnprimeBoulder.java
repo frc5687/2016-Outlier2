@@ -40,6 +40,7 @@ public class UnprimeBoulder extends Command{
     protected void end() {
         intake.stop();
         lights.turnRingLightOff();
+        lights.turnFlashlightOff();
         if (intake.isCaptured()) {
             ledStrip.setStripColor(LEDColors.CAPTURED);
         } else {

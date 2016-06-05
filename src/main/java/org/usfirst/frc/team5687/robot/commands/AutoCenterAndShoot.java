@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoCenterAndShoot extends CommandGroup {
 
     public AutoCenterAndShoot() {
-        // addParallel(new AutoFire());
+        addParallel(new AutoFire());
         addSequential(new AutoCenterTarget());
         addSequential(new AutoApproachTarget());
     }

@@ -13,7 +13,6 @@ import static org.usfirst.frc.team5687.robot.Robot.*;
  * Created by Ben Bernard on 4/12/2016.
  */
 public class AutoApproachTarget extends Command {
-    private static final double SHOOTING_DISTANCE = 60.0;
     private static final double SHOOTING_DISTANCE_DEADBAND = 5;
     private static final double AUTO_APPROACH_SPEED = 0.6;
 
@@ -30,7 +29,7 @@ public class AutoApproachTarget extends Command {
     protected void initialize() {
         inRange = false;
 
-        DriverStation.reportError("Starting AutoApproachTarget to distance=" + SHOOTING_DISTANCE, false);
+        DriverStation.reportError("Starting AutoApproachTarget to distance=" + Constants.Target.SHOOTING_DISTANCE, false);
         lights.turnRingLightOn();
     }
 
@@ -51,7 +50,7 @@ public class AutoApproachTarget extends Command {
                     distance = newDistance;
 
                     // Get the gap
-                    double gap = distance - SHOOTING_DISTANCE;
+                    double gap = distance - Constants.Target.SHOOTING_DISTANCE;
 
                     inRange = Math.abs(gap) < SHOOTING_DISTANCE_DEADBAND;
                     if (!inRange) {

@@ -85,7 +85,7 @@ public class Constants {
         /**
          * Time it takes for a boulder to clear the intake roller when bowling (in milliseconds).
          */
-        public static final long BOWL_TIME = 1000;
+        public static final long BOWL_TIME = 3000;
 
         /**
          * Speed to run the intake roller when bowling.
@@ -154,5 +154,6 @@ public class Constants {
         public static final double WIDTH = 163.0f;
         public static final double LOW_WIDTH = 50.0f;
         public static final double X = -66.0f;
+        public static final double SHOOTING_DISTANCE = 60.0f;
     }
 }

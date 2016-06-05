@@ -32,7 +32,7 @@ public class OI {
     public static final int BOWL = 2;
     public static final int PRIME = 5;
     public static final int UNPRIME = 6;
-    public static final int FIRE = 9; // Previous: 1, not responsive
+    public static final int FIRE = 9; // Previous: 1, not responsive  9
     public static final int RECOVER = 4;
     // Intake Lifter Buttons
     public static final int LOWER_INTAKE_AUTO = 11;

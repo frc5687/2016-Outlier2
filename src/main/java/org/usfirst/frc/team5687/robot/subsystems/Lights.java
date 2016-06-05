@@ -28,10 +28,6 @@ public class Lights extends Subsystem {
     }
 
 
-    public boolean getRingLight() {
-        return ringLight.get();
-    }
-
     public void turnFlashlightOn() {
         flashlight.set(true);
     }
@@ -44,16 +40,19 @@ public class Lights extends Subsystem {
         flashlight.toggle();
     }
 
-    public void toggleRingLight() {
-        ringLight.toggle();
+
+    public boolean getRingLight() {
+        return ringLight.get();
     }
 
     public void turnRingLightOn() {
         ringLight.set(true);
     }
 
-    public void turnRingLightOff() {
-        ringLight.set(false);
+    public void turnRingLightOff() { ringLight.set(false); }
+
+    public void toggleRingLight() {
+        ringLight.toggle();
     }
 
     public void updateDashboard() {
