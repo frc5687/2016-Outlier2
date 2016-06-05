@@ -1,21 +1,22 @@
 package org.usfirst.frc.team5687.robot.subsystems;
 
-import edu.wpi.first.wpilibj.PWM;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.RobotMap;
+import org.usfirst.frc.team5687.robot.utils.LEDSwitch;
 
 /**
  * Subsystem to control lights for vision tracking and shooter aid
  * @author wil
  */
 public class Lights extends Subsystem {
-    private PWM flashlight;
-    private PWM visionLight;
+    private LEDSwitch flashlight;
+    private LEDSwitch ringLight;
 
     public Lights() {
-        flashlight = new PWM(RobotMap.Lights.FLASHLIGHT);
-        visionLight = new PWM(RobotMap.Lights.RINGLIGHT);
+        flashlight = new LEDSwitch(RobotMap.Lights.FLASHLIGHT);
+        ringLight = new LEDSwitch(RobotMap.Lights.RINGLIGHT);
     }
 
     @Override
@@ -23,42 +24,39 @@ public class Lights extends Subsystem {
     }
 
     public boolean getFlashlight() {
-        return flashlight.getRaw()>0;
+        return flashlight.get();
     }
 
-
-    public boolean getVisionLight() {
-        return visionLight.getRaw()>0;
-    }
 
     public void turnFlashlightOn() {
-        flashlight.setRaw(255);
+        flashlight.set(true);
     }
 
     public void turnFlashlightOff() {
-        flashlight.setRaw(0);
+        flashlight.set(false);
     }
 
     public void toggleFlashlight() {
-        boolean state = flashlight.getRaw()>0;
-        flashlight.setRaw(state?0:255);
+        flashlight.toggle();
     }
 
-    public void toggleVisionLight() {
-        boolean state = visionLight.getRaw()>0;
-        visionLight.setRaw(state?0:255);
+
+    public boolean getRingLight() {
+        return ringLight.get();
     }
 
     public void turnRingLightOn() {
-        visionLight.setRaw(255);
+        ringLight.set(true);
     }
 
-    public void turnVisionLightOff() {
-        visionLight.setRaw(0);
+    public void turnRingLightOff() { ringLight.set(false); }
+
+    public void toggleRingLight() {
+        ringLight.toggle();
     }
 
     public void updateDashboard() {
-        SmartDashboard.putBoolean("lights/flashlight", flashlight.getRaw()>0);
-        SmartDashboard.putBoolean("lights/ringlight", visionLight.getRaw()>0);
+        SmartDashboard.putBoolean("lights/flashlight", flashlight.get());
+        SmartDashboard.putBoolean("lights/ringlight", ringLight.get());
     }
 }

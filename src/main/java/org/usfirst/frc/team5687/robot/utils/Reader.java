@@ -6,5 +6,5 @@ package org.usfirst.frc.team5687.robot.utils;
  */
 
 public class Reader {
-    public static final String gitInfo = "lights/#195-ledstrip dad8539 *";
+    public static final String gitInfo = "auto/#194-AutoCenterAlign fd7e166 *";
  }

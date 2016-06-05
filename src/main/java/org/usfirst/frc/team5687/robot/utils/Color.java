@@ -27,11 +27,12 @@ public class Color {
     }
 
     public static final Color RED = new Color(255,0,0);
-    public static final Color CRIMSON = new Color(220,20,60);
+    public static final Color CRIMSON = new Color(255,20,60);
     public static final Color WHITE = new Color(255,255,255);
+    public static final Color DIM_WHITE = new Color(127,127,127);
     public static final Color BLACK = new Color(0,0,0);
 
-    public static final Color MEGENTA = new Color(255,0,255);
+    public static final Color MAGENTA = new Color(255,0,255);
     public static final Color VIOLET = new Color(238,130,238);
     public static final Color PURPLE = new Color(128,0,128);
 

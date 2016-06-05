@@ -2,14 +2,13 @@ package org.usfirst.frc.team5687.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5687.robot.Robot;
-import org.usfirst.frc.team5687.robot.subsystems.Lights;
+import static org.usfirst.frc.team5687.robot.Robot.lights;
 
 /**
  * Command to toggle ring light
  * @author wil
  */
 public class ToggleVisionLight extends Command {
-    Lights lights = Robot.lights;
 
     public ToggleVisionLight() {
         requires(lights);
@@ -21,7 +20,7 @@ public class ToggleVisionLight extends Command {
 
     @Override
     protected void execute() {
-        lights.toggleVisionLight();
+        lights.toggleRingLight();
     }
 
     @Override

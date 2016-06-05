@@ -143,7 +143,7 @@ public class Robot extends IterativeRobot {
         defenseChooser.addObject("Rough Terrain","RoughTerrain");
         defenseChooser.addObject("Rampart","Rampart");
         SmartDashboard.putData("Defense to Cross", defenseChooser);
-        initializeCameras();
+        // initializeCameras();
 
         positionChooser.addDefault("1 (Low Bar)","1");
         positionChooser.addObject("2","2");
@@ -152,11 +152,11 @@ public class Robot extends IterativeRobot {
         positionChooser.addObject("5","5");
         SmartDashboard.putData("Start Position", positionChooser);
 
-        autoChooser.addDefault("Do Nothing At All", new AutonomousDoNothing());
-        autoChooser.addObject("Traverse Defense", new AutoTraverseBuilder());
+        // autoChooser.addDefault("Do Nothing At All", new AutonomousDoNothing());
+        autoChooser.addDefault("Traverse Defense", new AutoTraverseBuilder());
         autoChooser.addObject("Traverse And Shoot", new AutoTraverseAndShootBuilder());
+        autoChooser.addObject("Traverse Center And Shoot", new AutoTraverseCenterAndShootBuilder());
         autoChooser.addDefault("---Below are for Testing---", new AutonomousDoNothing());
-        autoChooser.addObject("X - Traverse Center And Shoot", new AutoTraverseCenterAndShootBuilder());
         autoChooser.addObject("X - Center and Shoot", new AutoCenterAndShoot());
         autoChooser.addObject("X - Turn, Target and Shoot", new AutoTurnAndShootBuilder());
         autoChooser.addObject("X - Target and Shoot", new AutoShootOnly());
@@ -174,13 +174,11 @@ public class Robot extends IterativeRobot {
 
 
         //Setup Camera Code
-        cameraServer = CustomCameraServer.getInstance();
-        cameraServer.setQuality(50);
-        cameraServer.startAutomaticCapture(intakeCamera);
+        //cameraServer = CustomCameraServer.getInstance();
+        //cameraServer.setQuality(50);
+        //cameraServer.startAutomaticCapture(intakeCamera);
 
         SmartDashboard.putBoolean("FMS", DriverStation.getInstance().isFMSAttached());
-
-        // ledStrip.setStripColor(255, 200, 0);
 
 
     }
@@ -208,8 +206,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousInit() {
         // schedule the autonomous command (example)
-        //Command ls = new PulseLEDStrip(new Color(62, 121, 40), new Color(200, 217, 68), 100);
-        //ls.start();
+        ledStrip.setStripColor(LEDColors.AUTONOMOUS);
         driveTrain.setSafeMode(false);
         autonomousCommand = (Command) autoChooser.getSelected();
         if (autonomousCommand!=null) {
@@ -228,6 +225,7 @@ public class Robot extends IterativeRobot {
         // intake.updateDashboard();
         // arms.updateDashboard();
         lights.updateDashboard();
+        ledStrip.updateDashboard();
     }
 
     public void teleopInit() {
@@ -240,7 +238,11 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().add(new StopShooter());
         // Scheduler.getInstance().add(new PulseLEDStrip(Color.GREEN, Color.RED, 10000));
 
-        ledStrip.setStripColor(Color.BLACK);
+        if (intake.isCaptured()) {
+            ledStrip.setStripColor(LEDColors.CAPTURED);
+        } else {
+            ledStrip.setStripColor(LEDColors.TELEOP);
+        }
     }
 
     /**
@@ -254,6 +256,7 @@ public class Robot extends IterativeRobot {
         intakeLifter.updateDashboard();
         arms.updateDashboard();
         lights.updateDashboard();
+        ledStrip.updateDashboard();
         shooter.updateDashboard();
         oi.endRumble();
     }
@@ -270,6 +273,7 @@ public class Robot extends IterativeRobot {
      */
     public void switchCameras() {
         //cameraServer.stopAutomaticCapture();
+        /*
         if (oi.getDirection()==-1) {
             camera = RobotMap.Cameras.intakeEnd;
             cameraServer.startAutomaticCapture(intakeCamera);
@@ -277,6 +281,7 @@ public class Robot extends IterativeRobot {
             camera = RobotMap.Cameras.hornsEnd;
             cameraServer.startAutomaticCapture(hornsCamera);
         }
+        */
         DriverStation.reportError("Camera now streaming: "+camera,false);
     }
 

@@ -21,12 +21,12 @@ public class DisableVisionLight extends Command {
 
     @Override
     protected void execute() {
-        lights.turnVisionLightOff();
+        lights.turnRingLightOff();
     }
 
     @Override
     protected boolean isFinished() {
-        return !lights.getVisionLight();
+        return !lights.getRingLight();
     }
 
     @Override

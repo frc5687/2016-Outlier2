@@ -12,24 +12,14 @@ import static org.usfirst.frc.team5687.robot.Robot.*;
  */
 public class AutoDetectTarget extends Command {
 
-    private double deadbandX = 5;
-    private double deadbandWidth = 5;
+    private static final double ANGLE_DEADBAND = 0.5;
+    private static final double DISTANCE_DEADBAND = 4.0;
 
 
-    private double targetX = Constants.Target.X;
-    private double targetWidth = Constants.Target.WIDTH;
-
-    private double minX;
-    private double maxX;
-
-    private double minWidth;
-    private double maxWidth;
+    private double targetDistance = Constants.Target.WIDTH;
 
     private boolean centered = false;
     private boolean inRange = false;
-
-    private double centerX = 0;
-    private double width = 0;
 
     boolean sighted = false;
 
@@ -41,32 +31,27 @@ public class AutoDetectTarget extends Command {
         centered = false;
         inRange = false;
 
-        minX = targetX - deadbandX;
-        maxX = targetX + deadbandX;
-
-        minWidth = width - deadbandWidth;
-        maxWidth = width + deadbandWidth;
-
-        DriverStation.reportError("Starting AutoDetectTarget to centerX between " + minX + " and " + maxX + ",  width between " + minWidth + " and " + maxWidth , false);
+        DriverStation.reportError("Starting AutoDetectTarget to offsetAngle between " + (0-ANGLE_DEADBAND) + " and " + (ANGLE_DEADBAND) + ",  distance between " + (Constants.Target.SHOOTING_DISTANCE - DISTANCE_DEADBAND) + " and " + (Constants.Target.SHOOTING_DISTANCE + DISTANCE_DEADBAND) , false);
         lights.turnRingLightOn();
     }
 
     @Override
     protected void execute() {
         sighted = pitracker.getBoolean("TargetSighted", false);
-        centerX = pitracker.getNumber("centerX", 0);
-        width = pitracker.getNumber("width", 0);
+        double offsetAngle = pitracker.getNumber("offsetAngle", 0);
+        double distance = pitracker.getNumber("distance",0);
 
-        centered = sighted && centerX >= minX && centerX <=maxX;
-        inRange = sighted && width >= minWidth && width <= maxWidth;
+        centered = sighted && Math.abs(offsetAngle) < ANGLE_DEADBAND;
 
-        SmartDashboard.putNumber("AutoDetectTarget/centerX", centerX);
+        inRange = sighted && Math.abs(distance - Constants.Target.SHOOTING_DISTANCE) < DISTANCE_DEADBAND;
+
+        SmartDashboard.putNumber("AutoDetectTarget/offsetAngle", offsetAngle);
         SmartDashboard.putBoolean("AutoDetectTarget/centered", centered);
 
-        SmartDashboard.putNumber("AutoDetectTarget/width", width);
+        SmartDashboard.putNumber("AutoDetectTarget/distance", distance);
         SmartDashboard.putBoolean("AutoDetectTarget/inrange", inRange);
 
-        DriverStation.reportError("AutoDetctTarget: Center=" + centerX + " Width=" + width + " (looking for " + minX + " to " + maxX + " and " + minWidth + " to " + maxWidth + ")", false);
+        DriverStation.reportError("AutoDetectTarget: offsetAngle=" + offsetAngle + " distance=" + distance, false);
     }
 
     @Override

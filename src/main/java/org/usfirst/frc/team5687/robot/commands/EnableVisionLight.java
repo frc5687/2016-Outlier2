@@ -26,7 +26,7 @@ public class EnableVisionLight extends Command {
 
     @Override
     protected boolean isFinished() {
-        return lights.getVisionLight();
+        return lights.getRingLight();
     }
 
     @Override
