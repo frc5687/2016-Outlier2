@@ -40,11 +40,6 @@ public class AutoAlign extends Command implements PIDOutput{
         turnController.enable();
     }
 
-    protected void setTargetAngle(double targetAngle) {
-        this.targetAngle = targetAngle;
-        turnController.setSetpoint(targetAngle);
-        SmartDashboard.putNumber("AutoAlign/Target Angle", targetAngle);
-    }
     protected void execute(){
         synchronized (this) {
             // Base turning on the rotateToAngleRate...

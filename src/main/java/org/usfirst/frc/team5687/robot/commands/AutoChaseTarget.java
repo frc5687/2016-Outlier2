@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.Constants;
 
 import static org.usfirst.frc.team5687.robot.Robot.driveTrain;
-import static org.usfirst.frc.team5687.robot.Robot.pitracker;
+import static org.usfirst.frc.team5687.robot.Robot.pitrackerOutputs;
 import static org.usfirst.frc.team5687.robot.Robot.pitrackerInputs;
 import static org.usfirst.frc.team5687.robot.Robot.lights;
 
@@ -47,13 +47,13 @@ public class AutoChaseTarget extends Command {
         pitrackerInputs.putNumber("TARGET_WIDTH", targetWidth);
         pitrackerInputs.putNumber("TARGET_X", targetX);
 
-        double width = pitracker.getNumber("width", 0);
-        double centerX = pitracker.getNumber("centerX", 0);
-        pitracker.putNumber("width", width);
-        pitracker.putNumber("centerX", centerX);
+        double width = pitrackerOutputs.getNumber("width", 0);
+        double centerX = pitrackerOutputs.getNumber("centerX", 0);
+        pitrackerOutputs.putNumber("width", width);
+        pitrackerOutputs.putNumber("centerX", centerX);
 
-        boolean sighted = pitracker.getBoolean("TargetSighted", false);
-        pitracker.putBoolean("TargetSighted", sighted);
+        boolean sighted = pitrackerOutputs.getBoolean("TargetSighted", false);
+        pitrackerOutputs.putBoolean("TargetSighted", sighted);
 
         DriverStation.reportError("Starting autochasetarget to width=" + targetWidth + " and X=" + targetX, false);
         lights.turnRingLightOn();
@@ -62,10 +62,10 @@ public class AutoChaseTarget extends Command {
     @Override
     protected void execute() {
 
-        // read pitracker
-        boolean sighted = pitracker.getBoolean("TargetSighted", false);
-        double width = pitracker.getNumber("width", 0);
-        double centerX = pitracker.getNumber("centerX", 0);
+        // read pitrackerOutputs
+        boolean sighted = pitrackerOutputs.getBoolean("TargetSighted", false);
+        double width = pitrackerOutputs.getNumber("width", 0);
+        double centerX = pitrackerOutputs.getNumber("centerX", 0);
         double offset = 0;
         double speed = 0;
         centered = false;

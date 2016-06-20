@@ -3,63 +3,65 @@ package org.usfirst.frc.team5687.robot.commands;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.Constants;
+import org.usfirst.frc.team5687.robot.utils.OutliersPose;
+import org.usfirst.frc.team5687.robot.utils.PiTracker;
 
 import static org.usfirst.frc.team5687.robot.Robot.*;
 
 /**
  * Created by Ben Bernard on 4/12/2016.
  */
-public class AutoApproachTarget extends Command {
-    private static final double SHOOTING_DISTANCE_DEADBAND = 5;
+public class AutoApproachTarget extends AutoDrive {
     private static final double AUTO_APPROACH_SPEED = 0.6;
 
     private boolean inRange = false;
     private long lastMills = 0;
-    private double distance;
+    private Double gap;
 
     boolean sighted = false;
 
     public AutoApproachTarget() {
+        super(AUTO_APPROACH_SPEED);
     }
 
     @Override
     protected void initialize() {
+        lights.turnRingLightOn();
         inRange = false;
 
         DriverStation.reportError("Starting AutoApproachTarget to distance=" + Constants.Target.SHOOTING_DISTANCE, false);
-        lights.turnRingLightOn();
+        super.initialize();
     }
 
     @Override
     protected void execute() {
         synchronized (this) {
 
-            // Read the offsetAngle from networktables...
-            long mills = (long)pitracker.getNumber("Mills", 0);
-            boolean sighted = pitracker.getBoolean("TargetSighted", true);
-            double newDistance = pitracker.getNumber("distance", 0);
+            Double newGap = null;
 
-            // If we have no new data, don't change our plan!
-            if (mills!=lastMills) {
-                lastMills = mills;
-                // If we see the target, go ahead and process it
-                if (sighted && newDistance!=distance) {
-                    distance = newDistance;
+            // See how far the piTracker says we need to drive...
+            PiTracker.Frame frame = piTracker.getLatestFrame();
+            if (frame!=null) {
+                inRange = Math.abs(frame.getDistance() - Constants.Target.SHOOTING_DISTANCE ) < Constants.Target.SHOOTING_DISTANCE_DEADBAND;
 
-                    // Get the gap
-                    double gap = distance - Constants.Target.SHOOTING_DISTANCE;
-
-                    inRange = Math.abs(gap) < SHOOTING_DISTANCE_DEADBAND;
-                    if (!inRange) {
-                        Scheduler.getInstance().add(new AutoDrive(AUTO_APPROACH_SPEED, gap));
-                    }
+                OutliersPose pose = (OutliersPose) poseTracker.get(frame.getMillis());
+                if (pose != null) {
+                    newGap = (pose.getDistance() + (frame.getDistance() - Constants.Target.SHOOTING_DISTANCE)) - driveTrain.getDistance();
                 }
             }
 
+            if (newGap!=null && (gap==null || gap!=newGap)) {
+                gap = newGap;
+                DriverStation.reportError("AutoApproach gap set to " + gap, false);
+
+                setDistance(gap);
+            }
+
             SmartDashboard.putBoolean("AutoApproachTarget/inRange", inRange);
+
+            super.execute();
         }
     }
 
@@ -70,7 +72,8 @@ public class AutoApproachTarget extends Command {
 
     @Override
     protected void end() {
-        DriverStation.reportError("AutoApproachTarget complete at distance " +  distance, false);
+        super.end();
+        DriverStation.reportError("AutoApproachTarget complete at gap " +  gap, false);
     }
 
     @Override

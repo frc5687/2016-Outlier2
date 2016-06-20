@@ -14,11 +14,9 @@ public class AutoTraverseCenterAndShoot extends CommandGroup {
         }
         addSequential(new AutoTraverseOnly(defense));
         addSequential(new AutoTurnOnly(position));
-        addParallel(new AutoFire());
-        addSequential(new AutoCenterTarget());
-        addSequential(new AutoApproachTarget());
+        addSequential(new AutoCenterApproachShoot());
         addSequential(new AutoDrive(.6, -24.0f));
-        addSequential(new AutoAlign(-179));
+        addSequential(new AutoAlign(-179f));
 
     }
 

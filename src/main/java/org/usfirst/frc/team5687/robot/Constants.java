@@ -155,5 +155,7 @@ public class Constants {
         public static final double LOW_WIDTH = 50.0f;
         public static final double X = -66.0f;
         public static final double SHOOTING_DISTANCE = 60.0f;
+        public static final double SHOOTING_DISTANCE_DEADBAND = 5;
+        public static final double SHOOTING_ANGLE_DEADBAND = .1;
     }
 }

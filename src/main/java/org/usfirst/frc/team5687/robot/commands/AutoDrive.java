@@ -25,7 +25,7 @@ public class AutoDrive extends Command implements PIDOutput{
     private double speed = 0;
     private double inchesDriven = 0;
     private double inchesAtStart = 0;
-    private boolean driveByTime;
+    protected boolean driveByTime;
 
     private static final double kP = 0.3;
     private static final double kI = 0.05;
@@ -35,6 +35,10 @@ public class AutoDrive extends Command implements PIDOutput{
     private double rotateToAngleRate = 0;
     private double targetAngle = 0;
 
+    public AutoDrive(double speed) {
+        this.speed = speed;
+    }
+
     /**
      * Drive at a specified speed for a time specified in milliseconds.
      *
@@ -42,8 +46,7 @@ public class AutoDrive extends Command implements PIDOutput{
      * @param millisToDrive Milliseconds to drive
      */
     public AutoDrive(double speed, int millisToDrive) {
-        requires(driveTrain);
-        this.speed = speed;
+        this(speed);
         this.timeToDrive = millisToDrive;
         this.driveByTime = true;
     }
@@ -55,8 +58,7 @@ public class AutoDrive extends Command implements PIDOutput{
      * @param inchesToDrive Inches to drive (negative for reverse)
      */
     public AutoDrive(double speed, double inchesToDrive) {
-        requires(driveTrain);
-        this.speed = speed;
+        this(speed);
         this.inchesToDrive = inchesToDrive;
         this.driveByTime = false;
     }
@@ -68,9 +70,8 @@ public class AutoDrive extends Command implements PIDOutput{
             endTime = (new Date()).getTime() + timeToDrive;
         } else {
             DriverStation.reportError("Driving at " + speed + " for " + inchesToDrive + " inches.\n", false);
-            driveTrain.resetDriveEncoders();
+            setDistance(inchesToDrive);
         }
-        inchesAtStart = driveTrain.getRightDistance();
         targetAngle = imu.getYaw();
         turnController = new PIDController(kP, kI, kD, kF, imu, this);
         turnController.setInputRange(-180f, 180f);
@@ -79,6 +80,12 @@ public class AutoDrive extends Command implements PIDOutput{
         turnController.setContinuous(true);
         turnController.setSetpoint(targetAngle);
         turnController.enable();
+    }
+
+    protected void setDistance(double inchesToDrive) {
+        inchesAtStart = driveTrain.getRightDistance();
+        this.inchesToDrive = inchesToDrive;
+        driveByTime = false;
     }
 
     @Override
@@ -105,6 +112,7 @@ public class AutoDrive extends Command implements PIDOutput{
 
     @Override
     protected void end() {
+        turnController.disable();
         DriverStation.reportError("AutoDrive done.\n", false);
         driveTrain.tankDrive(0,0);
 
@@ -112,7 +120,7 @@ public class AutoDrive extends Command implements PIDOutput{
 
     @Override
     protected void interrupted() {
-
+        end();
     }
 
     @Override
