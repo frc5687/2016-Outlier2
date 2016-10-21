@@ -1,6 +1,5 @@
 package org.usfirst.frc.team5687.robot.subsystems;
 
-import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.RobotMap;
@@ -45,8 +44,8 @@ public class LEDStrip extends Subsystem {
     }
 
     public void updateDashboard() {
-        SmartDashboard.putNumber("lights/red", redStrip.get());
-        SmartDashboard.putNumber("lights/green", greenStrip.get());
-        SmartDashboard.putNumber("lights/blue", blueStrip.get());
+        SmartDashboard.putNumber("lights/red", redStrip.getRaw());
+        SmartDashboard.putNumber("lights/green", greenStrip.getRaw());
+        SmartDashboard.putNumber("lights/blue", blueStrip.getRaw());
     }
 }

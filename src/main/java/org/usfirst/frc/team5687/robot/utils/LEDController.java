@@ -48,7 +48,7 @@ public class LEDController extends DigitalOutput {
      * Gets the most recent value sent to the LED controller.
      * @return The most recent value sent to the LED controller.
      */
-    public int get() {
+    public int getRaw() {
         return _value;
     }
 

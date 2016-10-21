@@ -41,6 +41,9 @@ public class CaptureBoulder extends Command {
 
     @Override
     protected void end() {
+        if (!intake.isCaptured()) {
+            ledStrip.setStripColor(LEDColors.TELEOP);
+        }
         intake.stop();
         oi.rumble(.3f,500);
     }

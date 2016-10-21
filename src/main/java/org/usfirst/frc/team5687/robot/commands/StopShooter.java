@@ -1,9 +1,12 @@
 package org.usfirst.frc.team5687.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team5687.robot.LEDColors;
+import org.usfirst.frc.team5687.robot.utils.Color;
 
 import java.time.Instant;
 
+import static org.usfirst.frc.team5687.robot.Robot.ledStrip;
 import static org.usfirst.frc.team5687.robot.Robot.shooter;
 
 /**
@@ -25,6 +28,7 @@ public class StopShooter extends Command {
 
     @Override
     protected void execute() {
+        ledStrip.setStripColor(Color.BLACK);
         shooter.setRawSpeed(_brakeSpeed);
     }
 

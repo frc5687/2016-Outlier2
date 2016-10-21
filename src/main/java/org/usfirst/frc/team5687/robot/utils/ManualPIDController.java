@@ -109,7 +109,7 @@ public class ManualPIDController implements PIDInterface, LiveWindowSendable {
    * @param Ki the integral coefficient
    * @param Kd the derivative coefficient
    * @param Kf the feed forward term
-   * @param source The PIDSource object that is used to get values
+   * @param source The PIDSource object that is used to getRaw values
    */
   public ManualPIDController(double Kp, double Ki, double Kd, double Kf, PIDSource source) {
 

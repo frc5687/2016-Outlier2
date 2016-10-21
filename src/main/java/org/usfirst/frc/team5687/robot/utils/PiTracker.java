@@ -52,11 +52,12 @@ public class PiTracker {
             outgoingSocket = null;
         }
 
-        _piListener = new PiListener(this);
+        _piListener = new PiListener(this, _roboRioPort);
         listenerThread = new Thread(_piListener);
         listenerThread.start();
 
         _piTimer = new Timer();
+
         _piTimer.schedule(new PiTrackerTimerTask(this), _period, _period);
     }
 
@@ -74,6 +75,7 @@ public class PiTracker {
                 buffer.append(Boolean.toString(lights.getRingLight()));
                 buffer.append(";");
 
+                DriverStation.reportError("Sending packet to pi (" +piAddress.toString()+ ":" + _piPort+ "): " +buffer.toString(), false);
                 byte[] sendData = new byte[1024];
                 sendData = buffer.toString().getBytes();
                 DatagramPacket sendPacket = new DatagramPacket(sendData, buffer.length(), piAddress, _piPort);
@@ -85,7 +87,7 @@ public class PiTracker {
         }
 
         // latestFrame = _piListener==null?null:_piListener.getLatestFrame();
-        // trackingPose = latestFrame==null?null: (OutliersPose)poseTracker.get(latestFrame.adjustedMillis);
+        // trackingPose = latestFrame==null?null: (OutliersPose)poseTracker.getRaw(latestFrame.adjustedMillis);
     }
 
     protected synchronized void setLatestFrame(Frame frame) {
@@ -135,43 +137,55 @@ public class PiTracker {
 
     protected class PiListener implements Runnable {
         private PiTracker _tracker;
-        private InetAddress piAddress = null;
+        private InetAddress _piAddress = null;
+        private int _roboRioPort;
 
-        protected PiListener(PiTracker tracker) {
+        protected PiListener(PiTracker tracker, int roboRioPort) {
+            _roboRioPort = roboRioPort;
+            DriverStation.reportError("Starting piListener", false);
             _tracker = tracker;
         }
 
         @Override
         public void run() {
+            DriverStation.reportError("piListener run " + Integer.toString(_roboRioPort), false);
             DatagramSocket incomingSocket;
             byte[] receiveData = new byte[1024];
-            byte[] sendData = new byte[1024];
             try {
                 incomingSocket = new DatagramSocket(_roboRioPort);
                 while (true) {
                     DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+                    DriverStation.reportError("piListener waiting for packet ", false);
                     incomingSocket.receive(receivePacket);
-                    String raw = new String(receivePacket.getData());
+                    DriverStation.reportError("piListener got packet ", false);
+                    if (receivePacket == null) {
+                        // DriverStation.reportError("Pi listener received empty packet from " + _piAddress.toString() + ": ", false);
+                        synchronized (this) {
+                            _piAddress = receivePacket.getAddress();
+                        }
 
-                    synchronized (this) {
-                        piAddress = receivePacket.getAddress();
-                        Frame frame = new Frame(raw);
-                        _tracker.setLatestFrame(frame);
+                    } else {
+                        String raw = new String(receivePacket.getData(), 0, receivePacket.getLength());
+
+                        // DriverStation.reportError("Pi listener received packet from " + _piAddress.toString() + ": " + raw, false);
+                        synchronized (this) {
+                            _piAddress = receivePacket.getAddress();
+                            Frame frame = new Frame(raw);
+                            _tracker.setLatestFrame(frame);
+                        }
                     }
                 }
 
             } catch (IOException ioe) {
-
+                DriverStation.reportError("piListener died 1" + ioe.getMessage(), true);
+            } catch (Exception e) {
+                DriverStation.reportError("piListener died 2" + e.toString(), true);
             }
 
         }
 
         public synchronized InetAddress getPiAddress() {
-            return piAddress;
-        }
-
-        public synchronized Frame getLatestFrame() {
-            return _latestFrame;
+            return _piAddress;
         }
 
     }
