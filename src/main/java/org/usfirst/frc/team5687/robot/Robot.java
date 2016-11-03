@@ -81,7 +81,7 @@ public class Robot extends IterativeRobot implements IPoseTrackable {
      * The PiTracker class serves as a proxy for the piTracker running on the Raspberry Pi and handles
      * all communications between the Pi and the roboRio.
      */
-    public static PiTracker piTracker;
+    public static PiTrackerProxy piTracker;
 
     /**
      * Provides static access to the singleton Robot instance
@@ -125,7 +125,7 @@ public class Robot extends IterativeRobot implements IPoseTrackable {
         lights = new Lights();
         ledStrip = new LEDStrip();
         poseTracker = new PoseTracker(this, 10, 5);
-        piTracker =  new PiTracker(10);
+        piTracker =  new PiTrackerProxy(10);
 
         autoChooser = new SendableChooser();
         defenseChooser = new SendableChooser();

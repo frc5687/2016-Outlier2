@@ -45,6 +45,7 @@ public class SynchronousPIDController {
      * This should be called at a constant rate by the user (ex. in a timed thread)
      *
      * @param input the input
+     * @return the PID output
      */
     public double calculate(double input) {
         m_last_input = input;
@@ -221,6 +222,7 @@ public class SynchronousPIDController {
     /**
      * Return true if the error is within the tolerance
      *
+     * @param tolerance the tolerance within which the input must fall
      * @return true if the error is less than the tolerance
      */
     public boolean onTarget(double tolerance) {

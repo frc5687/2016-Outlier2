@@ -4,9 +4,8 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.Constants;
-import org.usfirst.frc.team5687.robot.utils.ManualPIDController;
 import org.usfirst.frc.team5687.robot.utils.OutliersPose;
-import org.usfirst.frc.team5687.robot.utils.PiTracker;
+import org.usfirst.frc.team5687.robot.utils.PiTrackerProxy;
 import org.usfirst.frc.team5687.robot.utils.SynchronousPIDController;
 
 import static org.usfirst.frc.team5687.robot.Robot.*;
@@ -51,7 +50,7 @@ public class AutoCenterTarget extends Command {
 
         Double newAngle = null;
         // See what the piTracker says for angle...
-        PiTracker.Frame frame = piTracker.getLatestFrame();
+        PiTrackerProxy.Frame frame = piTracker.getLatestFrame();
         if (frame!=null) {
             double offsetAngle = frame.getOffsetAngle();
             isCentered = Math.abs(offsetAngle) < kToleranceDegrees;

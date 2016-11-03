@@ -2,10 +2,8 @@ package org.usfirst.frc.team5687.robot.commands;
 
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.Constants;
-import org.usfirst.frc.team5687.robot.utils.OutliersPose;
-import org.usfirst.frc.team5687.robot.utils.PiTracker;
+import org.usfirst.frc.team5687.robot.utils.PiTrackerProxy;
 
 import static org.usfirst.frc.team5687.robot.Robot.*;
 
@@ -32,7 +30,7 @@ public class AutoDetectTarget extends Command {
     @Override
     protected void execute() {
 
-        PiTracker.Frame frame = piTracker.getLatestFrame();
+        PiTrackerProxy.Frame frame = piTracker.getLatestFrame();
 
         if (frame!=null) {
             isCentered = Math.abs(frame.getOffsetAngle()) < Constants.Target.SHOOTING_ANGLE_DEADBAND;

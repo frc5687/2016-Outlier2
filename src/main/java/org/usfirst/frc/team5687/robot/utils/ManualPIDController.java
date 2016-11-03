@@ -155,6 +155,8 @@ public class ManualPIDController implements PIDInterface, LiveWindowSendable {
    * Read the input, calculate the output accordingly, and write to the output.
    * This should only be called by the PIDTask and is created during
    * initialization.
+   *
+   * @return returns the PID output
    */
   public double calculate() {
     boolean enabled;
@@ -257,6 +259,8 @@ public class ManualPIDController implements PIDInterface, LiveWindowSendable {
    * being used, the F term should be set to 1 over the maximum speed for the
    * output measured in setpoint units per this controller's update period (see
    * the default period in this class's constructor).
+   *
+   * @return the computed feedfroward value
    */
   protected double calculateFeedForward() {
     if (m_pidInput.getPIDSourceType().equals(PIDSourceType.kRate)) {
@@ -608,17 +612,7 @@ public class ManualPIDController implements PIDInterface, LiveWindowSendable {
   }
 
   /**
-   * Return true if PIDController is enabled.
-   *
-   * @deprecated Call {@link #isEnabled()} instead.
-   */
-  @Deprecated
-  public synchronized boolean isEnable() {
-    return isEnabled();
-  }
-
-  /**
-   * Return true if PIDController is enabled.
+   * @return true if PIDController is enabled.
    */
   public boolean isEnabled() {
     return m_enabled;
@@ -651,7 +645,7 @@ public class ManualPIDController implements PIDInterface, LiveWindowSendable {
         if (getSetpoint() != ((Double) value).doubleValue())
           setSetpoint(((Double) value).doubleValue());
       } else if (key.equals("enabled")) {
-        if (isEnable() != ((Boolean) value).booleanValue()) {
+        if (isEnabled() != ((Boolean) value).booleanValue()) {
           if (((Boolean) value).booleanValue()) {
             enable();
           } else {
@@ -674,7 +668,7 @@ public class ManualPIDController implements PIDInterface, LiveWindowSendable {
       table.putNumber("d", getD());
       table.putNumber("f", getF());
       table.putNumber("setpoint", getSetpoint());
-      table.putBoolean("enabled", isEnable());
+      table.putBoolean("enabled", isEnabled());
       table.addTableListener(listener, false);
     }
   }

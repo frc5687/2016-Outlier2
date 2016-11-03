@@ -2,18 +2,11 @@ package org.usfirst.frc.team5687.robot.utils;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import java.util.Timer;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import javafx.geometry.Pos;
-import org.usfirst.frc.team5687.robot.Constants;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.sql.Time;
-import java.util.List;
 import java.util.TimerTask;
 
 import static org.usfirst.frc.team5687.robot.Robot.*;
@@ -22,7 +15,7 @@ import static org.usfirst.frc.team5687.robot.Robot.*;
  * Utility class to wrap the interface with the PiTracker
  * Created by Ben Bernard on 6/5/2016.
  */
-public class PiTracker {
+public class PiTrackerProxy {
     public static final int DEFAULT_PI_PORT = 27002;
     public static final int DEFAULT_ROBORIO_PORT = 27001;
     public static final int DEFAULT_PERIOD = 10;
@@ -44,7 +37,7 @@ public class PiTracker {
     private PiListener _piListener;
     private Timer _piTimer;
 
-    public PiTracker(int period) {
+    public PiTrackerProxy(int period) {
         _period = period;
         try {
             outgoingSocket = new DatagramSocket();
@@ -123,9 +116,9 @@ public class PiTracker {
     }
 
     protected class PiTrackerTimerTask extends TimerTask {
-        private PiTracker _piTracker;
+        private PiTrackerProxy _piTracker;
 
-        protected PiTrackerTimerTask(PiTracker piTracker) {
+        protected PiTrackerTimerTask(PiTrackerProxy piTracker) {
             _piTracker = piTracker;
         }
 
@@ -136,11 +129,11 @@ public class PiTracker {
     }
 
     protected class PiListener implements Runnable {
-        private PiTracker _tracker;
+        private PiTrackerProxy _tracker;
         private InetAddress _piAddress = null;
         private int _roboRioPort;
 
-        protected PiListener(PiTracker tracker, int roboRioPort) {
+        protected PiListener(PiTrackerProxy tracker, int roboRioPort) {
             _roboRioPort = roboRioPort;
             DriverStation.reportError("Starting piListener", false);
             _tracker = tracker;
@@ -160,19 +153,15 @@ public class PiTracker {
                     DriverStation.reportError("piListener got packet ", false);
                     if (receivePacket == null) {
                         // DriverStation.reportError("Pi listener received empty packet from " + _piAddress.toString() + ": ", false);
+                    } else {
                         synchronized (this) {
                             _piAddress = receivePacket.getAddress();
                         }
-
-                    } else {
                         String raw = new String(receivePacket.getData(), 0, receivePacket.getLength());
 
                         // DriverStation.reportError("Pi listener received packet from " + _piAddress.toString() + ": " + raw, false);
-                        synchronized (this) {
-                            _piAddress = receivePacket.getAddress();
-                            Frame frame = new Frame(raw);
-                            _tracker.setLatestFrame(frame);
-                        }
+                        Frame frame = new Frame(raw);
+                        _tracker.setLatestFrame(frame);
                     }
                 }
 
