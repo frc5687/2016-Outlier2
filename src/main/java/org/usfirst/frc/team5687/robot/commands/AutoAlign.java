@@ -30,7 +30,7 @@ public class AutoAlign extends Command implements PIDOutput{
     protected void initialize(){
         DriverStation.reportError("Starting autoalign", false);
         SmartDashboard.putNumber("AutoAlign/Target Angle", targetAngle);
-        imu.setPIDSourceType(PIDSourceType.kRate);
+        // imu.setPIDSourceType(PIDSourceType.kRate);
         turnController = new PIDController(kP, kI, kD, kF, imu, this);
         turnController.setInputRange(-180.0f,  180.0f);
         turnController.setOutputRange(-0.6, 0.6);

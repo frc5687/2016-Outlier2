@@ -68,7 +68,7 @@ public class PiTrackerProxy {
                 buffer.append(Boolean.toString(lights.getRingLight()));
                 buffer.append(";");
 
-                DriverStation.reportError("Sending packet to pi (" +piAddress.toString()+ ":" + _piPort+ "): " +buffer.toString(), false);
+                // DriverStation.reportError("Sending packet to pi (" +piAddress.toString()+ ":" + _piPort+ "): " +buffer.toString(), false);
                 byte[] sendData = new byte[1024];
                 sendData = buffer.toString().getBytes();
                 DatagramPacket sendPacket = new DatagramPacket(sendData, buffer.length(), piAddress, _piPort);
@@ -148,9 +148,9 @@ public class PiTrackerProxy {
                 incomingSocket = new DatagramSocket(_roboRioPort);
                 while (true) {
                     DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-                    DriverStation.reportError("piListener waiting for packet ", false);
+                    // DriverStation.reportError("piListener waiting for packet ", false);
                     incomingSocket.receive(receivePacket);
-                    DriverStation.reportError("piListener got packet ", false);
+                    // DriverStation.reportError("piListener got packet ", false);
                     if (receivePacket == null) {
                         // DriverStation.reportError("Pi listener received empty packet from " + _piAddress.toString() + ": ", false);
                     } else {

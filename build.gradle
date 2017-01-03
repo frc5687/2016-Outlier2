@@ -21,8 +21,8 @@ apply plugin: 'idea'
 apply plugin: 'GradleRIO'
 
 gradlerio.robotClass = 'org.usfirst.frc.team5687.robot.Robot'       //The class for the main Robot Class
-gradlerio.team = '5687'                                             //The FRC team number
-gradlerio.rioIP = '24.235.78.38'                                      //The IP address of the RIO
+gradlerio.team = '7865'                                               //The FRC team number
+gradlerio.rioIP = '10.78.65.20'                                      //The IP address of the RIO
 
 def robotManifest = {
   attributes 'Main-Class': 'edu.wpi.first.wpilibj.RobotBase'

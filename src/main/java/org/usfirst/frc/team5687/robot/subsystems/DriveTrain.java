@@ -1,9 +1,6 @@
 package org.usfirst.frc.team5687.robot.subsystems;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.Constants;
@@ -11,7 +8,7 @@ import org.usfirst.frc.team5687.robot.Robot;
 import org.usfirst.frc.team5687.robot.RobotMap;
 import org.usfirst.frc.team5687.robot.commands.DriveWith2Joysticks;
 
-public class DriveTrain extends Subsystem {
+public class DriveTrain extends Subsystem implements PIDSource {
     private RobotDrive drive;
     private VictorSP leftFrontMotor;
     private VictorSP leftRearMotor;
@@ -20,7 +17,9 @@ public class DriveTrain extends Subsystem {
     private Encoder rightEncoder;
     private Encoder leftEncoder;
 
-    public DriveTrain(){
+    private PIDSourceType pidSourceType = PIDSourceType.kDisplacement;
+
+    public DriveTrain() {
         leftFrontMotor = new VictorSP(RobotMap.Drive.LEFT_MOTOR_FRONT);
         leftRearMotor = new VictorSP(RobotMap.Drive.LEFT_MOTOR_REAR);
         rightFrontMotor = new VictorSP(RobotMap.Drive.RIGHT_MOTOR_FRONT);
@@ -101,6 +100,9 @@ public class DriveTrain extends Subsystem {
     public double getDistance() {
         return (getLeftDistance()+getRightDistance())/2;
     }
+    public double getSpeed() {
+        return (getLeftSpeed()+getRightSpeed())/2;
+    }
 
     public void sendAmpDraw() {
         SmartDashboard.putNumber("Current Draw/LeftFrontMotor", Robot.powerDistributionPanel.getCurrent(RobotMap.Drive.PDP_LEFT_MOTOR_FRONT));
@@ -151,5 +153,20 @@ public class DriveTrain extends Subsystem {
 
     public void setSafeMode(boolean enabled) {
         drive.setSafetyEnabled(enabled);
+    }
+
+    @Override
+    public void setPIDSourceType(PIDSourceType pidSource) {
+        pidSourceType = pidSource;
+    }
+
+    @Override
+    public PIDSourceType getPIDSourceType() {
+        return pidSourceType;
+    }
+
+    @Override
+    public double pidGet() {
+        return pidSourceType.equals(PIDSourceType.kDisplacement) ? getDistance() : getSpeed();
     }
 }
