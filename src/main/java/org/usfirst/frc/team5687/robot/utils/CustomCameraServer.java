@@ -244,6 +244,7 @@ public class CustomCameraServer {
     /**
      * check if auto capture is started
      *
+     * @return true if autocapture has been started
      */
     public synchronized boolean isAutoCaptureStarted() {
         return m_autoCaptureStarted;

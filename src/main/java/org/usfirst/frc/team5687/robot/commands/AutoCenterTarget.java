@@ -2,84 +2,98 @@ package org.usfirst.frc.team5687.robot.commands;
 
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5687.robot.Constants;
-import org.usfirst.frc.team5687.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team5687.robot.utils.OutliersPose;
+import org.usfirst.frc.team5687.robot.utils.PiTrackerProxy;
+import org.usfirst.frc.team5687.robot.utils.SynchronousPIDController;
 
 import static org.usfirst.frc.team5687.robot.Robot.*;
 
 /**
  * Created by Ben Bernard on 4/12/2016.
  */
-public class AutoCenterTarget extends AutoAlign {
+public class AutoCenterTarget extends Command {
 
-    private static final double ANGLE_DEADBAND = 0.5;
-    private boolean centered = false;
-    private long lastMills = 0;
-    private double offsetAngle=-999;
+    private PIDController turnController;
+    private static final double kPturn = 0.3;
+    private static final double kIturn = 0.05;
+    private static final double kDturn = 0.1;
+    private static final double kToleranceDegrees = Constants.Target.SHOOTING_ANGLE_DEADBAND;
+
+    private boolean isCentered = false;
+
+    private double rotateToAngleRate = 0;
 
     public AutoCenterTarget() {
-        super(0);
+        requires(driveTrain);
     }
 
     @Override
-    protected void initialize() {
-        centered = false;
-
-        // Tell the PID to do nothing to start
-        setTargetAngle(imu.getYaw());
-        DriverStation.reportError("Starting AutoCenterTarget", false);
+    synchronized protected void initialize() {
         lights.turnRingLightOn();
-        super.initialize();
+        DriverStation.reportError("Starting AutoCenterTarget", false);
+        turnController = new PIDController(kPturn, kIturn, kDturn, imu, this::angleWrite);
+        turnController.setInputRange(-180.0f,  180.0f);
+        turnController.setOutputRange(-0.3, 0.3);
+        turnController.setContinuous(true);
+        turnController.setAbsoluteTolerance(kToleranceDegrees);
     }
 
     @Override
-    protected void execute() {
+    synchronized protected void execute() {
         synchronized (this) {
 
-            // Read the offsetAngle from networktables...
-            long mills = (long)pitracker.getNumber("Mills", 0);
-            boolean sighted = pitracker.getBoolean("TargetSighted", true);
-            double newOffsetAngle = pitracker.getNumber("offsetAngle", 0);
+            Double newAngle = null;
 
-            // If we have no new data, don't change our plan!
-            if (mills!=lastMills) {
-                lastMills = mills;
-                // If we see the target, go ahead and process it
-                if (sighted && newOffsetAngle!=offsetAngle) {
-                    offsetAngle = newOffsetAngle;
-                    // Get our current heading
-                    double angle = imu.getYaw();
+            // Get the latest input from the piTracker...
+            PiTrackerProxy.Frame frame = piTracker.getLatestFrame();
 
-                    // Add the new offset angle
-                    double targetAngle = angle + offsetAngle;
-
-                    // Now tell the PID where to turn!
-                    setTargetAngle(targetAngle);
-
-                    centered = Math.abs(newOffsetAngle) < ANGLE_DEADBAND;
+            if (frame != null) {
+                // If we have a new frame from the piTracker, find the closest pose entry from the poseTracker
+                OutliersPose pose = (OutliersPose) poseTracker.get(frame.getMillis());
+                if (pose != null) {
+                    // If we found one, determine the angle we need to turn to and the encoder distance we need to move to
+                    newAngle = pose.getAngle() + frame.getOffsetAngle();
                 }
             }
 
-            SmartDashboard.putBoolean("AutoCenterTarget/centered", centered);
+            // If we have a new angle, and it's different from our old one, send it to the turning PIDController
+            if (newAngle != null && turnController.getSetpoint() != newAngle) {
+                DriverStation.reportError("Setting target angle to " + newAngle, false);
+                turnController.setSetpoint(newAngle);
+                turnController.enable();
+            }
+
         }
-        super.execute();
+
+        synchronized (this) {
+            double twist = rotateToAngleRate;
+
+            driveTrain.tankDrive(twist, 0 - twist, true);
+
+            isCentered = turnController.onTarget();
+        }
     }
 
     @Override
-    protected boolean isFinished() {
-        return centered;
+    synchronized protected boolean isFinished() {
+        return isCentered;
     }
 
     @Override
-    protected void end() {
-        super.end();
-        DriverStation.reportError("AutoCenterTarget complete at " + offsetAngle, false);
+    synchronized protected void end() {
+        turnController.disable();
+        DriverStation.reportError("AutoCenterTarget completed at " + imu.getYaw(), false);
     }
 
     @Override
-    protected void interrupted() {
+    synchronized protected void interrupted() {
         end();
     }
+
+    synchronized public void angleWrite(double output) {
+        rotateToAngleRate = output;
+    }
+
 }

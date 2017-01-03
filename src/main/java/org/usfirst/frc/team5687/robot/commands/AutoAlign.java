@@ -30,7 +30,7 @@ public class AutoAlign extends Command implements PIDOutput{
     protected void initialize(){
         DriverStation.reportError("Starting autoalign", false);
         SmartDashboard.putNumber("AutoAlign/Target Angle", targetAngle);
-        imu.setPIDSourceType(PIDSourceType.kRate);
+        // imu.setPIDSourceType(PIDSourceType.kRate);
         turnController = new PIDController(kP, kI, kD, kF, imu, this);
         turnController.setInputRange(-180.0f,  180.0f);
         turnController.setOutputRange(-0.6, 0.6);
@@ -40,11 +40,6 @@ public class AutoAlign extends Command implements PIDOutput{
         turnController.enable();
     }
 
-    protected void setTargetAngle(double targetAngle) {
-        this.targetAngle = targetAngle;
-        turnController.setSetpoint(targetAngle);
-        SmartDashboard.putNumber("AutoAlign/Target Angle", targetAngle);
-    }
     protected void execute(){
         synchronized (this) {
             // Base turning on the rotateToAngleRate...

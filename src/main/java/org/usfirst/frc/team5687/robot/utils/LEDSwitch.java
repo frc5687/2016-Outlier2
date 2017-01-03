@@ -46,6 +46,8 @@ public class LEDSwitch extends DigitalOutput {
 
     /**
      * Get the value of the LEDSwitch (true=on, false=off).
+     *
+     * @return true if the LED is on
      */
     public boolean get() {
         return _state;

@@ -11,10 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.USBCamera;
 import org.usfirst.frc.team5687.robot.commands.*;
 import org.usfirst.frc.team5687.robot.subsystems.*;
-import org.usfirst.frc.team5687.robot.utils.Color;
-import org.usfirst.frc.team5687.robot.utils.CustomCameraServer;
-import org.usfirst.frc.team5687.robot.utils.Reader;
-import sun.text.resources.ro.CollationData_ro;
+import org.usfirst.frc.team5687.robot.utils.*;
 
 /*
  * The VM is configured to automatically run this class, and to call the
@@ -23,7 +20,7 @@ import sun.text.resources.ro.CollationData_ro;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-public class Robot extends IterativeRobot {
+public class Robot extends IterativeRobot implements IPoseTrackable {
 
     /**
      * Represents the navX inertial measurement unit, used for measuring robot movement and orientation.
@@ -74,9 +71,26 @@ public class Robot extends IterativeRobot {
     public static PowerDistributionPanel powerDistributionPanel;
 
     /**
+     * The PoseTracker keeps a running log of the most recent few seconds pose data.
+     * This is combined with the vision data from the PiTracker to decide the next action during auto.
+     */
+    public static PoseTracker poseTracker;
+
+
+    /**
+     * The PiTracker class serves as a proxy for the piTracker running on the Raspberry Pi and handles
+     * all communications between the Pi and the roboRio.
+     */
+    public static PiTrackerProxy piTracker;
+
+    /**
      * Provides static access to the singleton Robot instance
      */
     public static Robot robot;
+
+
+
+
 
     Command autonomousCommand;
     private SendableChooser autoChooser;
@@ -90,11 +104,11 @@ public class Robot extends IterativeRobot {
     USBCamera intakeCamera = null;
 
     String camera = RobotMap.Cameras.hornsEnd;
-    public static NetworkTable pitracker = null;
+    public static NetworkTable pitrackerOutputs = null;
     public static NetworkTable pitrackerInputs = null;
 
     public Robot() {
-        pitracker = NetworkTable.getTable("PITracker/tracking");
+        pitrackerOutputs = NetworkTable.getTable("PITracker/tracking");
         pitrackerInputs = NetworkTable.getTable("PITracker/inputs");
     }
     /**
@@ -110,6 +124,9 @@ public class Robot extends IterativeRobot {
         arms = new Arms();
         lights = new Lights();
         ledStrip = new LEDStrip();
+        poseTracker = new PoseTracker(this, 10, 5);
+        piTracker =  new PiTrackerProxy(10);
+
         autoChooser = new SendableChooser();
         defenseChooser = new SendableChooser();
         positionChooser = new SendableChooser();
@@ -157,14 +174,16 @@ public class Robot extends IterativeRobot {
         autoChooser.addObject("Traverse And Shoot", new AutoTraverseAndShootBuilder());
         autoChooser.addObject("Traverse Center And Shoot", new AutoTraverseCenterAndShootBuilder());
         autoChooser.addDefault("---Below are for Testing---", new AutonomousDoNothing());
+        autoChooser.addObject("X - Center Target", new AutoCenterTarget());
+        autoChooser.addObject("X - Approach Target", new AutoApproachTarget());
         autoChooser.addObject("X - Center and Shoot", new AutoCenterAndShoot());
         autoChooser.addObject("X - Turn, Target and Shoot", new AutoTurnAndShootBuilder());
         autoChooser.addObject("X - Target and Shoot", new AutoShootOnly());
         autoChooser.addObject("X - Target and Shoot", new AutoShootOnly());
         autoChooser.addObject("X - Chase Target", new AutoChaseTarget());
         autoChooser.addObject("X - Calibrate CVT", new AutonomousTestCVT());
-        autoChooser.addObject("X - Left 90", new AutoAlign(-90));
-        autoChooser.addObject("X - Right 90", new AutoAlign(90));
+        autoChooser.addObject("X - Left 90", new AutoAlign(-90f));
+        autoChooser.addObject("X - Right 90", new AutoAlign(90f));
         autoChooser.addObject("X - Drive 12", new AutoDrive(0.4, 12f));
         autoChooser.addObject("X - Drive 24", new AutoDrive(0.4, 24f));
         autoChooser.addObject("X - Drive 48", new AutoDrive(0.4, 48f));
@@ -180,7 +199,6 @@ public class Robot extends IterativeRobot {
 
         SmartDashboard.putBoolean("FMS", DriverStation.getInstance().isFMSAttached());
 
-
     }
 
 	/**
@@ -194,18 +212,22 @@ public class Robot extends IterativeRobot {
 
     public void disabledPeriodic() {
         //Scheduler.getInstance().run();
+        // piTracker.collect();
     }
 
     /**
      * This autonomous (along with the chooser code above) shows how to select between different autonomous modes
      * using the dashboard. The sendable chooser code works with the Java SmartDashboard. If you prefer the LabVIEW
-     * Dashboard, remove all of the chooser code and uncomment the getString code to get the auto name from the text box
+     * Dashboard, remove all of the chooser code and uncomment the getString code to getRaw the auto name from the text box
      * below the Gyro
      * You can add additional auto modes by adding additional commands to the chooser code above (like the commented example)
      * or additional comparisons to the switch structure below with additional strings and commands.
      */
     public void autonomousInit() {
         // schedule the autonomous command (example)
+        imu.reset();
+        poseTracker.reset();
+
         ledStrip.setStripColor(LEDColors.AUTONOMOUS);
         driveTrain.setSafeMode(false);
         autonomousCommand = (Command) autoChooser.getSelected();
@@ -225,7 +247,6 @@ public class Robot extends IterativeRobot {
         // intake.updateDashboard();
         // arms.updateDashboard();
         lights.updateDashboard();
-        ledStrip.updateDashboard();
     }
 
     public void teleopInit() {
@@ -235,6 +256,9 @@ public class Robot extends IterativeRobot {
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
         driveTrain.setSafeMode(true);
+        imu.reset();
+        poseTracker.reset();
+
         Scheduler.getInstance().add(new StopShooter());
         // Scheduler.getInstance().add(new PulseLEDStrip(Color.GREEN, Color.RED, 10000));
 
@@ -380,5 +404,11 @@ public class Robot extends IterativeRobot {
 
 
 
+    }
+
+    @Override
+    public Pose getPose() {
+        if (imu==null || driveTrain==null) { return null; }
+        return new OutliersPose(imu.getYaw(), driveTrain.getLeftDistance(), driveTrain.getRightDistance(), driveTrain.getDistance());
     }
 }
