@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5687.robot;
 
 import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -8,7 +9,6 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.vision.USBCamera;
 import org.usfirst.frc.team5687.robot.commands.*;
 import org.usfirst.frc.team5687.robot.subsystems.*;
 import org.usfirst.frc.team5687.robot.utils.*;
@@ -98,12 +98,9 @@ public class Robot extends IterativeRobot implements IPoseTrackable {
     public SendableChooser defenseChooser;
     public SendableChooser positionChooser;
 
-    CustomCameraServer cameraServer;
+    CameraServer cameraServer;
+    UsbCamera camera = null;
 
-    USBCamera hornsCamera = null;
-    USBCamera intakeCamera = null;
-
-    String camera = RobotMap.Cameras.hornsEnd;
     public static NetworkTable pitrackerOutputs = null;
     public static NetworkTable pitrackerInputs = null;
 
@@ -367,43 +364,8 @@ public class Robot extends IterativeRobot implements IPoseTrackable {
 
 
     public void initializeCameras() {
-        if (hornsCamera!=null) {
-            hornsCamera.closeCamera();
-            hornsCamera = null;
-        }
-        if (intakeCamera!=null) {
-            intakeCamera.closeCamera();
-            intakeCamera = null;
-        }
-
-        try {
-            hornsCamera = new USBCamera(RobotMap.Cameras.hornsEnd);
-        } catch (Exception e) {
-            hornsCamera = null;
-        }
-
-        try {
-            intakeCamera = new USBCamera(RobotMap.Cameras.intakeEnd);
-        } catch (Exception e) {
-            intakeCamera = null;
-        }
-
-       if (cameraServer==null){
-        //Setup Camera Code
-            cameraServer = CustomCameraServer.getInstance();
-           cameraServer.setQuality(50);
-       }
-
-        if (camera.equals(RobotMap.Cameras.hornsEnd)) {
-            camera = RobotMap.Cameras.intakeEnd;
-            cameraServer.startAutomaticCapture(intakeCamera);
-        }else {
-            camera = RobotMap.Cameras.hornsEnd;
-            cameraServer.startAutomaticCapture(hornsCamera);
-        }
-
-
-
+        cameraServer = CameraServer.getInstance();
+        camera = cameraServer.startAutomaticCapture(RobotMap.Cameras.hornsEnd);
     }
 
     @Override

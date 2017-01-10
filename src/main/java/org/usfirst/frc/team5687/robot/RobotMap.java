@@ -77,7 +77,7 @@ public class RobotMap {
      * Camera ports
      */
     public static class Cameras {
-        public static final String hornsEnd = "cam0";
-        public static final String intakeEnd = "cam1";
+        public static final int hornsEnd = 0;
+        public static final int intakeEnd = 1;
     }
 }

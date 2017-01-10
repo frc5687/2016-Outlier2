@@ -14,6 +14,12 @@ buildscript {
 apply plugin: 'java'
 dependencies {
   compile files('lib/navx_frc.jar')
+  compile files('lib/cscore.jar')
+  compile files('lib/NetworkTables.jar')
+  compile files('lib/opencv.jar')
+  compile files('lib/WPILib.jar')
+
+
 }
 
 apply plugin: 'idea'
