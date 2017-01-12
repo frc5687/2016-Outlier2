@@ -1,43 +1,47 @@
-buildscript {
-  repositories {
-    mavenCentral()
-    maven {
-      name = 'GradleRIO'
-      url = 'http://dev.imjac.in/maven'
-	}
-  }
-  dependencies {
-    classpath group: 'jaci.openrio.gradle', name: 'GradleRIO', version: '+'			//Change this line if you wish to Update GradleRIO
-  }
+plugins {
+    id "java"
+    id "eclipse"
+    id "idea"
+    id "jaci.openrio.gradle.GradleRIO" version "2017.0.1"
 }
 
-apply plugin: 'java'
+apply plugin: "jaci.openrio.gradle.GradleRIO"
+apply plugin: "java"
+apply plugin: "eclipse"
+apply plugin: "idea"
+
+frc {
+    team = "5687"
+    robotClass = "org.usfirst.frc.team5687.robot.Robot"
+    rioIP="10.56.87.95"
+}
+
+wpi {
+    wpilibVersion = "+"                   // The WPILib version to use. For this version of GradleRIO, must be a 2017 version
+    ntcoreVersion = "+"                   // The NetworkTables Core version to use.
+    opencvVersion = "+"                   // The OpenCV version to use
+    cscoreVersion = "+"                   // The CSCore version to use
+    talonSrxVersion = "+"                 // The CTRE Toolsuite (Talon SRX) version to use.
+}
+
 dependencies {
-  compile files('lib/navx_frc.jar')
-  compile files('lib/cscore.jar')
-  compile files('lib/NetworkTables.jar')
-  compile files('lib/opencv.jar')
-  compile files('lib/WPILib.jar')
-
-
+    compile wpilib()
+    compile talonSrx()
+    compile fileTree(dir: 'lib', include: '**/*.jar')
 }
-
-apply plugin: 'idea'
-
-apply plugin: 'GradleRIO'
-
-gradlerio.robotClass = 'org.usfirst.frc.team5687.robot.Robot'       //The class for the main Robot Class
-gradlerio.team = '5687'                                               //The FRC team number
-gradlerio.rioIP = '10.56.87.95'                                      //The IP address of the RIO
 
 def robotManifest = {
   attributes 'Main-Class': 'edu.wpi.first.wpilibj.RobotBase'
-  attributes 'Robot-Class': gradlerio.robotClass
+  attributes 'Robot-Class': frc.robotClass
 }
 
 jar {
-  from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-  manifest robotManifest
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    manifest robotManifest
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.2.1'
 }
 
 task genJavadoc(type: Jar, dependsOn: javadoc) {
